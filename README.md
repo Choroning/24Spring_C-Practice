@@ -17,9 +17,9 @@ This repository organizes and stores sample C language code written for universi
 - [License](#license)
 
 ---
-<br>
 
 
+<br><a name="about-this-repository"></a>
 ## 📝 About This Repository
 
 This repository contains code examples developed for a university-level C programming course, including:
@@ -28,7 +28,7 @@ This repository contains code examples developed for a university-level C progra
 - Assignment solutions
 - Additional practice exercises
 
-
+<br><a name="course-information"></a>
 ## 📚 Course Information
 
 - **Semester:** Spring 2024 (March - June)
@@ -48,7 +48,7 @@ This repository contains code examples developed for a university-level C progra
 |Textbook|"문제풀이 중심의 C언어 연습" by Yongil Kim et al.|
 |Other|Lecture Slides by instructors|
 
-
+<br><a name="prerequisites"></a>
 ## ✅ Prerequisites
 
 - Basic understanding of programming concepts
@@ -63,7 +63,7 @@ This repository contains code examples developed for a university-level C progra
 |Visual Studio Code|Microsoft|macOS|C/C++ Extension Pack|
 |Xcode|Apple Inc.|macOS|most used IDE|
 
-
+<br><a name="repository-structure"></a>
 ## 🗂 Repository Structure
 
 (will be edited soon)
@@ -90,7 +90,7 @@ c-language-archive/
 └── LICENSE
 ```
 
-
+<br><a name="license"></a>
 ## 🤝 License
 
 This repository is released under the [MIT License](LICENSE).
