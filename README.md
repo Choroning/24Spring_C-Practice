@@ -10,7 +10,7 @@ This repository organizes and stores sample C language code written for universi
 
 ## 📑 Table of Contents
 
-- [About](#📝-about)
+- [About](#📝-about-this-repository)
 - [Course Information](#📚-course-information)
 - [Prerequisites](#✅-prerequisites)
 - [Repository Structure](#🗂-repository-structure)
@@ -20,7 +20,7 @@ This repository organizes and stores sample C language code written for universi
 <br>
 
 
-## 📝 About
+## 📝 About This Repository
 
 This repository contains code examples developed for a university-level C programming course, including:
 
@@ -39,18 +39,29 @@ This repository contains code examples developed for a university-level C progra
 |`DCCS101-04`|COMPUTER LANGUAGE Ⅰ|General Studies|Prof. Younghee&nbsp;Im|Computer Science and Software Engineering|
 |`DCCS103-03`|COMPUTER LANGUAGE AND TRAINING Ⅰ|General Studies|Prof. Jonguk&nbsp;Lee|Computer Science and Software Engineering|
 
-- **References**
+
+- **📖 References**
   
 | Type | Contents |
 |:----:|:---------|
-|Textbook|"Warming-Up C Programming" by ~|
+|Textbook|"Warming-Up C Programming 2nd Edition" by Jeonga Cheon|
+|Textbook|"문제풀이 중심의 C언어 연습" by Yongil Kim et al.|
 |Other|Lecture Slides by instructors|
+
 
 ## ✅ Prerequisites
 
 - Basic understanding of programming concepts
 - C/C++ compiler (e.g., GCC) installed
 - Familiarity with command-line tools
+
+- **💻 Development Environment**
+
+| Tool | Company |  OS  | Notes |
+|:-----|:-------:|:----:|:------|
+|Visual Studio|Microsoft|Windows|C/C++ Extension Pack|
+|Visual Studio Code|Microsoft|macOS|C/C++ Extension Pack|
+|Xcode|Apple Inc.|macOS|most used IDE|
 
 
 ## 🗂 Repository Structure
