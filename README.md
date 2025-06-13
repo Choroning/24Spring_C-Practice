@@ -4,25 +4,27 @@
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Language)
 
 This repository organizes and stores sample C language code written for university lectures and assignments.  
-*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 2 as of 2024*
 
+*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 1 as of 2024*
+<br><br>
 
 ## 📑 Table of Contents
 
 - [About](#📝-about)
 - [Course Information](#📚-course-information)
+- [Prerequisites](#✅-prerequisites)
 - [Repository Structure](#🗂-repository-structure)
 - [License](#🤝-license)
 
 ---
-
+<br>
 
 
 ## 📝 About
 
-This archive contains code examples developed for a university-level C programming course, including:
+This repository contains code examples developed for a university-level C programming course, including:
 
-- Lecture demonstration code
+- Lecture demonstration codes
 - Assignment solutions
 - Additional practice exercises
 
@@ -31,9 +33,24 @@ This archive contains code examples developed for a university-level C programmi
 
 - **Semester:** Spring 2024 (March - June)
 - **School:** Korea University Sejong
-- **Department:** Computer Science and Software Engineering
-- **Course:** DCCS101-04 COMPUTER LANGUAGE Ⅰ
-- **Type:** General Studies
+
+| Course&nbsp;Code| Course            | Type          | Instructor      | Department                              |
+|:----------:|:------------------|:-------------:|:---------------:|:----------------------------------------|
+|`DCCS101-04`|COMPUTER LANGUAGE Ⅰ|General Studies|Prof. Younghee&nbsp;Im|Computer Science and Software Engineering|
+|`DCCS103-03`|COMPUTER LANGUAGE AND TRAINING Ⅰ|General Studies|Prof. Jonguk&nbsp;Lee|Computer Science and Software Engineering|
+
+- **References**
+  
+| Type | Contents |
+|:----:|:---------|
+|Textbook|"Warming-Up C Programming" by ~|
+|Other|Lecture Slides by instructors|
+
+## ✅ Prerequisites
+
+- Basic understanding of programming concepts
+- C/C++ compiler (e.g., GCC) installed
+- Familiarity with command-line tools
 
 
 ## 🗂 Repository Structure
