@@ -4,6 +4,7 @@
 ![Languages](https://img.shields.io/github/languages/top/username/c-language-archive)
 
 This repository organizes and stores sample C language code written for university lectures and assignments.
+*Author: Cheolwon Park (Korea University Sejong, CSE, Year 2)*
 
 
 ## 📑 Table of Contents
@@ -14,6 +15,7 @@ This repository organizes and stores sample C language code written for universi
 - [License](#🤝-license)
 
 ---
+
 
 
 ## 📝 About
@@ -36,6 +38,7 @@ This archive contains code examples developed for a university-level C programmi
 
 ## 🗂 Repository Structure
 
+(will be edited soon)
 ```plaintext
 c-language-archive/
 ├── lecture01_basics/       # Week 1: Variables and Data Types
@@ -65,5 +68,3 @@ c-language-archive/
 This repository is released under the [MIT License](LICENSE).
 
 ---
-
-*Author: Cheolwon Park (Korea University Sejong, CSE, Year 2)*
