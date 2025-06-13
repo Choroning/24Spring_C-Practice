@@ -3,7 +3,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/username/c-language-archive)
 ![Languages](https://img.shields.io/github/languages/top/username/c-language-archive)
 
-This repository organizes and stores sample C language code written for university lectures and assignments.
+This repository organizes and stores sample C language code written for university lectures and assignments.  
 *Author: Cheolwon Park (Korea University Sejong, CSE, Year 2)*
 
 
