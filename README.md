@@ -10,11 +10,11 @@ This repository organizes and stores sample C language code written for universi
 
 ## 📑 Table of Contents
 
-- [About](#📝-about-this-repository)
-- [Course Information](#📚-course-information)
-- [Prerequisites](#✅-prerequisites)
-- [Repository Structure](#🗂-repository-structure)
-- [License](#🤝-license)
+- [About This Repository](#about-this-repository)
+- [Course Information](#course-information)
+- [Prerequisites](#prerequisites)
+- [Repository Structure](#repository-structure)
+- [License](#license)
 
 ---
 <br>
