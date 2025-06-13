@@ -1,10 +1,10 @@
 # [Spring 2024] C Language Practice
 
-![Last Commit](https://img.shields.io/github/last-commit/username/c-language-archive)
-![Languages](https://img.shields.io/github/languages/top/username/c-language-archive)
+![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Language)
+![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Language)
 
 This repository organizes and stores sample C language code written for university lectures and assignments.  
-*Author: Cheolwon Park (Korea University Sejong, CSE, Year 2)*
+*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 2 as of 2024*
 
 
 ## 📑 Table of Contents
