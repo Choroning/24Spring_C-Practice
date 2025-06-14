@@ -44,7 +44,7 @@
   
 | 유형 | 내용 |
 |:----:|:---------|
-|교재|Warming-Up C Programming 2nd Edition(천정아)|
+|교재|Warming-Up C Programming 2판(천정아)|
 |교재|문제풀이 중심의 C언어 연습(김용일 외 1인)|
 |기타|교수자 제공 강의자료|
 
