@@ -1,7 +1,6 @@
 # Chapter 4. 연산자 실습
 
-**문항 출처(Source):**
-*Prof. Younghee&nbsp;Im, Instructor of COMPUTER LANGUAGE Ⅰ(DCCS101-04)*
+**문항 출처(Source):** *Prof. Younghee&nbsp;Im, Instructor of COMPUTER LANGUAGE Ⅰ (DCCS101-04)*
 
 ---
 
@@ -20,15 +19,14 @@
 - **입력(Input)**: 헬멧의 높이(h)와 base 반지름(a) (단, h와 a는 정수)
 - **출력(Output)**: 헬멧의 체적(V)과 표면적(S)
 
-
-**프로그램 요구사항**
+<br>**프로그램 요구사항**
 
 1. π 값은 3.14159265를 사용하며, `#define`문을 이용하여 매크로 상수로 정의한다.
 2. 입력 데이터인 헬멧의 높이(h)와 base 반지름(a)은 `int`형이다.
 3. 정수 나눗셈이 발생하지 않도록 주의하여, 실행 예와 같이 정확한 계산 결과를 출력해야 한다.
 
 
-**실행 예시**
+<br>**실행 예시**
 
 ```text
 헬멧의 높이: 1
@@ -68,7 +66,7 @@ Program ended with exit code: 0
   2. 시간, 분, 초
 
 
-**프로그램 요구사항**
+<br>**프로그램 요구사항**
 
 다음의 기호 상수를 사용하시오.
 
@@ -78,7 +76,7 @@ Program ended with exit code: 0
 ```
 
 
-**실행 예시**
+<br>**실행 예시**
 
 ```text
 시간을 차례로 입력하세요(시,분,초): 2 10 47
@@ -104,7 +102,7 @@ Program ended with exit code: 0
 
 ---
 
-## Q3 - Q4. RGB 모델
+## Q3-Q4. RGB 모델
 
 RGB 모델은 컴퓨터에서 색을 표현하는 방식 중 하나이며, 각각 0 - 255의 값을 갖는 빨강(Red), 초록(Green), 파랑(Blue)의 세 가지 색상을 조합하여 색상을 표현한다.
 
@@ -120,7 +118,7 @@ RGB 모델은 컴퓨터에서 색을 표현하는 방식 중 하나이며, 각�
 - **출력(Output)**: RGB 값 (6자리 16진수)
 
 
-**실행 예시**
+<br>**실행 예시**
 
 ```text
 Red 값 입력(0-255): 255
@@ -148,13 +146,13 @@ Program ended with exit code: 0
 
 ## Q4. 16진수 RGB 값을 각각의 4바이트 RGB 값으로 변환
 
-사용자로부터 6자리 16진수 정수의 RGB 값을 입력받아, red, green, blue 값을 각각 추출하여 아래 형태로 출력하시오.
+사용자로부터 6자리 16진수 정수의 RGB 값을 입력받아, Red, Green, Blue 값을 각각 추출하여 아래 형태로 출력하시오.
 
 - **입력(Input)**: RGB 값 (6자리 16진수)
 - **출력(Output)**: Red, Green, Blue 각각의 2자리 16진수와 10진수 값
 
 
-**실행 예시**
+<br>**실행 예시**
 
 ```text
 RGB 값 입력(16진수 6자리): A73B03
