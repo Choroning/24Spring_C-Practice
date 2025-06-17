@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_Q3.c
+ * @file    A10104-1_C4Q3.c
  * @brief   Q3. 4바이트 RGB값을 16진수 RGB값으로 변환
  * @author  박철원 (Cheolwon Park)
  * @date    2024-03-27
