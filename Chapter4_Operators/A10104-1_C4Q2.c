@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_Q2.c
+ * @file    A10104-1_C4Q2.c
  * @brief   Q2. 시간 - 초 환산
  * @author  박철원 (Cheolwon Park)
  * @date    2024-03-27
