@@ -32,7 +32,7 @@ This repository contains code examples developed for a university-level C progra
 ## 📚 Course Information
 
 - **Semester:** Spring 2024 (March - June)
-- **School:** Korea University Sejong
+- **Affiliation:** Korea University Sejong
 
 | Course&nbsp;Code| Course            | Type          | Instructor      | Department                              |
 |:----------:|:------------------|:-------------:|:---------------:|:----------------------------------------|
