@@ -66,7 +66,6 @@ This repository contains code examples developed for a university-level C progra
 <br><a name="repository-structure"></a>
 ## 🗂 Repository Structure
 
-(will be edited soon)
 ```plaintext
 24Spring_C-Practice
 ├── Chapter04_Operators
