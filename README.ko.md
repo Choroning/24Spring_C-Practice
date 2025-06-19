@@ -1,7 +1,7 @@
 # [2024학년도 봄학기] C언어 연습
 
-![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Language)
-![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Language)
+![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
+![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
 
 이 레포지토리는 대학 강의 및 과제를 위해 작성된 C언어 예제 및 실습 코드를 체계적으로 정리하고 보관합니다. 
 
