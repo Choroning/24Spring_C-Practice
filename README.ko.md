@@ -66,7 +66,6 @@
 <br><a name="repository-structure"></a>
 ## 🗂 레포지토리 구조
 
-(추후 수정됩니다.)
 ```plaintext
 24Spring_C-Practice
 ├── Chapter04_Operators
