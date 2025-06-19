@@ -1,7 +1,7 @@
 # [Spring 2024] C Language Practice
 
-![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Language)
-![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Language)
+![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
+![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
 
 This repository organizes and stores sample C language code written for university lectures and assignments.  
 
