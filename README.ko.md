@@ -68,26 +68,55 @@
 
 (추후 수정됩니다.)
 ```plaintext
-c-language-archive/
-├── lecture01_basics/       # Week 1: Variables and Data Types
-│   ├── hello_world.c
-│   ├── input_output.c
-│   └── data_types.c
-├── lecture02_control/      # Week 2: Conditional Statements and Loops
-│   ├── if_statement.c
-│   ├── for_loop.c
-│   └── while_loop.c
-├── lecture03_function/     # Week 3: Functions and Scope
-│   ├── function_example.c
-│   └── recursion.c
-├── lecture04_array/        # Week 4: Arrays and Strings
-│   ├── array_practice.c
-│   └── string_manipulation.c
-├── lecture05_pointer/      # Week 5: Pointers
-│   ├── pointer_basics.c
-│   └── pointer_arithmetic.c
+24Spring_C-Practice
+├── Chapter04_Operators
+│   ├── A10104-1_C04-Problems.md
+│   ├── A10104-1_C04Q1.c
+│   ├── A10104-1_C04Q2.c
+│   ├── A10104-1_C04Q3.c
+│   └── A10104-1_C04Q4.c
+├── Chapter05_Control-Statements
+│   ├── A10104-1_C05-Problems.md
+│   ├── A10104-1_C05Q1.c
+│   ├── A10104-1_C05Q2.c
+│   ├── A10104-1_C05Q3.c
+│   ├── A10104-2_C05-Problems.md
+│   ├── A10104-2_C05Q1.c
+│   └── A10104-2_C05Q2.c
+├── Chapter06_Functions
+│   ├── A10104-1_C06-Problems.md
+│   ├── A10104-1_C06Q1.c
+│   ├── A10104-1_C06Q2.c
+│   └── A10104-1_C06Q3.c
+├── Chapter07_Arrays
+│   ├── A10104-1_C07-Problems.md
+│   ├── A10104-1_C07Q1.c
+│   ├── A10104-1_C07Q2.c
+│   └── A10104-1_C07Q3.c
+├── Chapter08_Pointers
+│   ├── A10104-1_C08-Problems.md
+│   ├── A10104-1_C08Q1.c
+│   └── A10104-1_C08Q2.c
+├── Chapter09_Strings
+│   ├── A10104-1_C09-Problems.md
+│   └── A10104-1_C09Q1.c
+├── Chapter10_Structures
+│   ├── A10104-1_C10-Problems.md
+│   ├── A10104-1_C10Q1.c
+│   └── A10104-1_C10Q2.c
+├── LICENSE
+├── README.ko.md
 ├── README.md
-└── LICENSE
+└── src
+    └── images
+        ├── C04_A10104-1_1.png
+        ├── C05_A10104-1_1.png
+        ├── C05_A10104-1_2.png
+        ├── C07_A10104-1_1.png
+        ├── C08_A10104-1_1.png
+        └── C10_A10104-1_1.png
+
+10 directories, 37 files
 ```
 
 <br><a name="license"></a>
