@@ -1,11 +1,11 @@
 /**
- * @file    A10104-1_C8Q1.c
+ * @file    A10104-1_C08Q1.c
  * @brief   Q1. 2차원 평면 좌표 계산기
  * @author  박철원 (Cheolwon Park)
  * @date    2024-05-14
  * 
- * @note	소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 			IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
+ *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
  */
 
 #include <stdio.h>
