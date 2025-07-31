@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_C6Q2.c
+ * @file    A10104-1_C06Q2.c
  * @brief   Q2. 윤년 판별
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-17
