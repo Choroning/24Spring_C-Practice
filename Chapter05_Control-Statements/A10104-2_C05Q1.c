@@ -1,5 +1,5 @@
 /**
- * @file    A10104-2_C5Q1.c
+ * @file    A10104-2_C05Q1.c
  * @brief   Q1. 정수의 합과 평균 계산
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-09
