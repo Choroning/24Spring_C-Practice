@@ -4,8 +4,8 @@
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-02
  * 
- * @note	소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 			IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
+ * 		    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
  */
 
 #include <stdio.h>
