@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_C5Q3.c
+ * @file    A10104-1_C05Q3.c
  * @brief   Q3. 이차 방정식의 근 계산
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-03
