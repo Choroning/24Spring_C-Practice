@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_C5Q1.c
+ * @file    A10104-1_C05Q1.c
  * @brief   Q1. 이차원 평면의 점 좌표 사분면 판별
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-02
