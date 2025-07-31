@@ -1,11 +1,11 @@
 /**
- * @file    A10104-1_C7Q1.c
+ * @file    A10104-1_C07Q1.c
  * @brief   Q1. UPC 바코드의 Check Digit 계산
  * @author  박철원 (Cheolwon Park)
  * @date    2024-05-11
  * 
- * @note	소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 			IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
+ *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
  */
 
 #include <stdio.h>

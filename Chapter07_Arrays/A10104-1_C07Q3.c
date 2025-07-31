@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_C7Q3.c
+ * @file    A10104-1_C07Q3.c
  * @brief   Q3. 빈도와 상대 빈도 계산
  * @author  박철원 (Cheolwon Park)
  * @date    2024-05-11

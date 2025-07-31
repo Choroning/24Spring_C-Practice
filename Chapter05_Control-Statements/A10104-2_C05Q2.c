@@ -1,11 +1,11 @@
 /**
- * @file    A10104-2_C5Q2.c
+ * @file    A10104-2_C05Q2.c
  * @brief   Q2. 삼각형 출력 메뉴
  * @author  박철원 (Cheolwon Park)
  * @date    2024-04-10
  * 
- * @note	<windows.h> 헤더는 Windows 이외의 개발환경에서
- * 			오류가 발생할 수 있음에 주의하시기 바랍니다.
+ * @note    <windows.h> 헤더는 Windows 이외의 개발환경에서
+ *          오류가 발생할 수 있음에 주의하시기 바랍니다.
  */
 
 #pragma warning(disable:4996)
