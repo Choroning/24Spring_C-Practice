@@ -1,5 +1,5 @@
 /**
- * @file    A10104-1_C7Q2.c
+ * @file    A10104-1_C07Q2.c
  * @brief   Q2. 선택 정렬 변형
  * @author  박철원 (Cheolwon Park)
  * @date    2024-05-11
