@@ -69,10 +69,10 @@ This repository contains code examples developed for a university-level C progra
 ```plaintext
 24Spring_C-Practice
 ├── Chapter03_Data-Types-and-Variables
-│   ├── A10303-1_C03-Problems.md
-│   ├── A10303-1_C03Q1.c
-│   ├── A10303-1_C03Q2.c
-│   ├── A10303-1_C03Q3.c
+│   ├── A10303-1_C03-Problems.md        < Here's where you'll find the example problems.
+│   ├── A10303-1_C03Q1.c                < Here's one way to tackle the first example.
+│   ├── A10303-1_C03Q2.c                < And here's the next solution—and so on.
+│   ├── A10303-1_C03Q3.c                  (Feel free to come up with your own valid approach!)
 │   └── A10303-1_C03Q4.c
 ├── Chapter04_Operators
 │   ├── A10104-1_C04-Problems.md
