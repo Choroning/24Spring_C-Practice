@@ -1,4 +1,4 @@
-# [Spring 2024] C Language Practice
+# [Spring 2024] C Programming Practice
 
 ![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
