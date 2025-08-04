@@ -68,12 +68,22 @@
 
 ```plaintext
 24Spring_C-Practice
+├── Chapter03_Data-Types-and-Variables
+│   ├── A10303-1_C03-Problems.md
+│   ├── A10303-1_C03Q1.c
+│   ├── A10303-1_C03Q2.c
+│   ├── A10303-1_C03Q3.c
+│   └── A10303-1_C03Q4.c
 ├── Chapter04_Operators
 │   ├── A10104-1_C04-Problems.md
 │   ├── A10104-1_C04Q1.c
 │   ├── A10104-1_C04Q2.c
 │   ├── A10104-1_C04Q3.c
-│   └── A10104-1_C04Q4.c
+│   ├── A10104-1_C04Q4.c
+│   ├── A10303-1_C04-Problems.md
+│   ├── A10303-1_C04Q1.c
+│   ├── A10303-1_C04Q2.c
+│   └── A10303-1_C04Q3.c
 ├── Chapter05_Control-Statements
 │   ├── A10104-1_C05-Problems.md
 │   ├── A10104-1_C05Q1.c
@@ -81,24 +91,55 @@
 │   ├── A10104-1_C05Q3.c
 │   ├── A10104-2_C05-Problems.md
 │   ├── A10104-2_C05Q1.c
-│   └── A10104-2_C05Q2.c
+│   ├── A10104-2_C05Q2.c
+│   ├── A10303-1_C05-Problems.md
+│   ├── A10303-1_C05Q1.c
+│   ├── A10303-2_C05-Problems.md
+│   ├── A10303-2_C05Q1.c
+│   ├── A10303-2_C05Q2.c
+│   ├── A10303-2_C05Q3.c
+│   ├── A10303-2_C05Q4.c
+│   ├── A10303-2_C05Q5.c
+│   ├── A10303-3_C05-Problems.md
+│   ├── A10303-3_C05Q1.c
+│   ├── A10303-3_C05Q2.c
+│   ├── A10303-3_C05Q3.c
+│   └── A10303-3_C05Q4.c
 ├── Chapter06_Functions
 │   ├── A10104-1_C06-Problems.md
 │   ├── A10104-1_C06Q1.c
 │   ├── A10104-1_C06Q2.c
-│   └── A10104-1_C06Q3.c
+│   ├── A10104-1_C06Q3.c
+│   ├── A10303-1_C06-Problems.md
+│   ├── A10303-1_C06Q1.c
+│   └── A10303-1_C06Q2.c
 ├── Chapter07_Arrays
 │   ├── A10104-1_C07-Problems.md
 │   ├── A10104-1_C07Q1.c
 │   ├── A10104-1_C07Q2.c
-│   └── A10104-1_C07Q3.c
+│   ├── A10104-1_C07Q3.c
+│   ├── A10303-1_C07-Problems.md
+│   ├── A10303-1_C07Q1.c
+│   ├── A10303-1_C07Q2.c
+│   └── A10303-1_C07Q3.c
 ├── Chapter08_Pointers
 │   ├── A10104-1_C08-Problems.md
 │   ├── A10104-1_C08Q1.c
-│   └── A10104-1_C08Q2.c
+│   ├── A10104-1_C08Q2.c
+│   ├── A10303-1_C08-Problems.md
+│   ├── A10303-1_C08Q1.c
+│   ├── A10303-1_C08Q2.c
+│   ├── A10303-2_C08-Problems.md
+│   ├── A10303-2_C08Q1.c
+│   ├── A10303-2_C08Q2.c
+│   └── A10303-2_C08Q3.c
 ├── Chapter09_Strings
 │   ├── A10104-1_C09-Problems.md
-│   └── A10104-1_C09Q1.c
+│   ├── A10104-1_C09Q1.c
+│   ├── A10303-1_C09-Problems.md
+│   ├── A10303-1_C09Q1.c
+│   ├── A10303-1_C09Q2.c
+│   └── A10303-1_C09Q3.c
 ├── Chapter10_Structures
 │   ├── A10104-1_C10-Problems.md
 │   ├── A10104-1_C10Q1.c
@@ -108,14 +149,16 @@
 ├── README.md
 └── src
     └── images
+        ├── C03_A10303-1_1.png
         ├── C04_A10104-1_1.png
         ├── C05_A10104-1_1.png
         ├── C05_A10104-1_2.png
         ├── C07_A10104-1_1.png
+        ├── C07_A10303-1_1.png
         ├── C08_A10104-1_1.png
         └── C10_A10104-1_1.png
 
-10 directories, 37 files
+11개의 디렉토리, 79개의 파일
 ```
 
 <br><a name="license"></a>
