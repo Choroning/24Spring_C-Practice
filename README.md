@@ -5,7 +5,7 @@
 
 This repository organizes and stores sample C language code written for university lectures and assignments.  
 
-*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 1 as of 2024*
+*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 1 (Freshman) as of 2024*
 <br><br>
 
 ## 📑 Table of Contents
@@ -36,8 +36,8 @@ This repository contains code examples developed for a university-level C progra
 
 | Course&nbsp;Code| Course            | Type          | Instructor      | Department                              |
 |:----------:|:------------------|:-------------:|:---------------:|:----------------------------------------|
-|`DCCS101-04`|COMPUTER LANGUAGE Ⅰ|General Studies|Prof. Younghee&nbsp;Im|Computer Science and Software Engineering|
-|`DCCS103-03`|COMPUTER LANGUAGE AND TRAINING Ⅰ|General Studies|Prof. Jonguk&nbsp;Lee|Computer Science and Software Engineering|
+|`DCCS101-04`|COMPUTER LANGUAGE Ⅰ|General Studies|Prof. Younghee&nbsp;Im|Department of Computer Convergence Software|
+|`DCCS103-03`|COMPUTER LANGUAGE AND TRAINING Ⅰ|General Studies|Prof. Jonguk&nbsp;Lee|Department of Computer Convergence Software|
 
 
 - **📖 References**
