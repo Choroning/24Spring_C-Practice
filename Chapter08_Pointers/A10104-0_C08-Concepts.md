@@ -22,7 +22,7 @@
   - [2.4 Array vs Pointer Comparison](#24-array-vs-pointer-comparison)
 - [3. Functions and Pointers](#3-functions-and-pointers)
   - [3.1 Pass by Value vs Pass by Reference](#31-pass-by-value-vs-pass-by-reference)
-  - [3.2 Swap Example](#32-swap-example)
+  - [3.2 Modifying a Variable Through a Pointer](#32-modifying-a-variable-through-a-pointer)
   - [3.3 Returning Multiple Values](#33-returning-multiple-values)
   - [3.4 Passing Arrays to Functions](#34-passing-arrays-to-functions)
 - [Summary](#summary)
@@ -404,67 +404,65 @@ Pass by Value              Pass by Reference
    a unchanged                 a changed!
 ```
 
-### 3.2 Swap Example
+### 3.2 Modifying a Variable Through a Pointer
 
-The classic demonstration of why pass-by-reference is necessary.
+A simple demonstration of why pass-by-reference is necessary: a function that adds 10 to the caller's variable.
 
 **Wrong: pass by value (does NOT work)**
 
 ```c
-void swap_wrong(int x, int y) {
-    int temp = x;
-    x = y;
-    y = temp;
-    // x and y are local copies — originals unchanged
+void addTen_wrong(int x) {
+    x = x + 10;
+    // x is a local copy — original unchanged
 }
 
 int main() {
-    int a = 10, b = 20;
-    swap_wrong(a, b);
-    printf("a=%d, b=%d\n", a, b);   // a=10, b=20 (not swapped!)
+    int score = 85;
+    addTen_wrong(score);
+    printf("score = %d\n", score);   // score = 85 (not modified!)
     return 0;
 }
 ```
 
 ```
-Before swap_wrong:        Inside swap_wrong:        After swap_wrong:
-  main:  a=10, b=20       x=10→20, y=20→10         main: a=10, b=20
-         │      │          (local copies)            (unchanged!)
-         ▼      ▼
-        copy   copy
-         │      │
-         ▼      ▼
-        x=10   y=20
+Before addTen_wrong:      Inside addTen_wrong:      After addTen_wrong:
+  main: score=85           x=85→95                   main: score=85
+         │                 (local copy)               (unchanged!)
+         ▼
+        copy
+         │
+         ▼
+        x=85
 ```
 
 **Correct: pass by reference (works)**
 
 ```c
-void swap(int *x, int *y) {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
+void addTen(int *p) {
+    *p = *p + 10;   // modify the original variable through the pointer
 }
 
 int main() {
-    int a = 10, b = 20;
-    swap(&a, &b);
-    printf("a=%d, b=%d\n", a, b);   // a=20, b=10 (swapped!)
+    int score = 85;
+    addTen(&score);
+    printf("score = %d\n", score);   // score = 95 (modified!)
     return 0;
 }
 ```
 
 ```
-Before swap:              Inside swap:              After swap:
-  main:  a=10, b=20        *x=10→20, *y=20→10        main: a=20, b=10
-         │      │          (modify via address)      (swapped!)
-         ▼      ▼
-        &a      &b
-         │      │
-         ▼      ▼
-        x=&a   y=&b
-       *x=10  *y=20
+Before addTen:            Inside addTen:            After addTen:
+  main: score=85           *p=85→95                  main: score=95
+         │                 (modify via address)       (modified!)
+         ▼
+       &score
+         │
+         ▼
+        p=&score
+       *p=85
 ```
+
+> **Classic exercise:** Swapping two values is the most well-known application of this pattern. It requires two pointer parameters so the function can modify both caller variables. Try implementing it as practice!
 
 ### 3.3 Returning Multiple Values
 
@@ -575,7 +573,7 @@ int main() {
 | Array vs pointer | Array: fixed address, `sizeof` = total; Pointer: variable address, `sizeof` = 4/8 |
 | Pass by value | Function gets a copy; original unchanged |
 | Pass by reference | Function gets address via pointer; can modify original |
-| Swap function | Must use pointers (`int *x, int *y`) — pass-by-value swap does not work |
+| Modify via pointer | Must pass address (`int *p`) — pass-by-value cannot modify the caller's variable |
 | Multiple return values | Pass addresses to function; function writes via `*` |
 | Array to function | Array decays to pointer; `sizeof(arr)` in function = pointer size; pass size separately |
 

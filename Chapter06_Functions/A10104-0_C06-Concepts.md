@@ -50,19 +50,19 @@ A **function** is a named, reusable block of code that performs a specific task.
 #include <stdio.h>
 
 int main() {
-    // --- compute sum 1 to 10 ---
-    int sum1 = 0;
-    for (int i = 1; i <= 10; i++) {
-        sum1 += i;
+    // --- compute factorial of 5 ---
+    int fact1 = 1;
+    for (int i = 1; i <= 5; i++) {
+        fact1 *= i;
     }
-    printf("Sum(1~10) = %d\n", sum1);
+    printf("5! = %d\n", fact1);
 
-    // --- compute sum 1 to 20 (duplicated logic!) ---
-    int sum2 = 0;
-    for (int i = 1; i <= 20; i++) {
-        sum2 += i;
+    // --- compute factorial of 8 (duplicated logic!) ---
+    int fact2 = 1;
+    for (int i = 1; i <= 8; i++) {
+        fact2 *= i;
     }
-    printf("Sum(1~20) = %d\n", sum2);
+    printf("8! = %d\n", fact2);
 
     return 0;
 }
@@ -73,22 +73,22 @@ int main() {
 ```c
 #include <stdio.h>
 
-int getSum(int n) {
-    int sum = 0;
+int factorial(int n) {
+    int result = 1;
     for (int i = 1; i <= n; i++) {
-        sum += i;
+        result *= i;
     }
-    return sum;
+    return result;
 }
 
 int main() {
-    printf("Sum(1~10) = %d\n", getSum(10));
-    printf("Sum(1~20) = %d\n", getSum(20));
+    printf("5! = %d\n", factorial(5));
+    printf("8! = %d\n", factorial(8));
     return 0;
 }
 ```
 
-The duplicated loop is gone. If the summation algorithm needs to change, we edit only `getSum()`.
+The duplicated loop is gone. If the factorial algorithm needs to change, we edit only `factorial()`.
 
 ### 1.2 Function Types
 
@@ -105,7 +105,7 @@ Functions in C
 |:---------|:--------|:------|
 | Entry point | `main()` | Every C program must have exactly one `main()`. Execution starts here. |
 | Library | `printf()`, `scanf()`, `sqrt()` | Provided by the C standard library. Must `#include` the appropriate header (`<stdio.h>`, `<math.h>`, etc.). |
-| User-defined | `getSum()`, `isLeapYear()` | Written by the programmer to solve specific sub-problems. |
+| User-defined | `factorial()`, `isLeapYear()` | Written by the programmer to solve specific sub-problems. |
 
 > **Key Point:** `#include <stdio.h>` does **not** include the function code itself. It includes the **declarations** (prototypes) so the compiler knows how to call them. The actual implementation is linked later by the linker.
 
@@ -158,16 +158,16 @@ A function definition consists of a **header** and a **body**.
  *    │
  *    │    function name
  *    │       │
- *    │       │     parameter list
- *    │       │        │            */
-    int     getSum   (int n)          // ← header
-    {                                 // ← body begins
-        int sum = 0;                  //   local variable
+ *    │       │        parameter list
+ *    │       │            │            */
+    int     factorial   (int n)          // ← header
+    {                                    // ← body begins
+        int result = 1;                  //   local variable
         for (int i = 1; i <= n; i++) {
-            sum += i;
+            result *= i;
         }
-        return sum;                   //   return value to caller
-    }                                 // ← body ends
+        return result;                   //   return value to caller
+    }                                    // ← body ends
 ```
 
 | Component | Description |
@@ -183,7 +183,7 @@ The return type specifies what kind of value the function sends back.
 
 | Return Type | Meaning | Example |
 |:------------|:--------|:--------|
-| `int` | Returns an integer | `int getSum(int n)` |
+| `int` | Returns an integer | `int factorial(int n)` |
 | `double` | Returns a floating-point number | `double getAverage(int a, int b)` |
 | `void` | Returns nothing | `void printMenu(void)` |
 
@@ -227,10 +227,10 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 
 | Rule | Example |
 |:-----|:--------|
-| Must start with a letter or `_` | `getSum`, `_helper` |
+| Must start with a letter or `_` | `factorial`, `_helper` |
 | Can contain letters, digits, `_` | `calc2dArea` |
 | Cannot be a C keyword | ~~`return`~~, ~~`int`~~ |
-| Case-sensitive | `getSum` and `GetSum` are different |
+| Case-sensitive | `factorial` and `Factorial` are different |
 
 **Naming conventions (recommended):**
 
@@ -240,7 +240,7 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 | camelCase | `verbNoun` | `getFactorial`, `isLeapYear` |
 | PascalCase | `VerbNoun` | `GetDaysOfMonth`, `PrintMenu` |
 
-> **Tip:** Choose **one** naming convention and use it consistently throughout your program. Use verb+noun pairs that describe what the function does: `getSum`, `isLeapYear`, `printMenu`.
+> **Tip:** Choose **one** naming convention and use it consistently throughout your program. Use verb+noun pairs that describe what the function does: `getFactorial`, `isLeapYear`, `printMenu`.
 
 > **Warning:** In C, you **cannot** define two functions with the same name (no overloading). Each function name must be unique within the program.
 
@@ -322,11 +322,11 @@ To execute a function, write its name followed by parentheses containing the arg
 
 ```c
 // Calling a function and using its return value
-int result = getSum(10);         // store return value
-printf("Sum = %d\n", getSum(5)); // use return value directly in expression
+int result = factorial(5);              // store return value
+printf("8! = %d\n", factorial(8));      // use return value directly in expression
 
 // Calling a void function
-printLine();                     // no return value to capture
+printLine();                            // no return value to capture
 ```
 
 **Rules for function calls:**
@@ -381,22 +381,22 @@ The C compiler reads source code **top to bottom**. If `main()` calls a function
 #include <stdio.h>
 
 // ─── Prototypes (declarations) ───
-int getSum(int n);            // parameter name included (recommended)
+int factorial(int n);         // parameter name included (recommended)
 int isLeapYear(int);          // parameter name omitted (also valid)
 
 int main() {
-    printf("Sum = %d\n", getSum(10));       // OK — prototype seen above
+    printf("5! = %d\n", factorial(5));      // OK — prototype seen above
     printf("Leap? %d\n", isLeapYear(2024)); // OK — prototype seen above
     return 0;
 }
 
 // ─── Definitions ───
-int getSum(int n) {
-    int sum = 0;
+int factorial(int n) {
+    int result = 1;
     for (int i = 1; i <= n; i++) {
-        sum += i;
+        result *= i;
     }
-    return sum;
+    return result;
 }
 
 int isLeapYear(int year) {
@@ -408,9 +408,9 @@ int isLeapYear(int year) {
 
 | Rule | Example |
 |:-----|:--------|
-| Must match the definition's return type and parameter types | `int getSum(int n);` matches `int getSum(int n) { ... }` |
+| Must match the definition's return type and parameter types | `int factorial(int n);` matches `int factorial(int n) { ... }` |
 | Parameter **names** are optional in prototypes | `int add(int, int);` is valid |
-| Must end with a **semicolon** | `int getSum(int n);` (not `int getSum(int n) { }`) |
+| Must end with a **semicolon** | `int factorial(int n);` (not `int factorial(int n) { }`) |
 | Typically placed **before `main()`** or in a header file | Convention for readability |
 
 > **Tip:** Always include parameter names in prototypes even though they are optional. It serves as documentation: `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
@@ -421,16 +421,16 @@ int isLeapYear(int year) {
 #include <stdio.h>
 
 int main() {
-    // If getSum() is defined below and NO prototype exists above:
+    // If factorial() is defined below and NO prototype exists above:
     // The compiler may assume int return type (C89) or produce an error (C99+)
-    printf("Sum = %d\n", getSum(10));   // warning or error!
+    printf("5! = %d\n", factorial(5));   // warning or error!
     return 0;
 }
 
-int getSum(int n) {
-    int sum = 0;
-    for (int i = 1; i <= n; i++) sum += i;
-    return sum;
+int factorial(int n) {
+    int result = 1;
+    for (int i = 1; i <= n; i++) result *= i;
+    return result;
 }
 ```
 
@@ -673,16 +673,19 @@ factorial(4)
   → returns 4 * 6 = 24
 ```
 
-**Another example — sum from 1 to n:**
+**Another example — count the number of digits in a positive integer:**
 
 ```c
-int recursiveSum(int n) {
-    if (n == 1) {         // base case
+int countDigits(int n) {
+    if (n < 10) {         // base case: single digit
         return 1;
     }
-    return n + recursiveSum(n - 1);   // recursive case
+    return 1 + countDigits(n / 10);   // recursive case
 }
-// recursiveSum(5) = 5 + 4 + 3 + 2 + 1 = 15
+// countDigits(9128) = 1 + countDigits(912)
+//                   = 1 + 1 + countDigits(91)
+//                   = 1 + 1 + 1 + countDigits(9)
+//                   = 1 + 1 + 1 + 1 = 4
 ```
 
 > **Warning:** A recursive function without a proper base case will call itself infinitely, causing a **stack overflow** (the call stack runs out of memory). Always ensure the base case is reachable.
