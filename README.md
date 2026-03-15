@@ -69,8 +69,8 @@ This repository contains code examples developed for a university-level C progra
 ```plaintext
 24Spring_C-Practice
 ├── Chapter01_Programming-and-C-Language
-│   ├── A10104-0_C01-Concepts.ko.md     < Here's where you'll find the basic theory. (Korean version)
-│   └── A10104-0_C01-Concepts.md                                                     (English version)
+│   ├── A10104-0_C01-Concepts.ko.md     < Here's where you'll find the basic theory.
+│   └── A10104-0_C01-Concepts.md          Explanations are provided in both EN/KR.
 ├── Chapter02_C-Program-Basics
 │   ├── A10104-0_C02-Concepts.ko.md
 │   └── A10104-0_C02-Concepts.md

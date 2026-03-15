@@ -69,8 +69,8 @@
 ```plaintext
 24Spring_C-Practice
 ├── Chapter01_Programming-and-C-Language
-│   ├── A10104-0_C01-Concepts.ko.md     < 이 파일에 기초 이론설명이 있습니다. (한국어 버전)
-│   └── A10104-0_C01-Concepts.md                                      (영어 버전)
+│   ├── A10104-0_C01-Concepts.ko.md     < 이 파일에 기초 이론설명이 있습니다.
+│   └── A10104-0_C01-Concepts.md          설명은 영어/한국어로 제공됩니다.
 ├── Chapter02_C-Program-Basics
 │   ├── A10104-0_C02-Concepts.ko.md
 │   └── A10104-0_C02-Concepts.md
