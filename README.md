@@ -5,7 +5,7 @@
 
 This repository organizes and stores sample C language code written for university lectures and assignments.  
 
-*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 1 as of 2024*
+*Author: Cheolwon Park (Korea University Sejong, CSE) – Year 1 (Freshman) as of 2024*
 <br><br>
 
 ## 📑 Table of Contents
