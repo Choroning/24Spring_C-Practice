@@ -56,9 +56,9 @@ In C, a **character** and a **string** are fundamentally different.
 A **string** in C is a **null-terminated character array** — a sequence of `char` values ending with the special character `'\0'` (ASCII 0).
 
 ```
-Character:  'A'       →  [ 65 ]           (1 byte)
-String:     "A"       →  [ 65 ][ 0 ]      (2 bytes)
-String:     "Hello"   →  [ H ][ e ][ l ][ l ][ o ][ \0 ]  (6 bytes)
+Character:  'A'      →  [ 65 ]                           (1 byte)
+String:     "A"      →  [ 65 ][ 0 ]                      (2 bytes)
+String:     "Hello"  →  [ H ][ e ][ l ][ l ][ o ][ \0 ]  (6 bytes)
 ```
 
 **String constant vs string variable:**
@@ -89,7 +89,7 @@ char str4[] = {'a', 'b', 'c'};        // size 3, no null terminator
 **Memory layout of `char str[10] = "abc";`:**
 
 ```
-Index:   [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]  [8]  [9]
+Index:   [0]  [1]  [2]   [3]  [4]  [5]  [6]  [7]  [8]  [9]
 Value:   'a'  'b'  'c'  '\0' '\0' '\0' '\0' '\0' '\0' '\0'
 ```
 

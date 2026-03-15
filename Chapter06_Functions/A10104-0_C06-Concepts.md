@@ -116,11 +116,10 @@ To use a function in C, three elements are needed:
 ```
 Three Requirements for Using a Function
 ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│  Definition   │    │  Declaration  │    │    Call       │
-│ (구현/정의)    │    │  (선언/원형)   │    │  (호출)       │
-│               │    │               │    │               │
-│ What it does  │    │ Promise of    │    │ Actually run  │
-│ (full body)   │    │ existence     │    │ the function  │
+│  Definition  │    │  Declaration │    │    Call      │
+│              │    │              │    │              │
+│ What it does │    │ Promise of   │    │ Actually run │
+│ (full body)  │    │ existence    │    │ the function │
 └──────────────┘    └──────────────┘    └──────────────┘
 ```
 
@@ -142,13 +141,13 @@ A function definition consists of a **header** and a **body**.
 
 ```
 ┌─── Function Header ─────────────────────────┐
-│  return_type  function_name(parameter_list)   │
-└──────────────────────────────────────────────┘
+│  return_type  function_name(parameter_list) │
+└─────────────────────────────────────────────┘
 ┌─── Function Body ───┐
-│  {                   │
-│      statements;     │
-│      return value;   │
-│  }                   │
+│  {                  │
+│      statements;    │
+│      return value;  │
+│  }                  │
 └─────────────────────┘
 ```
 

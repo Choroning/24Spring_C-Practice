@@ -108,7 +108,7 @@ printf("Size: %zu\n", sizeof(struct example));  // likely 16 or 24
 Memory layout (with possible padding):
 ┌─────┬─────────┬──────────┬──────────────────┐
 │  c  │ padding │    n     │        d         │
-│ 1B  │  3B     │   4B     │       8B         │
+│ 1B  │   3B    │    4B    │        8B        │
 └─────┴─────────┴──────────┴──────────────────┘
 sizeof(struct example) = 16  (not 13)
 ```
@@ -150,10 +150,10 @@ struct {
 ```
 struct content c1;
 
-┌────────────────────────┬───────────┬───────────┐
-│    c1.title (50 bytes) │ c1.price  │  c1.rate  │
-│                        │  (4 bytes)│ (8 bytes) │
-└────────────────────────┴───────────┴───────────┘
+┌────────────────────────┬──────────┬────────────────┐
+│        c1.title        │ c1.price │     c1.rate    │
+│        (50 bytes)      │ (4 bytes)│    (8 bytes)   │
+└────────────────────────┴──────────┴────────────────┘
          (may include padding between members)
 ```
 
@@ -355,11 +355,11 @@ p->rate       // equivalent to (*p).rate
 > **Warning:** Parentheses are required in `(*p).title` because the dot `.` has higher precedence than `*`. Without parentheses, `*p.title` is interpreted as `*(p.title)`, which is wrong if `p` is a pointer to a struct.
 
 ```
- p ──────► ┌────────────────────┐
-           │ c1.title = "Avengers"│
-           │ c1.price = 11000     │
-           │ c1.rate  = 8.8       │
-           └────────────────────┘
+ p ──────► ┌───────────────────────┐
+           │ c1.title = "Avengers" │
+           │ c1.price = 11000      │
+           │ c1.rate  = 8.8        │
+           └───────────────────────┘
 
 p->title   ≡  (*p).title   ≡  c1.title
 ```
@@ -475,15 +475,15 @@ printf("Year: %d\n", p->birthday.year);   // pointer->outer.inner
 ```
 struct student s1
 
-┌──────────────────────────────────────────────┐
-│ name = "Kim"                                 │
-│ id = 2024001                                 │
-│ birthday ┌──────────────────────────────┐    │
-│          │ year  = 2005                 │    │
-│          │ month = 3                    │    │
-│          │ day   = 15                   │    │
-│          └──────────────────────────────┘    │
-└──────────────────────────────────────────────┘
+┌───────────────────────────────┐
+│ name = "Kim"                  │
+│ id = 2024001                  │
+│ birthday ┌─────────────────┐  │
+│          │ year  = 2005    │  │
+│          │ month = 3       │  │
+│          │ day   = 15      │  │
+│          └─────────────────┘  │
+└───────────────────────────────┘
 ```
 
 ---
