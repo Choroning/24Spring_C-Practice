@@ -1,8 +1,6 @@
 # Chapter 08 — 포인터
 
 > **최종 수정일:** 2026-03-16
->
-> **교재 참조:** *Warming-Up C Programming 2판* — 8장
 
 ---
 

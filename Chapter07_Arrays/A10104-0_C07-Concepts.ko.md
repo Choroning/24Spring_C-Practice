@@ -1,8 +1,6 @@
 # Chapter 07 — 배열
 
 > **최종 수정일:** 2026-03-16
->
-> **교재 참조:** *Warming-Up C Programming 2판* — 7장
 
 ---
 
