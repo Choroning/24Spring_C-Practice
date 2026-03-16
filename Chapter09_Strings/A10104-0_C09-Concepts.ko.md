@@ -1,8 +1,6 @@
 # Chapter 09 — 문자열
 
 > **최종 수정일:** 2026-03-16
->
-> **교재 참조:** *Warming-Up C Programming 2판* — 9장
 
 ---
 

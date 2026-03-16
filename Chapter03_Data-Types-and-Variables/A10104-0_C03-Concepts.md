@@ -1,8 +1,6 @@
 # Chapter 03 — Data Types and Variables
 
 > **Last Updated:** 2026-03-16
->
-> **Textbook Reference:** *Warming-Up C Programming, 2nd Edition* — Chapter 3
 
 ---
 

@@ -3,7 +3,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
 
-이 레포지토리는 대학 강의 및 과제를 위해 작성된 C언어 예제 및 실습 코드를 체계적으로 정리하고 보관합니다. 
+이 레포지토리는 대학 강의 및 과제를 위해 작성된 C언어 개념 정리 및 예제 코드를 체계적으로 정리하고 보관합니다.
 
 *작성자: 박철원 (고려대학교(세종), 컴퓨터융합소프트웨어학과) - 2024년 기준 1학년*
 <br><br>
@@ -22,10 +22,10 @@
 <br><a name="about-this-repository"></a>
 ## 📝 레포지토리 소개
 
-이 레포지토리에는 대학 수준의 C언어 프로그래밍 과목을 위해 작성된 코드가 포함되어 있습니다:
+이 레포지토리에는 대학 수준의 C언어 프로그래밍 과목을 위해 작성된 개념 정리와 코드가 포함되어 있습니다:
 
-- 강의에서 소개한 코드
-- 각 과제의 솔루션
+- 챕터별 개념 정리 노트 (영문/한국어 이중 언어)
+- 과제 문제 및 솔루션
 - 추가적인 연습 문제
 
 <br><a name="course-information"></a>

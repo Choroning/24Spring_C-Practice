@@ -1,8 +1,6 @@
 # Chapter 06 — 함수
 
 > **최종 수정일:** 2026-03-16
->
-> **교재 참조:** *Warming-Up C Programming 2판* — 6장
 
 ---
 
@@ -50,19 +48,19 @@
 #include <stdio.h>
 
 int main() {
-    // --- 1부터 10까지의 합 계산 ---
-    int sum1 = 0;
-    for (int i = 1; i <= 10; i++) {
-        sum1 += i;
+    // --- 5의 팩토리얼 계산 ---
+    int fact1 = 1;
+    for (int i = 1; i <= 5; i++) {
+        fact1 *= i;
     }
-    printf("Sum(1~10) = %d\n", sum1);
+    printf("5! = %d\n", fact1);
 
-    // --- 1부터 20까지의 합 계산 (중복된 로직!) ---
-    int sum2 = 0;
-    for (int i = 1; i <= 20; i++) {
-        sum2 += i;
+    // --- 8의 팩토리얼 계산 (중복된 로직!) ---
+    int fact2 = 1;
+    for (int i = 1; i <= 8; i++) {
+        fact2 *= i;
     }
-    printf("Sum(1~20) = %d\n", sum2);
+    printf("8! = %d\n", fact2);
 
     return 0;
 }
@@ -73,22 +71,22 @@ int main() {
 ```c
 #include <stdio.h>
 
-int getSum(int n) {
-    int sum = 0;
+int factorial(int n) {
+    int result = 1;
     for (int i = 1; i <= n; i++) {
-        sum += i;
+        result *= i;
     }
-    return sum;
+    return result;
 }
 
 int main() {
-    printf("Sum(1~10) = %d\n", getSum(10));
-    printf("Sum(1~20) = %d\n", getSum(20));
+    printf("5! = %d\n", factorial(5));
+    printf("8! = %d\n", factorial(8));
     return 0;
 }
 ```
 
-중복된 반복문이 사라졌다. 합산 알고리즘을 변경해야 할 때 `getSum()`만 수정하면 된다.
+중복된 반복문이 사라졌다. 팩토리얼 알고리즘을 변경해야 할 때 `factorial()`만 수정하면 된다.
 
 ### 1.2 함수의 종류
 
@@ -105,7 +103,7 @@ C의 함수
 |:----|:----|:----|
 | 진입점 | `main()` | 모든 C 프로그램에는 정확히 하나의 `main()`이 있어야 한다. 실행이 여기서 시작된다. |
 | 라이브러리 | `printf()`, `scanf()`, `sqrt()` | C 표준 라이브러리에서 제공. 적절한 헤더(`<stdio.h>`, `<math.h>` 등)를 `#include`해야 한다. |
-| 사용자 정의 | `getSum()`, `isLeapYear()` | 프로그래머가 특정 하위 문제를 해결하기 위해 작성. |
+| 사용자 정의 | `factorial()`, `isLeapYear()` | 프로그래머가 특정 하위 문제를 해결하기 위해 작성. |
 
 > **핵심:** `#include <stdio.h>`는 함수 코드 자체를 포함하는 것이 **아니다**. 컴파일러가 함수 호출 방법을 알 수 있도록 **선언(원형)**을 포함하는 것이다. 실제 구현은 나중에 링커가 연결한다.
 
@@ -158,16 +156,16 @@ C에서 함수를 사용하려면 세 가지 요소가 필요하다:
  *    │
  *    │    함수 이름
  *    │       │
- *    │       │     매개변수 목록
- *    │       │        │            */
-    int     getSum   (int n)          // ← 헤더
-    {                                 // ← 본체 시작
-        int sum = 0;                  //   지역 변수
+ *    │       │        매개변수 목록
+ *    │       │            │            */
+    int     factorial   (int n)          // ← 헤더
+    {                                    // ← 본체 시작
+        int result = 1;                  //   지역 변수
         for (int i = 1; i <= n; i++) {
-            sum += i;
+            result *= i;
         }
-        return sum;                   //   호출자에게 값 반환
-    }                                 // ← 본체 끝
+        return result;                   //   호출자에게 값 반환
+    }                                    // ← 본체 끝
 ```
 
 | 구성 요소 | 설명 |
@@ -183,7 +181,7 @@ C에서 함수를 사용하려면 세 가지 요소가 필요하다:
 
 | 반환형 | 의미 | 예시 |
 |:------|:----|:----|
-| `int` | 정수를 반환 | `int getSum(int n)` |
+| `int` | 정수를 반환 | `int factorial(int n)` |
 | `double` | 실수를 반환 | `double getAverage(int a, int b)` |
 | `void` | 아무것도 반환하지 않음 | `void printMenu(void)` |
 
@@ -227,10 +225,10 @@ void printIfPositive(int n) {
 
 | 규칙 | 예시 |
 |:----|:----|
-| 문자 또는 `_`로 시작해야 함 | `getSum`, `_helper` |
+| 문자 또는 `_`로 시작해야 함 | `factorial`, `_helper` |
 | 문자, 숫자, `_`를 포함할 수 있음 | `calc2dArea` |
 | C 키워드는 사용 불가 | ~~`return`~~, ~~`int`~~ |
-| 대소문자를 구분함 | `getSum`과 `GetSum`은 서로 다름 |
+| 대소문자를 구분함 | `factorial`과 `Factorial`은 서로 다름 |
 
 **명명 규칙 (권장):**
 
@@ -240,7 +238,7 @@ void printIfPositive(int n) {
 | camelCase | `동사명사` | `getFactorial`, `isLeapYear` |
 | PascalCase | `동사명사` | `GetDaysOfMonth`, `PrintMenu` |
 
-> **팁:** **하나의** 명명 규칙을 선택하고 프로그램 전체에서 일관되게 사용하라. 함수가 하는 일을 설명하는 동사+명사 조합을 사용하라: `getSum`, `isLeapYear`, `printMenu`.
+> **팁:** **하나의** 명명 규칙을 선택하고 프로그램 전체에서 일관되게 사용하라. 함수가 하는 일을 설명하는 동사+명사 조합을 사용하라: `getFactorial`, `isLeapYear`, `printMenu`.
 
 > **경고:** C에서는 **같은 이름의 함수를 두 개 정의할 수 없다** (오버로딩 불가). 프로그램 내에서 각 함수 이름은 고유해야 한다.
 
@@ -322,11 +320,11 @@ int main() {
 
 ```c
 // 함수를 호출하고 반환값 사용
-int result = getSum(10);         // 반환값을 저장
-printf("Sum = %d\n", getSum(5)); // 반환값을 식에서 직접 사용
+int result = factorial(5);              // 반환값을 저장
+printf("8! = %d\n", factorial(8));      // 반환값을 식에서 직접 사용
 
 // void 함수 호출
-printLine();                     // 캡처할 반환값 없음
+printLine();                            // 캡처할 반환값 없음
 ```
 
 **함수 호출 규칙:**
@@ -381,22 +379,22 @@ C 컴파일러는 소스 코드를 **위에서 아래로** 읽는다. `main()`�
 #include <stdio.h>
 
 // ─── 원형 (선언) ───
-int getSum(int n);            // 매개변수 이름 포함 (권장)
+int factorial(int n);         // 매개변수 이름 포함 (권장)
 int isLeapYear(int);          // 매개변수 이름 생략 (유효)
 
 int main() {
-    printf("Sum = %d\n", getSum(10));       // OK — 위에서 원형 확인됨
+    printf("5! = %d\n", factorial(5));      // OK — 위에서 원형 확인됨
     printf("Leap? %d\n", isLeapYear(2024)); // OK — 위에서 원형 확인됨
     return 0;
 }
 
 // ─── 정의 ───
-int getSum(int n) {
-    int sum = 0;
+int factorial(int n) {
+    int result = 1;
     for (int i = 1; i <= n; i++) {
-        sum += i;
+        result *= i;
     }
-    return sum;
+    return result;
 }
 
 int isLeapYear(int year) {
@@ -408,9 +406,9 @@ int isLeapYear(int year) {
 
 | 규칙 | 예시 |
 |:----|:----|
-| 정의의 반환형 및 매개변수 타입과 일치해야 함 | `int getSum(int n);`은 `int getSum(int n) { ... }`과 일치 |
+| 정의의 반환형 및 매개변수 타입과 일치해야 함 | `int factorial(int n);`은 `int factorial(int n) { ... }`과 일치 |
 | 매개변수 **이름**은 원형에서 선택 사항 | `int add(int, int);`은 유효 |
-| **세미콜론**으로 끝나야 함 | `int getSum(int n);` (`int getSum(int n) { }` 아님) |
+| **세미콜론**으로 끝나야 함 | `int factorial(int n);` (`int factorial(int n) { }` 아님) |
 | 일반적으로 **`main()` 앞** 또는 헤더 파일에 배치 | 가독성을 위한 관례 |
 
 > **팁:** 매개변수 이름은 선택 사항이지만 원형에 항상 포함하라. 문서 역할을 한다: `double power(double base, int exponent);`가 `double power(double, int);`보다 훨씬 읽기 쉽다.
@@ -421,16 +419,16 @@ int isLeapYear(int year) {
 #include <stdio.h>
 
 int main() {
-    // getSum()이 아래에 정의되어 있고 위에 원형이 없는 경우:
+    // factorial()이 아래에 정의되어 있고 위에 원형이 없는 경우:
     // 컴파일러가 int 반환형으로 가정하거나 (C89) 오류를 발생시킴 (C99+)
-    printf("Sum = %d\n", getSum(10));   // 경고 또는 오류!
+    printf("5! = %d\n", factorial(5));   // 경고 또는 오류!
     return 0;
 }
 
-int getSum(int n) {
-    int sum = 0;
-    for (int i = 1; i <= n; i++) sum += i;
-    return sum;
+int factorial(int n) {
+    int result = 1;
+    for (int i = 1; i <= n; i++) result *= i;
+    return result;
 }
 ```
 
@@ -673,16 +671,19 @@ factorial(4)
   → returns 4 * 6 = 24
 ```
 
-**다른 예제 — 1부터 n까지의 합:**
+**다른 예제 — 양의 정수의 자릿수 세기:**
 
 ```c
-int recursiveSum(int n) {
-    if (n == 1) {         // 기저 조건
+int countDigits(int n) {
+    if (n < 10) {         // 기저 조건: 한 자리 수
         return 1;
     }
-    return n + recursiveSum(n - 1);   // 재귀 조건
+    return 1 + countDigits(n / 10);   // 재귀 조건
 }
-// recursiveSum(5) = 5 + 4 + 3 + 2 + 1 = 15
+// countDigits(9128) = 1 + countDigits(912)
+//                   = 1 + 1 + countDigits(91)
+//                   = 1 + 1 + 1 + countDigits(9)
+//                   = 1 + 1 + 1 + 1 = 4
 ```
 
 > **경고:** 적절한 기저 조건이 없는 재귀 함수는 무한히 자기 자신을 호출하여 **스택 오버플로**(호출 스택의 메모리가 고갈)를 일으킨다. 기저 조건에 도달할 수 있는지 항상 확인하라.
