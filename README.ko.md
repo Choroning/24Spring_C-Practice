@@ -186,6 +186,6 @@
 <br><a name="license"></a>
 ## 🤝 라이선스
 
-이 레포지토리는 [Apache License 2.0](LICENSE) 하에 배포됩니다.
+이 레포지토리는 [MIT License](LICENSE) 하에 배포됩니다.
 
 ---
