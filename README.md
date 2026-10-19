@@ -26,14 +26,14 @@ This repository contains the lecture notes, exercises, assignment explanations, 
 
 - `Lecture-Notes/` holds, for each chapter, lecture notes that organize the key concepts (`Concepts_Lecture`), and Chapters 4-10 also hold exercises that transcribe the chapter lab problems of Computer Language Ⅰ (`Exercises`) and their solutions (`Solutions`). The units follow the chapter numbers (Chapters 1-10) of Warming-Up C Programming, the textbook of Computer Language Ⅰ, and are numbered `Ch01`-`Ch10`.
 - Every lecture note, exercise set, and solution set comes as an English file (`.md`) and a Korean file (`.ko.md`) with the same structure.
-- `HW01`-`HW10` in `Coursework/` hold Assignments 1-10 of Computer Language and Training Ⅰ. Each assignment has an assignment explanation that explains the problems and their solutions (`Assignment-Explanation`) and the author's own solution code (`Solution/`), and the assignment explanations also come as English and Korean file pairs.
+- `HW01`-`HW10` in `Coursework/` hold Assignments 1-10 of Computer Language and Training Ⅰ. Each assignment has an assignment explanation that explains the problems and their solutions (`Assignment-Explanation`) and solution code (`Solution/`), and the assignment explanations also come as English and Korean file pairs.
 - `Lab04`-`Lab10` in `Coursework/` hold the author's own C code that solves the lab problems of Chapters 4-10, and the solutions (`Solutions`) of each unit explain this code.
 - The solution code shows one way to solve each problem and is not the only correct answer.
 - The code files carry **Doxygen-style headers** that record the problem title, author, and date.
 - All C code was compiled under the C99 standard with GCC, with standard functions standing in for the Visual Studio-specific functions.
 
 > **🤖 AI Agent Usage**
-> [Claude Code](https://claude.ai/download) was used to organize and translate the lecture notes and exercises, to write the solutions and assignment explanations, and to restructure the repository. Computer Language and Training Ⅰ required students to always write code on their own, and all lab code and assignment solution code was written by the author.
+> [Claude Code](https://claude.ai/download) was used to organize and translate the lecture notes and exercises, to write the solutions and assignment explanations, and to restructure the repository. Computer Language and Training Ⅰ required students to always write code on their own, and the lab code and assignment solution code were written by the author. The solutions to the assignment problems that were missing from the repository (HW03 Problems 1-3, HW07 Problem 4, HW08 Problem 3, and HW10 Problem 1), and the problem statements of HW07 Problem 4 and HW08 Problem 3, were written with Claude Code.
 
 <br><a name="course-information"></a>
 ## 📚 Course Information
