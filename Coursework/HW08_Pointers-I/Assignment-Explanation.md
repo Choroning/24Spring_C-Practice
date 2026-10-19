@@ -8,6 +8,7 @@
 > 1. Write a function that swaps two of the caller's variables through pointer parameters
 > 2. Pass the addresses of array elements to a function and store element-wise results in another array
 > 3. Decide what a function should handle when its prototype is fixed and explain the reason
+> 4. Pass an address received through a pointer parameter on to another function as it is to sort three of the caller's variables
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03) / Cheolwon Park
 
@@ -23,6 +24,10 @@
   - [2.1 Problem](#21-problem)
   - [2.2 Solution](#22-solution)
   - [2.3 Output](#23-output)
+- [3. Sorting Three Numbers](#3-sorting-three-numbers)
+  - [3.1 Problem](#31-problem)
+  - [3.2 Solution](#32-solution)
+  - [3.3 Output](#33-output)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -181,6 +186,113 @@ The four sums match the sample run. The output format differs. Because `printf("
 
 <br>
 
+## 3. Sorting Three Numbers
+
+### 3.1 Problem
+
+The third item of the assignment is a free item in which students set and solve their own problem on pointers, and the problem in this section is a new problem set in that format.
+
+Write a program that reads three integers from the user into three variables and then sorts the values of the three variables in ascending order using pointers and prints them.
+
+**Program Requirements:**
+
+1. Define and use the `swap()` function that exchanges the values of two variables (Section 1) and the function `void sort3(int* pa, int* pb, int* pc)`, which receives the addresses of three variables and sorts their values in ascending order.
+2. The sorted result must be reflected directly in the variables `x`, `y`, and `z` of `main()`.
+
+**Sample Run:**
+
+```text
+정수 3개 입력: 9 -2 5
+정렬 전: x = 9, y = -2, z = 5
+정렬 후: x = -2, y = 5, z = 9
+
+Program ended with exit code: 0
+```
+
+### 3.2 Solution
+
+**Approach:** The program goes through three steps, each of which compares two neighboring values and swaps them if the first is larger. The swaps reuse the `swap()` of Section 1 as it is.
+
+- **Steps 1 and 2:** If `*pa > *pb`, swap `*pa` and `*pb`; then, if `*pb > *pc`, swap `*pb` and `*pc`. After these two steps, the largest of the three values has moved to `*pc`.
+- **Step 3:** Comparing the remaining two values `*pa` and `*pb` once more and swapping them puts the three values in ascending order.
+- **Passing the addresses on:** The parameters `pa`, `pb`, and `pc` of `sort3()` already hold the addresses of `x`, `y`, and `z` of `main()`, so they are passed to `swap()` as they are, as in `swap(pa, pb)`. `swap()` dereferences the addresses it receives to change the values, so even through two levels of function calls the variables of `main()` change directly ([Chapter 8, Section 3.2](../../Lecture-Notes/Ch08_Pointers/Concepts_Lecture.md#32-modifying-a-variable-through-a-pointer)).
+
+For the input `9 -2 5`, `x`, `y`, and `z` start as 9, -2, and 5, and the values after each step are as follows.
+
+| Step | Comparison | Swap | `x` | `y` | `z` |
+|:-----|:-----|:-----|:-----|:-----|:-----|
+| Step 1 | `*pa > *pb`, that is, 9 > -2 is true | `swap(pa, pb)` | -2 | 9 | 5 |
+| Step 2 | `*pb > *pc`, that is, 9 > 5 is true | `swap(pb, pc)` | -2 | 5 | 9 |
+| Step 3 | `*pa > *pb`, that is, -2 > 5 is false | None | -2 | 5 | 9 |
+
+*Table 1. Variable values after each step of `sort3()` for the input `9 -2 5`*
+
+**Code:** [Solution/Q3.c](Solution/Q3.c)
+
+```c
+/**
+ * @file    Q3.c
+ * @brief   Q3. 세 수 정렬
+ * @author  박철원 (Cheolwon Park)
+ * @date    2026-10-19
+ */
+
+#include <stdio.h>
+
+void swap(int* a, int* b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+void sort3(int* pa, int* pb, int* pc)
+{
+	if (*pa > *pb)
+		swap(pa, pb);
+	if (*pb > *pc)
+		swap(pb, pc);
+	if (*pa > *pb)
+		swap(pa, pb);
+}
+
+int main()
+{
+	int x, y, z;
+
+	printf("정수 3개 입력: ");
+	scanf(" %d %d %d", &x, &y, &z);
+
+	printf("정렬 전: x = %d, y = %d, z = %d\n", x, y, z);
+	sort3(&x, &y, &z);
+	printf("정렬 후: x = %d, y = %d, z = %d\n", x, y, z);
+}
+```
+
+### 3.3 Output
+
+It compiles without warnings with `gcc -std=c99 -Wall`, and entering the same values as in the sample run gives the following output.
+
+```text
+정수 3개 입력: 9 -2 5
+정렬 전: x = 9, y = -2, z = 5
+정렬 후: x = -2, y = 5, z = 9
+```
+
+It matches the sample run. Entering 1, 2, and 3 in all six orders always gives `x = 1, y = 2, z = 3`, and `5 5 1`, which contains equal values, gives `x = 1, y = 5, z = 5`. The program always makes three comparisons regardless of the input, and the input with the most swaps is the descending `3 2 1`, which swaps in all three steps.
+
+```text
+정수 3개 입력: 3 2 1
+정렬 전: x = 3, y = 2, z = 1
+정렬 후: x = 1, y = 2, z = 3
+```
+
+> **Caution:** Adding `&` inside `sort3()`, as in `swap(&pa, &pb);`, passes the address of the pointer variable `pa` itself, a value of type `int**`, instead of the value of `pa` (the address of `x`). It does not match the parameter type `int*`, so clang gives the warning `-Wincompatible-pointer-types`, and gcc 16 stops compiling with an error of the same name. If the warning is ignored and `9 -2 5` is entered into the executable built with clang, the result is not sorted, as in `x = 5, y = -2, z = 9`.
+
+---
+
+<br>
+
 ## Summary
 
 | Concept | Key Summary |
@@ -191,6 +303,8 @@ The four sums match the sample run. The output format differs. Because `printf("
 | Output parameter | A pointer parameter through which the function writes its result, like `pZ` of `arrSum()`, is called an output parameter. |
 | Fixed prototype and division of work | With a prototype that has no size parameter, letting the function process one element and the caller repeat avoids tying the function to an array size. |
 | Output format differences | Even with the same results, newlines and the widths of format specifiers can make blank lines, spacing, and trailing spaces differ from the sample run. |
+| Passing addresses on | A pointer parameter already holds an address, so it is passed to another function as it is, as in `swap(pa, pb)`, while `&pa` is the address of the pointer variable itself, a value of type `int**`. |
+| Sorting three values | Going through three steps that compare two neighboring values and swap them puts the three values in ascending order. |
 
 ---
 
@@ -222,5 +336,23 @@ The four sums match the sample run. The output format differs. Because `printf("
    <summary>Answer</summary>
 
    Inside the function, the number of array elements cannot be known from the pointers alone (`sizeof(pX)` is the pointer size), so the size would have to be fixed inside the function, for example at 4. Then the function cannot be used for arrays of other lengths, and passing a shorter array would access memory beyond the array. So when the prototype cannot change, it is safer to process one element per call and repeat in the caller.
+
+   </details>
+
+4. **Tracing the swaps:** If `3 2 1` is entered into the program of Section 3, what are the values of `x`, `y`, and `z` after each step of `sort3()`?
+
+   <details>
+   <summary>Answer</summary>
+
+   In step 1, 3 > 2 is true, so a swap gives (2, 3, 1); in step 2, 3 > 1 is true, so a swap gives (2, 1, 3); and in step 3, 2 > 1 is true, so a swap gives (1, 2, 3). A swap happens in all three steps, and this input is the case with the most swaps.
+
+   </details>
+
+5. **Descending order:** What must change for `sort3()` to sort the three values in descending order?
+
+   <details>
+   <summary>Answer</summary>
+
+   Change `>` to `<` in all three comparisons. Then the smallest value moves to `*pc` through steps 1 and 2, and step 3 places the remaining two values with the larger one first. For example, entering `9 -2 5` gives `x = 9, y = 5, z = -2`.
 
    </details>

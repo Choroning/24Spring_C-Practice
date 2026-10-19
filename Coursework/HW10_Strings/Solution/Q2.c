@@ -1,44 +1,30 @@
 /**
- * @file    A10303-1_C09Q2.c
- * @brief   Q2. 문자열 뒤집기
+ * @file    A10303-1_C09Q1.c
+ * @brief   Q1. 문자열 검색
  * @author  박철원 (Cheolwon Park)
  * @date    2024-05-31
+ * 
+ * @note    소스 코드에 사용된 gets_s는 Visual Studio 이외의
+ *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
  */
 
 #include <stdio.h>
 
-void revStr(char* str) {
-    char* start = str;
-    char* end = str;
-
-    while (*end) {
-        end++;
-    }
-    end--;
+int main()
+{
+	char str[50] = "";
+	int i, countU = 0, countL = 0;
 	
-    while (start < end) {
-        char tmp = *start;
-        *start = *end;
-        *end = tmp;
+	printf("Input str: ");
+	gets_s(str, sizeof(str));
 
-        start++;
-        end--;
-    }
-}
+	for (i = 0; str[i]; i++) {
+		if (str[i] >= 'a' && str[i] <= 'z')
+			countL++;
+		else if (str[i] >= 'A' && str[i] <= 'Z')
+			countU++;
+	}
 
-int main() {
-    char str[100];
-
-    printf("Input str: ");
-    if (fgets(str, sizeof(str), stdin)) {
-        for (int i = 0; str[i]; i++) {
-            if (str[i] == '\n') {
-                str[i] = '\0';
-                break;
-            }
-        }
-
-        revStr(str);
-        printf("Reversed str: %s\n", str);
-    }
+	printf("Uppercase letters: %d\n", countU);
+	printf("Lowercase letters: %d\n", countL);
 }

@@ -9,6 +9,7 @@
 > 2. Initialize the maximum and minimum with the first element and update them by comparing with the remaining elements
 > 3. Reverse the order of array elements using the correspondence between indices `i` and `n - 1 - i`
 > 4. Explain the difference between the population standard deviation and the sample standard deviation
+> 5. Find every position of a value in an array by sequential search and decide whether the value is present from the number of matches
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03) / Cheolwon Park
 
@@ -32,6 +33,11 @@
   - [4.2 Solution Approach](#42-solution-approach)
   - [4.3 Code and Output](#43-code-and-output)
   - [4.4 Edge Cases](#44-edge-cases)
+- [5. Problem 4: Finding a Value in an Array](#5-problem-4-finding-a-value-in-an-array)
+  - [5.1 Requirements](#51-requirements)
+  - [5.2 Solution Approach](#52-solution-approach)
+  - [5.3 Code and Output](#53-code-and-output)
+  - [5.4 Edge Cases](#54-edge-cases)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -41,14 +47,15 @@
 
 ## 1. Assignment Layout and How to Run
 
-This assignment consists of three problems that store values in a one-dimensional array and process them with loops ([Chapter 7](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md)). The assignment included free items in which students set and solved their own problems for understanding arrays, and Problem 3 is the problem Cheolwon Park set under that item.
+This assignment consists of four problems that store values in a one-dimensional array and process them with loops ([Chapter 7](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md)). The assignment included free items in which students set and solved two of their own problems for understanding arrays, and Problem 3 is the problem Cheolwon Park set under those items, while Problem 4 is a new problem set in the same format.
 
 ```text
 Coursework/HW07_Arrays/
 └── Solution/
     ├── Q1.c    # Problem 1: average and standard deviation of 10 real numbers
     ├── Q2.c    # Problem 2: maximum and minimum of 7 integers
-    └── Q3.c    # Problem 3: copy a real-number array in reverse order
+    ├── Q3.c    # Problem 3: copy a real-number array in reverse order
+    └── Q4.c    # Problem 4: positions and count of an entered value in an integer array
 ```
 
 *Figure 1. Directory layout of the HW7 assignment*
@@ -58,9 +65,10 @@ cd Coursework/HW07_Arrays/Solution
 gcc -std=c99 -Wall -o Q1 Q1.c -lm && ./Q1
 gcc -std=c99 -Wall -o Q2 Q2.c && ./Q2
 gcc -std=c99 -Wall -o Q3 Q3.c && ./Q3
+gcc -std=c99 -Wall -o Q4 Q4.c && ./Q4
 ```
 
-All three programs compile without warnings. `Q1.c` uses `sqrt()` from `<math.h>`, so with gcc on Linux it needs `-lm`, which links the math library; on macOS it can be omitted. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
+All four programs compile without warnings. `Q1.c` uses `sqrt()` from `<math.h>`, so with gcc on Linux it needs `-lm`, which links the math library; on macOS it can be omitted. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
 ---
 
@@ -348,6 +356,117 @@ int main()
 
 <br>
 
+## 5. Problem 4: Finding a Value in an Array
+
+### 5.1 Requirements
+
+Write a program that finds a value entered by the user in an array storing integer data and prints the positions where the value is stored and how many there are.
+
+**Program Requirements:**
+
+1. Set the array size to 10.
+2. Initialize the array with the following values in order.
+    - 7, 3, 9, 3, 12, 5, 3, 8, 1, 9
+3. If the value to find is in the array, print every index where it is stored and then the count; otherwise, print a message that it is not there.
+
+**Sample Runs:**
+
+```text
+배열의 내용: 7 3 9 3 12 5 3 8 1 9
+>> 찾을 값: 3
+-> 인덱스: 1 3 6
+-> 개수: 3
+
+Program ended with exit code: 0
+```
+
+```text
+배열의 내용: 7 3 9 3 12 5 3 8 1 9
+>> 찾을 값: 4
+-> 찾는 값이 배열에 없습니다.
+
+Program ended with exit code: 0
+```
+
+### 5.2 Solution Approach
+
+The program uses sequential search, which compares each element from the start of the array to the end with the value to find, `key` ([Chapter 7, Section 5.5](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md#55-sequential-search)). The same value may be stored several times, so the loop does not stop at the first match but runs to the end.
+
+1. **Printing the array and reading the input:** The size is fixed with `#define SIZE 10`, and after printing the contents of the array, the program prints the prompt `>> 찾을 값: ` and reads `key` with `%d`.
+2. **Searching:** Each time it meets an element with `arr[i] == key`, it prints the index `i` and increases `count` by 1. The first match happens when `count` is 0, so only then does it print `-> 인덱스:` first.
+3. **Deciding the result:** After the loop, if `count` is greater than 0, the program prints the count; if it is 0, there was no match at all, so it prints the not-found message. `count` counts the matches and at the same time tells whether the value is present.
+
+Each value is printed with a leading space as `" %d"`, so no space remains at the end of a line. Indices start at 0, so index 1 in the sample run is the second element of the array.
+
+### 5.3 Code and Output
+
+**Code:** [Solution/Q4.c](Solution/Q4.c)
+
+```c
+/**
+ * @file    Q4.c
+ * @brief   Q4. 배열에서 값 찾기
+ * @author  박철원 (Cheolwon Park)
+ * @date    2026-10-19
+ */
+
+#include <stdio.h>
+#define SIZE 10
+
+int main()
+{
+	int arr[SIZE] = { 7, 3, 9, 3, 12, 5, 3, 8, 1, 9 };
+	int key, count = 0;
+
+	printf("배열의 내용:");
+	for (int i = 0; i < SIZE; i++) {
+		printf(" %d", arr[i]);
+	}
+
+	printf("\n>> 찾을 값: ");
+	scanf(" %d", &key);
+
+	for (int i = 0; i < SIZE; i++) {
+		if (arr[i] == key) {
+			if (count == 0)
+				printf("-> 인덱스:");
+			printf(" %d", i);
+			count++;
+		}
+	}
+
+	if (count > 0)
+		printf("\n-> 개수: %d\n", count);
+	else
+		printf("-> 찾는 값이 배열에 없습니다.\n");
+}
+```
+
+**Output:** Entering the same values as in the sample runs prints the same results as the sample runs. 3 is at indices 1, 3, and 6, so the count is 3, and 4 is not in the array.
+
+```text
+배열의 내용: 7 3 9 3 12 5 3 8 1 9
+>> 찾을 값: 3
+-> 인덱스: 1 3 6
+-> 개수: 3
+```
+
+```text
+배열의 내용: 7 3 9 3 12 5 3 8 1 9
+>> 찾을 값: 4
+-> 찾는 값이 배열에 없습니다.
+```
+
+### 5.4 Edge Cases
+
+- **First and last elements:** Entering 9 prints `-> 인덱스: 2 9` and `-> 개수: 2`, which shows that the comparison reaches the last index 9 without skipping any element. Entering 7 prints only index 0 of the first element.
+- **Number of comparisons:** All occurrences must be found, so the program always makes `SIZE`, that is, 10 comparisons whether or not the value is present. If only the first position is needed, ending the loop with `break` at the moment of a match makes it 1 comparison when the value is in the first element and 10 when it is absent.
+- **Non-integer input:** If a non-integer such as `abc` is entered, `scanf` cannot read a value, and the uninitialized `key` is used in the comparisons. Checking that the return value of `scanf` is 1 filters out such input.
+
+---
+
+<br>
+
 ## Summary
 
 | Concept | Key Summary |
@@ -357,6 +476,7 @@ int main()
 | Maximum and minimum | `max` and `min` are initialized with the first element and updated by comparing with the remaining elements using the conditional operator. |
 | Reverse copy | In an array of size $n$, `arrRev[i] = arr[n - 1 - i]` builds a reversed array while preserving the original. |
 | In-place reversal | Swapping the elements at both ends `n / 2` times reverses the original array without an additional array. |
+| Sequential search | Compare the elements of the array with the value to find from start to end; counting the matches lets the program decide after the loop whether the value is present by checking whether the count is 0. |
 | Output format | The solutions print the same values as the sample runs, but some blank lines and spaces differ. |
 
 ---
@@ -407,5 +527,14 @@ int main()
    <summary>Answer</summary>
 
    The sum of squared deviations is 2569.584, so it is $\sqrt{2569.584 / 9} = \sqrt{285.509\ldots} \approx 16.90$. This is larger than the population standard deviation 16.03, which divides by $N$.
+
+   </details>
+
+6. **Finding only the first position:** How should the second loop of Problem 4 be changed so that it prints only the index where the value first appears? If the value to find is 3, after how many comparisons does the loop end?
+
+   <details>
+   <summary>Answer</summary>
+
+   Right after printing the index of a matching element and increasing `count`, end the loop with `break;`. 3 first appears at index 1, so the loop ends after 2 comparisons, `arr[0]` and `arr[1]`, and `-> 인덱스: 1` is printed.
 
    </details>

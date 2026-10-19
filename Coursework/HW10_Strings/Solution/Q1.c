@@ -1,30 +1,56 @@
 /**
- * @file    A10303-1_C09Q1.c
- * @brief   Q1. 문자열 검색
+ * @file    Q1.c
+ * @brief   Q1. 중위수 구하기
  * @author  박철원 (Cheolwon Park)
- * @date    2024-05-31
- * 
- * @note    소스 코드에 사용된 gets_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @date    2026-10-19
  */
 
 #include <stdio.h>
 
+void sortArr(int arr[], int n)
+{
+	for (int i = 0; i < n - 1; i++) {
+		int minIdx = i;
+		for (int j = i + 1; j < n; j++) {
+			if (arr[j] < arr[minIdx])
+				minIdx = j;
+		}
+		int tmp = arr[i];
+		arr[i] = arr[minIdx];
+		arr[minIdx] = tmp;
+	}
+}
+
+double getMedian(int arr[], int n)
+{
+	if (n % 2 == 1)
+		return arr[n / 2];
+	else
+		return (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
+}
+
+void printArr(const char* name, int arr[], int n)
+{
+	printf("%s:", name);
+	for (int i = 0; i < n; i++)
+		printf(" %d", arr[i]);
+	printf("\n");
+}
+
 int main()
 {
-	char str[50] = "";
-	int i, countU = 0, countL = 0;
-	
-	printf("Input str: ");
-	gets_s(str, sizeof(str));
+	int vOne[] = { 15, 18, 10, 4, 27 };
+	int vTwo[] = { 2, -4, 6, 9, 21, 44 };
+	int nOne = sizeof(vOne) / sizeof(vOne[0]);
+	int nTwo = sizeof(vTwo) / sizeof(vTwo[0]);
 
-	for (i = 0; str[i]; i++) {
-		if (str[i] >= 'a' && str[i] <= 'z')
-			countL++;
-		else if (str[i] >= 'A' && str[i] <= 'Z')
-			countU++;
-	}
+	printArr("vOne", vOne, nOne);
+	sortArr(vOne, nOne);
+	printArr("Sorted vOne", vOne, nOne);
+	printf("Median of vOne: %.1f\n\n", getMedian(vOne, nOne));
 
-	printf("Uppercase letters: %d\n", countU);
-	printf("Lowercase letters: %d\n", countL);
+	printArr("vTwo", vTwo, nTwo);
+	sortArr(vTwo, nTwo);
+	printArr("Sorted vTwo", vTwo, nTwo);
+	printf("Median of vTwo: %.1f\n", getMedian(vTwo, nTwo));
 }
