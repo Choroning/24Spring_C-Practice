@@ -1,6 +1,17 @@
-# Chapter 06 — Functions
+# Chapter 6 — Functions
 
-> **Last Updated:** 2026-03-16
+[Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
+
+> **Last Updated:** 2026-10-19
+>
+> Warming-Up C Programming, 천정아, Ch 6
+
+> **Learning Objectives:**
+> 1. Explain why functions are needed and describe the three kinds of functions
+> 2. Write function definitions, declarations (prototypes), and calls and tell them apart
+> 3. Explain the relationship between parameters and arguments and how pass by value works
+> 4. Compare the scope, lifetime, and initial value of local and global variables
+> 5. Explain function call overhead and the base case of a recursive function
 
 ---
 
@@ -24,6 +35,7 @@
 - [4. Function Call Overhead](#4-function-call-overhead)
 - [5. Recursive Functions (Introduction)](#5-recursive-functions-introduction)
 - [Summary](#summary)
+- [Self-Check Questions](#self-check-questions)
 
 ---
 
@@ -33,16 +45,18 @@
 
 ### 1.1 Why Functions
 
-A **function** is a named, reusable block of code that performs a specific task. Without functions, programs become long, repetitive, and hard to maintain. Functions provide four core benefits:
+A **function** is a named, reusable block of code that performs a specific task. A function can be viewed as a black box that takes inputs (parameters) and produces a result (return value); the caller can use the function without knowing how it is implemented. Without functions, programs become long, repetitive, and hard to maintain. Functions provide four core benefits:
 
 | Benefit | Description |
 |:--------|:------------|
-| **Code Reuse** | Write once, call many times — no copy-pasting |
+| **Code Reuse** | Write once and call many times, so the same code never has to be copied and pasted |
 | **Modularity** | Break a large problem into smaller, manageable pieces |
 | **Readability** | `main()` reads like an outline; details are hidden inside functions |
-| **Maintainability** | Fix a bug in one function — every call site is fixed automatically |
+| **Maintainability** | Fix a bug in one function and every call site is fixed automatically |
 
-**Before — everything in `main()`:**
+*Table 1. Four benefits of functions*
+
+**Before (everything inside `main()`):**
 
 ```c
 #include <stdio.h>
@@ -66,7 +80,7 @@ int main() {
 }
 ```
 
-**After — logic extracted into a function:**
+**After (the repeated logic extracted into a function):**
 
 ```c
 #include <stdio.h>
@@ -92,18 +106,22 @@ The duplicated loop is gone. If the factorial algorithm needs to change, we edit
 
 C programs use three categories of functions:
 
-```
+```text
 Functions in C
 ├── 1. Entry-point function  ← main()
 ├── 2. Library functions     ← printf(), scanf(), sqrt(), ...
 └── 3. User-defined functions← written by the programmer
 ```
 
+*Figure 1. Three kinds of functions in C*
+
 | Category | Example | Notes |
 |:---------|:--------|:------|
-| Entry point | `main()` | Every C program must have exactly one `main()`. Execution starts here. |
+| Entry point | `main()` | Every C program must have exactly one `main()`. It is called from the operating system side when the program starts, and the programmer never calls it directly. Execution starts here. |
 | Library | `printf()`, `scanf()`, `sqrt()` | Provided by the C standard library. Must `#include` the appropriate header (`<stdio.h>`, `<math.h>`, etc.). |
 | User-defined | `factorial()`, `isLeapYear()` | Written by the programmer to solve specific sub-problems. |
+
+*Table 2. Examples and characteristics of each kind of function*
 
 > **Key Point:** `#include <stdio.h>` does **not** include the function code itself. It includes the **declarations** (prototypes) so the compiler knows how to call them. The actual implementation is linked later by the linker.
 
@@ -111,7 +129,7 @@ Functions in C
 
 To use a function in C, three elements are needed:
 
-```
+```text
 Three Requirements for Using a Function
 ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
 │  Definition  │    │  Declaration │    │    Call      │
@@ -121,11 +139,17 @@ Three Requirements for Using a Function
 └──────────────┘    └──────────────┘    └──────────────┘
 ```
 
+*Figure 2. Three elements of using a function*
+
 | Element | Purpose | Required? |
 |:--------|:--------|:----------|
 | **Definition** | Implements the function (header + body) | Yes, exactly once |
 | **Declaration** (prototype) | Tells the compiler the function exists (return type, name, parameters) | Needed if the call appears **before** the definition |
 | **Call** | Executes the function with specific arguments | Yes, otherwise the function is never used |
+
+*Table 3. Three elements of using a function and whether each is required*
+
+Of the three elements, only the declaration can be omitted; it is unnecessary when the function definition appears before the call.
 
 ---
 
@@ -137,7 +161,7 @@ Three Requirements for Using a Function
 
 A function definition consists of a **header** and a **body**.
 
-```
+```text
 ┌─── Function Header ─────────────────────────┐
 │  return_type  function_name(parameter_list) │
 └─────────────────────────────────────────────┘
@@ -148,6 +172,8 @@ A function definition consists of a **header** and a **body**.
 │  }                  │
 └─────────────────────┘
 ```
+
+*Figure 3. Header and body of a function definition*
 
 **Annotated example:**
 
@@ -171,9 +197,11 @@ A function definition consists of a **header** and a **body**.
 | Component | Description |
 |:----------|:------------|
 | Return type | Data type of the value sent back to the caller (`int`, `double`, `void`, ...) |
-| Function name | Identifier following the naming rules (see 2.3) |
+| Function name | Identifier following the naming rules (see Section 2.3) |
 | Parameter list | Comma-separated list of `type name` pairs that receive values from the caller |
 | Body `{}` | The block of code that executes when the function is called |
+
+*Table 4. Components of a function definition*
 
 ### 2.2 Return Type
 
@@ -184,6 +212,8 @@ The return type specifies what kind of value the function sends back.
 | `int` | Returns an integer | `int factorial(int n)` |
 | `double` | Returns a floating-point number | `double getAverage(int a, int b)` |
 | `void` | Returns nothing | `void printMenu(void)` |
+
+*Table 5. Kinds of return types*
 
 ```c
 // int return type
@@ -205,8 +235,9 @@ void printLine(void) {
 **Important rules:**
 
 1. **A function can return only ONE value.** To return multiple results, you need pointers (covered in Chapter 8).
-2. If the return type is omitted, the compiler defaults to `int` (C89 behavior). **Always write the return type explicitly** — omitting it is deprecated and error-prone.
+2. If the return type is omitted, C89 assumed `int`. C99 removed this implicit `int` rule from the standard, so **always write the return type explicitly.**
 3. A `void` function may use `return;` (no value) to exit early, or simply let execution fall through to the closing `}`.
+4. A function whose return type is not `void` must send back a value with `return expression;`, and if the type of the expression differs from the return type, the value is converted to the return type (for example, `return 3.7;` in an `int` function returns 3).
 
 ```c
 void printIfPositive(int n) {
@@ -217,7 +248,7 @@ void printIfPositive(int n) {
 }   // implicit return here
 ```
 
-> **Preview (Chapter 8):** To effectively return multiple values from a function, pass pointers as parameters. The function can then modify the caller's variables directly through those pointers.
+> **Note:** **Preview.** To send back several values from a function, pass pointers as parameters. The function can then modify the caller's variables directly through those pointers; Chapter 8 covers this in detail.
 
 ### 2.3 Function Name
 
@@ -230,6 +261,8 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 | Cannot be a C keyword | ~~`return`~~, ~~`int`~~ |
 | Case-sensitive | `factorial` and `Factorial` are different |
 
+*Table 6. Identifier rules for function names*
+
 **Naming conventions (recommended):**
 
 | Convention | Style | Example |
@@ -238,9 +271,11 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 | camelCase | `verbNoun` | `getFactorial`, `isLeapYear` |
 | PascalCase | `VerbNoun` | `GetDaysOfMonth`, `PrintMenu` |
 
-> **Tip:** Choose **one** naming convention and use it consistently throughout your program. Use verb+noun pairs that describe what the function does: `getFactorial`, `isLeapYear`, `printMenu`.
+*Table 7. Naming conventions for function names*
 
-> **Warning:** In C, you **cannot** define two functions with the same name (no overloading). Each function name must be unique within the program.
+> **Note:** **Tip.** Choose **one** naming convention and use it consistently throughout your program. Use verb and noun combinations that describe what the function does (`getFactorial`, `isLeapYear`, `printMenu`).
+
+> **Caution:** In C, you **cannot** define two functions with the same name (no overloading). Each function name must be unique within the program.
 
 ### 2.4 Parameters and Arguments
 
@@ -250,6 +285,8 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 |:-----|:-----------|:---------|:-----|
 | **Parameter** | Formal parameter | In the function **definition** | A local variable that receives the incoming value |
 | **Argument** | Actual parameter | At the function **call site** | The actual value or expression passed to the function |
+
+*Table 8. Comparison of parameters and arguments*
 
 ```c
 //                 parameter (formal)
@@ -278,6 +315,8 @@ int add(int a, int b) {
 // int add(int a, b) { ... }   ← compile error!
 ```
 
+Omitting a parameter's type in a function definition is a compile error, and through C17 omitting a parameter's name is also an error (C23 allows unnamed parameters in definitions as well). There is no limit on the number of parameters.
+
 **No-parameter functions:**
 
 ```c
@@ -286,11 +325,11 @@ void printMenu(void) { ... }   // explicit void — preferred
 void printMenu() { ... }       // empty parentheses — also valid in definitions
 ```
 
-> **Key Point:** In a **prototype** (declaration), `void printMenu()` means "unspecified parameters" (accepts anything), while `void printMenu(void)` means "zero parameters." Always use `void` in prototypes for clarity.
+> **Key Point:** In a **prototype** (declaration) before C23, `void printMenu()` declares a function without specifying the number or types of its parameters, so the compiler does not check the arguments, while `void printMenu(void)` means the function takes no parameters. Since C23, empty parentheses also mean no parameters. Always use `void` in prototypes for clarity.
 
 **Pass by value:**
 
-In C, arguments are passed **by value**. The parameter receives a **copy** of the argument. Changes to the parameter do **not** affect the original variable.
+In C, arguments are passed **by value**. A parameter is a local variable that is created when the function is called and initialized with a **copy** of the argument, and it is destroyed when the function returns. Therefore changes to the parameter do **not** affect the original variable.
 
 ```c
 void tryToChange(int x) {
@@ -306,13 +345,13 @@ int main() {
 }
 ```
 
-```
+```text
 Output:
 Inside function: x = 100
 After function call: num = 5
 ```
 
-> **Preview (Chapter 8):** To modify the caller's variable, pass its **address** (pointer) instead of its value. This is called "pass by reference" (via pointers).
+> **Note:** **Preview.** To modify the caller's variable, pass its **address** (pointer) instead of its value. This is often called **pass by reference**, but strictly speaking it is still pass by value, because the address itself is copied. Chapter 8 covers this in detail.
 
 ### 2.5 Function Call
 
@@ -330,8 +369,10 @@ printLine();                            // no return value to capture
 **Rules for function calls:**
 
 1. The function must be **defined or declared** before the point where it is called.
-2. The number and types of arguments must match the parameters.
+2. The number and order of arguments must match the parameters. If an argument's type differs from the parameter's type, the argument is converted to the parameter's type wherever a prototype is visible (for example, passing 101 to a `char` parameter passes the character `'e'`).
 3. The return value can be used in any expression, assigned to a variable, or discarded.
+4. An argument is itself an expression, so its value is computed first and then the function is called.
+5. A call to a function whose return type is `void` has no value, so it cannot be used as an operand of another expression.
 
 **Calling a function from another function:**
 
@@ -363,7 +404,7 @@ int main() {
 
 ### 2.6 Function Declaration (Prototype)
 
-A **function declaration** (also called a **prototype**) tells the compiler about a function's interface **before** its full definition appears.
+A **function declaration** (also called a **prototype** or **signature**) tells the compiler about a function's interface **before** its full definition appears.
 
 **Syntax:**
 
@@ -411,9 +452,11 @@ int isLeapYear(int year) {
 | Must end with a **semicolon** | `int factorial(int n);` (not `int factorial(int n) { }`) |
 | Typically placed **before `main()`** or in a header file | Convention for readability |
 
-> **Tip:** Always include parameter names in prototypes even though they are optional. It serves as documentation: `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
+*Table 9. Rules for function prototypes*
 
-**Without a prototype — what goes wrong:**
+> **Note:** **Tip.** Always include parameter names in prototypes even though they are optional. The names serve as documentation, so `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
+
+**What goes wrong without a prototype:**
 
 ```c
 #include <stdio.h>
@@ -432,7 +475,7 @@ int factorial(int n) {
 }
 ```
 
-> **Warning:** In C99 and later, calling a function without a prior declaration or definition is an **error**. Always provide a prototype or define the function before using it.
+> **Caution:** Since C99, implicit declaration (calling a function without a prior declaration) has been removed from the standard, so the compiler must issue a diagnostic. gcc 14 and later and clang 16 and later treat it as an **error** by default, while earlier versions only warn and assume a function returning `int`. Always provide a prototype or define the function before using it.
 
 ---
 
@@ -442,7 +485,7 @@ int factorial(int n) {
 
 ### 3.1 Local Variables
 
-A **local variable** is declared inside a block `{}` — typically inside a function body. It exists only while that block is executing.
+A **local variable** is a variable declared inside a block `{}`, usually inside a function body. It exists only while that block is executing.
 
 ```c
 void funcA() {
@@ -469,8 +512,11 @@ int main() {
 |:---------|:------------|
 | Scope | From declaration to the end of the enclosing `{}` block |
 | Lifetime | Created when the block is entered, destroyed when it exits |
+| Storage | Usually the stack area |
 | Initial value | **Undefined** (garbage) unless explicitly initialized |
 | Independence | Different functions can use the same variable name without conflict |
+
+*Table 10. Characteristics of local variables*
 
 ```c
 int main() {
@@ -483,7 +529,9 @@ int main() {
 }
 ```
 
-> **Warning:** Local variables are **not** automatically initialized to zero. Always initialize them before use, or you will get unpredictable garbage values.
+A local variable inside a function is created anew each time the function is called and destroyed when it returns, and a local variable inside a loop block is created and destroyed on every iteration. Parameters are local variables too, so changing a parameter inside a function does not affect the caller; to pass a value computed by the function back to the caller, use the return value.
+
+> **Caution:** Local variables are **not** automatically initialized to zero. Always initialize them before use, or you will get unpredictable garbage values.
 
 ### 3.2 Global Variables
 
@@ -511,14 +559,19 @@ int main() {
 }
 ```
 
+All three calls to `increment()` change the same `count`, so `printCount()` prints 3. A value assigned to a global variable inside a function remains after the function returns.
+
 **Characteristics of global variables:**
 
 | Property | Description |
 |:---------|:------------|
 | Scope | From declaration point to the end of the source file |
 | Lifetime | Entire program execution (created at program start, destroyed at program end) |
+| Storage | The data area |
 | Initial value | **Automatically initialized to `0`** (unlike local variables) |
 | Accessibility | Any function defined after the declaration can access it |
+
+*Table 11. Characteristics of global variables*
 
 ```c
 #include <stdio.h>
@@ -534,7 +587,7 @@ int main() {
 }
 ```
 
-> **Warning:** Avoid overusing global variables. They make it hard to track which functions modify them, leading to **hidden dependencies** and bugs that are difficult to debug. Prefer passing values as parameters.
+> **Caution:** Avoid overusing global variables. They make it hard to track which functions modify them, leading to **hidden dependencies** and bugs that are difficult to debug. Prefer passing values as parameters.
 
 ### 3.3 Scope Rules
 
@@ -565,7 +618,7 @@ int main() {
 }
 ```
 
-```
+```text
 Output:
 Before demo(): x = 100
 Inside demo(): x = 50
@@ -576,19 +629,23 @@ After block: x = 100
 
 **Scope resolution priority:**
 
-```
+```text
 When the same name exists at multiple levels:
   Inner block variable  >  Outer block variable  >  Global variable
   (innermost scope wins)
 ```
 
+*Figure 4. Priority when variables with the same name exist in several scopes*
+
 | Scope Level | Variable | Accessible Where |
 |:------------|:---------|:-----------------|
 | Block `{}` | Declared inside a block | Only within that block |
-| Function | Declared at the top of a function | Throughout the function |
+| Function | Declared at the top of a function | From the declaration to the end of the function |
 | File (global) | Declared outside all functions | From declaration to end of file |
 
-> **Tip:** Avoid naming local variables the same as global variables. Shadowing makes code confusing and is a common source of bugs. Use distinct, descriptive names.
+*Table 12. Accessible range of variables at each scope level*
+
+> **Note:** **Tip.** Avoid naming local variables the same as global variables. Shadowing makes code confusing and is a common source of bugs. Use distinct, descriptive names.
 
 ---
 
@@ -598,7 +655,7 @@ When the same name exists at multiple levels:
 
 Every function call involves a sequence of behind-the-scenes operations managed by the **call stack**:
 
-```
+```text
 Function Call Mechanism
 ─────────────────────────────────────────
 1. Save the return address (where to come back)
@@ -611,6 +668,10 @@ Function Call Mechanism
 8. Jump back to the return address
 ─────────────────────────────────────────
 ```
+
+*Figure 5. Steps of a function call and return*
+
+The exact steps and their order depend on the CPU and the calling convention. For example, on x86-64 the first several arguments are passed in registers rather than on the stack.
 
 This process is called **function call overhead**. For large functions that perform significant computation, the overhead is negligible. However, for **very small functions** (e.g., a one-line calculation), the overhead can be relatively significant compared to the actual work.
 
@@ -626,9 +687,9 @@ for (int i = 0; i < 1000000; i++) {
 }
 ```
 
-> **Key Point:** C++ introduces `inline` functions to mitigate this overhead: the compiler substitutes the function body directly at the call site, eliminating the call/return mechanism. C99 also supports the `inline` keyword, but its behavior differs slightly from C++.
+> **Key Point:** C++ introduced `inline` functions to mitigate this overhead. `inline` is a request to expand the function body directly at the call site and eliminate the call and return steps, but the compiler decides whether to actually expand it. C99 also supports the `inline` keyword, but its linkage rules differ slightly from C++.
 
-> **Tip:** Do not avoid functions just to reduce overhead. The readability, maintainability, and reusability benefits of functions far outweigh the small performance cost in nearly all cases. Only optimize if profiling reveals an actual bottleneck.
+> **Note:** **Tip.** Do not avoid functions just to reduce overhead. The readability, maintainability, and reusability benefits of functions far outweigh the small performance cost in nearly all cases. Only optimize if profiling reveals an actual bottleneck.
 
 ---
 
@@ -638,8 +699,8 @@ for (int i = 0; i < 1000000; i++) {
 
 A **recursive function** is a function that calls **itself**. Every recursive function needs:
 
-1. **Base case** — a condition that stops the recursion
-2. **Recursive case** — the function calls itself with a smaller/simpler input
+1. **Base case:** a condition that stops the recursion.
+2. **Recursive case:** the case in which the function calls itself with a smaller or simpler input.
 
 ```c
 #include <stdio.h>
@@ -660,7 +721,7 @@ int main() {
 
 **Execution trace for `factorial(4)`:**
 
-```
+```text
 factorial(4)
   → 4 * factorial(3)
        → 3 * factorial(2)
@@ -671,7 +732,9 @@ factorial(4)
   → returns 4 * 6 = 24
 ```
 
-**Another example — count the number of digits in a positive integer:**
+*Figure 6. Recursive call trace of factorial(4)*
+
+**Another example (counting the digits of a positive integer):**
 
 ```c
 int countDigits(int n) {
@@ -686,9 +749,9 @@ int countDigits(int n) {
 //                   = 1 + 1 + 1 + 1 = 4
 ```
 
-> **Warning:** A recursive function without a proper base case will call itself infinitely, causing a **stack overflow** (the call stack runs out of memory). Always ensure the base case is reachable.
+> **Caution:** A recursive function without a proper base case will call itself infinitely, causing a **stack overflow** (the call stack runs out of memory). Always ensure the base case is reachable.
 
-> **Key Point:** Any problem that can be solved recursively can also be solved with a loop (iteration). Recursion is elegant for problems that are naturally self-similar (factorial, Fibonacci, tree traversal), but iterative solutions are often more efficient due to lower function call overhead.
+> **Key Point:** Any problem that can be solved recursively can also be solved with a loop (iteration), managing a stack explicitly if necessary. Recursion is elegant for problems that are naturally self-similar (factorial, Fibonacci, tree traversal), but iterative solutions are often more efficient due to lower function call overhead.
 
 ---
 
@@ -696,23 +759,72 @@ int countDigits(int n) {
 
 ## Summary
 
-| Concept | Key Takeaway |
-|:--------|:-------------|
-| Why Functions | Code reuse, modularity, readability, maintainability |
-| Function Types | Entry point (`main`), library (`printf`, `scanf`), user-defined |
-| Function Requirements | Definition (body), declaration (prototype), call (invocation) |
-| Function Definition | Header (return type + name + parameters) + body `{}` |
-| Return Type | `int`, `double`, `void`; only ONE value can be returned; omitting defaults to `int` (deprecated) |
-| Function Name | Identifier rules from Ch3; verb+noun convention; no duplicate names in C |
-| Parameters vs Arguments | Parameter = receiving variable in definition; Argument = actual value at call site |
-| Pass by Value | Arguments are copied; changes to parameters do not affect originals |
-| Function Call | Must be declared/defined before the call point; return value usable in expressions |
-| Function Prototype | `return_type name(params);` — allows calling before definition; param names optional |
-| Local Variables | Declared inside `{}`; exist only during block execution; not auto-initialized |
-| Global Variables | Declared outside all functions; accessible file-wide; auto-initialized to `0` |
-| Scope Rules | Inner scope shadows outer scope; local > global when same name |
-| Function Call Overhead | Save/restore registers, push/pop stack; small functions have relatively high overhead |
-| Recursive Functions | Function calls itself; needs base case + recursive case; risk of stack overflow |
-| Multiple Return Values | Not directly possible; use pointers (Chapter 8 preview) |
+| Concept | Key Summary |
+|:-----|:-----|
+| Why Functions | Functions improve code reuse, modularity, readability, and maintainability. |
+| Function Types | Functions are divided into the entry-point function (`main`), library functions (`printf`, `scanf`), and user-defined functions. |
+| Function Requirements | Using a function requires a definition, a declaration (prototype), and a call, and the declaration can be omitted if the definition comes before the call. |
+| Function Definition | A function definition consists of a header made of the return type, name, and parameter list, and a body enclosed in `{}`. |
+| Return Type | The return type is `int`, `double`, `void`, and so on; a function can return only one value, and omitting the return type has not been allowed since C99. |
+| Function Name | A function name follows the identifier rules of Chapter 3 and combines a verb and a noun, and C does not allow two functions with the same name. |
+| Parameters and Arguments | A parameter is a local variable in the definition that receives a value, and an argument is the actual value passed at the call. |
+| Pass by Value | The argument's value is copied into the parameter, so changing the parameter does not change the original variable. |
+| Function Call | A declaration or definition must appear before the call point, and the return value can be used inside expressions. |
+| Function Prototype | A prototype of the form `return_type name(params);` allows calling a function before its definition, and parameter names may be omitted in it. |
+| Local Variables | A local variable is declared inside `{}`, exists only while the block executes, and is not initialized automatically. |
+| Global Variables | A global variable is declared outside all functions, can be used from its declaration to the end of the file, and is automatically initialized to `0`. |
+| Scope Rules | When names are the same, a variable in an inner scope hides one in an outer scope, so a local variable takes precedence over a global variable. |
+| Function Call Overhead | Every call needs saving the return address and registers, passing arguments, and restoring them, so the share of overhead grows as the function gets smaller. |
+| Recursive Functions | A recursive function calls itself, and a stack overflow occurs if there is no base case or the base case is never reached. |
+| Multiple Return Values | A function cannot return several values directly, so pointer parameters are used, which Chapter 8 covers. |
 
 ---
+
+<br>
+
+## Self-Check Questions
+
+1. **Pass by value:** If `void addTen(int n) { n += 10; }` is defined and `main()` runs `int x = 5; addTen(x); printf("%d\n", x);`, what is printed?
+
+   <details>
+   <summary>Answer</summary>
+
+   5 is printed. When `addTen()` is called, the parameter `n` is a local variable initialized with a copy of the value 5 of `x`, so changing `n` to 15 does not change `x`. `n` is destroyed when the function returns.
+
+   </details>
+
+2. **Function prototype:** To call `double average(int a, int b)`, defined below `main()`, from `main()`, what must be written before `main()`?
+
+   <details>
+   <summary>Answer</summary>
+
+   Write the prototype `double average(int a, int b);`. The form without parameter names, `double average(int, int);`, is also valid in a prototype; either way it ends with a semicolon and has no body. Without a prototype, compilers for C99 and later issue a warning or an error for the implicit declaration.
+
+   </details>
+
+3. **Scope:** Given the global variable `int x = 1;` and the function `void f(void) { int x = 2; x++; }`, what is printed if `main()` calls `f();` and then runs `printf("%d\n", x);`?
+
+   <details>
+   <summary>Answer</summary>
+
+   1 is printed. The `x` inside `f()` is a local variable that shadows the global `x`, so `x++` changes only the local variable to 3, and that local variable is destroyed when `f()` returns. The `x` in `main()` refers to the global variable, so its value is still 1.
+
+   </details>
+
+4. **Recursion trace:** For `countDigits()` in Section 5, find the return values of `countDigits(50070)` and `countDigits(0)`, and state how many times the function is called in total for `countDigits(50070)`.
+
+   <details>
+   <summary>Answer</summary>
+
+   `countDigits(50070)` is called 5 times in total, with 50070, 5007, 500, 50, and 5; at 5 it meets the base case `n < 10` and returns 1, and each level adds 1, so it returns 5. `countDigits(0)` returns 1 because 0 satisfies the base case from the start.
+
+   </details>
+
+5. **Initial values of variables:** What are the values of an uninitialized global variable `int g;` and an uninitialized local variable `int local;` inside `main()`?
+
+   <details>
+   <summary>Answer</summary>
+
+   The global variable `g` is automatically initialized to 0 when the program starts, so it is guaranteed to be 0. The local variable `local` is not initialized automatically, so its value is indeterminate, and reading it before initializing it yields an unpredictable garbage value.
+
+   </details>

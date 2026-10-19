@@ -1,10 +1,22 @@
-# Chapter 05 — Control Statements
+# Chapter 5 — Control Statements
 
-> **Last Updated:** 2026-03-16
+[Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
+
+> **Last Updated:** 2026-10-19
+>
+> Warming-Up C Programming, 천정아, Ch 5
+
+> **Learning Objectives:**
+> 1. Distinguish the sequential, conditional, loop, and branch structures and name the C keywords used for each
+> 2. Choose an execution path by a condition with `if`, `if-else`, `else if`, and nested `if`
+> 3. Explain the rules of the `switch` statement and its fall-through behavior, and choose between it and `if-else`
+> 4. Compare the execution flow and minimum number of executions of `for`, `while`, and `do-while`
+> 5. Trace where `break`, `continue`, `goto`, and `return` transfer control
+> 6. Implement loop patterns such as counters, accumulators, max tracking, input validation, and menus
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
 - [1. Control Statements Overview](#1-control-statements-overview)
 - [2. Conditional Statements](#2-conditional-statements)
@@ -33,6 +45,7 @@
   - [5.3 Input Validation Loop](#53-input-validation-loop)
   - [5.4 Menu-Driven Program](#54-menu-driven-program)
 - [Summary](#summary)
+- [Self-Check Questions](#self-check-questions)
 
 ---
 
@@ -42,7 +55,7 @@
 
 By default, C executes statements **sequentially** (top to bottom). **Control statements** alter this flow by branching or repeating.
 
-```
+```text
 Program Flow
 ├── Sequential   ← default (top to bottom)
 ├── Conditional  ← choose which path to take
@@ -50,13 +63,17 @@ Program Flow
 └── Branch       ← jump to another location
 ```
 
+*Figure 1. The four structures of program flow*
+
 | Category | Purpose | C Keywords |
 |:---------|:--------|:-----------|
 | Conditional | Execute different blocks based on conditions | `if`, `else`, `else if`, `switch`, `case`, `default` |
 | Loop | Repeat a block while a condition is true | `for`, `while`, `do-while` |
 | Branch | Jump out of or skip within a block | `break`, `continue`, `goto`, `return` |
 
-> **Key Point:** The **ternary operator** (`? :`) is a conditional *expression*, not a statement, but serves a similar purpose: `max = (a > b) ? a : b;`
+*Table 1. Classification of control statements*
+
+> **Key Point:** The **ternary operator** (`? :`) is a conditional *expression*, not a statement, but it serves a purpose similar to a conditional statement, as in `max = (a > b) ? a : b;`.
 
 ---
 
@@ -78,7 +95,7 @@ if (condition) {
 
 **Execution flow:**
 
-```
+```text
         ┌───────────┐
         │ condition │
         └────┬──────┘
@@ -92,6 +109,8 @@ if (condition) {
         (next code)
 ```
 
+*Figure 2. Execution flow of the if statement*
+
 ```c
 int score = 85;
 
@@ -100,7 +119,7 @@ if (score >= 60) {
 }
 ```
 
-> **Tip:** In C, any non-zero value is **true**, and zero is **false**. So `if (1)` always executes, `if (0)` never executes.
+> **Note:** **Judging true and false.** In C, any non-zero value is **true**, and zero is **false**. So `if (1)` always executes, and `if (0)` never executes.
 
 ### 2.2 Compound Statements / Blocks
 
@@ -113,7 +132,7 @@ if (score >= 90) {
 }
 ```
 
-Without braces, only the **first statement** belongs to `if`:
+Without braces, only the **first statement** belongs to `if`.
 
 ```c
 if (score >= 90)
@@ -121,7 +140,7 @@ if (score >= 90)
     printf("Excellent!\n");    // ALWAYS executes (not part of if!)
 ```
 
-> **Warning:** Always use braces `{}` even for single statements. This prevents bugs when adding lines later and makes intent clear.
+> **Caution:** It is best to use braces `{}` even for single statements. This prevents bugs when adding lines later and makes intent clear.
 
 ### 2.3 `if-else`
 
@@ -139,7 +158,7 @@ if (condition) {
 
 **Execution flow:**
 
-```
+```text
        ┌───────────┐
        │ condition │
        └────┬──────┘
@@ -154,6 +173,8 @@ if (condition) {
             ▼
        (next code)
 ```
+
+*Figure 3. Execution flow of the if-else statement*
 
 ```c
 int num = 7;
@@ -222,7 +243,7 @@ if (score >= 90) {
 }
 ```
 
-> **Key Point:** Because conditions are checked in order, `score >= 80` implicitly means `80 <= score < 90` (since `score >= 90` was already rejected). You do **not** need `score >= 80 && score < 90`.
+> **Key Point:** Because conditions are checked in order, the second condition `score >= 80` is checked only after `score >= 90` has been rejected, so it means a score of at least 80 and less than 90. You therefore do **not** need `score >= 80 && score < 90`. Writing `80 <= score < 90` as in mathematics is computed in C as `(80 <= score) < 90`, which is always true, so a range must be split with `&&`.
 
 ### 2.5 Nested `if`
 
@@ -251,7 +272,7 @@ if (x == 0 && y == 0) {
 }
 ```
 
-> **Warning:** Deeply nested `if` statements become hard to read. Consider using `else if` ladders or early returns to flatten the structure.
+> **Caution:** Deeply nested `if` statements become hard to read. Consider using `else if` ladders or early returns to flatten the structure.
 
 ### 2.6 Multiple Independent `if`
 
@@ -316,11 +337,13 @@ default:
 
 | Rule | Detail |
 |:-----|:-------|
-| Expression type | Must be `int` or `char` (integer types). **Not** `float`, `double`, or `string`. |
-| Case labels | Must be **constant** values (not variables). |
-| `break` | Required to prevent **fall-through**. Without it, execution continues to the next case. |
+| Expression type | Must be an integer type such as `char`, `int`, or `long`. `float`, `double`, and strings are **not** allowed. |
+| Case labels | Must be integer **constant** expressions (not variables). |
+| `break` | Needed to prevent **fall-through**. Without it, the statements of the next case also execute. |
 | `default` | Optional. Handles values not matched by any case. |
 | Duplicate cases | Not allowed. Each case label must be unique. |
+
+*Table 2. Key rules of the switch statement*
 
 **Fall-through behavior (missing `break`):**
 
@@ -341,7 +364,7 @@ case 3:
 //         two
 ```
 
-> **Warning:** Forgetting `break` is one of the most common bugs in C. Intentional fall-through (like grouping `'C'` and `'c'`) should be clearly documented.
+> **Caution:** Forgetting `break` is one of the most common bugs in C. Intentional fall-through (like grouping `'C'` and `'c'`) should be clearly documented.
 
 **Using `switch` with integer ranges (score grading):**
 
@@ -377,7 +400,9 @@ default:
 | Readability | Better for ranges/complex conditions | Better for many discrete values |
 | Performance | Sequential check | May use jump table (faster for many cases) |
 
-> **Tip:** Use `switch` when comparing a single variable against many **constant integer/char values**. Use `if-else` for ranges, floating-point comparisons, or complex conditions.
+*Table 3. Comparison of the if-else and switch statements*
+
+> **Note:** **Choosing between switch and if-else.** Use `switch` when comparing a single variable against many **constant integer/char values**. Use `if-else` for ranges, floating-point comparisons, or complex conditions.
 
 ---
 
@@ -399,7 +424,7 @@ for (initialization; condition; update) {
 
 **Execution flow:**
 
-```
+```text
       init
         │
         ▼
@@ -413,10 +438,12 @@ for (initialization; condition; update) {
 └── update
 ```
 
-1. **Initialization** — executes once before the loop starts.
-2. **Condition** — checked before each iteration. If false, the loop exits.
-3. **Loop body** — executes if condition is true.
-4. **Update** — executes after each iteration, then goes back to step 2.
+*Figure 4. Execution flow of the for statement*
+
+1. **Initialization:** Executes once before the loop starts.
+2. **Condition:** Checked before each iteration; if it is false, the loop exits.
+3. **Loop body:** Executes if the condition is true.
+4. **Update:** Executes after each iteration, then control goes back to step 2.
 
 ```c
 // Print 1 to 5
@@ -461,7 +488,7 @@ for (;;) {               // infinite loop (all parts omitted)
 }
 ```
 
-> **Warning:** An infinite loop without `break` or `return` will run forever and freeze your program.
+> **Caution:** An infinite loop without `break` or `return` keeps running without end, so the program appears frozen.
 
 ### 3.2 `while`
 
@@ -477,7 +504,7 @@ while (condition) {
 
 **Execution flow:**
 
-```
+```text
     ┌─► condition ──false──► exit
     │       │
     │      true
@@ -486,6 +513,8 @@ while (condition) {
     │       │
     └───────┘
 ```
+
+*Figure 5. Execution flow of the while statement*
 
 The condition is checked **before** each iteration. If false initially, the body never executes.
 
@@ -525,7 +554,7 @@ while (1) {
 
 ### 3.3 `do-while`
 
-The `do-while` loop **always executes at least once**, then checks the condition.
+The `do-while` loop **always executes the body at least once**, then checks the condition.
 
 **Syntax:**
 
@@ -537,7 +566,7 @@ do {
 
 **Execution flow:**
 
-```
+```text
     ┌───────┐
     │       ▼
     │   loop body(execute first)
@@ -547,6 +576,8 @@ do {
     │       │
     └──── true
 ```
+
+*Figure 6. Execution flow of the do-while statement*
 
 ```c
 int choice;
@@ -561,7 +592,7 @@ do {
 printf("Goodbye!\n");
 ```
 
-> **Warning:** Do not forget the **semicolon** after `while(condition);` in a `do-while` loop. This is a common syntax error.
+> **Caution:** Do not forget the **semicolon** after `while(condition);` in a `do-while` loop. This is a common syntax error.
 
 **Guaranteed single execution:**
 
@@ -595,7 +626,7 @@ for (int i = 1; i <= n; i++) {        // rows
 ```
 
 Output:
-```
+```text
 *
 **
 ***
@@ -618,7 +649,7 @@ for (int i = 1; i <= n; i++) {
 ```
 
 Output:
-```
+```text
    *
   **
  ***
@@ -660,6 +691,8 @@ printf("Result: %d\n", sum);  // -5
 | Typical use | Counting, iterating arrays | Sentinel loops, reading input | Input validation, menus |
 | Syntax | `for (init; cond; upd)` | `while (cond)` | `do { } while (cond);` |
 
+*Table 4. Comparison of the for, while, and do-while statements*
+
 > **Key Point:** Any `for` loop can be rewritten as a `while` loop and vice versa. Choose whichever makes the intent clearest.
 
 ```c
@@ -697,7 +730,7 @@ for (int i = 1; i <= 100; i++) {
 }
 ```
 
-In nested loops, `break` only exits the **inner** loop:
+In nested loops, `break` only exits the **inner** loop.
 
 ```c
 for (int i = 0; i < 3; i++) {
@@ -713,7 +746,7 @@ for (int i = 0; i < 3; i++) {
 
 ### 4.2 `continue`
 
-`continue` skips the **rest of the current iteration** and jumps to the next iteration (or to the condition check in `while`/`do-while`, or to the update step in `for`).
+`continue` skips the **rest of the current iteration** and jumps to the next iteration (to the condition check in `while`/`do-while`, or to the update step in `for`).
 
 ```c
 // Print odd numbers only
@@ -726,7 +759,7 @@ for (int i = 1; i <= 10; i++) {
 // Output: 1 3 5 7 9
 ```
 
-> **Tip:** `continue` in a `for` loop jumps to the **update** expression (`i++`), not the condition. In a `while` loop, it jumps directly to the **condition** check — so make sure the loop variable is updated before `continue`, or you'll get an infinite loop.
+> **Note:** **Where continue jumps.** `continue` in a `for` loop jumps to the **update** expression (`i++`), not the condition. In a `while` loop, it jumps directly to the **condition** check. Therefore, in a `while` loop, make sure the loop variable is updated before `continue`, or the loop may never end.
 
 ### 4.3 `goto`
 
@@ -744,7 +777,7 @@ found:
 printf("Done\n");
 ```
 
-> **Warning:** Avoid `goto` in almost all cases. The only acceptable use is breaking out of deeply nested loops. Use `break`, `continue`, or functions instead.
+> **Caution:** Avoid `goto` in almost all cases. The commonly accepted exceptions are breaking out of deeply nested loops at once and jumping to the cleanup code at the end of a function when an error occurs. Otherwise, use `break`, `continue`, or functions instead.
 
 ### 4.4 `return`
 
@@ -797,7 +830,7 @@ if (count > 0) {
 
 ### 5.2 Max/Min Tracking
 
-Initialize max/min with the **first input**, then update as new values arrive.
+Initialize the maximum and minimum with the **first input**, then update them as new values arrive.
 
 ```c
 int num, max, min, count = 0;
@@ -823,7 +856,7 @@ if (count > 0) {
 }
 ```
 
-You can also use the **ternary operator** for compact max/min:
+You can also use the **ternary operator** to find the maximum and minimum compactly.
 
 ```c
 int a, b, c;
@@ -836,7 +869,7 @@ printf("Max: %d\n", max);
 
 ### 5.3 Input Validation Loop
 
-Use `do-while` to ensure valid input before proceeding.
+Use `do-while` to repeat until valid input is received.
 
 ```c
 int score;
@@ -853,7 +886,7 @@ printf("Valid score: %d\n", score);
 
 ### 5.4 Menu-Driven Program
 
-Combine `while(1)` with `switch` for interactive menus.
+Combine `while(1)`, `switch`, and `do-while` to implement an interactive menu.
 
 ```c
 #include <stdio.h>
@@ -896,7 +929,7 @@ int main() {
 }
 ```
 
-> **Tip:** When reading a `char` with `scanf`, use `" %c"` (with a leading space) to skip any leftover whitespace/newline characters in the input buffer.
+> **Note:** **Skipping whitespace.** When reading a `char` with `scanf`, use `" %c"` (with a leading space) to skip any leftover whitespace or newline characters in the input buffer.
 
 ---
 
@@ -904,29 +937,96 @@ int main() {
 
 ## Summary
 
-| Concept | Key Takeaway |
-|:--------|:-------------|
-| Control Statements | Alter sequential flow: conditional, loop, branch |
-| `if` | Executes block when condition is non-zero (true) |
-| Compound Statement | `{}` groups multiple statements; always use braces |
-| `if-else` | Two mutually exclusive paths based on one condition |
-| `else if` | Sequential condition checking; first match wins, rest skipped |
-| Nested `if` | `if` inside another `if`/`else`; avoid deep nesting |
-| Multiple `if` | Each condition checked independently; not mutually exclusive |
-| `switch` | Integer/char equality matching; `break` required to prevent fall-through |
-| `switch` vs `if-else` | `switch` for discrete values; `if-else` for ranges/complex conditions |
-| `for` | Best for known iteration count; `for(init; cond; update)` |
-| `while` | Condition checked first; best for sentinel/event-driven loops |
-| `do-while` | Body executes at least once; semicolon after `while()` |
-| Nested Loops | Inner loop completes fully per outer iteration; used for 2D patterns |
-| `break` | Exits innermost loop or `switch` |
-| `continue` | Skips to next iteration; jumps to update (`for`) or condition (`while`) |
-| `goto` | Jumps to label; generally avoided (spaghetti code) |
-| `return` | Exits current function; in `main`, terminates program |
-| Counter/Accumulator | `count++` and `sum += val` for tallying and totaling |
-| Max/Min Tracking | Initialize with first input; update with each comparison |
-| Input Validation | `do-while` ensures at least one prompt before checking |
-| Menu-Driven | `while(1)` + `switch` + `do-while` for interactive programs |
-| Ternary Operator | `(cond) ? val_true : val_false` — compact inline conditional |
+| Concept | Key Summary |
+|:--------|:------------|
+| Control statements | They change the sequential top-to-bottom flow through conditions, loops, and branches. |
+| `if` | It executes a block only when the condition is non-zero (true). |
+| Compound statement | `{}` groups multiple statements into one, and using braces even for a single statement is safer. |
+| `if-else` | It executes one of two mutually exclusive paths based on a single condition. |
+| `else if` | It checks conditions in order, executes only the first block whose condition is true, and skips the rest. |
+| Nested `if` | It places another `if` inside an `if` or `else` block, and deep nesting hurts readability. |
+| Multiple independent `if` | Each condition is checked independently, so several blocks can execute together. |
+| `switch` | It jumps to the case equal to the value of an integer expression, and without `break` it falls through to the next case. |
+| `switch` vs `if-else` | `switch` suits comparisons against discrete constant values, while `if-else` suits ranges and complex conditions. |
+| `for` | Written as `for(init; cond; update)`, it suits loops with a known number of iterations. |
+| `while` | It checks the condition first, so the body may never execute, and it suits sentinel or event-driven loops. |
+| `do-while` | It executes the body at least once before checking the condition and needs a semicolon after `while()`. |
+| Nested loops | The inner loop runs completely for each outer iteration, which is used for 2D pattern output. |
+| `break` | It immediately exits the innermost loop or `switch` statement. |
+| `continue` | It skips the rest of the current iteration and jumps to the update in `for` or to the condition check in `while`. |
+| `goto` | It jumps unconditionally to a label and is generally avoided because it makes code hard to follow. |
+| `return` | It exits the current function, and executing it in `main` terminates the program. |
+| Counter and accumulator | `count++` counts occurrences and `sum += val` accumulates a total. |
+| Max and min tracking | The values are initialized with the first input and updated by comparing each new value. |
+| Input validation | `do-while` reads input at least once and repeats until it is valid. |
+| Menu-driven program | `while(1)`, `switch`, and `do-while` combine to implement an interactive program. |
+| Ternary operator | `(cond) ? val_true : val_false` is a compact inline conditional expression. |
 
 ---
+
+<br>
+
+## Self-Check Questions
+
+1. **Order of `else if`:** In the grading code of Section 2.4, if the order of the conditions is reversed to `score >= 60`, `score >= 70`, `score >= 80`, `score >= 90`, which grade does a score of 85 receive, and why?
+
+   <details>
+   <summary>Answer</summary>
+
+   It receives grade D. An `else if` ladder executes only the first block whose condition is true, and 85 already satisfies the first condition `score >= 60`, so the remaining conditions are not checked. A ladder that narrows a range must check the largest threshold first.
+
+   </details>
+
+2. **Fall-through:** Write the output of the following code.
+
+   ```c
+   int n = 2;
+   switch (n) {
+   case 1: printf("one\n");
+   case 2: printf("two\n");
+   case 3: printf("three\n"); break;
+   default: printf("other\n");
+   }
+   ```
+
+   <details>
+   <summary>Answer</summary>
+
+   `two` and `three` are printed on separate lines. After jumping to `case 2`, there is no `break`, so execution continues into the statement of `case 3`, and the `break` there exits the `switch`. `case 1` and `default` are not executed.
+
+   </details>
+
+3. **Iteration count:** How many times does the body of `for (i = 0; i < 10; i += 3)` execute, and what is the value of `i` after the loop? Also, when the condition is false from the start, how many times do the bodies of `while` and `do-while` execute?
+
+   <details>
+   <summary>Answer</summary>
+
+   It executes 4 times, for `i` equal to 0, 3, 6, and 9. The update after 9 makes `i` 12, so the condition `i < 10` becomes false and `i` is 12 after the loop. When the condition is false from the start, the body of `while` executes 0 times and the body of `do-while` executes once.
+
+   </details>
+
+4. **`break` and `continue`:** Write the output of the following code.
+
+   ```c
+   for (int i = 1; i <= 10; i++) {
+       if (i % 3 == 0) continue;
+       if (i > 7) break;
+       printf("%d ", i);
+   }
+   ```
+
+   <details>
+   <summary>Answer</summary>
+
+   The output is `1 2 4 5 7 `. 3 and 6 skip the output through `continue`, and at 8, `i > 7` becomes true and `break` ends the loop. 9 and 10 are never checked.
+
+   </details>
+
+5. **`while` and `continue`:** `int i = 0; while (i < 5) { if (i == 2) continue; i++; }` never ends. Explain why, and write a way to fix it so that the loop ends while still skipping only the remaining statements when `i` is 2.
+
+   <details>
+   <summary>Answer</summary>
+
+   When `i` becomes 2, `continue` skips the update statement `i++` and returns directly to the condition check, so `i` stays at 2 and the loop never ends. Incrementing `i` before `continue` (`if (i == 2) { i++; continue; }`) or switching to `for (i = 0; i < 5; i++)`, where the update happens in the update expression, makes the loop end.
+
+   </details>

@@ -1,6 +1,18 @@
-# Chapter 04 — Operators
+# Chapter 4 — Operators
 
-> **Last Updated:** 2026-03-16
+[Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
+
+> **Last Updated:** 2026-10-19
+>
+> Warming-Up C Programming, 천정아, Ch 4
+
+> **Learning Objectives:**
+> 1. Explain the relationship among expressions, operators, and operands, and classify operators by the number of operands
+> 2. Distinguish integer division, floating-point division, and the remainder operation, and translate mathematical formulas into C expressions
+> 3. Trace the different values that prefix and postfix increment and decrement operators produce inside an expression
+> 4. Explain the result values of relational and logical operators and short-circuit evaluation
+> 5. Combine and extract specific bits of an integer with bitwise and shift operators
+> 6. Compute the value of an expression by applying the type conversion rules and operator precedence and associativity
 
 ---
 
@@ -47,6 +59,7 @@
   - [10.2 Associativity](#102-associativity)
   - [10.3 Use Parentheses When in Doubt](#103-use-parentheses-when-in-doubt)
 - [Summary](#summary)
+- [Self-Check Questions](#self-check-questions)
 
 ---
 
@@ -56,7 +69,7 @@
 
 ### 1.1 Expressions
 
-An **expression** is any element in C that produces a value. Expressions include:
+An **expression** is any element in C that produces a value. Expressions include the following.
 
 | Kind | Example | Value |
 |:-----|:--------|:------|
@@ -65,6 +78,8 @@ An **expression** is any element in C that produces a value. Expressions include
 | Operation | `3 + 4` | `7` |
 | Function call | `sqrt(9.0)` | `3.0` |
 | Assignment | `x = 5` | `5` |
+
+*Table 1. Kinds of expressions and their values*
 
 Every expression has a **type** and a **value**. Even an assignment like `x = 5` is an expression whose value is `5`.
 
@@ -78,13 +93,15 @@ printf("%d\n", x=5); // prints 5 — assignment is an expression
 
 An **operator** is a symbol that performs an operation on one or more **operands**.
 
-Operators are classified by the **number of operands** they take:
+Operators are classified by the **number of operands** they take as follows.
 
 | Category | Operands | Examples |
 |:---------|:--------:|:--------|
 | Unary | 1 | `sizeof(x)`, `-x`, `+x`, `!a`, `~a`, `++x`, `x--` |
 | Binary | 2 | `a + b`, `a = b`, `a > b`, `a && b` |
 | Ternary | 3 | `a ? b : c` |
+
+*Table 2. Classification of operators by the number of operands*
 
 ```c
 int a = 10, b = 3;
@@ -112,11 +129,13 @@ a > b ? a : b; // ternary — three operands (a>b, a, b)
 | `+x` | Unary plus | `+5` | `5` |
 | `-x` | Unary minus (negation) | `-5` | `-5` |
 
-> **Note:** Unary `+` and `-` are different from binary `+` and `-`. Unary operates on a single operand: `+x` is the value itself, `-x` negates the value.
+*Table 3. Arithmetic operators*
+
+> **Note:** Unary `+` and `-` are different from binary `+` and `-`. A unary operator works on a single operand: `+x` yields the value itself, and `-x` negates the value.
 
 ### 2.2 Integer Division vs Float Division
 
-When **both operands** of `/` are integers, C performs **integer division** — the fractional part is **truncated** (not rounded).
+When **both operands** of `/` are integers, C performs **integer division**. The fractional part is **truncated** (not rounded).
 
 ```c
 int a = 7, b = 2;
@@ -124,7 +143,7 @@ printf("%d\n", a / b);       // 3  (not 3.5 — truncated!)
 printf("%d\n", -7 / 2);      // -3 (truncates toward zero)
 ```
 
-To get a floating-point result, **at least one operand** must be a floating-point type:
+To get a floating-point result, **at least one operand** must be a floating-point type.
 
 ```c
 int a = 7, b = 2;
@@ -136,7 +155,7 @@ result = a / (double)b;      // int / double = 3.5
 result = 7.0 / 2;            // double / int = 3.5
 ```
 
-> **Warning:** `result = a / b;` performs integer division **first** (result: 3), then converts 3 to 3.0 for assignment. The cast or literal must appear **in the division itself**, not after.
+> **Caution:** `result = a / b;` performs integer division **first** (result: 3), then converts 3 to 3.0 for assignment. The cast or literal must appear **in the division itself**, not after.
 
 ### 2.3 Modulo Operator
 
@@ -153,24 +172,26 @@ printf("%d\n", -7 % 2);   // -1  (sign follows dividend in C99+)
 // double r = 7.5 % 2.0;
 ```
 
-Common use cases:
-- **Even/odd check:** `n % 2 == 0` means even.
+Common use cases are as follows.
+- **Even/odd check:** `n % 2 == 0` means the number is even.
 - **Extracting digits:** `n % 10` gives the last digit.
-- **Cyclic wraparound:** `i % N` keeps `i` in range `[0, N-1]`.
+- **Cyclic wraparound:** If `i` is 0 or greater, `i % N` always lies in the range `[0, N-1]`, so an index can cycle within this range.
 
 ### 2.4 Math Formula Conversion to C
 
-Mathematical notation must be rewritten using C operators. Key rules:
+Mathematical notation must be rewritten using C operators. The key rules are as follows.
 - Multiplication must be explicit (`2x` becomes `2*x`).
-- Division uses `/`, and you must handle integer vs float division.
+- Division uses `/`, and integer division must be distinguished from floating-point division.
 - Exponents use repeated multiplication or `pow()` from `<math.h>`.
 
 | Math Formula | C Expression | Notes |
 |:-------------|:-------------|:------|
-| (a + b) / 2 | `(a + b) / 2.0` | Use `2.0` to avoid integer division |
-| C = 5/9 (F - 32) | `9.0 / 5 * (F - 32)` | `9/5` would be `1` (integer division!) |
-| x^3 + 2x - 5 | `x*x*x + 2*x - 5` | Explicit multiplication; no `^` operator for power |
-| (a + b) / (a^2 * b^2) | `(double)(a + b) / (a*a * b*b)` | Cast to avoid integer truncation |
+| $(a + b) / 2$ | `(a + b) / 2.0` | `2.0` prevents integer division |
+| $C = \frac{5}{9}(F - 32)$ | `5.0 / 9 * (F - 32)` | `5/9` would be `0` by integer division |
+| $x^3 + 2x - 5$ | `x*x*x + 2*x - 5` | Multiplication is explicit, and `^` is bitwise XOR, not a power operator |
+| $\frac{a + b}{a^2 b^2}$ | `(double)(a + b) / (a*a * b*b)` | The cast prevents integer truncation |
+
+*Table 4. Correspondence between mathematical formulas and C expressions*
 
 ```c
 // Fahrenheit to Celsius
@@ -207,9 +228,11 @@ double frac = (double)(p + q) / (p*p * q*q);  // 7.0 / 144 = 0.048611...
 | `x++` | Postfix increment | Use the current value of x **first**, then increment |
 | `x--` | Postfix decrement | Use the current value of x **first**, then decrement |
 
+*Table 5. Prefix and postfix increment and decrement operators*
+
 ### 3.2 Standalone vs In Expressions
 
-When used **standalone** (as the only operation on a line), prefix and postfix produce the **same effect**:
+When used **standalone** (as the only operation on a line), prefix and postfix produce the **same effect**.
 
 ```c
 int x = 5;
@@ -218,7 +241,7 @@ x++;    // x becomes 6
 // Both just increment x by 1 — no difference in standalone use
 ```
 
-The difference appears **inside expressions**:
+The difference appears **inside expressions**.
 
 ```c
 int a, x;
@@ -234,7 +257,7 @@ a = x++;   // a = 5 (old value), then x becomes 6
 // Result: x = 6, a = 5
 ```
 
-> **Key Point:** Think of prefix as "change, then read" and postfix as "read, then change."
+> **Key Point:** Prefix changes the value and then reads it (change, then read), while postfix reads the value and then changes it (read, then change).
 
 ### 3.3 Restrictions
 
@@ -270,7 +293,7 @@ int main(void) {
 }
 ```
 
-Step-by-step trace:
+The printed value and the variable values after each line are as follows.
 
 | Line | Expression | Printed Value | `a` after | `b` after |
 |:-----|:-----------|:------------:|:---------:|:---------:|
@@ -280,6 +303,8 @@ Step-by-step trace:
 | `printf("b   = %d\n", b)` | `b` | 5 | 6 | 5 |
 | `printf("++b = %d\n", ++b)` | `++b` | 6 | 6 | 6 |
 | `printf("b   = %d\n", b)` | `b` | 6 | 6 | 6 |
+
+*Table 6. Step-by-step trace of the increment operator example*
 
 ---
 
@@ -300,9 +325,11 @@ Relational operators compare two values and produce an integer result.
 | `==` | Equal to | `5 == 5` | `1` |
 | `!=` | Not equal to | `5 != 3` | `1` |
 
+*Table 7. Relational operators*
+
 ### 4.2 Result Type
 
-In C, relational expressions always evaluate to an `int`: **1 for true**, **0 for false**. There is no dedicated `bool` type in C89/C90.
+In C, relational expressions always evaluate to an `int`: **1 for true** and **0 for false**. There is no dedicated `bool` type in C89/C90, and even after C99 added the `_Bool` type and `bool` in `<stdbool.h>`, the result type of a relational expression is still `int`.
 
 ```c
 int result;
@@ -319,6 +346,8 @@ printf("%d\n", 3 > 7);  // prints 0
 | `=` | **Assignment** | `x = 5;` stores 5 in x |
 | `==` | **Equality comparison** | `x == 5` checks if x equals 5 |
 
+*Table 8. The assignment operator and the equality operator*
+
 ```c
 int x = 10;
 
@@ -326,7 +355,7 @@ if (x == 5) { ... }  // ✅ Comparison — checks if x is 5
 if (x = 5)  { ... }  // ⚠ Assignment — sets x to 5, then checks if 5 is non-zero (always true!)
 ```
 
-> **Warning:** `if (x = 5)` compiles without error but it assigns 5 to x and always evaluates to true (since 5 is non-zero). This is one of the most common bugs in C. Some compilers issue a warning, but not all.
+> **Caution:** `if (x = 5)` compiles without error, but it assigns 5 to x and always evaluates to true (since 5 is non-zero). This is one of the most common bugs in C. gcc and clang warn about it with the `-Wall` option, but not every compiler warns with its default settings.
 
 ---
 
@@ -336,13 +365,15 @@ if (x = 5)  { ... }  // ⚠ Assignment — sets x to 5, then checks if 5 is non-
 
 ### 5.1 AND, OR, NOT
 
-Logical operators combine or negate boolean conditions.
+Logical operators combine or negate conditions.
 
 | Operator | Name | Description | Example |
 |:--------:|:-----|:------------|:--------|
 | `&&` | Logical AND | True if **both** operands are true | `(a > 0) && (b > 0)` |
 | `\|\|` | Logical OR | True if **at least one** operand is true | `(a > 0) \|\| (b > 0)` |
-| `!` | Logical NOT | Inverts true/false | `!(a > 0)` |
+| `!` | Logical NOT | Inverts true and false | `!(a > 0)` |
+
+*Table 9. Logical operators*
 
 ```c
 int age = 25, income = 3000;
@@ -371,6 +402,8 @@ if (!0)
 | 1 | 0 | 0 |
 | 1 | 1 | 1 |
 
+*Table 10. Truth table of logical AND*
+
 **OR (`||`)**
 
 | A | B | A \|\| B |
@@ -380,6 +413,8 @@ if (!0)
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
 
+*Table 11. Truth table of logical OR*
+
 **NOT (`!`)**
 
 | A | !A |
@@ -387,9 +422,11 @@ if (!0)
 | 0 | 1 |
 | non-zero | 0 |
 
+*Table 12. Truth table of logical NOT*
+
 ### 5.3 Short-Circuit Evaluation
 
-C evaluates logical expressions **left to right** and **stops as soon as the result is determined**:
+C evaluates logical expressions **left to right** and **stops as soon as the result is determined**.
 
 - **`&&`:** If the left operand is **false (0)**, the right operand is **not evaluated** (result is already 0).
 - **`||`:** If the left operand is **true (non-zero)**, the right operand is **not evaluated** (result is already 1).
@@ -412,14 +449,14 @@ if (a || b++) {
 printf("b = %d\n", b);  // b = 6 (b++ was executed)
 ```
 
-> **Tip:** Short-circuit evaluation is useful for **guarding** potentially dangerous operations:
+> **Note:** **Guarding with short-circuit evaluation.** Short-circuit evaluation is useful for **guarding** potentially dangerous operations.
 > ```c
 > if (b != 0 && a / b > 2) { ... }  // division only happens if b != 0
 > ```
 
 ### 5.4 Truthiness in C
 
-C does **not** have a native boolean type (in C89). Instead:
+C89 does **not** have a native boolean type. Instead, it judges truth and falsehood from integer values as follows.
 - **0** is treated as **false**.
 - **Any non-zero value** (positive or negative) is treated as **true**.
 
@@ -452,7 +489,9 @@ Bitwise operators work on the **individual bits** of integer values.
 | `^` | Bitwise XOR | 1 if bits are **different** |
 | `~` | Bitwise NOT | Flips all bits (one's complement) |
 
-Bit-level truth table:
+*Table 13. Bitwise operators*
+
+The result of each operation on single bits is as follows.
 
 | a | b | a & b | a \| b | a ^ b | ~a |
 |:-:|:-:|:-----:|:------:|:-----:|:--:|
@@ -460,6 +499,8 @@ Bit-level truth table:
 | 0 | 1 | 0 | 1 | 1 | 1 |
 | 1 | 0 | 0 | 1 | 1 | 0 |
 | 1 | 1 | 1 | 1 | 0 | 0 |
+
+*Table 14. Bit-level truth table*
 
 ```c
 unsigned char a = 0xB5;  // 1011 0101
@@ -471,14 +512,16 @@ printf("a ^ b = %02X\n", a ^ b);   // 1101 1000 = 0xD8
 printf("~a    = %02X\n", (unsigned char)~a);  // 0100 1010 = 0x4A
 ```
 
-> **Warning:** Do not confuse bitwise operators (`&`, `|`) with logical operators (`&&`, `||`). Bitwise operators work bit-by-bit on integers; logical operators treat the entire value as true/false.
+> **Caution:** Do not confuse bitwise operators (`&`, `|`) with logical operators (`&&`, `||`). Bitwise operators work bit by bit on integers, while logical operators treat the entire value as true or false.
 
 ### 6.2 Shift Operators
 
 | Operator | Name | Description |
 |:--------:|:-----|:------------|
-| `<<` | Left shift | Shift bits left by n positions; fills with 0 on the right |
-| `>>` | Right shift | Shift bits right by n positions; fills with 0 (unsigned) or sign bit (signed) |
+| `<<` | Left shift | Shifts bits left by n positions and fills the right with 0 |
+| `>>` | Right shift | Shifts bits right by n positions; unsigned values and non-negative signed values are filled with 0 on the left, while the fill for negative signed values is implementation-defined (most compilers use the sign bit) |
+
+*Table 15. Shift operators*
 
 ```c
 unsigned char x = 0x0D;    // 0000 1101 = 13
@@ -489,20 +532,22 @@ printf("%02X\n", x >> 1);  // 0000 0110 = 0x06 = 6   (÷2)
 printf("%02X\n", x >> 2);  // 0000 0011 = 0x03 = 3   (÷4)
 ```
 
-> **Tip:** Left shifting by n is equivalent to multiplying by 2^n. Right shifting by n is equivalent to dividing by 2^n (for unsigned values).
+> **Note:** **Shifts and powers of 2.** Left shifting by n bits is equivalent to multiplying by $2^n$ as long as the result stays within the range of the type. Right shifting by n bits is equivalent to the quotient of division by $2^n$ (for unsigned values).
 
 ### 6.3 Practical Example: RGB Color
 
-In a 32-bit RGB model, a single `unsigned int` stores three color channels (and an unused high byte):
+In a 32-bit RGB model, a single `unsigned int` stores three color channels (and an unused high byte).
 
-```
+```text
 Bit position:  31──24  23──16  15───8   7───0
                [ 0x00 ][ Blue ][ Green ][ Red  ]
 ```
 
-**Combining R, G, B into a single RGB value** (needed for Q3):
+*Figure 1. Bit layout of a 32-bit RGB value*
 
-Use left shift (`<<`) to position each channel, then OR (`|`) to combine:
+**Combining R, G, B into a single RGB value** (used in [Exercise 3](Exercises.md#exercise-3-convert-red-green-and-blue-values-to-a-hexadecimal-rgb-value)):
+
+Use left shift (`<<`) to position each channel, then OR (`|`) to combine them.
 
 ```c
 unsigned int red = 255, green = 0, blue = 130;
@@ -512,16 +557,16 @@ printf("RGB = 0X%06X\n", rgb);  // RGB = 0X8200FF
 ```
 
 Step-by-step:
-```
+```text
 red   = 0x000000FF              (bits 0-7)
 green = 0x00000000  << 8  → 0x00000000  (bits 8-15)
 blue  = 0x00000082  << 16 → 0x00820000  (bits 16-23)
 OR all together:             0x008200FF
 ```
 
-**Extracting R, G, B from a single RGB value** (needed for Q4):
+**Extracting R, G, B from a single RGB value** (used in [Exercise 4](Exercises.md#exercise-4-convert-a-hexadecimal-rgb-value-to-red-green-and-blue-values)):
 
-Use right shift (`>>`) and AND mask (`& 0xFF`) to isolate each channel:
+Use right shift (`>>`) and an AND mask (`& 0xFF`) to isolate each channel.
 
 ```c
 unsigned int rgb = 0xA73B03;
@@ -536,7 +581,7 @@ printf("Blue  = 0X%02X (%d)\n", blue, blue);    // Blue  = 0XA7 (167)
 ```
 
 Step-by-step:
-```
+```text
 rgb         = 0x00A73B03
 
 red   = rgb & 0xFF           = 0x03  (mask lower 8 bits)
@@ -544,7 +589,7 @@ green = (rgb >> 8) & 0xFF    = 0x3B  (shift right 8, then mask)
 blue  = (rgb >> 16) & 0xFF   = 0xA7  (shift right 16, then mask)
 ```
 
-> **Key Point:** The mask `0xFF` (binary `1111 1111`) isolates exactly 8 bits. `& 0xFF` zeroes out all bits except the lowest 8. Shifting first moves the desired channel into the low 8 bits, then masking extracts it.
+> **Key Point:** The mask `0xFF` (binary `1111 1111`) isolates exactly 8 bits. `& 0xFF` zeroes out all bits except the lowest 8. Shifting first moves the desired channel into the low 8 bits, and masking then extracts it.
 
 ---
 
@@ -558,7 +603,7 @@ The **simple assignment** operator `=` stores a value in a variable. **Compound 
 
 | Operator | Equivalent | Example |
 |:--------:|:-----------|:--------|
-| `=` | — | `x = 10` |
+| `=` | None | `x = 10` |
 | `+=` | `x = x + y` | `x += 3` → `x = x + 3` |
 | `-=` | `x = x - y` | `x -= 2` → `x = x - 2` |
 | `*=` | `x = x * y` | `x *= 4` → `x = x * 4` |
@@ -569,6 +614,8 @@ The **simple assignment** operator `=` stores a value in a variable. **Compound 
 | `^=` | `x = x ^ y` | `x ^= mask` |
 | `<<=` | `x = x << n` | `x <<= 4` |
 | `>>=` | `x = x >> n` | `x >>= 8` |
+
+*Table 16. Simple and compound assignment operators*
 
 ```c
 int score = 80;
@@ -581,7 +628,7 @@ score %= 3;    // score = 17 % 3 = 2
 
 ### 7.2 Chained Assignment
 
-Assignment is **right-associative**, so chained assignments evaluate right-to-left:
+Assignment is **right-associative**, so chained assignments evaluate right to left.
 
 ```c
 int a, b, c;
@@ -606,7 +653,7 @@ x = y = 10 + 5;
 
 The **conditional operator** `? :` is the only ternary operator in C (three operands).
 
-```
+```text
 condition ? value_if_true : value_if_false
 ```
 
@@ -619,7 +666,7 @@ printf("%s\n", (a % 2 == 0) ? "even" : "odd");  // "even"
 
 ### 8.2 Equivalent if/else
 
-The conditional operator is a compact alternative to simple `if/else`:
+The conditional operator is a compact alternative to a simple `if/else`.
 
 ```c
 // Using if/else
@@ -633,7 +680,7 @@ else
 int abs_val = (x >= 0) ? x : -x;
 ```
 
-> **Tip:** Use the ternary operator for simple, short expressions. For complex logic with multiple statements, prefer `if/else` for readability.
+> **Note:** **Choosing between the ternary operator and if/else.** Use the ternary operator for simple, short expressions. For complex logic with multiple statements, prefer `if/else` for readability.
 
 ---
 
@@ -652,16 +699,18 @@ char a = 10, b = 20;
 // In the expression a + b:
 // a is promoted to int, b is promoted to int
 // Result type: int
-printf("%d\n", sizeof(a + b));  // 4 (int), not 1 (char)
+printf("%zu\n", sizeof(a + b));  // 4 (int), not 1 (char)
 ```
 
 **Usual arithmetic conversion** (for binary operators):
 
-```
+```text
 char / short → int → long → long long → float → double → long double
 ```
 
-The smaller type is converted to match the larger type.
+*Figure 2. Type ranking in the usual arithmetic conversions*
+
+The smaller type is converted to match the larger type. This ordering is a simplification that omits the rules for `unsigned` integer types.
 
 ```c
 int i = 5;
@@ -683,7 +732,7 @@ double r1 = a / b;           // 3.0
 double r2 = (double)a / b;   // 3.5
 ```
 
-Important: the cast applies only to the **immediately following operand**:
+Note that the cast applies only to the **immediately following operand**.
 
 ```c
 int a = 3, b = 4;
@@ -721,8 +770,8 @@ When an expression has multiple operators, **precedence** determines which opera
 
 | Precedence | Operators | Description |
 |:----------:|:----------|:------------|
-| 1 (highest) | `()` `[]` `->` `.` | Grouping, subscript, member access |
-| 2 | `!` `~` `++` `--` `+x` `-x` `(type)` `*` `&` `sizeof` | Unary operators |
+| 1 (highest) | `x++` `x--` `()` `[]` `.` `->` | Postfix increment and decrement, function call, subscript, member access |
+| 2 | `++x` `--x` `+x` `-x` `!` `~` `(type)` `*` `&` `sizeof` | Unary operators |
 | 3 | `*` `/` `%` | Multiplication, division, modulo |
 | 4 | `+` `-` | Addition, subtraction |
 | 5 | `<<` `>>` | Bitwise shift |
@@ -734,7 +783,10 @@ When an expression has multiple operators, **precedence** determines which opera
 | 11 | `&&` | Logical AND |
 | 12 | `\|\|` | Logical OR |
 | 13 | `?:` | Conditional (ternary) |
-| 14 (lowest) | `=` `+=` `-=` `*=` `/=` `%=` etc. | Assignment |
+| 14 | `=` `+=` `-=` `*=` `/=` `%=` etc. | Assignment |
+| 15 (lowest) | `,` | Comma |
+
+*Table 17. Operator precedence*
 
 ```c
 int x = 2 + 3 * 4;      // 3*4 first → 2 + 12 = 14 (not 20)
@@ -748,8 +800,10 @@ When operators have the **same precedence**, **associativity** determines the ev
 
 | Associativity | Operators | Example |
 |:--------------|:----------|:--------|
-| Left-to-right | Most binary operators: `+`, `-`, `*`, `/`, `%`, `<`, `>`, `==`, `&&`, etc. | `a - b - c` = `(a - b) - c` |
-| Right-to-left | Unary operators, assignment, ternary | `a = b = c` = `a = (b = c)` |
+| Left-to-right | Postfix operators and most binary operators: `+`, `-`, `*`, `/`, `%`, `<`, `>`, `==`, `&&`, `,`, etc. | `a - b - c` = `(a - b) - c` |
+| Right-to-left | Unary operators of precedence 2, assignment, ternary | `a = b = c` = `a = (b = c)` |
+
+*Table 18. Associativity of operators*
 
 ```c
 int result = 10 - 3 - 2;
@@ -772,7 +826,7 @@ if (a & b == 0) { ... }   // ⚠ Actually: a & (b == 0), because == has higher p
 if ((a & b) == 0) { ... } // ✅ Correct and readable
 ```
 
-> **Tip:** Bitwise operators (`&`, `|`, `^`) have **lower precedence** than relational operators (`==`, `!=`). This is a common source of bugs. Always parenthesize bitwise expressions in comparisons.
+> **Caution:** Bitwise operators (`&`, `|`, `^`) have **lower precedence** than relational operators (`==`, `!=`). This is a common source of bugs. Always parenthesize bitwise expressions in comparisons.
 
 ---
 
@@ -780,33 +834,82 @@ if ((a & b) == 0) { ... } // ✅ Correct and readable
 
 ## Summary
 
-| Concept | Key Takeaway |
-|:--------|:-------------|
-| Expression | Anything with a value: constant, variable, operation, function call, assignment |
-| Unary / Binary / Ternary | 1, 2, or 3 operands; e.g., `sizeof`, `+`, `?:` |
-| Arithmetic Operators | `+`, `-`, `*`, `/`, `%`; unary `+x`, `-x` |
-| Integer Division | `int / int` truncates; cast at least one operand for float result |
-| Modulo `%` | Remainder of integer division; integers only |
-| Formula Conversion | Use `2.0` or cast to prevent integer division; explicit `*` for multiplication |
-| Prefix `++x` | Increment first, then use the value |
-| Postfix `x++` | Use the value first, then increment |
-| Increment Restriction | Only on variables; not on constants or expressions |
-| Relational Operators | `>`, `<`, `>=`, `<=`, `==`, `!=`; result is 0 or 1 |
-| `=` vs `==` | Assignment vs comparison; mixing them is a common bug |
-| Logical Operators | `&&` (AND), `\|\|` (OR), `!` (NOT) |
-| Short-Circuit | `&&` stops on false; `\|\|` stops on true; right operand may be skipped |
-| Truthiness | 0 is false; any non-zero is true |
-| Bitwise Operators | `&`, `\|`, `^`, `~` operate on individual bits |
-| Shift Operators | `<<` (left, multiply by 2^n), `>>` (right, divide by 2^n) |
-| RGB Combining | `(blue << 16) \| (green << 8) \| red` |
-| RGB Extracting | `(rgb >> n) & 0xFF` to isolate each channel |
-| Compound Assignment | `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `\|=`, `^=`, `<<=`, `>>=` |
-| Chained Assignment | `a = b = c = 0` (right-to-left) |
-| Ternary Operator | `condition ? true_val : false_val` — compact if/else |
-| Implicit Promotion | `char`/`short` always promoted to `int` in expressions |
-| Cast Operator | `(type)expr` — explicit conversion; applies to immediately following operand |
-| Precedence | Unary > `*`/`/`/`%` > `+`/`-` > relational > logical > assignment |
-| Associativity | Most binary: left-to-right; unary/assignment/ternary: right-to-left |
-| Parentheses | When in doubt, parenthesize; especially with bitwise operators |
+| Concept | Key Summary |
+|:--------|:------------|
+| Expression | An expression is anything with a value, such as a constant, variable, operation, function call, or assignment, and every expression has a type and a value. |
+| Unary, binary, ternary operators | These operators take 1, 2, and 3 operands, respectively, as in `sizeof`, `+`, and `?:`. |
+| Arithmetic operators | C has the binary operators `+`, `-`, `*`, `/`, `%` and the unary operators `+x`, `-x`. |
+| Integer division | `int / int` truncates the fractional part, so at least one operand must be a floating-point type when a floating-point result is needed. |
+| Modulo `%` | It yields the remainder of integer division and works only with integer operands. |
+| Formula conversion | A floating-point literal such as `2.0` or a cast prevents integer division, and multiplication must be written explicitly with `*`. |
+| Prefix `++x` | It increments first and then uses the new value in the expression. |
+| Postfix `x++` | It uses the current value in the expression first and then increments. |
+| Increment restriction | Increment and decrement operators apply only to variables, not to constants or expressions. |
+| Relational operators | The result of `>`, `<`, `>=`, `<=`, `==`, `!=` is the `int` value 1 or 0. |
+| `=` vs `==` | `=` is assignment and `==` is comparison, and mixing them up is a common bug. |
+| Logical operators | `&&` (AND), `\|\|` (OR), and `!` (NOT) combine or negate conditions. |
+| Short-circuit evaluation | `&&` skips the right operand when the left is false, and `\|\|` skips it when the left is true. |
+| Truthiness | 0 is false and every non-zero value is true. |
+| Bitwise operators | `&`, `\|`, `^`, `~` operate on each bit of an integer individually. |
+| Shift operators | `<<` multiplies by $2^n$ for an n-bit shift, and `>>` yields the quotient of an unsigned value divided by $2^n$. |
+| RGB combining | `(blue << 16) \| (green << 8) \| red` gathers the three channels into one value. |
+| RGB extracting | `(rgb >> n) & 0xFF` moves the desired channel into the low 8 bits and isolates it. |
+| Compound assignment | `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `\|=`, `^=`, `<<=`, `>>=` combine an operation with assignment. |
+| Chained assignment | `a = b = c = 0` associates right to left and is evaluated as `a = (b = (c = 0))`. |
+| Ternary operator | `condition ? true_val : false_val` writes a simple if/else as a single expression. |
+| Implicit promotion | `char` and `short` are always promoted to `int` in arithmetic expressions. |
+| Cast operator | `(type)expr` converts a type explicitly and applies only to the immediately following operand. |
+| Precedence | Operators bind in the order postfix, unary, multiplicative, additive, shift, relational, bitwise, logical, conditional, assignment, and comma. |
+| Associativity | Most binary operators associate left to right, while unary, assignment, and ternary operators associate right to left. |
+| Parentheses | Parentheses should be used when in doubt, especially when bitwise and comparison operators appear together. |
 
 ---
+
+<br>
+
+## Self-Check Questions
+
+1. **Integer division and casts:** Given `int a = 7, b = 2;`, write the values of `a / b`, `(double)a / b`, `(double)(a / b)`, `a % b`, `-7 / 2`, and `-7 % 2`.
+
+   <details>
+   <summary>Answer</summary>
+
+   They are 3, 3.5, 3.0, 1, -3, and -1. `a / b` is integer division, so the fractional part of 3.5 is truncated. In `(double)a / b`, the cast applies to `a` first and the division becomes floating-point, but `(double)(a / b)` converts the integer result 3 afterward, giving 3.0. Since C99, integer division truncates toward zero, so `-7 / 2` is -3, and the sign of the remainder follows the dividend, so `-7 % 2` is -1.
+
+   </details>
+
+2. **Prefix and postfix:** After executing `int x = 5; int a = x++; int b = ++x;` in order, write the values of `a`, `b`, and `x`.
+
+   <details>
+   <summary>Answer</summary>
+
+   `a` is 5, `b` is 7, and `x` is 7. `x++` gives the current value 5 to `a` and then makes `x` 6. `++x` first makes `x` 7 and then gives that value to `b`.
+
+   </details>
+
+3. **Short-circuit evaluation:** Given `int a = 0, b = 5;`, write `r` and `b` after executing `int r = (a != 0) && (b++ > 3);`. What are `r` and `b` after then executing `r = (a == 0) || (b++ > 3);`?
+
+   <details>
+   <summary>Answer</summary>
+
+   After the first statement, `r` is 0 and `b` is 5. Because `a != 0` is false, the right operand `b++ > 3` of `&&` is not evaluated. After the second statement, `r` is 1 and `b` is still 5. Because `a == 0` is true, the result of `||` is fixed at 1 and the right operand is not evaluated.
+
+   </details>
+
+4. **Bitwise operations:** For `unsigned int rgb = 0x12AB34;`, write the expression that extracts the Green channel and its value. Also write in hexadecimal the RGB value obtained by combining Red `0x10`, Green `0x20`, and Blue `0x30` in the layout of Figure 1.
+
+   <details>
+   <summary>Answer</summary>
+
+   Green occupies bits 8-15, so it is extracted with `(rgb >> 8) & 0xFF`, and its value is `0xAB` (171). The combined value is `(0x30 << 16) | (0x20 << 8) | 0x10` = `0x302010`.
+
+   </details>
+
+5. **Precedence:** Given `int a = 5, b = 2;`, find the values of `a & b == 0` and `(a & b) == 0`, and explain why they differ.
+
+   <details>
+   <summary>Answer</summary>
+
+   `a & b == 0` is 0 and `(a & b) == 0` is 1. Because `==` has higher precedence than `&`, the first expression is computed as `a & (b == 0)`, that is, `5 & 0` = 0. The second expression first computes `5 & 2` (binary `101 & 010`) = 0 and then compares it with 0, giving 1.
+
+   </details>
