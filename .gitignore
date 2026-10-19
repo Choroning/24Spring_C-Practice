@@ -12,4 +12,5 @@ Thumbs.db
 # Language specific
 *.o
 *.out
-.idea/
+*.exe
+a.out
