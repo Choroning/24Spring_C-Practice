@@ -29,7 +29,7 @@
 
 > **🤖 AI 에이전트 활용**
 > 컴퓨터언어실습Ⅰ은 코드를 스스로 작성하도록 했습니다.
-> [Claude Code](https://claude.ai/download)를 노트 정리와 번역, 레포지토리 정리에 활용했으며, 빠져 있던 과제 문항 일부의 풀이는 Claude Code로 작성했습니다.
+> [Claude Code](https://claude.ai/download)를 노트 정리와 번역, 레포지토리 정리에 활용했습니다.
 
 <br><a name="course-information"></a>
 ## 📚 강의 정보

@@ -29,7 +29,7 @@ This repository archives bilingual lecture notes and coursework for the Computer
 
 > **🤖 AI Agent Usage**
 > Computer Language and Training Ⅰ required students to write their own code.
-> [Claude Code](https://claude.ai/download) was used to organize and translate the notes and to restructure the repository, and it also wrote the solutions to some assignment problems that were missing.
+> [Claude Code](https://claude.ai/download) was used to organize and translate the notes and to restructure the repository.
 
 <br><a name="course-information"></a>
 ## 📚 Course Information
