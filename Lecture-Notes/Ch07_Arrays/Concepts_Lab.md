@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 8, 9
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
 > **Learning Objectives:**
 > 1. State the three elements needed to declare an array and access its elements by index

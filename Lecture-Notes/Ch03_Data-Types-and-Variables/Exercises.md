@@ -12,6 +12,31 @@ Exercises 1-8 are exercises 1-8 of Chapter 3 of the textbook, and Exercises 9-18
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Statements About Data Types](#exercise-1-statements-about-data-types)
+- [Exercise 2: Meanings of Escape Sequences](#exercise-2-meanings-of-escape-sequences)
+- [Exercise 3: Statements About Variables](#exercise-3-statements-about-variables)
+- [Exercise 4: Valid Variable Declarations](#exercise-4-valid-variable-declarations)
+- [Exercise 5: Statements About Constants](#exercise-5-statements-about-constants)
+- [Exercise 6: Advantages of Symbolic Constants](#exercise-6-advantages-of-symbolic-constants)
+- [Exercise 7: Lines That Cause Compile Errors](#exercise-7-lines-that-cause-compile-errors)
+- [Exercise 8: Printing Out-of-Range Values](#exercise-8-printing-out-of-range-values)
+- [Exercise 9: Area and Perimeter of a Square](#exercise-9-area-and-perimeter-of-a-square)
+- [Exercise 10: Area and Perimeter of a Rectangle](#exercise-10-area-and-perimeter-of-a-rectangle)
+- [Exercise 11: Computing Potential Energy](#exercise-11-computing-potential-energy)
+- [Exercise 12: Area of a Right Triangle](#exercise-12-area-of-a-right-triangle)
+- [Exercise 13: Converting Dollars to Won](#exercise-13-converting-dollars-to-won)
+- [Exercise 14: Converting Won to Dollars](#exercise-14-converting-won-to-dollars)
+- [Exercise 15: Converting Yards to Meters](#exercise-15-converting-yards-to-meters)
+- [Exercise 16: Converting Inches to Centimeters](#exercise-16-converting-inches-to-centimeters)
+- [Exercise 17: Converting Square Meters to Pyeong](#exercise-17-converting-square-meters-to-pyeong)
+- [Exercise 18: Square and Cube of a Real Number](#exercise-18-square-and-cube-of-a-real-number)
+
+---
+
+<br>
+
 ## Exercise 1: Statements About Data Types
 
 **Textbook Problem:** Chapter 3 exercise 1

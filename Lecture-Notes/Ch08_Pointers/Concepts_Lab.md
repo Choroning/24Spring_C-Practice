@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 9
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 9
 
 > **Learning Objectives:**
 > 1. Explain with memory addresses why a variable cannot be changed through another variable that copies it
@@ -94,6 +94,8 @@ An address can also be printed with the hexadecimal integer format specifiers `%
 ```
 
 > **Note:** **Length and value of printed addresses.** The size of an address is set by the target platform of the build. In a 32-bit (x86) build an address is 4 bytes, printed as 8 hexadecimal digits such as `00D5FAEC`, and in a 64-bit (x64, ARM64) build it is 8 bytes, printed as a longer value. The textbook explains addresses on a 32-bit basis, so switching Visual Studio's platform to x86 shows addresses of the same length as the textbook. Also, today's operating systems randomize the location of the stack on each run for security (ASLR, Address Space Layout Randomization), so the same program prints different addresses on each run. The addresses in this note come from one run, and only the differences between addresses (4 bytes, 8 bytes, and so on) are meaningful.
+
+> **[Operating Systems]** The addresses a program prints belong to the virtual address space that the operating system gives each process, and the operating system maps these virtual addresses to physical addresses in memory. ASLR, which changes the addresses on every run, is one of the operating system's memory management and protection techniques; virtual memory is covered in Operating Systems.
 
 ---
 

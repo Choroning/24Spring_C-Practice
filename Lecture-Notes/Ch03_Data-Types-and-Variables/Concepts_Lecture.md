@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -393,6 +393,8 @@ In 3 bits, sign-magnitude and one's complement represent only the 7 values from 
 - The adder works the same way for positive and negative numbers, so subtraction can be done as addition of a negative number.
 - The hardware implementation is simple.
 
+> **[Computer Architecture]** With two's complement a single adder handles the addition of positive and negative numbers alike and also performs subtraction as addition. How such integer arithmetic units and IEEE 754 floating-point units (Section 2.3) are built in hardware is covered under data representation and arithmetic units in Computer Architecture.
+
 Unsigned integer types use the most significant bit to store value as well. In other words, the data type of a variable determines the meaning of the value stored in it.
 
 > **Key Point:** The same bit pattern means different things depending on the type. `short a = -7` and `unsigned short b = 65529` have the **identical bits** (`0xFFF9`), but the type determines interpretation. In `b`, the most significant bit is treated as the value $2^{15}$.
@@ -443,7 +445,7 @@ The data used in a program consists of variables and constants. A **variable** i
 **Declaration** tells the compiler the variable's data type and name. To declare several variables of the same type, list the variable names separated by commas (`,`). **Initialization** gives a variable its starting value when it is allocated in memory, and **assignment** stores a value in a variable that already exists.
 
 ```c
-int x;                // declaration — value is garbage (undefined)
+int x;                // declaration: value is garbage (undefined)
 int y = 10;           // declaration + initialization
 x = 5;                // assignment
 
@@ -530,8 +532,8 @@ If `hours` is 5, `wage` becomes 8350 × 5 = 41750.
 **Rules and pitfalls:** A `#define` statement needs no semicolon at the end, and the value of a macro constant cannot be changed.
 
 ```c
-#define MAX_SIZE 100    // ✅ correct — no semicolon at end
-#define MAX_SIZE 100;   // ❌ wrong — semicolon gets substituted too!
+#define MAX_SIZE 100    // ✅ correct: no semicolon at end
+#define MAX_SIZE 100;   // ❌ wrong: semicolon gets substituted too!
 
 // After preprocessing with the wrong version:
 int arr[MAX_SIZE];  →  int arr[100;];  // syntax error!
@@ -539,9 +541,9 @@ int arr[MAX_SIZE];  →  int arr[100;];  // syntax error!
 
 ```c
 #define HOURLY_WAGE 8350
-HOURLY_WAGE = 9000;           // ❌ compile error — macro is not a variable
-printf("HOURLY_WAGE\n");      // prints "HOURLY_WAGE" — strings are NOT replaced
-printf("%d\n", HOURLY_WAGE);  // prints 8350 — identifier IS replaced
+HOURLY_WAGE = 9000;           // ❌ compile error: macro is not a variable
+printf("HOURLY_WAGE\n");      // prints "HOURLY_WAGE": strings are NOT replaced
+printf("%d\n", HOURLY_WAGE);  // prints 8350: identifier IS replaced
 ```
 
 ### 4.3 `const` Variables
@@ -557,7 +559,7 @@ BUF_SIZE = 128;  // ❌ compile error
 
 > **Caution:** A `const` variable **must be initialized at declaration**. A declaration without initialization is not a syntax error in C (it is in C++), but because no value can be assigned later, a local one is left holding garbage and is useless.
 > ```c
-> const int size;     // ❌ useless — can never assign a value
+> const int size;     // ❌ useless: can never assign a value
 > const int size = 10; // ✅ correct
 > ```
 

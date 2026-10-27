@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -147,15 +147,15 @@ C was created in **1972** by **Dennis Ritchie** at Bell Labs, building on the B 
 ```text
 Timeline of C
 ──────────────────────────────────────────────────────────────
-1969    B Language (Ken Thompson) — for early UNIX on PDP-7
-1972    C Language (Dennis Ritchie) — Bell Labs, for UNIX on PDP-11
-1978    K&R C — "The C Programming Language" book (Kernighan & Ritchie)
-1989    ANSI C (C89) — first official standard (ANSI X3.159-1989)
-1990    C90 — ISO adoption of ANSI C (ISO/IEC 9899:1990)
-1999    C99 — inline functions, variable-length arrays, // comments
-2011    C11 — multi-threading, _Generic, bounds-checking
-2018    C18 — bug fixes for C11 (no new features)
-2023    C23 — latest standard (nullptr, #embed, auto type inference)
+1969    B Language (Ken Thompson): for early UNIX on PDP-7
+1972    C Language (Dennis Ritchie): Bell Labs, for UNIX on PDP-11
+1978    K&R C: "The C Programming Language" book (Kernighan & Ritchie)
+1989    ANSI C (C89): first official standard (ANSI X3.159-1989)
+1990    C90: ISO adoption of ANSI C (ISO/IEC 9899:1990)
+1999    C99: inline functions, variable-length arrays, // comments
+2011    C11: multi-threading, _Generic, bounds-checking
+2018    C18: bug fixes for C11 (no new features)
+2023    C23: latest standard (nullptr, #embed, auto type inference)
 ──────────────────────────────────────────────────────────────
 ```
 
@@ -227,12 +227,12 @@ An **embedded system** is a device that contains a special-purpose computer, and
 
 ```text
 C (1972)
-├── C++ (1979) — adds OOP, templates, STL
-├── Objective-C (1984) — adds Smalltalk-style OOP
-├── Java (1995) — C-like syntax, garbage collection, JVM
-├── C# (2000) — Microsoft's answer to Java
-├── Go (2009) — simplicity of C + concurrency
-└── Rust (2010) — C-level performance + memory safety
+├── C++ (1979): adds OOP, templates, STL
+├── Objective-C (1984): adds Smalltalk-style OOP
+├── Java (1995): C-like syntax, garbage collection, JVM
+├── C# (2000): Microsoft's answer to Java
+├── Go (2009): simplicity of C + concurrency
+└── Rust (2010): C-level performance + memory safety
 ```
 
 *Figure 4. Languages influenced by C*
@@ -293,7 +293,7 @@ When you "compile" a C program, multiple stages happen behind the scenes. The fu
 └────────────┘
      │
      ▼
-  hello.i          (preprocessed source — all macros expanded)
+  hello.i          (preprocessed source: all macros expanded)
      │
      ▼
 ┌────────────┐
@@ -309,7 +309,7 @@ When you "compile" a C program, multiple stages happen behind the scenes. The fu
 └────────────┘
      │
      ▼
-  hello.o          (object file — machine code, not yet executable)
+  hello.o          (object file: machine code, not yet executable)
      │
      ▼
 ┌────────────┐
@@ -332,6 +332,8 @@ When you "compile" a C program, multiple stages happen behind the scenes. The fu
 *Table 6. Input, output, and role of each build stage*
 
 One object file is produced per source file, and the linker combines the object files and libraries into a single executable. Visual Studio (Visual C++) uses the `.obj` extension for object files and `.exe` for executables (`first.c` → `first.obj` → `first.exe`), and it runs everything from preprocessing to linking with a single build command.
+
+> **[Systems Programming]** Symbol resolution and relocation, in which the linker connects the external references left in object files (for example, `printf`) to their definitions in libraries, and loading, which places the finished executable in memory and starts it, are covered in Systems Programming. Knowing this process explains why a function whose definition is missing is reported as an error only at the link step, after compilation has finished (Section 3.3).
 
 > **Key Point:** The preprocessor runs **before** actual compilation. It performs textual substitution and does not understand C syntax. This is why `#define` macros can cause subtle bugs.
 

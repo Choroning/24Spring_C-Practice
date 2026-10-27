@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 2
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2
 
 > **Learning Objectives:**
 > 1. Distinguish characters that look like numbers from numbers that can be computed, based on the fact that `printf` prints the string inside double quotes as it is
@@ -190,7 +190,7 @@ int main(void)
 
 ### 3.1 Variable Names Inside a String
 
-The first `printf` of the program in Section 2.4 prints not `2 + 3 = 5` but the following.
+Running the program of Section 2.4 prints the following. The first `printf` prints not `2 + 3 = 5` but the first line, `val_1 + val_2 = sum`.
 
 ```text
 val_1 + val_2 = sum 
@@ -214,7 +214,7 @@ A **format specifier** is a symbol that specifies where and in what format the v
 
 *Table 2. Format specifiers by kind of data*
 
-> **Caution:** If a format specifier and its argument do not match in type, for example printing a `double` value with `%d`, the behavior is undefined in the C standard and a wrong value is printed. The numbers of format specifiers and arguments must also be equal.
+> **Caution:** If a format specifier and its argument do not match in type, for example printing a `double` value with `%d`, the behavior is undefined in the C standard, and a meaningless value is usually printed. The numbers of format specifiers and arguments must also be equal.
 
 ---
 
@@ -379,7 +379,7 @@ The codes of uppercase and lowercase letters differ by 32 (0x20), so `'a' - 'A'`
    <details>
    <summary>Answer</summary>
 
-   An uninitialized local variable holds an unknown garbage value left over in that memory, so a different value can be printed on each run. In the C standard, using such a value should be avoided in the first place, so a variable is initialized or assigned a value before it is used.
+   An uninitialized local variable holds an unknown garbage value left over in that memory, so a different value can be printed on each run. This value is not one the program set and must not be used, so a variable is initialized or assigned a value before it is used.
 
    </details>
 

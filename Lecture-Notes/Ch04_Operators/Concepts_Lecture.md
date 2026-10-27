@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -86,7 +86,7 @@ Every expression has a **type** and a **value**. Even an assignment like `x = 5`
 ```c
 int x;
 x = 5;              // assignment expression, value is 5
-printf("%d\n", x=5); // prints 5 — assignment is an expression
+printf("%d\n", x=5); // prints 5: assignment is an expression
 ```
 
 ### 1.2 Operators and Operands
@@ -106,9 +106,9 @@ Operators are classified by the **number of operands** they take as follows.
 ```c
 int a = 10, b = 3;
 
-sizeof(a);    // unary — one operand (a)
-a + b;        // binary — two operands (a, b)
-a > b ? a : b; // ternary — three operands (a>b, a, b)
+sizeof(a);    // unary: one operand (a)
+a + b;        // binary: two operands (a, b)
+a > b ? a : b; // ternary: three operands (a>b, a, b)
 ```
 
 ---
@@ -139,7 +139,7 @@ When **both operands** of `/` are integers, C performs **integer division**. The
 
 ```c
 int a = 7, b = 2;
-printf("%d\n", a / b);       // 3  (not 3.5 — truncated!)
+printf("%d\n", a / b);       // 3  (not 3.5: truncated!)
 printf("%d\n", -7 / 2);      // -3 (truncates toward zero)
 ```
 
@@ -168,7 +168,7 @@ printf("%d\n", -7 % 2);   // -1  (sign follows dividend in C99+)
 ```
 
 ```c
-// ❌ Compile error — % does not work with floats
+// ❌ Compile error: % does not work with floats
 // double r = 7.5 % 2.0;
 ```
 
@@ -238,7 +238,7 @@ When used **standalone** (as the only operation on a line), prefix and postfix p
 int x = 5;
 x++;    // x becomes 6
 ++x;    // x becomes 7
-// Both just increment x by 1 — no difference in standalone use
+// Both just increment x by 1: no difference in standalone use
 ```
 
 The difference appears **inside expressions**.
@@ -265,12 +265,12 @@ a = x++;   // a = 5 (old value), then x becomes 6
 
 ```c
 int count = 5;
-count++;        // ✅ OK — variable
-++count;        // ✅ OK — variable
+count++;        // ✅ OK: variable
+++count;        // ✅ OK: variable
 
-// 10++;         // ❌ Error — constant
-// (count+1)--;  // ❌ Error — expression, not a variable
-// ++(a+b);      // ❌ Error — expression
+// 10++;         // ❌ Error: constant
+// (count+1)--;  // ❌ Error: expression, not a variable
+// ++(a+b);      // ❌ Error: expression
 ```
 
 ### 3.4 Detailed Trace Example
@@ -351,8 +351,8 @@ printf("%d\n", 3 > 7);  // prints 0
 ```c
 int x = 10;
 
-if (x == 5) { ... }  // ✅ Comparison — checks if x is 5
-if (x = 5)  { ... }  // ⚠ Assignment — sets x to 5, then checks if 5 is non-zero (always true!)
+if (x == 5) { ... }  // ✅ Comparison: checks if x is 5
+if (x = 5)  { ... }  // ⚠ Assignment: sets x to 5, then checks if 5 is non-zero (always true!)
 ```
 
 > **Caution:** `if (x = 5)` compiles without error, but it assigns 5 to x and always evaluates to true (since 5 is non-zero). This is one of the most common bugs in C. gcc and clang warn about it with the `-Wall` option, but not every compiler warns with its default settings.
@@ -462,8 +462,8 @@ C89 does **not** have a native boolean type. Instead, it judges truth and falseh
 
 ```c
 int x = -5;
-if (x)   printf("true\n");   // prints "true" — x is non-zero
-if (!0)  printf("true\n");   // prints "true" — !0 = 1
+if (x)   printf("true\n");   // prints "true": x is non-zero
+if (!0)  printf("true\n");   // prints "true": !0 = 1
 
 printf("%d\n", !0);    // 1
 printf("%d\n", !5);    // 0  (any non-zero becomes 0)
@@ -501,6 +501,8 @@ The result of each operation on single bits is as follows.
 | 1 | 1 | 1 | 1 | 0 | 0 |
 
 *Table 14. Bit-level truth table*
+
+> **[Digital Logic Design]** The truth tables in Table 14 are those of Boolean conjunction (AND), disjunction (OR), exclusive OR (XOR), and negation (NOT), which hardware implements with AND, OR, XOR, and NOT gates. A bitwise operator is the same as applying one such gate to each bit position of an integer; Boolean algebra and logic gates are covered in Digital Logic Design.
 
 ```c
 unsigned char a = 0xB5;  // 1011 0101
@@ -676,7 +678,7 @@ if (x >= 0)
 else
     abs_val = -x;
 
-// Using ternary — equivalent
+// Using ternary: equivalent
 int abs_val = (x >= 0) ? x : -x;
 ```
 
@@ -725,10 +727,10 @@ The **cast operator** `(type)` explicitly converts a value to a specified type. 
 ```c
 int a = 7, b = 2;
 
-// Without cast — integer division
+// Without cast: integer division
 double r1 = a / b;           // 3.0
 
-// With cast — floating-point division
+// With cast: floating-point division
 double r2 = (double)a / b;   // 3.5
 ```
 
@@ -819,10 +821,10 @@ a = b = c = 0;
 Rather than memorizing the entire precedence table, use **parentheses** to make your intent explicit.
 
 ```c
-// Ambiguous — is it (a & b) == 0 or a & (b == 0)?
+// Ambiguous: is it (a & b) == 0 or a & (b == 0)?
 if (a & b == 0) { ... }   // ⚠ Actually: a & (b == 0), because == has higher precedence than &
 
-// Clear — always use parentheses with bitwise operators
+// Clear: always use parentheses with bitwise operators
 if ((a & b) == 0) { ... } // ✅ Correct and readable
 ```
 

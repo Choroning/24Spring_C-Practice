@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 8, 9
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
 > **Learning Objectives:**
 > 1. Distinguish string constants from string variables (character arrays) and explain how the null character marks the end of a string
@@ -133,7 +133,7 @@ int main()
 2. Hello 
 ```
 
-The first `printf` prints an uninitialized array, so unknown bytes left in that memory are printed, or the function may read past the array until it finds a null character. This is undefined behavior and the result differs from run to run, so the output above shows only the second line, after `strcpy`.
+The first `printf` prints an uninitialized array after `1. `, so unknown bytes left in that memory are printed, or the function may read past the array until it finds a null character. This is undefined behavior, so the first line differs from run to run, and the output above leaves out that first line and shows only the second line, after `strcpy`.
 
 > **Note:** Visual Studio issues warning C4996 for `strcpy` because it does not check the size of the destination array, and it is turned off with `#define _CRT_SECURE_NO_WARNINGS` or `#pragma warning(disable:4996)` ([Chapter 3 Lab, Section 5.1](../Ch03_Data-Types-and-Variables/Concepts_Lab.md#51-warning-c4996)). The compiler does not check that the destination array is large enough to hold the string and the null character, so the programmer must guarantee it.
 
@@ -246,7 +246,7 @@ aBc
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | `str[0]` | `'a'` | `'B'` | `'c'` | `'\0'` | `'\0'` | `'\0'` |
 | `str[1]` | `'d'` | `'e'` | `'f'` | `'g'` | `'\0'` | `'\0'` |
-| `str[2]` | `'1'` | `'@'` | `'$'` | `'\0'` | `'\0'` | `'\0'` |
+| `str[2]` | `'1'` | `'Q'` | `'$'` | `'\0'` | `'\0'` | `'\0'` |
 
 *Table 1. The array of strings after changing str[0][0] and str[0][2]*
 
@@ -291,7 +291,7 @@ int main()
 - **Emptying the buffer:** `while (getchar() != '\n');` reads and discards the characters left in the buffer up to the newline character. Without this line, the second input function would not wait for the user but would immediately read the ` gil dong` left in the buffer.
 - **Second input:** The line input function reads the whole line including spaces, `hong gil dong`.
 
-> **Note:** **`gets`, `gets_s`, and `fgets`.** `gets`, which does not receive the size of the array and can cause buffer overflows, was removed from the standard in C11. Visual Studio provides `gets_s(str, sizeof(str));` instead, but this function belongs to the optional Annex K of C11 and is usually absent from the standard libraries of gcc and clang. The examples of this repository use the standard function `fgets(str, sizeof(str), stdin);` so that they compile with any compiler. Unlike `gets_s`, `fgets` keeps the newline character it reads in the array, so `str[strcspn(str, "\n")] = '\0';` replaces the newline with the null character ([Chapter 9, Section 4.2](Concepts_Lecture.md#42-fgets--gets_s)). For the same reason, reading a string with `scanf_s` requires passing the size of the array as well, as in `scanf_s("%s", nOne, 20);`.
+> **Note:** **`gets`, `gets_s`, and `fgets`.** `gets`, which does not receive the size of the array and can cause buffer overflows, was removed from the standard in C11. Visual Studio provides `gets_s(str, sizeof(str));` instead, but this function belongs to the optional Annex K of C11 and is usually absent from the standard libraries of gcc and clang. The examples in this note use the standard function `fgets(str, sizeof(str), stdin);` so that they compile with any compiler. Unlike `gets_s`, `fgets` keeps the newline character it reads in the array, so `str[strcspn(str, "\n")] = '\0';` replaces the newline with the null character ([Chapter 9, Section 4.2](Concepts_Lecture.md#42-fgets--gets_s)). For the same reason, reading a string with `scanf_s` requires passing the size of the array as well, as in `scanf_s("%s", nOne, 20);`.
 
 ---
 

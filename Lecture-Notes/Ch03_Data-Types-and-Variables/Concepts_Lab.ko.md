@@ -4,7 +4,7 @@
 
 > **최종 수정일:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 3
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
 > **학습 목표:**
 > 1. 기본 데이터 타입의 크기와 표현 범위를 말하고, 여러 데이터 타입이 필요한 이유를 설명할 수 있다
@@ -295,7 +295,7 @@ input real num(double): -34.457
 1.32, -34.46 
 ```
 
-> **핵심:** `printf`에 넘긴 `float` 인자는 함수 호출 과정에서 `double`로 변환되므로 `%f` 하나로 두 타입을 출력할 수 있다. 반면 `scanf`는 값이 아니라 변수의 주소를 받으므로, 저장할 메모리의 크기(4바이트 또는 8바이트)를 형식 지정자로 정확히 알려야 한다. `double` 변수를 `%f`로 읽으면 정의되지 않은 동작이 되어 엉뚱한 값이 저장된다.
+> **핵심:** `printf`에 넘긴 `float` 인자는 함수 호출 과정에서 `double`로 변환되므로 `%f` 하나로 두 타입을 출력할 수 있다. 반면 `scanf`는 값이 아니라 변수의 주소를 받으므로, 저장할 메모리의 크기(4바이트 또는 8바이트)를 형식 지정자로 정확히 알려야 한다. `double` 변수를 `%f`로 읽으면 정의되지 않은 동작이 되며, 대개 잘못된 값이 저장된다.
 
 ---
 
@@ -356,7 +356,7 @@ int main()
 }
 ```
 
-Visual Studio의 오류 목록에는 C4996 오류(`'scanf': This function or variable may be unsafe. Consider using scanf_s instead.`)와 C6031 경고(반환 값이 무시되었습니다)가 나타나며, 실행할 때 드러나는 입력 버퍼 문제도 있다.
+Visual Studio의 오류 목록에는 오류로 처리된 C4996 경고(`'scanf': This function or variable may be unsafe. Consider using scanf_s instead.`)와 C6031 경고(반환 값이 무시되었습니다)가 나타나며, 실행할 때 드러나는 입력 버퍼 문제도 있다.
 
 ### 5.1 C4996 경고
 
@@ -370,7 +370,7 @@ Visual Studio(MSVC)는 `scanf`가 입력의 길이를 검사하지 않아 버퍼
 
 `_CRT_SECURE_NO_WARNINGS`는 MSVC의 헤더 파일이 검사하는 매크로이므로 `#include <stdio.h>`보다 먼저 정의해야 효과가 있다. 프로젝트 속성에서 SDL 검사를 "아니요"로 바꾸면 C4996이 오류가 아닌 경고로 남는다.
 
-> **참고:** C4996은 C 표준의 문제가 아니라 Microsoft 컴파일러의 정책이다. gcc와 clang은 `scanf`에 이런 경고를 내지 않으며, `_CRT_SECURE_NO_WARNINGS` 매크로와 `#pragma warning`은 아무 효과가 없다. 그래서 이 레포지토리의 예제 코드는 `#define _CRT_SECURE_NO_WARNINGS`를 두어 Visual Studio와 다른 컴파일러에서 모두 그대로 컴파일되게 한다.
+> **참고:** C4996은 C 표준의 문제가 아니라 Microsoft 컴파일러의 정책이다. gcc와 clang은 `scanf`에 이런 경고를 내지 않으며, `_CRT_SECURE_NO_WARNINGS` 매크로와 `#pragma warning`은 아무 효과가 없다. 그래서 이 노트의 예제 코드는 `#define _CRT_SECURE_NO_WARNINGS`를 두어 Visual Studio와 다른 컴파일러에서 모두 그대로 컴파일되게 한다.
 
 ### 5.2 입력 버퍼와 형식 문자열의 공백
 
@@ -585,7 +585,7 @@ Enter real num.(double): 34.144
    <details>
    <summary>정답</summary>
 
-   `%f`는 `float`(4바이트)의 주소를 기대하므로 `double`(8바이트) 변수의 메모리 일부에만 `float` 형식의 비트가 쓰이고, 나머지 바이트는 그대로 남는다. 형식 지정자와 인자의 타입이 맞지 않으므로 정의되지 않은 동작이며, 대개 엉뚱한 값이 저장된다. `double`은 `%lf`로 읽어야 한다.
+   `%f`는 `float`(4바이트)의 주소를 기대하므로 `double`(8바이트) 변수의 메모리 일부에만 `float` 형식의 비트가 쓰이고, 나머지 바이트는 그대로 남는다. 형식 지정자와 인자의 타입이 맞지 않으므로 정의되지 않은 동작이며, 대개 잘못된 값이 저장된다. `double`은 `%lf`로 읽어야 한다.
 
    </details>
 

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -229,8 +229,8 @@ printf("Title: %s\n", c1.title);    // read a member
 > **Key Point:** Members can **only** be accessed through a struct variable. You cannot use a member name on its own, and `title` alone does not refer to `c1.title`. If there is an ordinary variable with the same name, `title` refers to that variable.
 
 ```c
-// title = "Test";       // compile error — title is not a standalone variable
-c1.title;                // correct — access through the struct variable
+// title = "Test";       // compile error: title is not a standalone variable
+c1.title;                // correct: access through the struct variable
 ```
 
 When several structure variables are declared, they are allocated in different memory, and the members are allocated separately for each structure variable. Because members are always accessed through a structure variable, it is clear whose member is being used.
@@ -261,9 +261,9 @@ Array members **cannot** be assigned to each other directly, so `strcpy` must be
 struct content c1 = {"Avengers", 11000, 8.8};
 struct content c3;
 
-// c3.title = c1.title;         // compile error — arrays cannot be assigned!
-strcpy(c3.title, c1.title);     // correct — use strcpy for strings
-c3.price = c1.price;            // OK — non-array members can be assigned
+// c3.title = c1.title;         // compile error: arrays cannot be assigned!
+strcpy(c3.title, c1.title);     // correct: use strcpy for strings
+c3.price = c1.price;            // OK: non-array members can be assigned
 c3.rate = c1.rate;              // OK
 ```
 
@@ -421,7 +421,7 @@ A structure can be passed to a function either by value or by pointer.
 ```c
 void display(struct content c) {
     printf("%s %d %.1f\n", c.title, c.price, c.rate);
-    c.price = 0;   // modifies the copy only — original unchanged
+    c.price = 0;   // modifies the copy only: original unchanged
 }
 
 int main() {
@@ -639,7 +639,7 @@ printf("i = %d\n", d.i);    // 42
 
 d.f = 3.14;
 printf("f = %.2f\n", d.f);  // 3.14
-printf("i = %d\n", d.i);    // garbage — overwritten by d.f!
+printf("i = %d\n", d.i);    // garbage: overwritten by d.f!
 ```
 
 The last line prints a meaningless value, but not a random one. It prints `1078523331`, the IEEE 754 single-precision bit pattern `0x4048F5C3` of `3.14f` stored in `d.f`, reinterpreted as an `int` (on typical systems where `int` and `float` are both 4 bytes). The C standard specifies that reading a member other than the one last written reinterprets those bytes as the new type.
@@ -684,7 +684,7 @@ Without `typedef`, you must always write `struct point`. Even after the `typedef
 
 ```c
 struct point p1 = {10, 20};   // verbose
-Point p1 = {10, 20};          // concise — with typedef
+Point p1 = {10, 20};          // concise: with typedef
 ```
 
 > **Key Point:** `typedef` does **not** create a new type; it creates a new **name** for an existing type. `Point` and `struct point` are the same type.

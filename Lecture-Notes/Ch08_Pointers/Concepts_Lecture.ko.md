@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -479,7 +479,7 @@ int main() {
 ```c
 void addTen_wrong(int x) {
     x = x + 10;
-    // x는 지역 복사본 — 원본은 변경되지 않음
+    // x는 지역 복사본: 원본은 변경되지 않음
 }
 
 int main() {

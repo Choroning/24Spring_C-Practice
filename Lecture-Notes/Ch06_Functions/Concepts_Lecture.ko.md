@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -226,7 +226,7 @@ double average(int a, int b) {
     return (double)(a + b) / 2;
 }
 
-// void 반환형 — 반환값 없음
+// void 반환형: 반환값 없음
 void printLine(void) {
     printf("--------------------\n");
 }
@@ -321,8 +321,8 @@ int add(int a, int b) {
 
 ```c
 // 두 형태 모두 "매개변수 없음"을 의미:
-void printMenu(void) { ... }   // 명시적 void — 권장
-void printMenu() { ... }       // 빈 괄호 — 정의에서는 유효
+void printMenu(void) { ... }   // 명시적 void: 권장
+void printMenu() { ... }       // 빈 괄호: 정의에서는 유효
 ```
 
 > **핵심:** C23 이전의 **원형(선언)** 에서 `void printMenu()`는 매개변수의 개수와 타입을 지정하지 않은 선언이어서 컴파일러가 인수를 검사하지 않고, `void printMenu(void)`는 매개변수가 없음을 뜻한다. C23부터는 빈 괄호도 매개변수가 없다는 뜻이다. 명확성을 위해 원형에서는 항상 `void`를 사용하라.
@@ -404,7 +404,7 @@ int main() {
 
 ### 2.6 함수 선언 (원형)
 
-**함수 선언**(또는 **원형**(prototype), **시그니처**(signature))은 전체 정의가 나타나기 **전에** 함수의 인터페이스를 컴파일러에 알려준다.
+**함수 선언**(또는 **원형(prototype)**, **시그니처(signature)**)은 전체 정의가 나타나기 **전에** 함수의 인터페이스를 컴파일러에 알려준다.
 
 **문법:**
 
@@ -424,8 +424,8 @@ int factorial(int n);         // 매개변수 이름 포함 (권장)
 int isLeapYear(int);          // 매개변수 이름 생략 (유효)
 
 int main() {
-    printf("5! = %d\n", factorial(5));      // OK — 위에서 원형 확인됨
-    printf("Leap? %d\n", isLeapYear(2024)); // OK — 위에서 원형 확인됨
+    printf("5! = %d\n", factorial(5));      // OK: 위에서 원형 확인됨
+    printf("Leap? %d\n", isLeapYear(2024)); // OK: 위에서 원형 확인됨
     return 0;
 }
 
@@ -494,14 +494,14 @@ void funcA() {
 }
 
 void funcB() {
-    int x = 20;   // funcB의 지역 변수 — funcA의 x와 독립적
+    int x = 20;   // funcB의 지역 변수: funcA의 x와 독립적
     printf("funcB: x = %d\n", x);
 }
 
 int main() {
     funcA();   // 출력: funcA: x = 10
     funcB();   // 출력: funcB: x = 20
-    // printf("%d", x);   // 오류 — 여기서 x에 접근 불가
+    // printf("%d", x);   // 오류: 여기서 x에 접근 불가
     return 0;
 }
 ```
@@ -524,7 +524,7 @@ int main() {
         int temp = i * 10;   // 매 반복마다 생성되고, 반복 끝에 소멸
         printf("%d ", temp);
     }
-    // printf("%d", temp);  // 오류 — temp는 여기에 존재하지 않음
+    // printf("%d", temp);  // 오류: temp는 여기에 존재하지 않음
     return 0;
 }
 ```
@@ -540,7 +540,7 @@ int main() {
 ```c
 #include <stdio.h>
 
-int count = 0;   // 전역 변수 — 이 줄 아래 어디서든 접근 가능
+int count = 0;   // 전역 변수: 이 줄 아래 어디서든 접근 가능
 
 void increment() {
     count++;   // 전역 변수를 수정
@@ -576,13 +576,13 @@ int main() {
 ```c
 #include <stdio.h>
 
-int g;   // 전역 — 자동으로 0으로 초기화됨
+int g;   // 전역: 자동으로 0으로 초기화됨
 
 int main() {
     printf("g = %d\n", g);   // g = 0 (보장됨)
 
     int local;
-    // printf("local = %d\n", local);  // 위험 — 미초기화, 쓰레기 값
+    // printf("local = %d\n", local);  // 위험: 미초기화, 쓰레기 값
     return 0;
 }
 ```
@@ -599,7 +599,7 @@ int main() {
 int x = 100;   // 전역
 
 void demo() {
-    int x = 50;   // 지역 — 전역 x를 가림
+    int x = 50;   // 지역: 전역 x를 가림
     printf("demo() 내부: x = %d\n", x);       // 50 (지역)
 }
 
@@ -609,7 +609,7 @@ int main() {
     printf("demo() 후: x = %d\n", x);          // 100 (전역, 변경 없음)
 
     {
-        int x = 999;   // 블록 지역 — 전역 x를 가림
+        int x = 999;   // 블록 지역: 전역 x를 가림
         printf("블록 내부: x = %d\n", x);       // 999
     }
     printf("블록 후: x = %d\n", x);             // 100 (전역)
@@ -673,15 +673,17 @@ demo() 후: x = 100
 
 구체적인 단계와 순서는 CPU와 호출 규약(calling convention)에 따라 다르다. 예를 들어 x86-64 환경에서는 처음 몇 개의 인수를 스택이 아니라 레지스터로 전달한다.
 
+> **[시스템프로그래밍]** 함수가 호출될 때마다 스택에 만들어지는 스택 프레임(복귀 주소, 저장된 레지스터, 지역 변수)과, 인수를 어느 레지스터나 스택 위치로 전달할지 정한 호출 규약은 프로그램의 기계 수준 표현으로서 시스템프로그래밍에서 다룬다. 이 구조를 알면 지역 변수가 함수가 끝날 때 사라지는 이유(3.1절)와 함수 호출 오버헤드가 생기는 이유를 함께 이해할 수 있다.
+
 이 과정을 **함수 호출 오버헤드**라 한다. 상당한 계산을 수행하는 큰 함수의 경우 오버헤드는 무시할 수 있다. 그러나 **매우 작은 함수**(예: 한 줄짜리 계산)의 경우, 실제 작업에 비해 오버헤드가 상대적으로 클 수 있다.
 
 ```c
-// 작은 함수 — 수행하는 작업에 비해 오버헤드가 상대적으로 큼
+// 작은 함수: 수행하는 작업에 비해 오버헤드가 상대적으로 큼
 int square(int x) {
     return x * x;
 }
 
-// 촘촘한 반복문에서 호출 — 오버헤드 누적
+// 촘촘한 반복문에서 호출: 오버헤드 누적
 for (int i = 0; i < 1000000; i++) {
     result += square(i);   // 함수 호출 오버헤드 × 1,000,000
 }

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -479,7 +479,7 @@ Why pass by reference is necessary can be seen from a function that adds 10 to t
 ```c
 void addTen_wrong(int x) {
     x = x + 10;
-    // x is a local copy — original unchanged
+    // x is a local copy: original unchanged
 }
 
 int main() {

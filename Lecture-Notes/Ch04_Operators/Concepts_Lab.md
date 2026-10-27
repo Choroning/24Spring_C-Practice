@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 4
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4
 
 > **Learning Objectives:**
 > 1. Distinguish operators from operands and list the operators of C by kind
@@ -111,7 +111,7 @@ Result : 35
 
 *Table 2. Compound assignment operators and their equivalent assignments*
 
-`a *= b + 1` equals `a = a * (b + 1)`, not `a = a * b + 1`. Compound assignment operators are among those with the lowest precedence, so the whole expression on the right is computed first.
+`a *= b + 1` equals `a = a * (b + 1)`, not `a = a * b + 1`. Compound assignment operators have the lowest precedence after the comma operator, so the whole expression on the right is computed first.
 
 ---
 

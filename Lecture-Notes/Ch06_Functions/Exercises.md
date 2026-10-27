@@ -14,6 +14,42 @@ Exercises 1-3 are lab problems, Exercises 4-17 are exercises 1-14 of Chapter 6 o
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Rounding a Real Number](#exercise-1-rounding-a-real-number)
+- [Exercise 2: Leap Year Test](#exercise-2-leap-year-test)
+- [Exercise 3: Number of Days in a Month](#exercise-3-number-of-days-in-a-month)
+- [Exercise 4: The Concept of a Function](#exercise-4-the-concept-of-a-function)
+- [Exercise 5: Advantages of Using Functions](#exercise-5-advantages-of-using-functions)
+- [Exercise 6: Statements About Functions](#exercise-6-statements-about-functions)
+- [Exercise 7: Return Types and Parameters](#exercise-7-return-types-and-parameters)
+- [Exercise 8: The Three Requirements of a Function](#exercise-8-the-three-requirements-of-a-function)
+- [Exercise 9: Calling a Function with a Return Value and Parameters](#exercise-9-calling-a-function-with-a-return-value-and-parameters)
+- [Exercise 10: Local and Global Variables](#exercise-10-local-and-global-variables)
+- [Exercise 11: Prototype of a Function That Computes the Perimeter of a Rectangle](#exercise-11-prototype-of-a-function-that-computes-the-perimeter-of-a-rectangle)
+- [Exercise 12: Prototype of a Function That Checks for an English Letter](#exercise-12-prototype-of-a-function-that-checks-for-an-english-letter)
+- [Exercise 13: Prototype of a Function That Computes a Discounted Price](#exercise-13-prototype-of-a-function-that-computes-a-discounted-price)
+- [Exercise 14: Prototype of a Function That Computes the Greatest Common Divisor](#exercise-14-prototype-of-a-function-that-computes-the-greatest-common-divisor)
+- [Exercise 15: Turning the Arithmetic Code into a Function](#exercise-15-turning-the-arithmetic-code-into-a-function)
+- [Exercise 16: The Code Needed in the Blank](#exercise-16-the-code-needed-in-the-blank)
+- [Exercise 17: Output of a Program with Variables of the Same Name](#exercise-17-output-of-a-program-with-variables-of-the-same-name)
+- [Exercise 18: Printing Multiples of an Integer](#exercise-18-printing-multiples-of-an-integer)
+- [Exercise 19: Perimeter of a Rectangle](#exercise-19-perimeter-of-a-rectangle)
+- [Exercise 20: Distance Between Two Points](#exercise-20-distance-between-two-points)
+- [Exercise 21: Computing Discounted Prices](#exercise-21-computing-discounted-prices)
+- [Exercise 22: Printing a Menu](#exercise-22-printing-a-menu)
+- [Exercise 23: The Red, Green, and Blue Values of an RGB Color](#exercise-23-the-red-green-and-blue-values-of-an-rgb-color)
+- [Exercise 24: Leap Years from 2000 to 2100](#exercise-24-leap-years-from-2000-to-2100)
+- [Exercise 25: Checking for a Valid Date](#exercise-25-checking-for-a-valid-date)
+- [Exercise 26: Printing an Integer in Binary](#exercise-26-printing-an-integer-in-binary)
+- [Exercise 27: Divisors and the Number of Divisors](#exercise-27-divisors-and-the-number-of-divisors)
+- [Exercise 28: Prime Numbers from 1 to N](#exercise-28-prime-numbers-from-1-to-n)
+- [Exercise 29: An Accumulator](#exercise-29-an-accumulator)
+
+---
+
+<br>
+
 ## Exercise 1: Rounding a Real Number
 
 **Problem:** Define a function `round()` that receives a real number and returns the integer obtained by rounding it at the first decimal place. Using this function, write a program that reads real numbers until `0.0` is entered and prints the rounded result of each in turn.
