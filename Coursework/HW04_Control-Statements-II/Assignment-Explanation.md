@@ -65,7 +65,7 @@ Coursework/HW04_Control-Statements-II/
 
 *Figure 1. Directory layout of HW4*
 
-All five programs use the standard `scanf`, so they compile as they are with any C compiler. The outputs in this document were obtained with commands such as the following.
+All five programs use the standard `scanf`, so they compile as they are with any C compiler. Each program is compiled and run as follows.
 
 ```bash
 cd Coursework/HW04_Control-Statements-II/Solution

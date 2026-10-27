@@ -104,7 +104,7 @@ int main()
 }
 ```
 
-**Output:** `scanf_s` is a function provided by Visual Studio, so with gcc the code was compiled with `gcc -std=c99 -Wall -Dscanf_s=scanf`, which replaces it with `scanf` (no warnings). Entering the same values as in the sample run gives the same results. However, the prompt in the code has a space before the colon, as in `종료) : `, which differs by one space from `종료): ` in the sample run, and the last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
+**Output:** `scanf_s` is specific to Visual Studio, so other compilers build the code with the `-Dscanf_s=scanf` option, which replaces it with `scanf`. The last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
 ```text
 실수를 입력하세요 (0.0 입력 시 종료) : 2.75

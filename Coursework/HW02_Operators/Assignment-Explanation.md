@@ -54,7 +54,7 @@ Coursework/HW02_Operators/
 
 *Figure 1. Directory layout of HW2*
 
-The three programs were written in Visual Studio (MSVC) and use `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. For `%d`, which reads numbers, the two functions behave the same. All outputs in this document were obtained with the following commands.
+The three programs were written in Visual Studio (MSVC) and use `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. For `%d`, which reads numbers, the two functions behave the same. Each program is compiled and run as follows.
 
 ```bash
 cd Coursework/HW02_Operators/Solution

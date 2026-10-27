@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 
 > **학습 목표:**
 > 1. 감시값 0으로 끝나는 `while` 반복에서 범위 밖의 입력을 걸러 내며 최댓값과 최솟값을 갱신할 수 있다
@@ -57,7 +57,7 @@ Coursework/HW05_Control-Statements-III/
 
 *그림 1. HW5 과제의 디렉토리 구성*
 
-문제 2의 코드는 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 나머지 세 프로그램은 표준 `scanf`만 쓴다. 이 문서의 실행 결과는 다음과 같은 명령으로 얻은 것이다.
+문제 2의 코드는 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 나머지 세 프로그램은 표준 `scanf`만 쓴다. 각 프로그램은 다음과 같이 컴파일하고 실행한다.
 
 ```bash
 cd Coursework/HW05_Control-Statements-III/Solution

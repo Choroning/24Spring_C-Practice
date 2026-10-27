@@ -110,7 +110,7 @@ base 반지름 입력: 20
 헬멧의 표면적: 1709.026402 
 ```
 
-> **Note:** **`scanf_s` and the build environment.** The `scanf_s` used by the code in this chapter is a function provided by Visual Studio (MSVC). The optional Annex K of C11 also defines a function with this name, but most standard libraries used with gcc and clang do not provide it, so compiling the code as is fails with an undeclared function error. The outputs above were produced without changing the code by compiling with `gcc -std=c99 -Wall -Dscanf_s=scanf`, which replaces `scanf_s` with `scanf`. For conversions that read numbers, such as `%d` and `%x`, the two functions behave the same.
+> **Note:** **`scanf_s` and the build environment.** The `scanf_s` used by the code in this chapter is a function provided by Visual Studio (MSVC). The optional Annex K of C11 also defines a function with this name, but most standard libraries used with gcc and clang do not provide it, so compiling the code as is fails with an undeclared function error. With gcc and clang, the code compiles without changes as `gcc -std=c99 -Wall -Dscanf_s=scanf`, which replaces `scanf_s` with `scanf`. For conversions that read numbers, such as `%d` and `%x`, the two functions behave the same.
 
 > **Caution:** If the height is 0, `volume / (PI * height * height)` divides 0 by 0, so the surface area is printed as `nan` (Not a Number). Floating-point division by zero does not stop the program but yields infinity or `nan`. Also, `3 * base_radius * base_radius` is computed in `int`, so it exceeds the range of `int` when a is greater than 26754.
 

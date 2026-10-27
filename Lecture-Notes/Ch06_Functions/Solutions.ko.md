@@ -104,7 +104,7 @@ int main()
 }
 ```
 
-**실행 결과:** `scanf_s`는 Visual Studio가 제공하는 함수이므로, gcc에서는 `gcc -std=c99 -Wall -Dscanf_s=scanf`로 `scanf`로 바꾸어 컴파일하였다(경고 없음). 실행 예시와 같은 값을 입력하면 같은 결과가 나온다. 다만 코드의 프롬프트는 `종료) : `처럼 콜론 앞에 공백이 있어 실행 예시의 `종료): `와 한 칸 다르고, 실행 예시의 마지막 줄 `Program ended with exit code: 0`은 프로그램의 출력이 아니라 Xcode 콘솔이 덧붙이는 종료 메시지이다.
+**실행 결과:** `scanf_s`는 Visual Studio 전용 함수이므로, 다른 컴파일러에서는 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 실행 예시의 마지막 줄 `Program ended with exit code: 0`은 프로그램의 출력이 아니라 Xcode 콘솔이 덧붙이는 종료 메시지이다.
 
 ```text
 실수를 입력하세요 (0.0 입력 시 종료) : 2.75

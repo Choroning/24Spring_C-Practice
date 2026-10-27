@@ -65,7 +65,7 @@ Coursework/HW04_Control-Statements-II/
 
 *그림 1. HW4 과제의 디렉토리 구성*
 
-다섯 프로그램은 모두 표준 `scanf`를 쓰므로 어느 C 컴파일러에서나 그대로 컴파일된다. 이 문서의 실행 결과는 다음과 같은 명령으로 얻은 것이다.
+다섯 프로그램은 모두 표준 `scanf`를 쓰므로 어느 C 컴파일러에서나 그대로 컴파일된다. 각 프로그램은 다음과 같이 컴파일하고 실행한다.
 
 ```bash
 cd Coursework/HW04_Control-Statements-II/Solution

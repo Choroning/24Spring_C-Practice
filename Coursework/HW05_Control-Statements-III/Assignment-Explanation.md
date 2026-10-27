@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Update the maximum and minimum in a `while` loop that ends at the sentinel 0 while filtering out-of-range inputs
@@ -57,7 +57,7 @@ Coursework/HW05_Control-Statements-III/
 
 *Figure 1. Directory layout of HW5*
 
-The code of Problem 2 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The other three programs use only the standard `scanf`. The outputs in this document were obtained with commands such as the following.
+The code of Problem 2 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The other three programs use only the standard `scanf`. Each program is compiled and run as follows.
 
 ```bash
 cd Coursework/HW05_Control-Statements-III/Solution

@@ -59,7 +59,7 @@ Coursework/HW03_Control-Statements-I/
 
 서술 문항인 문제 1, 2, 3은 풀이 파일 없이 이 문서에 답과 해설을 둔다. 문제 1과 3의 실행 결과는 문제의 프로그램을 그대로 컴파일하여 실행한 것이다.
 
-문제 4의 프로그램은 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 문제 4의 실행 결과는 다음 명령으로 얻은 것이다.
+문제 4의 프로그램은 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 문제 4는 다음과 같이 컴파일하고 실행한다.
 
 ```bash
 cd Coursework/HW03_Control-Statements-I/Solution

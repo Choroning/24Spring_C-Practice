@@ -138,7 +138,7 @@ int main(void)
 
 > **참고:** (0, -5)처럼 x가 0이고 y가 음수인 점도 y축 위의 점이다. 코드는 이 경우를 `y축 아래에 위치합니다`로 출력하여 y축의 음수 쪽임을 나타내는데, x축 위의 점은 x의 부호와 관계없이 `x축 위`로 출력하므로 두 축의 표현이 서로 다르다.
 
-> **참고:** **`scanf_s`와 실행 환경.** 연습 문제 1~4의 코드가 쓰는 `scanf_s`는 Visual Studio(MSVC)가 제공하는 함수이다. gcc와 clang이 쓰는 표준 라이브러리 대부분은 이를 제공하지 않으므로, 이 문서의 실행 결과는 코드를 바꾸지 않고 `gcc -std=c99 -Wall -Dscanf_s=scanf`로 `scanf_s`를 `scanf`로 대체하여 컴파일한 것이다. 실행 예시의 `Program ended with exit code: 0`은 프로그램의 출력이 아니라 Xcode 콘솔이 덧붙이는 종료 메시지이다.
+> **참고:** **`scanf_s`와 실행 환경.** 연습 문제 1~4의 코드가 쓰는 `scanf_s`는 Visual Studio(MSVC)가 제공하는 함수이다. gcc와 clang이 쓰는 표준 라이브러리 대부분은 이를 제공하지 않으므로, 이 컴파일러에서는 코드를 바꾸지 않고 `gcc -std=c99 -Wall -Dscanf_s=scanf`처럼 `scanf_s`를 `scanf`로 대체하여 컴파일한다. 실행 예시의 `Program ended with exit code: 0`은 프로그램의 출력이 아니라 Xcode 콘솔이 덧붙이는 종료 메시지이다.
 
 ---
 
@@ -558,7 +558,7 @@ int main()
 프로그램을 종료합니다. 
 ```
 
-> **참고:** **Windows 전용 요소.** `<windows.h>`와 `system("pause")`, `system("cls")`는 Windows 환경을 전제한다. `pause`는 `계속하려면 아무 키나 누르십시오 . . .`를 출력하고 키 입력을 기다리며, `cls`는 화면을 지운다. `system()` 함수 자체는 `<stdlib.h>`에 선언된 표준 함수이다. 위의 실행 결과는 코드를 바꾸지 않고 빈 `windows.h`를 둔 디렉토리를 포함 경로에 넣고 `gcc -std=c99 -Wall -include stdlib.h`로 컴파일하여 macOS에서 얻은 것이며, macOS에는 `pause`와 `cls` 명령이 없으므로 셸이 표준 오류로 출력하는 오류 메시지는 생략하였다. `#pragma warning(disable:4996)`은 `scanf`를 쓸 때 MSVC가 내는 C4996 경고를 끄는 MSVC 전용 지시문이며, gcc와 clang은 알 수 없는 pragma로 무시한다.
+> **참고:** **Windows 전용 요소.** `<windows.h>`와 `system("pause")`, `system("cls")`는 Windows 환경을 전제한다. `pause`는 `계속하려면 아무 키나 누르십시오 . . .`를 출력하고 키 입력을 기다리며, `cls`는 화면을 지운다. `system()` 함수 자체는 `<stdlib.h>`에 선언된 표준 함수이다. macOS와 Linux에서는 빈 `windows.h`를 둔 디렉토리를 포함 경로에 넣고 `gcc -std=c99 -Wall -include stdlib.h`로 컴파일하면 코드를 바꾸지 않고 실행할 수 있으며, `pause`와 `cls` 명령이 없으므로 셸이 표준 오류로 오류 메시지를 출력한다. `#pragma warning(disable:4996)`은 `scanf`를 쓸 때 MSVC가 내는 C4996 경고를 끄는 MSVC 전용 지시문이며, gcc와 clang은 알 수 없는 pragma로 무시한다.
 
 ---
 

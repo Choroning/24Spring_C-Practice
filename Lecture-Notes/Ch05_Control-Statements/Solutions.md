@@ -138,7 +138,7 @@ int main(void)
 
 > **Note:** A point such as (0, -5), with x equal to 0 and y negative, also lies on the y-axis. The code prints this case as `y축 아래에 위치합니다` to indicate the negative side of the y-axis, while it prints points on the x-axis as `x축 위` regardless of the sign of x, so the two axes are described differently.
 
-> **Note:** **`scanf_s` and the build environment.** The `scanf_s` used by the code of Exercises 1-4 is a function provided by Visual Studio (MSVC). Most standard libraries used with gcc and clang do not provide it, so the outputs in this document were produced without changing the code by compiling with `gcc -std=c99 -Wall -Dscanf_s=scanf`, which replaces `scanf_s` with `scanf`. The line `Program ended with exit code: 0` in the sample runs is not program output but the exit message added by the Xcode console.
+> **Note:** **`scanf_s` and the build environment.** The `scanf_s` used by the code of Exercises 1-4 is a function provided by Visual Studio (MSVC). Most standard libraries used with gcc and clang do not provide it, so with these compilers the code compiles without changes as `gcc -std=c99 -Wall -Dscanf_s=scanf`, which replaces `scanf_s` with `scanf`. The line `Program ended with exit code: 0` in the sample runs is not program output but the exit message added by the Xcode console.
 
 ---
 
@@ -558,7 +558,7 @@ Menu item 4 differs from the sample run. The first inner loop of case 4 prints i
 프로그램을 종료합니다. 
 ```
 
-> **Note:** **Windows-specific parts.** `<windows.h>`, `system("pause")`, and `system("cls")` assume a Windows environment. `pause` prints `계속하려면 아무 키나 누르십시오 . . .` ("Press any key to continue . . .") and waits for a key, and `cls` clears the screen. The `system()` function itself is a standard function declared in `<stdlib.h>`. The outputs above were obtained on macOS without changing the code by putting a directory with an empty `windows.h` on the include path and compiling with `gcc -std=c99 -Wall -include stdlib.h`; macOS has no `pause` or `cls` command, so the error messages the shell prints to standard error are omitted. `#pragma warning(disable:4996)` is an MSVC-only directive that turns off the C4996 warning MSVC issues for `scanf`, and gcc and clang ignore it as an unknown pragma.
+> **Note:** **Windows-specific parts.** `<windows.h>`, `system("pause")`, and `system("cls")` assume a Windows environment. `pause` prints `계속하려면 아무 키나 누르십시오 . . .` ("Press any key to continue . . .") and waits for a key, and `cls` clears the screen. The `system()` function itself is a standard function declared in `<stdlib.h>`. On macOS and Linux, the code runs without changes when a directory with an empty `windows.h` is put on the include path and the code is compiled with `gcc -std=c99 -Wall -include stdlib.h`; these systems have no `pause` or `cls` command, so the shell prints error messages to standard error. `#pragma warning(disable:4996)` is an MSVC-only directive that turns off the C4996 warning MSVC issues for `scanf`, and gcc and clang ignore it as an unknown pragma.
 
 ---
 

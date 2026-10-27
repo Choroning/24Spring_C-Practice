@@ -22,10 +22,10 @@ This repository archives bilingual lecture notes and coursework for the Computer
 <br><a name="about-this-repository"></a>
 ## 📝 About This Repository
 
-- `Lecture-Notes/` holds a lecture note and a lab note for each chapter, and Chapters 1-10 also hold exercises transcribed from the textbook and the lab problems with their solutions.
+- `Lecture-Notes/` holds a lecture note and a lab note for each chapter, and Chapters 1-10 also hold exercises made up of the textbook and lab problems, with their solutions.
 - `Coursework/` holds the assignments of Computer Language and Training Ⅰ (`HW01`-`HW10`) and the chapter lab code (`Lab04`-`Lab10`).
 - Units follow the textbook's chapter numbers (`Ch01`-`Ch10`), and every document comes as an English (`.md`) and Korean (`.ko.md`) pair.
-- All C code was compiled and checked with GCC (C99).
+- All C code compiles with GCC (C99).
 
 > **🤖 AI Agent Usage**
 > Computer Language and Training Ⅰ required students to write their own code.

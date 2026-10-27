@@ -59,7 +59,7 @@ Coursework/HW03_Control-Statements-I/
 
 Problems 1, 2, and 3 are written problems, so their answers and explanations are given in this document without solution files. The outputs of Problems 1 and 3 come from compiling and running the programs of the problems as they are.
 
-The program of Problem 4 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The outputs of Problem 4 were obtained with the following commands.
+The program of Problem 4 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. Problem 4 is compiled and run as follows.
 
 ```bash
 cd Coursework/HW03_Control-Statements-I/Solution

@@ -54,7 +54,7 @@ Coursework/HW02_Operators/
 
 *그림 1. HW2 과제의 디렉토리 구성*
 
-세 프로그램은 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 숫자를 읽는 `%d`에서는 두 함수의 동작이 같다. 이 문서의 실행 결과는 모두 다음 명령으로 얻은 것이다.
+세 프로그램은 Visual Studio(MSVC)에서 작성되어 입력에 `scanf_s`를 쓴다. `scanf_s`는 MSVC가 제공하는 함수이고 gcc와 clang이 쓰는 표준 라이브러리 대부분에는 없으므로, 다른 환경에서는 코드를 바꾸지 않고 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 숫자를 읽는 `%d`에서는 두 함수의 동작이 같다. 각 프로그램은 다음과 같이 컴파일하고 실행한다.
 
 ```bash
 cd Coursework/HW02_Operators/Solution
