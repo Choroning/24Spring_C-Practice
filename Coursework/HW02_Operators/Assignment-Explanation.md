@@ -2,9 +2,9 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 3
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
 > **Learning Objectives:**
 > 1. Print an integer in decimal, octal, and hexadecimal with the `%d`, `%o`, and `%x` conversions of `printf` and the `#` flag

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -100,7 +100,7 @@ int main() {
 }
 ```
 
-The duplicated loop is gone. If the factorial algorithm needs to change, we edit only `factorial()`.
+The duplicated loop is gone. If the factorial algorithm needs to change, only `factorial()` has to be edited.
 
 ### 1.2 Function Types
 
@@ -226,7 +226,7 @@ double average(int a, int b) {
     return (double)(a + b) / 2;
 }
 
-// void return type — no return value
+// void return type: no return value
 void printLine(void) {
     printf("--------------------\n");
 }
@@ -321,8 +321,8 @@ Omitting a parameter's type in a function definition is a compile error, and thr
 
 ```c
 // Both forms mean "no parameters":
-void printMenu(void) { ... }   // explicit void — preferred
-void printMenu() { ... }       // empty parentheses — also valid in definitions
+void printMenu(void) { ... }   // explicit void: preferred
+void printMenu() { ... }       // empty parentheses: also valid in definitions
 ```
 
 > **Key Point:** In a **prototype** (declaration) before C23, `void printMenu()` declares a function without specifying the number or types of its parameters, so the compiler does not check the arguments, while `void printMenu(void)` means the function takes no parameters. Since C23, empty parentheses also mean no parameters. Always use `void` in prototypes for clarity.
@@ -424,8 +424,8 @@ int factorial(int n);         // parameter name included (recommended)
 int isLeapYear(int);          // parameter name omitted (also valid)
 
 int main() {
-    printf("5! = %d\n", factorial(5));      // OK — prototype seen above
-    printf("Leap? %d\n", isLeapYear(2024)); // OK — prototype seen above
+    printf("5! = %d\n", factorial(5));      // OK: prototype seen above
+    printf("Leap? %d\n", isLeapYear(2024)); // OK: prototype seen above
     return 0;
 }
 
@@ -494,14 +494,14 @@ void funcA() {
 }
 
 void funcB() {
-    int x = 20;   // local to funcB — independent from funcA's x
+    int x = 20;   // local to funcB: independent from funcA's x
     printf("funcB: x = %d\n", x);
 }
 
 int main() {
     funcA();   // prints: funcA: x = 10
     funcB();   // prints: funcB: x = 20
-    // printf("%d", x);   // ERROR — x is not accessible here
+    // printf("%d", x);   // ERROR: x is not accessible here
     return 0;
 }
 ```
@@ -524,7 +524,7 @@ int main() {
         int temp = i * 10;   // created each iteration, destroyed at end of iteration
         printf("%d ", temp);
     }
-    // printf("%d", temp);  // ERROR — temp does not exist here
+    // printf("%d", temp);  // ERROR: temp does not exist here
     return 0;
 }
 ```
@@ -540,7 +540,7 @@ A **global variable** is declared **outside all functions**, typically at the to
 ```c
 #include <stdio.h>
 
-int count = 0;   // global variable — accessible everywhere below this line
+int count = 0;   // global variable: accessible everywhere below this line
 
 void increment() {
     count++;   // modifies the global variable
@@ -576,13 +576,13 @@ All three calls to `increment()` change the same `count`, so `printCount()` prin
 ```c
 #include <stdio.h>
 
-int g;   // global — automatically initialized to 0
+int g;   // global: automatically initialized to 0
 
 int main() {
     printf("g = %d\n", g);   // g = 0 (guaranteed)
 
     int local;
-    // printf("local = %d\n", local);  // DANGEROUS — uninitialized, garbage value
+    // printf("local = %d\n", local);  // DANGEROUS: uninitialized, garbage value
     return 0;
 }
 ```
@@ -599,7 +599,7 @@ When a local variable and a global variable share the same name, the **local var
 int x = 100;   // global
 
 void demo() {
-    int x = 50;   // local — shadows the global x
+    int x = 50;   // local: shadows the global x
     printf("Inside demo(): x = %d\n", x);       // 50 (local)
 }
 
@@ -609,7 +609,7 @@ int main() {
     printf("After demo(): x = %d\n", x);        // 100 (global, unchanged)
 
     {
-        int x = 999;   // block-local — shadows the global x
+        int x = 999;   // block-local: shadows the global x
         printf("Inside block: x = %d\n", x);    // 999
     }
     printf("After block: x = %d\n", x);         // 100 (global)
@@ -673,15 +673,17 @@ Function Call Mechanism
 
 The exact steps and their order depend on the CPU and the calling convention. For example, on x86-64 the first several arguments are passed in registers rather than on the stack.
 
+> **[Systems Programming]** The stack frame created on the stack for each call (return address, saved registers, local variables) and the calling convention that decides which registers or stack locations carry the arguments are part of the machine-level representation of programs covered in Systems Programming. Knowing this structure explains both why local variables disappear when a function returns (Section 3.1) and where the function call overhead comes from.
+
 This process is called **function call overhead**. For large functions that perform significant computation, the overhead is negligible. However, for **very small functions** (e.g., a one-line calculation), the overhead can be relatively significant compared to the actual work.
 
 ```c
-// Small function — overhead is relatively large compared to the work done
+// Small function: overhead is relatively large compared to the work done
 int square(int x) {
     return x * x;
 }
 
-// Called in a tight loop — overhead accumulates
+// Called in a tight loop: overhead accumulates
 for (int i = 0; i < 1000000; i++) {
     result += square(i);   // function call overhead × 1,000,000
 }

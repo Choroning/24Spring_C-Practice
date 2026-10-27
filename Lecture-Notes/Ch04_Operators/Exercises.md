@@ -16,6 +16,38 @@ Exercises 1-4 are lab problems, Exercises 5-14 are exercises 1-10 of Chapter 4 o
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Volume and Surface Area of a Helmet](#exercise-1-volume-and-surface-area-of-a-helmet)
+- [Exercise 2: Converting Between Time and Seconds](#exercise-2-converting-between-time-and-seconds)
+- [Exercise 3: Convert Red, Green, and Blue Values to a Hexadecimal RGB Value](#exercise-3-convert-red-green-and-blue-values-to-a-hexadecimal-rgb-value)
+- [Exercise 4: Convert a Hexadecimal RGB Value to Red, Green, and Blue Values](#exercise-4-convert-a-hexadecimal-rgb-value-to-red-green-and-blue-values)
+- [Exercise 5: Statements About Operators](#exercise-5-statements-about-operators)
+- [Exercise 6: Unary Operators](#exercise-6-unary-operators)
+- [Exercise 7: Statements About Arithmetic Operators](#exercise-7-statements-about-arithmetic-operators)
+- [Exercise 8: Result Types of Expressions](#exercise-8-result-types-of-expressions)
+- [Exercise 9: Values of Expressions and Variables After Operations](#exercise-9-values-of-expressions-and-variables-after-operations)
+- [Exercise 10: Statements About Relational and Logical Operators](#exercise-10-statements-about-relational-and-logical-operators)
+- [Exercise 11: Data for Manipulating Specific Bits](#exercise-11-data-for-manipulating-specific-bits)
+- [Exercise 12: Parenthesizing Expressions in Evaluation Order](#exercise-12-parenthesizing-expressions-in-evaluation-order)
+- [Exercise 13: Computing an Entrance Fee with the Conditional Operator](#exercise-13-computing-an-entrance-fee-with-the-conditional-operator)
+- [Exercise 14: Output of a Bitwise Operation Program](#exercise-14-output-of-a-bitwise-operation-program)
+- [Exercise 15: Computing Density](#exercise-15-computing-density)
+- [Exercise 16: Computing an Electricity Bill](#exercise-16-computing-an-electricity-bill)
+- [Exercise 17: Computing an Electricity Bill with a Basic Charge](#exercise-17-computing-an-electricity-bill-with-a-basic-charge)
+- [Exercise 18: Checking Whether a Month Value Is Valid](#exercise-18-checking-whether-a-month-value-is-valid)
+- [Exercise 19: Converting Fahrenheit to Celsius](#exercise-19-converting-fahrenheit-to-celsius)
+- [Exercise 20: Computing Kinetic Energy](#exercise-20-computing-kinetic-energy)
+- [Exercise 21: Computing Percent Concentration](#exercise-21-computing-percent-concentration)
+- [Exercise 22: Converting a Playback Time to Hours, Minutes, and Seconds](#exercise-22-converting-a-playback-time-to-hours-minutes-and-seconds)
+- [Exercise 23: Computing a Discounted Price and the Discount Amount](#exercise-23-computing-a-discounted-price-and-the-discount-amount)
+- [Exercise 24: Printing Each Byte in Hexadecimal](#exercise-24-printing-each-byte-in-hexadecimal)
+- [Exercise 25: Building an RGB Color with Overflow Handling](#exercise-25-building-an-rgb-color-with-overflow-handling)
+
+---
+
+<br>
+
 ## Exercise 1: Volume and Surface Area of a Helmet
 
 **Problem:** Write a program that computes the volume and the surface area of a helmet.

@@ -12,6 +12,32 @@ Exercises 1-10 are exercises 1-10 of Chapter 2 of the textbook, and Exercises 11
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Statements About Comments](#exercise-1-statements-about-comments)
+- [Exercise 2: Statements About Functions](#exercise-2-statements-about-functions)
+- [Exercise 3: The Function Called When a Program Starts](#exercise-3-the-function-called-when-a-program-starts)
+- [Exercise 4: Statements About the `main` Function](#exercise-4-statements-about-the-main-function)
+- [Exercise 5: Statements About Variables](#exercise-5-statements-about-variables)
+- [Exercise 6: Format Specifiers of `printf` and Their Meanings](#exercise-6-format-specifiers-of-printf-and-their-meanings)
+- [Exercise 7: The Format Specifier That Produces the Output](#exercise-7-the-format-specifier-that-produces-the-output)
+- [Exercise 8: Two Things Needed to Declare a Variable](#exercise-8-two-things-needed-to-declare-a-variable)
+- [Exercise 9: The Header for the I/O Library](#exercise-9-the-header-for-the-io-library)
+- [Exercise 10: A Program That Reads and Prints a Character](#exercise-10-a-program-that-reads-and-prints-a-character)
+- [Exercise 11: Printing Several Lines with One `printf`](#exercise-11-printing-several-lines-with-one-printf)
+- [Exercise 12: Printing a Decimal Integer in Hexadecimal](#exercise-12-printing-a-decimal-integer-in-hexadecimal)
+- [Exercise 13: Reading and Printing a Date](#exercise-13-reading-and-printing-a-date)
+- [Exercise 14: Printing Hours, Minutes, and Seconds in Two Digits](#exercise-14-printing-hours-minutes-and-seconds-in-two-digits)
+- [Exercise 15: Converting Dollars to Won](#exercise-15-converting-dollars-to-won)
+- [Exercise 16: Choosing a Clothing Size](#exercise-16-choosing-a-clothing-size)
+- [Exercise 17: The Sum and Difference of Two Real Numbers](#exercise-17-the-sum-and-difference-of-two-real-numbers)
+- [Exercise 18: Printing Pi in Several Formats](#exercise-18-printing-pi-in-several-formats)
+- [Exercise 19: Reading and Printing Octal, Decimal, and Hexadecimal Integers](#exercise-19-reading-and-printing-octal-decimal-and-hexadecimal-integers)
+
+---
+
+<br>
+
 ## Exercise 1: Statements About Comments
 
 **Textbook Problem:** Chapter 2 exercise 1

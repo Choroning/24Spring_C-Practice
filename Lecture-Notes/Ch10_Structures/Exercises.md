@@ -2,9 +2,18 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+
+---
+
+<br>
+
+## Table of Contents
+
+- [Exercise 1: Student Structure](#exercise-1-student-structure)
+- [Exercise 2: Rectangle Structure](#exercise-2-rectangle-structure)
 
 ---
 

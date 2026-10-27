@@ -14,6 +14,43 @@ Exercises 1-3 practice conditional (selection) statements, and Exercises 4 and 5
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Quadrant of a Point in the Plane](#exercise-1-quadrant-of-a-point-in-the-plane)
+- [Exercise 2: Converting Between Celsius and Fahrenheit](#exercise-2-converting-between-celsius-and-fahrenheit)
+- [Exercise 3: Roots of a Quadratic Equation](#exercise-3-roots-of-a-quadratic-equation)
+- [Exercise 4: Sum and Average of Integers](#exercise-4-sum-and-average-of-integers)
+- [Exercise 5: Triangle Printing Menu](#exercise-5-triangle-printing-menu)
+- [Exercise 6: Statements About the if Statement](#exercise-6-statements-about-the-if-statement)
+- [Exercise 7: The Keyword for a False Condition](#exercise-7-the-keyword-for-a-false-condition)
+- [Exercise 8: Rewriting the Conditional Operator with if](#exercise-8-rewriting-the-conditional-operator-with-if)
+- [Exercise 9: Statements About the switch Statement](#exercise-9-statements-about-the-switch-statement)
+- [Exercise 10: Rewriting a switch Statement with if-else](#exercise-10-rewriting-a-switch-statement-with-if-else)
+- [Exercise 11: Statements About the for Statement](#exercise-11-statements-about-the-for-statement)
+- [Exercise 12: Rewriting a for Statement with while](#exercise-12-rewriting-a-for-statement-with-while)
+- [Exercise 13: Statements About while and do-while](#exercise-13-statements-about-while-and-do-while)
+- [Exercise 14: Branch Statements and Their Roles](#exercise-14-branch-statements-and-their-roles)
+- [Exercise 15: Statements About Branch Statements](#exercise-15-statements-about-branch-statements)
+- [Exercise 16: Finding Infinite Loops](#exercise-16-finding-infinite-loops)
+- [Exercise 17: Output of a Nested if Statement](#exercise-17-output-of-a-nested-if-statement)
+- [Exercise 18: Output of a for Loop with continue](#exercise-18-output-of-a-for-loop-with-continue)
+- [Exercise 19: Grades by Absolute Evaluation](#exercise-19-grades-by-absolute-evaluation)
+- [Exercise 20: Grades by Relative Evaluation](#exercise-20-grades-by-relative-evaluation)
+- [Exercise 21: The Quadrant of a Point](#exercise-21-the-quadrant-of-a-point)
+- [Exercise 22: Leap Year Test](#exercise-22-leap-year-test)
+- [Exercise 23: Converting Celsius and Fahrenheit Temperatures](#exercise-23-converting-celsius-and-fahrenheit-temperatures)
+- [Exercise 24: Electricity Bill with Progressive Rates](#exercise-24-electricity-bill-with-progressive-rates)
+- [Exercise 25: Bitwise Operation Calculator](#exercise-25-bitwise-operation-calculator)
+- [Exercise 26: Printing ASCII Characters](#exercise-26-printing-ascii-characters)
+- [Exercise 27: Printing Multiples of an Integer](#exercise-27-printing-multiples-of-an-integer)
+- [Exercise 28: Repeating the Electricity Bill Calculation](#exercise-28-repeating-the-electricity-bill-calculation)
+- [Exercise 29: Prime Test](#exercise-29-prime-test)
+- [Exercise 30: Printing the Primes up to N](#exercise-30-printing-the-primes-up-to-n)
+
+---
+
+<br>
+
 ## Exercise 1: Quadrant of a Point in the Plane
 
 **Textbook Problem:** Chapter 5 programming assignment 3

@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 1
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 1
 
 > **Learning Objectives:**
 > 1. Explain the relationship between languages and computer languages in terms of rules
@@ -116,7 +116,7 @@ int main()
 
 In the **compile** step, the compiler translates the source code into assembly language, and the assembler then produces an **object file** in machine language. In Visual Studio the object file of `First.c` is `First.obj`, and with gcc and clang it is `First.o`.
 
-The following is the core of the `main` function taken from the result of translating the same source code only as far as assembly language with clang on macOS, as in `cc -std=c99 -Wall -S First.c`. This computer's CPU is ARM64, so the format differs from the x86 instructions of Section 1.3.
+The following is the core of the `main` function taken from the result of translating the same source code only as far as assembly language with clang on macOS, as in `cc -std=c99 -Wall -S First.c`. This result is assembly code for an ARM64 CPU, so its format differs from the x86 instructions of Section 1.3.
 
 ```text
 _main:
@@ -131,6 +131,8 @@ _main:
 ```
 
 `adrp` and `add` put the address where the string `"Hello"` is stored into the register `x0`, `bl _printf` calls the `printf` function, and `mov w0, #0` prepares the return value 0 of `main`. The object file holds these instructions in machine language, but it does not contain the actual code of `printf`.
+
+> **[Computer Architecture]** The convention that defines the kinds and formats of instructions a CPU can execute and the set of registers it provides is called its instruction set architecture (ISA), and x86 and ARM64 are different instruction set architectures. This is why the same C code is translated into different assembly code for each CPU; instruction set architectures are covered in Computer Architecture.
 
 ### 2.3 Linking and the Executable File
 
@@ -203,7 +205,7 @@ In Visual Studio (2012 and later), the single command [Build] → [Build Solutio
 
    </details>
 
-3. **Machine dependence:** The x86 assembly code of Section 1.3 and the ARM64 assembly code of Section 2.2 differ in format even when they do the same job. Explain why this difference does not appear in the C source code `First.c`.
+3. **Machine dependence:** The x86 assembly code of Section 1.3 and the ARM64 assembly code of Section 2.2 differ in format even though both are instructions for printing to the screen. Explain why this difference does not appear in the C source code `First.c`.
 
    <details>
    <summary>Answer</summary>

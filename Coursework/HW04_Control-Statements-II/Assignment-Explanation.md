@@ -2,9 +2,9 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 5
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5
 
 > **Learning Objectives:**
 > 1. Determine and convert the case of an English letter by comparing ranges of ASCII codes

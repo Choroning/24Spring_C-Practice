@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -229,8 +229,8 @@ printf("제목: %s\n", c1.title);      // 멤버 읽기
 > **핵심:** 멤버는 구조체 변수를 통해서**만** 접근할 수 있다. 멤버 이름을 단독으로 사용할 수 없으며, `title`만으로는 `c1.title`을 가리키지 않는다. 같은 이름의 일반 변수가 있으면 `title`은 그 변수를 뜻한다.
 
 ```c
-// title = "Test";       // 컴파일 오류 — title은 독립 변수가 아님
-c1.title;                // 올바른 사용 — 구조체 변수를 통한 접근
+// title = "Test";       // 컴파일 오류: title은 독립 변수가 아님
+c1.title;                // 올바른 사용: 구조체 변수를 통한 접근
 ```
 
 구조체 변수를 여러 개 선언하면 서로 다른 메모리에 할당되며, 멤버도 구조체 변수마다 따로 할당된다. 멤버에는 항상 구조체 변수를 통해 접근하므로 어느 변수의 멤버인지 구분할 수 있다.
@@ -261,9 +261,9 @@ c3 = {"Matrix", 9000, 9.1};    // 컴파일 오류!
 struct content c1 = {"Avengers", 11000, 8.8};
 struct content c3;
 
-// c3.title = c1.title;         // 컴파일 오류 — 배열은 대입 불가!
-strcpy(c3.title, c1.title);     // 올바른 방법 — 문자열에는 strcpy 사용
-c3.price = c1.price;            // OK — 배열이 아닌 멤버는 대입 가능
+// c3.title = c1.title;         // 컴파일 오류: 배열은 대입 불가!
+strcpy(c3.title, c1.title);     // 올바른 방법: 문자열에는 strcpy 사용
+c3.price = c1.price;            // OK: 배열이 아닌 멤버는 대입 가능
 c3.rate = c1.rate;              // OK
 ```
 
@@ -421,7 +421,7 @@ p->title   ≡  (*p).title   ≡  c1.title
 ```c
 void display(struct content c) {
     printf("%s %d %.1f\n", c.title, c.price, c.rate);
-    c.price = 0;   // 복사본만 수정 — 원본은 변하지 않음
+    c.price = 0;   // 복사본만 수정: 원본은 변하지 않음
 }
 
 int main() {
@@ -639,7 +639,7 @@ printf("i = %d\n", d.i);    // 42
 
 d.f = 3.14;
 printf("f = %.2f\n", d.f);  // 3.14
-printf("i = %d\n", d.i);    // 쓰레기 값 — d.f에 의해 덮어씌워짐!
+printf("i = %d\n", d.i);    // 쓰레기 값: d.f에 의해 덮어씌워짐!
 ```
 
 마지막 줄은 의미 없는 값을 출력하지만, 무작위 값은 아니다. `d.f`에 저장된 `3.14f`의 IEEE 754 단정도 비트 패턴 `0x4048F5C3`을 `int`로 다시 해석한 값 `1078523331`이 출력된다(`int`와 `float`가 모두 4바이트인 일반적인 시스템). C 표준은 마지막으로 쓴 멤버가 아닌 멤버를 읽으면 그 바이트를 새 자료형으로 다시 해석한다고 정한다.
@@ -684,7 +684,7 @@ typedef struct point Point;
 
 ```c
 struct point p1 = {10, 20};   // 장황함
-Point p1 = {10, 20};          // 간결함 — typedef 사용
+Point p1 = {10, 20};          // 간결함: typedef 사용
 ```
 
 > **핵심:** `typedef`는 새로운 자료형을 만드는 것이 **아니라**, 기존 자료형에 새 **이름**을 부여하는 것이다. `Point`와 `struct point`는 같은 자료형이다.

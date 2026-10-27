@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Write a function that swaps two of the caller's variables through pointer parameters
@@ -190,7 +190,7 @@ The four sums match the sample run. The output format differs. Because `printf("
 
 ### 3.1 Problem
 
-The third item of the assignment is a free item in which students set and solve their own problem on pointers, and the problem in this section is a new problem set in that format.
+The third item of the assignment is a free item in which students set and solve their own problem on pointers, and the problem in this section is that item.
 
 Write a program that reads three integers from the user into three variables and then sorts the values of the three variables in ascending order using pointers and prints them.
 

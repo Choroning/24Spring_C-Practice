@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 5, 6
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5, 6
 
 > **Learning Objectives:**
 > 1. Choose `if`, `if-else`, or `if-else if-else` to fit the number of conditions, and group several statements into a compound statement
@@ -503,7 +503,7 @@ Consider printing the values 1 to 3, increasing one at a time. The repetition it
 | Element | Meaning | Example |
 |:-----|:-----|:-----|
 | Start value | The value at which the repetition starts | `i = 1` |
-| Condition | The condition that decides whether to continue; it must guarantee 1, 2, and 3, so it is true while less than 4 | `i < 4` |
+| Condition | The condition that decides whether to continue | `i < 4` (true for 1, 2, and 3, false for 4) |
 | Step size | The amount of change in each repetition | `i++` |
 
 *Table 2. The three elements of a loop*
@@ -530,7 +530,7 @@ The `for` statement expresses the three elements together inside its parentheses
 
 *Figure 2. Positions of the three elements of a loop in while and for statements*
 
-The following program prints 1 to 3 and computes the same sum with `for`, `while`, and `do-while`.
+The following program prints 1 to 3 and then computes the sum of 1 to 3 with each of `for`, `while`, and `do-while`.
 
 ```c
 #include <stdio.h>

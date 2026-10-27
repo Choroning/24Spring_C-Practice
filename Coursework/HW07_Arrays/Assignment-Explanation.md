@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Store input real numbers in an array and compute their average and standard deviation
@@ -47,7 +47,7 @@
 
 ## 1. Assignment Layout and How to Run
 
-This assignment consists of four problems that store values in a one-dimensional array and process them with loops ([Chapter 7](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md)). The assignment included free items in which students set and solved two of their own problems for understanding arrays, and Problem 3 is the problem Cheolwon Park set under those items, while Problem 4 is a new problem set in the same format.
+This assignment consists of four problems that store values in a one-dimensional array and process them with loops ([Chapter 7](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md)). The assignment included free items in which students set and solved two of their own problems for understanding arrays, and Problems 3 and 4 are these free items.
 
 ```text
 Coursework/HW07_Arrays/

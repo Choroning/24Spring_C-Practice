@@ -2,13 +2,23 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 **Common Requirement:** In every problem, specify the array size with a macro constant.
+
+---
+
+<br>
+
+## Table of Contents
+
+- [Exercise 1: Computing the Check Digit of a UPC Barcode](#exercise-1-computing-the-check-digit-of-a-upc-barcode)
+- [Exercise 2: Selection Sort Variant](#exercise-2-selection-sort-variant)
+- [Exercise 3: Computing Frequency and Relative Frequency](#exercise-3-computing-frequency-and-relative-frequency)
 
 ---
 

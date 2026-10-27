@@ -2,9 +2,9 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 8
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8
 
 > **Learning Objectives:**
 > 1. Sort an array by selection sort and find its median according to whether the number of elements is odd or even

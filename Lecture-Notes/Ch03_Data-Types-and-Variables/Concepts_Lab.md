@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 3
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
 > **Learning Objectives:**
 > 1. State the sizes and ranges of the basic data types and explain why several data types are needed
@@ -295,7 +295,7 @@ input real num(double): -34.457
 1.32, -34.46 
 ```
 
-> **Key Point:** A `float` argument passed to `printf` is converted to `double` during the function call, so a single `%f` prints both types. `scanf`, on the other hand, receives not the value but the address of the variable, so the format specifier must state exactly the size of the memory to store into (4 or 8 bytes). Reading a `double` variable with `%f` is undefined behavior and stores a wrong value.
+> **Key Point:** A `float` argument passed to `printf` is converted to `double` during the function call, so a single `%f` prints both types. `scanf`, on the other hand, receives not the value but the address of the variable, so the format specifier must state exactly the size of the memory to store into (4 or 8 bytes). Reading a `double` variable with `%f` is undefined behavior and usually stores a wrong value.
 
 ---
 
@@ -356,7 +356,7 @@ int main()
 }
 ```
 
-Visual Studio's error list shows error C4996 (`'scanf': This function or variable may be unsafe. Consider using scanf_s instead.`) and warning C6031 (return value ignored), and there is also an input buffer problem that shows up at run time.
+Visual Studio's error list shows warning C4996 (`'scanf': This function or variable may be unsafe. Consider using scanf_s instead.`), treated as an error, and warning C6031 (return value ignored), and there is also an input buffer problem that shows up at run time.
 
 ### 5.1 Warning C4996
 
@@ -370,7 +370,7 @@ Visual Studio (MSVC) recommends the security-enhanced `scanf_s` and issues C4996
 
 `_CRT_SECURE_NO_WARNINGS` is a macro that the MSVC header files check, so it takes effect only when defined before `#include <stdio.h>`. Setting SDL checks to "No" in the project properties leaves C4996 as a warning instead of an error.
 
-> **Note:** C4996 is not a problem of the C standard but a policy of the Microsoft compiler. gcc and clang issue no such warning for `scanf`, and the `_CRT_SECURE_NO_WARNINGS` macro and `#pragma warning` have no effect there. That is why the example code of this repository defines `_CRT_SECURE_NO_WARNINGS`, so that it compiles unchanged in Visual Studio and in other compilers.
+> **Note:** C4996 is not a problem of the C standard but a policy of the Microsoft compiler. gcc and clang issue no such warning for `scanf`, and the `_CRT_SECURE_NO_WARNINGS` macro and `#pragma warning` have no effect there. That is why the example code in this note defines `_CRT_SECURE_NO_WARNINGS`, so that it compiles unchanged in Visual Studio and in other compilers.
 
 ### 5.2 The Input Buffer and Spaces in the Format String
 

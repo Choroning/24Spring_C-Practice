@@ -1549,7 +1549,7 @@ int main(void)
 입력 오류! 양의 정수를 입력하세요.
 ```
 
-> **주의:** `num * i`는 `int`로 계산되므로, 정수와 개수의 곱이 `int`의 최댓값 2,147,483,647을 넘으면 부호 있는 정수의 오버플로우가 일어나고 그 결과는 정의되지 않는다([3장 1.1절](../Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md#오버플로우와-언더플로우)). 더 큰 값을 다루려면 `long long`형과 `%lld`를 쓴다.
+> **주의:** `num * i`는 `int`로 계산되므로, 정수와 개수의 곱이 `int`의 최댓값 2,147,483,647을 넘으면 부호 있는 정수의 오버플로가 일어나고 그 결과는 정의되지 않는다([3장 1.1절](../Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md#오버플로와-언더플로)). 더 큰 값을 다루려면 `long long`형과 `%lld`를 쓴다.
 
 ---
 

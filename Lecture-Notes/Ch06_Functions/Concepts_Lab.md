@@ -4,7 +4,7 @@
 
 > **Last Updated:** 2026-10-27
 >
-> 문제풀이 중심의 C언어 연습, 김용일 외, Ch 7
+> 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 7
 
 > **Learning Objectives:**
 > 1. Translate a mathematical function into the parameters, body, and return value of a C function by dividing it into input, work, and result
@@ -43,7 +43,7 @@
 
 ## 1. What a Function Is
 
-A **function** in C starts from the same idea as a function in mathematics. Like sin and cos, or linear and quadratic functions, the linear function y = x + 3 can be divided into three parts ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
+A **function** in C starts from the same idea as a function in mathematics. A mathematical function such as sin, cos, or a linear or quadratic function can be divided into three parts, an input, the work it does, and a result, and for the linear function y = x + 3 they are as follows ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
 
 | Part | In y = x + 3 | In a C function |
 |:-----|:-----|:-----|

@@ -12,6 +12,26 @@ Exercises 1-11 are exercises 1-11 of Chapter 1 of the textbook, and Exercises 12
 
 <br>
 
+## Table of Contents
+
+- [Exercise 1: Terms That Refer to Software](#exercise-1-terms-that-refer-to-software)
+- [Exercise 2: Statements About Programming Languages](#exercise-2-statements-about-programming-languages)
+- [Exercise 3: The Program That Translates a Source File into Machine Language](#exercise-3-the-program-that-translates-a-source-file-into-machine-language)
+- [Exercise 4: Reasons to Learn C](#exercise-4-reasons-to-learn-c)
+- [Exercise 5: Application Areas of C](#exercise-5-application-areas-of-c)
+- [Exercise 6: Advantages of C](#exercise-6-advantages-of-c)
+- [Exercise 7: Programs Running on Special-Purpose Devices](#exercise-7-programs-running-on-special-purpose-devices)
+- [Exercise 8: The C and C++ Languages](#exercise-8-the-c-and-c-languages)
+- [Exercise 9: The Development Process of a C Program](#exercise-9-the-development-process-of-a-c-program)
+- [Exercise 10: Statements About the Development Process](#exercise-10-statements-about-the-development-process)
+- [Exercise 11: Projects and Solutions in Visual Studio](#exercise-11-projects-and-solutions-in-visual-studio)
+- [Exercise 12: A Program That Prints Version Information](#exercise-12-a-program-that-prints-version-information)
+- [Exercise 13: A Program That Prints the Results of the Four Arithmetic Operations](#exercise-13-a-program-that-prints-the-results-of-the-four-arithmetic-operations)
+
+---
+
+<br>
+
 ## Exercise 1: Terms That Refer to Software
 
 **Textbook Problem:** Chapter 1 exercise 1

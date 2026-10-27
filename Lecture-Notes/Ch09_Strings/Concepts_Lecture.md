@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -88,16 +88,16 @@ String:     "Hello"  →  [ H ][ e ][ l ][ l ][ o ][ \0 ]  (6 bytes)
 A character array must be large enough to hold the string **plus one extra byte** for `'\0'`. That is, the array size must be at least the length of the string to store + 1.
 
 ```c
-// Explicit size — remaining positions filled with '\0'
+// Explicit size: remaining positions filled with '\0'
 char str1[10] = "abc";    // stores: 'a','b','c','\0','\0',...,'\0' (size 10)
 
-// Auto-sized — compiler determines size from initializer
+// Auto-sized: compiler determines size from initializer
 char str2[] = "abc";      // stores: 'a','b','c','\0' (size 4)
 
 // Initialized with character list (must include '\0' manually)
 char str3[] = {'a', 'b', 'c', '\0'};  // same as str2
 
-// Initialized with character list WITHOUT '\0' — NOT a valid string!
+// Initialized with character list WITHOUT '\0': NOT a valid string!
 char str4[] = {'a', 'b', 'c'};        // size 3, no null terminator
 ```
 
@@ -119,7 +119,7 @@ Value:   'a'  'b'  'c'  '\0' '\0' '\0' '\0' '\0' '\0' '\0'
 > **Caution:** If the string length equals or exceeds the array size, no `'\0'` is stored. This creates a char array that is **not** a valid string and will cause bugs with all string functions. When the string length equals the array size, C initializes the array without a null character; when it exceeds the array size, the compiler issues a warning or an error.
 
 ```c
-char danger[3] = "abc";  // stores: 'a','b','c' — NO '\0'!
+char danger[3] = "abc";  // stores: 'a','b','c', NO '\0'!
 printf("%s", danger);     // undefined behavior: reads past array boundary
 ```
 
@@ -588,11 +588,11 @@ msg = "World";   // OK: can change what the pointer points to
 *Table 9. String declarations by use case*
 
 ```c
-// Mutable string (array — copies the literal)
+// Mutable string (array: copies the literal)
 char greeting[] = "Hello";
 greeting[0] = 'h';             // OK
 
-// Immutable reference (pointer — points to literal)
+// Immutable reference (pointer: points to literal)
 const char *message = "Hello";
 // message[0] = 'h';           // compile error
 ```

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -93,6 +93,8 @@ The check digit is: 2
 <br>
 
 ## Exercise 2: Selection Sort Variant
+
+**Textbook Problem:** A variant of Chapter 7, Example 7-11 (ascending selection sort)
 
 **Problem:** Rewrite the ascending selection sort of textbook Example 7-11 so that it picks the maximum of the unsorted portion and sends it to its final position from the back. The result must be in ascending order. The full problem and the code of Example 7-11 are in [Exercise 2](Exercises.md#exercise-2-selection-sort-variant).
 

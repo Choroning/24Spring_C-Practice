@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -741,6 +741,8 @@ Pass 3: min_idx=3 (25), no effective swap
 Example 7-11 in the textbook works the same way and skips the swap when `i` equals the index of the minimum.
 
 > **Key Point:** Selection sort has time complexity $O(n^2)$. It is simple to implement and understand, but not efficient for large datasets.
+
+> **[Algorithms]** Analyzing running time with asymptotic notation such as $O(n)$ and $O(n^2)$, merge sort, which sorts in $O(n \log n)$ time and is faster than selection sort, and binary search, which finds a key in a sorted array in $O(\log n)$ time, are covered in Algorithms. The sequential search of Section 5.5 and the selection sort of this section are the simplest search and sort and serve as the starting point for that analysis and comparison.
 
 ### 5.7 Frequency Counting
 
