@@ -66,7 +66,7 @@ C 언어로 컴퓨터 프로그래밍의 기초를 배우는 두 교양 과목�
 
 ```plaintext
 24Spring_C-Practice
-├── Lecture-Notes               장별 강의 노트, 연습 문제, 풀이
+├── Lecture-Notes               장별 강의 노트, 연습 문제, 풀이, 예제 코드
 ├── Coursework                  컴퓨터언어실습Ⅰ 과제와 장별 C 실습 코드
 ├── images                      연습 문제와 과제의 그림
 ├── Course-Information.ko.md    수업 운영 정보
