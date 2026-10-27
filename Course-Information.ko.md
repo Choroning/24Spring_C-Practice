@@ -2,7 +2,7 @@
 
 [레포지토리 안내](README.ko.md) | [English](Course-Information.md) | [한국어](Course-Information.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 
 ## 목차
 
@@ -227,7 +227,20 @@
 - 1차\~10차 과제는 2\~6주차와 9\~13주차에 한 번씩 나왔고, 다음 주 월요일 수업 전(오후 2시)까지 제출했다.
 - 실제 진도는 강의계획서와 달리 10주차에 함수와 배열을, 11주차에 포인터를, 12주차에 다차원 배열과 포인터를, 13주차에 문자열(교재 8장)을, 14주차에 문자열 포인터를 다뤘고, 15주차에는 구조체의 이론만 설명했다.
 - 8주차에 중간고사를, 16주차에 기말고사를 치렀고, 15주차에 강의를 마쳤다.
-- 1주차의 Visual Studio 설치와 실행 방법 자료, 2주차의 추가 강의자료, 11주차의 포인터 주소 출력 설정 자료는 개발 환경 구성 자료이다. 이 과목의 강의자료는 정리본을 따로 만들지 않았고, 1차\~10차 과제는 `Coursework`의 `HW01`\~`HW10`에 대응한다. 과제 목록은 [`Coursework` 색인](Coursework/README.ko.md)에 있다.
+- 주차별 강의자료는 주제가 같은 단원의 실습 노트(`Concepts_Lab`)에 정리했다. 강의자료와 실습 노트의 대응은 다음과 같다.
+  - 1주차: [1장](Lecture-Notes/Ch01_Programming-and-C-Language/Concepts_Lab.ko.md), [2장](Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lab.ko.md)
+  - 2주차: [2장](Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lab.ko.md)
+  - 3주차: [3장](Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lab.ko.md)
+  - 4주차: [4장](Lecture-Notes/Ch04_Operators/Concepts_Lab.ko.md)
+  - 5\~7주차: [5장](Lecture-Notes/Ch05_Control-Statements/Concepts_Lab.ko.md)
+  - 9주차: [6장](Lecture-Notes/Ch06_Functions/Concepts_Lab.ko.md)
+  - 10주차: [6장](Lecture-Notes/Ch06_Functions/Concepts_Lab.ko.md), [7장](Lecture-Notes/Ch07_Arrays/Concepts_Lab.ko.md)
+  - 11주차: [8장](Lecture-Notes/Ch08_Pointers/Concepts_Lab.ko.md)
+  - 12주차: [7장](Lecture-Notes/Ch07_Arrays/Concepts_Lab.ko.md), [8장](Lecture-Notes/Ch08_Pointers/Concepts_Lab.ko.md)
+  - 13\~14주차: [9장](Lecture-Notes/Ch09_Strings/Concepts_Lab.ko.md)
+  - 15주차: [10장](Lecture-Notes/Ch10_Structures/Concepts_Lab.ko.md)
+- 1주차의 Visual Studio 설치와 실행 방법 자료, 2주차의 추가 강의자료, 11주차의 포인터 주소 출력 설정 자료는 개발 환경 구성 내용이므로 실습 노트에는 정리하지 않는다.
+- 1차\~10차 과제는 `Coursework`의 `HW01`\~`HW10`에 대응한다. 과제 목록은 [`Coursework` 색인](Coursework/README.ko.md)에 있다.
 
 ---
 

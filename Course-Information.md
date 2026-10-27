@@ -2,7 +2,7 @@
 
 [Repository Guide](README.md) | [English](Course-Information.md) | [한국어](Course-Information.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 ## Table of Contents
 
@@ -227,7 +227,20 @@
 - Assignments 1-10 were given once each in weeks 2-6 and 9-13 and were due before class (2 p.m.) on the following Monday.
 - Unlike the syllabus, the actual progress covered functions and arrays in week 10, pointers in week 11, multidimensional arrays and pointers in week 12, strings (textbook Ch 8) in week 13, and string pointers in week 14, and week 15 explained only the theory of structures.
 - The midterm exam was held in week 8 and the final exam in week 16, and the lectures ended in week 15.
-- The Visual Studio installation and usage materials of week 1, the additional material of week 2, and the pointer address output setting material of week 11 are development environment setup materials. No notes were made from the decks of this course, and Assignments 1-10 correspond to `HW01`-`HW10` in `Coursework`. The assignments are listed in the [`Coursework` index](Coursework/README.md).
+- The weekly decks are summarized in the lab notes (`Concepts_Lab`) of the unit on the same topic. The decks correspond to the lab notes as follows.
+  - Week 1: [Chapter 1](Lecture-Notes/Ch01_Programming-and-C-Language/Concepts_Lab.md), [Chapter 2](Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lab.md)
+  - Week 2: [Chapter 2](Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lab.md)
+  - Week 3: [Chapter 3](Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lab.md)
+  - Week 4: [Chapter 4](Lecture-Notes/Ch04_Operators/Concepts_Lab.md)
+  - Weeks 5-7: [Chapter 5](Lecture-Notes/Ch05_Control-Statements/Concepts_Lab.md)
+  - Week 9: [Chapter 6](Lecture-Notes/Ch06_Functions/Concepts_Lab.md)
+  - Week 10: [Chapter 6](Lecture-Notes/Ch06_Functions/Concepts_Lab.md), [Chapter 7](Lecture-Notes/Ch07_Arrays/Concepts_Lab.md)
+  - Week 11: [Chapter 8](Lecture-Notes/Ch08_Pointers/Concepts_Lab.md)
+  - Week 12: [Chapter 7](Lecture-Notes/Ch07_Arrays/Concepts_Lab.md), [Chapter 8](Lecture-Notes/Ch08_Pointers/Concepts_Lab.md)
+  - Weeks 13-14: [Chapter 9](Lecture-Notes/Ch09_Strings/Concepts_Lab.md)
+  - Week 15: [Chapter 10](Lecture-Notes/Ch10_Structures/Concepts_Lab.md)
+- The Visual Studio installation and usage materials of Week 1, the additional material of Week 2, and the pointer address output setting material of Week 11 set up the development environment, so they are not summarized in the lab notes.
+- Assignments 1-10 correspond to `HW01`-`HW10` in `Coursework`. The assignments are listed in the [`Coursework` index](Coursework/README.md).
 
 ---
 
