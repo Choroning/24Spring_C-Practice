@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Write a function that computes the sum from 0 to the input by choosing the loop direction from the sign of the input
@@ -53,7 +53,7 @@ gcc -std=c99 -Wall -o Q1 Q1.c && ./Q1
 gcc -std=c99 -Wall -o Q2 Q2.c && ./Q2
 ```
 
-Both programs compile without warnings. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console. Neither `main()` has a `return` statement, but since C99, reaching the closing `}` of `main()` is treated as returning 0.
+The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console. Neither `main()` has a `return` statement, but since C99, reaching the closing `}` of `main()` is treated as returning 0.
 
 ---
 
@@ -145,7 +145,7 @@ int getSum(int val) {
 }
 ```
 
-**Output:** Entering the same values as in the two sample runs gives the same results. Because no newline is printed after the result, the next shell prompt continues on the same line in a terminal.
+**Output:** Because no newline is printed after the result, the next shell prompt continues on the same line in a terminal.
 
 ```text
 >> Enter value: 4
@@ -240,7 +240,7 @@ int getSign(int tmp)
 }
 ```
 
-**Output:** Entering the same 10 values as in the sample run prints the same sum, 19.
+**Output:** Entering the 10 values of the sample run prints the sum 19.
 
 ```text
 >> (1) Input value: 3
@@ -324,6 +324,6 @@ int getSign(int tmp)
    <details>
    <summary>Answer</summary>
 
-   For $n < 0$ the formula is $\frac{n(1-n)}{2}$, so the value is $\frac{(-3)(1-(-3))}{2} = \frac{(-3) \times 4}{2} = -6$. This matches the sample run.
+   For $n < 0$ the formula is $\frac{n(1-n)}{2}$, so the value is $\frac{(-3)(1-(-3))}{2} = \frac{(-3) \times 4}{2} = -6$.
 
    </details>

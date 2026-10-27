@@ -59,7 +59,7 @@ Coursework/HW03_Control-Statements-I/
 
 Problems 1, 2, and 3 are written problems, so their answers and explanations are given in this document without solution files. The outputs of Problems 1 and 3 come from compiling and running the programs of the problems as they are.
 
-The program of Problem 4 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The outputs of Problem 4 were obtained with the following commands.
+The program of Problem 4 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. Problem 4 is compiled and run as follows.
 
 ```bash
 cd Coursework/HW03_Control-Statements-I/Solution
@@ -237,7 +237,7 @@ Each `printf` prints `a` and `b` at that point according to the format string `"
 
 ### 4.3 Output and Undefined Behavior
 
-Compiling and running the program of the problem with gcc and with clang gives the same output, shown below.
+Compiled with gcc or with clang, the program of the problem prints the following.
 
 ```text
 3 , 0 
@@ -324,7 +324,7 @@ int main()
 
 ### 5.3 Output and Edge Cases
 
-**Output:** Identical to the three sample runs. The program prints no newline at the end of the output. In the third run, -12 > -3 is false, so `max1` becomes -3, and -3 > -24 is true, so `max2` is also -3.
+**Output:** The program prints no newline at the end of the output. In the third run, -12 > -3 is false, so `max1` becomes -3, and -3 > -24 is true, so `max2` is also -3.
 
 ```text
 Input 3 values: 3 -4 9

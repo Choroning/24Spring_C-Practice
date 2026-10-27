@@ -138,7 +138,7 @@ int main()
 
 ### 1.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as follows.
+The output is as follows.
 
 ```text
 vOne: 15 18 10 4 27
@@ -221,7 +221,7 @@ int main()
 
 ### 2.3 Output
 
-`gets_s` belongs to Annex K, which is optional in the C11 standard, so Visual Studio provides it but the standard libraries used by gcc and clang do not. To run the code with gcc or clang, include a header that defines a `gets_s` with the same behavior (read one line and discard the newline) with the `-include` option, as in the Chapter 9 exercise solution ([Chapter 9, Exercise 1 solution](../../Lecture-Notes/Ch09_Strings/Solutions.md#exercise-1-string-manipulation)). Built this way, it compiles without warnings with `gcc -std=c99 -Wall`, and entering the same string as in the sample run gives the following result.
+`gets_s` belongs to Annex K, which is optional in the C11 standard, so Visual Studio provides it but the standard libraries used by gcc and clang do not. To run the code with gcc or clang, include a header that defines a `gets_s` with the same behavior (read one line and discard the newline) with the `-include` option, as in the Chapter 9 exercise solution ([Chapter 9, Exercise 1 solution](../../Lecture-Notes/Ch09_Strings/Solutions.md#exercise-1-string-manipulation)). Entering the string of the sample run gives the following result.
 
 ```text
 Input str: aB3 2# dfkW
@@ -229,7 +229,7 @@ Uppercase letters: 2
 Lowercase letters: 4
 ```
 
-It matches the sample run. The last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console, and the same holds for the other sample runs in this document.
+The last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console, and the same holds for the other sample runs in this document.
 
 > **Note:** Using `isupper()` and `islower()` from `<ctype.h>` instead of range comparisons shows the intent better and also works correctly for character sets other than ASCII ([Chapter 9, Section 3.1](../../Lecture-Notes/Ch09_Strings/Concepts_Lecture.md#31-classification)). For portability, read with `fgets` instead of `gets_s` and remove the newline (Section 4). The newline is not a letter, so even if it is not removed, the counts in this problem do not change.
 
@@ -323,14 +323,14 @@ int main() {
 
 ### 3.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and entering the same string as in the sample run gives the following result.
+Entering the string of the sample run gives the following result.
 
 ```text
 Input str: aB3 2# dfkW
 Reversed str: Wkfd #2 3Ba
 ```
 
-It matches the sample run. The string has length 11, so 5 swaps occur and the middle character `#` (index 5) stays in place.
+The string has length 11, so 5 swaps occur and the middle character `#` (index 5) stays in place.
 
 > **Caution:** If an empty string is entered, `end` points to the null character from the start, so `end--` makes it point before the beginning of the array. Since `start < end` is false, no dereference occurs, but merely forming a pointer outside the array is undefined behavior in the C standard, so it is safer to check first, as in `if (*str == '\0') return;`. Also, this function reverses byte by byte, so a UTF-8 string in which one character takes several bytes, such as Hangul, has its byte order reversed and its characters broken.
 
@@ -413,7 +413,7 @@ int main() {
 
 ### 4.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and entering the same string as in the sample run gives the following result.
+Entering the string of the sample run gives the following result.
 
 ```text
 Input str: aB 3# ! D
@@ -423,7 +423,7 @@ aB
 D
 ```
 
-The split pieces match the sample run, but the second line of the sample run, `Output:`, is not printed. To match the format, add `printf("Output:\n");` before the loop.
+The code does not print the second line of the sample run, `Output:`. To match the format, add `printf("Output:\n");` before the loop.
 
 > **Caution:** Because each whitespace character is replaced with a newline, consecutive spaces as in `a  b` produce an empty line between the pieces (three lines: `a`, an empty line, and `b`). To treat consecutive whitespace as one, remember whether the last printed character was a newline and do not print newlines in a row. Also, the loop condition `i < strlen(str)` calls `strlen` again on every iteration, taking $O(n^2)$ time for a string of length $n$, and compares an `int` with a `size_t` (an unsigned integer). It is better to compute the length once before the loop with `size_t len = strlen(str);` or to use `str[i] != '\0'` as the condition.
 

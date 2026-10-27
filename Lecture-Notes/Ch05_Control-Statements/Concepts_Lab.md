@@ -185,7 +185,7 @@ If the value of n equals no case, the statements after `default:` are executed a
 
 ## 3. Conditional Statement Practice
 
-The solution code of the following problems is the example files in this unit folder. Each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs. The messages end without `\n`, so in a real terminal the next prompt follows the message directly.
+The solution code of the following problems is the example files in this unit folder. The messages end without `\n`, so in a real terminal the next prompt follows the message directly.
 
 ### 3.1 Positive, Zero, or Negative
 
@@ -626,8 +626,6 @@ With `i = 5`, the condition `5 < 4` of `while` is false, so its body never runs,
 <br>
 
 ## 5. Loop Practice
-
-The solutions to the following problems compile with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
 
 ### 5.1 Sum from 1 to 5
 

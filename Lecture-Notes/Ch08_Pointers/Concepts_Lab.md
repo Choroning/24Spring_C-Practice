@@ -226,7 +226,7 @@ pointer sizes: 8, 8, 8
 pointee sizes: 1, 4, 8
 ```
 
-This was run on 64-bit macOS, so all three pointers are 8 bytes. The sizes of the pointed-to objects differ: `char` 1, `int` 4, and `double` 8 bytes.
+On a 64-bit platform a pointer is 8 bytes, so all three pointer sizes are 8. The sizes of the pointed-to objects differ: `char` 1, `int` 4, and `double` 8 bytes.
 
 ---
 
@@ -340,7 +340,7 @@ arr: 0x16bc1ab90
 
 ## 4. Pointer Practice
 
-The solution code of the following problems is the example files in this unit folder. Each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The solution code of the following problems is the example files in this unit folder.
 
 ### 4.1 Predicting the Results of Pointer Expressions
 

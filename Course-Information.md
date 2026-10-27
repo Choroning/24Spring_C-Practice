@@ -64,7 +64,6 @@
 - **Intended For:** First-year students
 - **Class Times:** Monday periods 6-7 (starting at 2 p.m.)
 - **Classroom:** Nongshim International Hall Room 209
-- **Course Code in the Syllabus:** `DCCS103 (03)`, while the Week 1 course plan material lists it as `DCCS153 (02, 03)`.
 - **Class Format:** The activity types in the syllabus are lecture, lab, and quiz. Students learn the detailed theory of the computer language in class, and some topics are practiced in labs so that students understand the theory clearly. The syllabus planned solving and explaining the textbook lab problems every week, and the actual classes went through the solutions to the previous assignment, textbook theory, and practice with textbook problems in that order.
 - **Class Mode:** The first semester of 2024 is taught in person, and the midterm and final exams are in principle held in person. When students have difficulty attending because of COVID-19 or a class falls on a public holiday, videos recorded in 2021 or newly recorded in 2023 are provided as lecture material instead of makeup classes.
 - **COVID-19 Provisions:** The syllabus states that classes are in person in principle but may be held as real-time hybrid online and offline classes (NeMO Class) or as real-time online lectures, that classes are fully online in principle under level 3 social distancing, and that online classes are given as online or recorded lectures.

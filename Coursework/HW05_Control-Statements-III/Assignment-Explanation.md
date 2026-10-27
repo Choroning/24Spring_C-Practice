@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Update the maximum and minimum in a `while` loop that ends at the sentinel 0 while filtering out-of-range inputs
@@ -57,7 +57,7 @@ Coursework/HW05_Control-Statements-III/
 
 *Figure 1. Directory layout of HW5*
 
-The code of Problem 2 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The other three programs use only the standard `scanf`. The outputs in this document were obtained with commands such as the following.
+The code of Problem 2 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. The other three programs use only the standard `scanf`. Each program is compiled and run as follows.
 
 ```bash
 cd Coursework/HW05_Control-Statements-III/Solution
@@ -147,7 +147,7 @@ int main()
 
 ### 2.3 Output and Edge Cases
 
-**Output:** Identical to the sample run. 234 is out of range and ignored, and the remaining values 3, 9, 54, 87, 5, and 3 give the maximum 87 and the minimum 3. `-- Error -- ` and the result line each end with one trailing space.
+**Output:** 234 is out of range and ignored, and the remaining values 3, 9, 54, 87, 5, and 3 give the maximum 87 and the minimum 3. `-- Error -- ` and the result line each end with one trailing space.
 
 ```text
 Input value(no): 3
@@ -252,7 +252,7 @@ int main()
 
 ### 3.3 Output and Edge Cases
 
-**Output:** Identical to the two sample runs. The separator ends with one trailing space, and no newline is printed after the last line.
+**Output:** The separator ends with one trailing space, and no newline is printed after the last line.
 
 ```text
 >> Input value: 1
@@ -325,7 +325,7 @@ int main()
 
 ### 4.3 Output
 
-Identical to the sample run, ending without a newline.
+The output ends without a newline.
 
 ```text
 1 - 2 + 3 - 4 + 5 - 6 + 7 - 8 + 9 - 10 = -5
@@ -396,7 +396,7 @@ int main()
 
 ### 5.3 Output
 
-Identical to the sample run. A trailing space remains after the last number of each line.
+A trailing space remains after the last number of each line.
 
 ```text
 0 

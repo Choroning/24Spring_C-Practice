@@ -87,14 +87,14 @@ int main()
 
 ### 1.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as follows.
+The output is as follows.
 
 ```text
 초기상태: a = 3, b = 5
 맞바꾸기: a = 5, b = 3
 ```
 
-It matches the sample run. The last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console, and the same holds for the other sample runs in this document. `main()` has no `return 0;`, but since C99 reaching the end of `main()` is treated as returning 0, so the exit code is 0.
+The last line of the sample run, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console, and the same holds for the other sample runs in this document. `main()` has no `return 0;`, but since C99 reaching the end of `main()` is treated as returning 0, so the exit code is 0.
 
 > **Caution:** If `swap()` exchanges the pointers themselves, as in `int *tmp = a; a = b; b = tmp;`, the variables of `main()` do not change. The pointer parameters `a` and `b` are also local variables that received copies of the addresses, so to change the originals, the pointed-to values must be changed through dereferencing, as in `*a` and `*b`.
 
@@ -171,14 +171,14 @@ int main()
 
 ### 2.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as follows.
+The output is as follows.
 
 ```text
 
 arrZ:   2    7    1  -26  
 ```
 
-The four sums match the sample run. The output format differs. Because `printf("\narrZ: ")` starts with a newline, a blank line appears before the result, and because each element is printed with `%3d` followed by two spaces, the spacing is wider than in the sample run and the line ends with trailing spaces. Also, no newline is printed at the end, so when run in a terminal, the next shell prompt appears on the same line.
+The output format differs from the sample run. Because `printf("\narrZ: ")` starts with a newline, a blank line appears before the result, and because each element is printed with `%3d` followed by two spaces, the spacing is wider than in the sample run and the line ends with trailing spaces. Also, no newline is printed at the end, so when run in a terminal, the next shell prompt appears on the same line.
 
 > **Note:** If the size could be passed as well, the input arrays could be received as `const`, as in `void arrSumN(const int *pX, const int *pY, int *pZ, int n)`, and the function could repeat `*(pZ + i) = *(pX + i) + *(pY + i);` `n` times to process the whole array in one call ([Chapter 8, Section 3.4](../../Lecture-Notes/Ch08_Pointers/Concepts_Lecture.md#34-passing-arrays-to-functions)).
 
@@ -271,7 +271,7 @@ int main()
 
 ### 3.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and entering the same values as in the sample run gives the following output.
+Entering the values of the sample run gives the following output.
 
 ```text
 정수 3개 입력: 9 -2 5
@@ -279,7 +279,7 @@ It compiles without warnings with `gcc -std=c99 -Wall`, and entering the same va
 정렬 후: x = -2, y = 5, z = 9
 ```
 
-It matches the sample run. Entering 1, 2, and 3 in all six orders always gives `x = 1, y = 2, z = 3`, and `5 5 1`, which contains equal values, gives `x = 1, y = 5, z = 5`. The program always makes three comparisons regardless of the input, and the input with the most swaps is the descending `3 2 1`, which swaps in all three steps.
+Entering 1, 2, and 3 in all six orders always gives `x = 1, y = 2, z = 3`, and `5 5 1`, which contains equal values, gives `x = 1, y = 5, z = 5`. The program always makes three comparisons regardless of the input, and the input with the most swaps is the descending `3 2 1`, which swaps in all three steps.
 
 ```text
 정수 3개 입력: 3 2 1

@@ -300,7 +300,7 @@ int main(void)
 }
 ```
 
-**Output:** Compiling the same code with `gcc -std=c99 -Wall second.c -o second` produces no warnings, and running it prints the same three lines as the sample run.
+**Output:** With gcc, compile and run the same code with `gcc -std=c99 -Wall second.c -o second`.
 
 ```text
 Second C Program
@@ -342,7 +342,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall calculator.c -o calculator` without warnings and prints the same results as the sample run.
+**Output:**
 
 ```text
 55 + 33 = 88

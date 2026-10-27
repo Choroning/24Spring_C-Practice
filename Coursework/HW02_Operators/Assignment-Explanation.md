@@ -54,7 +54,7 @@ Coursework/HW02_Operators/
 
 *Figure 1. Directory layout of HW2*
 
-The three programs were written in Visual Studio (MSVC) and use `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. For `%d`, which reads numbers, the two functions behave the same. All outputs in this document were obtained with the following commands.
+The three programs were written in Visual Studio (MSVC) and use `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. For `%d`, which reads numbers, the two functions behave the same. Each program is compiled and run as follows.
 
 ```bash
 cd Coursework/HW02_Operators/Solution
@@ -119,7 +119,7 @@ int main()
 
 ### 2.3 Output and Edge Cases
 
-**Output:** Identical to the sample run. 10 is 1 × 8 + 2 = `012` in octal and `0xa` in hexadecimal. The program prints no newline at the end of the output.
+**Output:** 10 is 1 × 8 + 2 = `012` in octal and `0xa` in hexadecimal. The program prints no newline at the end of the output.
 
 ```text
 enter no: 10
@@ -203,7 +203,7 @@ int main()
 
 ### 3.3 Output and Edge Cases
 
-**Output:** Identical to the sample run, except that each format string ends with `" \n"`, so every line ends with one trailing space.
+**Output:** Each format string ends with `" \n"`, so every line ends with one trailing space.
 
 ```text
 Enter 3 values: 1 2 4

@@ -348,7 +348,7 @@ result: 5
 
 ## 5. Function Practice
 
-The solution code of the following problems is the example files in this unit folder. Each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs. In programs whose messages end without `\n`, the next prompt follows the message directly in a real terminal.
+The solution code of the following problems is the example files in this unit folder. In programs whose messages end without `\n`, the next prompt follows the message directly in a real terminal.
 
 ### 5.1 Printing as Many Stars as Entered
 

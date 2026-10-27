@@ -311,8 +311,6 @@ sizeof(int)      // the memory size used by the type int
 
 ## 7. 실습 문제
 
-각 프로그램은 `gcc -std=c99 -Wall`로 경고 없이 컴파일되며, 출력은 실제로 실행한 결과이다.
-
 ### 7.1 증감 연산자의 결과 예측
 
 **문제:** 다음 프로그램의 실행 결과를 예측하라.

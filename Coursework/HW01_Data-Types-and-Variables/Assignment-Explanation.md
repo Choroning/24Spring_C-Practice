@@ -53,7 +53,7 @@ Coursework/HW01_Data-Types-and-Variables/
 
 *Figure 1. Directory layout of Assignment 1*
 
-Compile and run each solution as follows. All four files compile without warnings with `gcc -std=c99 -Wall` on Apple clang 21 on macOS.
+Compile and run each solution as follows.
 
 ```bash
 cd Coursework/HW01_Data-Types-and-Variables/Solution
@@ -152,7 +152,7 @@ int main()
 data: 2020
 ```
 
-The output matches the first line of the sample run. The format string has no `\n` at the end, so the line does not end after the output, and when the program runs in a terminal, the shell prompt appears right after `data: 2020`.
+The format string has no `\n` at the end, so the line does not end after the output, and when the program runs in a terminal, the shell prompt appears right after `data: 2020`.
 
 **Edge cases:** Calling `printf` before the assignment in (b) would read an uninitialized local variable and print a garbage value, which is undefined behavior. 2020 is within the range of `int` (-2,147,483,648 to 2,147,483,647), so no overflow occurs.
 
@@ -328,7 +328,7 @@ int main()
 13 % 3 = 1
 ```
 
-All five lines match the sample run. Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its own line.
+Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its own line.
 
 **Edge cases:**
 
