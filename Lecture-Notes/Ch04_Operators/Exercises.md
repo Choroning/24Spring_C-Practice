@@ -2,13 +2,15 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 **Common Requirement:** Every program must use meaningful variable names.
+
+Exercises 1-4 are lab problems, Exercises 5-14 are exercises 1-10 of Chapter 4 of the textbook, and Exercises 15-25 are programming assignments 1-11 of Chapter 4.
 
 ---
 
@@ -65,7 +67,7 @@ Program ended with exit code: 0
 
 ## Exercise 2: Converting Between Time and Seconds
 
-**Textbook Problem:** Adapted from Chapter 4 exercise 8
+**Textbook Problem:** Adapted from Chapter 4 programming assignment 8
 
 **Problem:** Referring to the sample runs, write a program that does the following two things.
 
@@ -185,3 +187,460 @@ Program ended with exit code: 0
 ```
 
 **[Solution](Solutions.md#exercise-4-convert-a-hexadecimal-rgb-value-to-red-green-and-blue-values)**
+
+---
+
+<br>
+
+## Exercise 5: Statements About Operators
+
+**Textbook Problem:** Chapter 4 exercise 1
+
+**Problem:** Choose all the incorrect statements about operators.
+
+- ① An operator is a symbol used in an operation.
+- ② A value that is the target of an operation is called an operand.
+- ③ An expression that contains an operator always has a value.
+- ④ Some operators have no operands.
+- ⑤ `#` can be defined as an operator and used.
+- ⑥ `^` is a unary operator.
+- ⑦ The comma (`,`) is also an operator.
+- ⑧ An operator expression cannot be used as part of another expression.
+
+**[Solution](Solutions.md#exercise-5-statements-about-operators)**
+
+---
+
+<br>
+
+## Exercise 6: Unary Operators
+
+**Textbook Problem:** Chapter 4 exercise 2
+
+**Problem:** Choose all the unary operators below.
+
+- ① `+`
+- ② `-`
+- ③ `++`
+- ④ `!`
+- ⑤ `sizeof`
+- ⑥ `<<`
+- ⑦ `&&`
+- ⑧ `~`
+- ⑨ `*=`
+- ⑩ `==`
+
+**[Solution](Solutions.md#exercise-6-unary-operators)**
+
+---
+
+<br>
+
+## Exercise 7: Statements About Arithmetic Operators
+
+**Textbook Problem:** Chapter 4 exercise 3
+
+**Problem:** Choose all the incorrect statements about arithmetic operators.
+
+- ① There are addition (`+`), subtraction (`-`), multiplication (`*`), division (`/`), and remainder (`%`) operators.
+- ② `+` and `-` can be used as sign operators.
+- ③ Integer / integer computes the quotient as a floating-point number.
+- ④ The remainder (`%`) operator can also be used on floating-point numbers.
+- ⑤ In a mixed operation on an integer and a floating-point number, the type is converted to a floating-point type.
+- ⑥ When the operands have the same data type, no type conversion takes place.
+- ⑦ The `*` and `/` operators have higher precedence than the `+` and `-` operators.
+
+**[Solution](Solutions.md#exercise-7-statements-about-arithmetic-operators)**
+
+---
+
+<br>
+
+## Exercise 8: Result Types of Expressions
+
+**Textbook Problem:** Chapter 4 exercise 4
+
+**Problem:** Write the type of the result of each expression below.
+
+- (1) `1 + 0.5`
+- (2) `1.01F + 0.5`
+- (3) `0.5F * 2.4`
+- (4) `12 + 56`
+- (5) `ch + 1` with `char ch = 'a';`
+- (6) `a - b` with `short a = 10, b = 20;`
+
+**[Solution](Solutions.md#exercise-8-result-types-of-expressions)**
+
+---
+
+<br>
+
+## Exercise 9: Values of Expressions and Variables After Operations
+
+**Textbook Problem:** Chapter 4 exercise 5
+
+**Problem:** For the variables declared below, perform each operation and write the value of the expression and the values of the variables `x`, `y`, and `z`. For each of (1)-(12), assume that `x`, `y`, and `z` are declared as follows.
+
+```c
+int x = 1, y = 2, z = 3;
+```
+
+- (1) `z % y`
+- (2) `++y;`
+- (3) `z = x--;`
+- (4) `z = y = x;`
+- (5) `z *= x;`
+- (6) `z *= y + 1;`
+- (7) `x > z && y < z`
+- (8) `! x || y < z`
+- (9) `x && y`
+- (10) `z << y`
+- (11) `x |= z`
+- (12) `y = x + 1 > z ? y : y - 1;`
+
+**[Solution](Solutions.md#exercise-9-values-of-expressions-and-variables-after-operations)**
+
+---
+
+<br>
+
+## Exercise 10: Statements About Relational and Logical Operators
+
+**Textbook Problem:** Chapter 4 exercise 6
+
+**Problem:** Choose all the incorrect statements about relational and logical operators.
+
+- ① An operator that compares the values of two numbers is called a relational operator.
+- ② `=` is the operator that compares whether two numbers are equal.
+- ③ The value of a logical expression is always 0 or 1.
+- ④ When relational and logical operators are used together, the relational operators are performed first.
+- ⑤ `~` is the logical NOT operator.
+- ⑥ An operand of a logical operator is considered true only when its value is 1.
+- ⑦ `!expr` can be used instead of `expr != 0`.
+- ⑧ The `&&` operation is performed before `||`.
+
+**[Solution](Solutions.md#exercise-10-statements-about-relational-and-logical-operators)**
+
+---
+
+<br>
+
+## Exercise 11: Data for Manipulating Specific Bits
+
+**Textbook Problem:** Chapter 4 exercise 7
+
+**Problem:** What is the data used in bitwise logical operations for the purpose of manipulating specific bit values called?
+
+**[Solution](Solutions.md#exercise-11-data-for-manipulating-specific-bits)**
+
+---
+
+<br>
+
+## Exercise 12: Parenthesizing Expressions in Evaluation Order
+
+**Textbook Problem:** Chapter 4 exercise 8
+
+**Problem:** For each expression below, enclose the operations in `()` in the order in which they are performed.
+
+- (1) `x - y / 3`
+- (2) `x < 0 || x > 100`
+- (3) `x == 0 || y == 0 && z == 1`
+- (4) `x = a > b`
+- (5) `!x && !y`
+- (6) `x += y * 2`
+- (7) `~x & y`
+- (8) `x < 0 || ! y && z`
+- (9) `x = x > 0 ? y + 1 : z + 2`
+- (10) `z = (double) x / y`
+
+**[Solution](Solutions.md#exercise-12-parenthesizing-expressions-in-evaluation-order)**
+
+---
+
+<br>
+
+## Exercise 13: Computing an Entrance Fee with the Conditional Operator
+
+**Textbook Problem:** Chapter 4 exercise 9
+
+**Problem:** The following code computes an entrance fee. Fill in the blank in the code using the conditional operator so that the entrance fee is 70,000 won in the peak season (June-August) and 35,000 won otherwise.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS    // required to use scanf in Visual Studio 2022
+#include <stdio.h>
+
+int main(void)
+{
+    int month;
+    int fee;
+
+    printf("what month? ");
+    scanf("%d", &month);            // reads the month
+    fee = ______________________________;
+
+    printf("entrance fee = %d\n", fee);
+}
+```
+
+**[Solution](Solutions.md#exercise-13-computing-an-entrance-fee-with-the-conditional-operator)**
+
+---
+
+<br>
+
+## Exercise 14: Output of a Bitwise Operation Program
+
+**Textbook Problem:** Chapter 4 exercise 10
+
+**Problem:** Write the output of the following program.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    unsigned char a = 0xcd;
+    unsigned char b = 0xf0;
+    unsigned char c;
+
+    c = a ^ b;
+    printf("z = %02x\n", c);
+
+    c = ~a | b << 2;
+    printf("z = %02x\n", c);
+}
+```
+
+**[Solution](Solutions.md#exercise-14-output-of-a-bitwise-operation-program)**
+
+---
+
+<br>
+
+## Exercise 15: Computing Density
+
+**Textbook Problem:** Chapter 4 programming assignment 1
+
+**Problem:** Write a program that reads a mass and a volume as floating-point numbers and computes the density. The mass is read in g, and the volume is read in $\text{cm}^3$.
+
+$$\text{density}(\text{g/cm}^3) = \frac{\text{mass}(\text{g})}{\text{volume}(\text{cm}^3)}$$
+
+**Sample Run:**
+
+```text
+질량(g)? 33
+부피(세제곱센티미터)? 400
+밀도: 0.082500
+```
+
+**[Solution](Solutions.md#exercise-15-computing-density)**
+
+---
+
+<br>
+
+## Exercise 16: Computing an Electricity Bill
+
+**Textbook Problem:** Chapter 4 programming assignment 2
+
+**Problem:** Write a program that reads the monthly usage (kWh) and computes the electricity bill. The charge for the usage is 190 won/kWh.
+
+$$\text{electricity bill} = \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}$$
+
+**Sample Run:**
+
+```text
+월 사용량(kWh)? 375
+전기 요금: 71250원
+```
+
+**[Solution](Solutions.md#exercise-16-computing-an-electricity-bill)**
+
+---
+
+<br>
+
+## Exercise 17: Computing an Electricity Bill with a Basic Charge
+
+**Textbook Problem:** Chapter 4 programming assignment 3
+
+**Problem:** Write a program that reads a basic charge and the monthly usage (kWh) and computes the electricity bill. The charge for the usage is 190 won/kWh. The expression can be written with a compound assignment operator, without declaring a separate variable to store the basic charge.
+
+$$\text{electricity bill} = \text{basic charge} + \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}$$
+
+**Sample Run:**
+
+```text
+기본 요금? 2500
+월 사용량(kWh)? 375
+전기 요금: 73750원
+```
+
+**[Solution](Solutions.md#exercise-17-computing-an-electricity-bill-with-a-basic-charge)**
+
+---
+
+<br>
+
+## Exercise 18: Checking Whether a Month Value Is Valid
+
+**Textbook Problem:** Chapter 4 programming assignment 4
+
+**Problem:** Write a program that reads the month of a date and prints that the value is valid if a value from 1 to 12 is entered, and that the value is invalid otherwise. Because `printf` is a function that returns a value, a call to `printf` can be used in the positions of `expr1`, `expr2`, and `expr3` in `expr1 ? expr2 : expr3`.
+
+**Sample Run:**
+
+```text
+몇 월? 15
+잘못된 값입니다.
+```
+
+**[Solution](Solutions.md#exercise-18-checking-whether-a-month-value-is-valid)**
+
+---
+
+<br>
+
+## Exercise 19: Converting Fahrenheit to Celsius
+
+**Textbook Problem:** Chapter 4 programming assignment 5
+
+**Problem:** Write a program that reads a Fahrenheit temperature (°F) as a floating-point number, converts it to a Celsius temperature (°C), and prints it. The formula that converts a Fahrenheit temperature to a Celsius temperature is as follows. Because integer / integer computes the quotient as an integer, `5/9` is 0. Therefore, `5.0/9.0` must be computed and used.
+
+$$\text{Celsius temperature} = (\text{Fahrenheit temperature} - 32) \times \frac{5}{9}$$
+
+**Sample Run:**
+
+```text
+화씨온도? 72
+72 F = 22.22 C
+```
+
+**[Solution](Solutions.md#exercise-19-converting-fahrenheit-to-celsius)**
+
+---
+
+<br>
+
+## Exercise 20: Computing Kinetic Energy
+
+**Textbook Problem:** Chapter 4 programming assignment 6
+
+**Problem:** Write a program that reads a mass and a speed as floating-point numbers and computes the kinetic energy. The mass is read in kg, and the speed is read in m/s.
+
+$$\text{kinetic energy} = \frac{1}{2} \times \text{mass} \times (\text{speed})^2$$
+
+**Sample Run:**
+
+```text
+질량(kg)? 5.5
+속력(m/s)? 4
+운동에너지: 44.00 J
+```
+
+**[Solution](Solutions.md#exercise-20-computing-kinetic-energy)**
+
+---
+
+<br>
+
+## Exercise 21: Computing Percent Concentration
+
+**Textbook Problem:** Chapter 4 programming assignment 7
+
+**Problem:** Write a program that reads the mass of a solvent and the mass of a solute as integers and computes the percent concentration of the solution. The masses of the solvent and the solute are read in g.
+
+$$\text{percent concentration}(\%) = \frac{\text{mass of solute}}{\text{mass of solvent} + \text{mass of solute}} \times 100$$
+
+**Sample Run:**
+
+```text
+용매(g)? 200
+용질(g)? 24
+농도: 10.71 %
+```
+
+**[Solution](Solutions.md#exercise-21-computing-percent-concentration)**
+
+---
+
+<br>
+
+## Exercise 22: Converting a Playback Time to Hours, Minutes, and Seconds
+
+**Textbook Problem:** Chapter 4 programming assignment 8
+
+**Problem:** Write a program that reads the playback time of a video in seconds and prints how many hours, minutes, and seconds it is. With the conditional operator, the program can be improved to print "재생 시간은 5분입니다." instead of "재생 시간은 0시간 5분 0초입니다.", that is, to print the hours, minutes, and seconds only when they are not 0.
+
+**Sample Run:**
+
+```text
+재생 시간(초)? 3750
+재생 시간은 1시간 2분 30초입니다.
+```
+
+**[Solution](Solutions.md#exercise-22-converting-a-playback-time-to-hours-minutes-and-seconds)**
+
+---
+
+<br>
+
+## Exercise 23: Computing a Discounted Price and the Discount Amount
+
+**Textbook Problem:** Chapter 4 programming assignment 9
+
+**Problem:** Write a program that reads the price of a product and a discount rate (%) and prints the discounted price and the discount amount.
+
+**Sample Run:**
+
+```text
+제품의 가격? 12000
+할인율(%)? 25
+할인가: 9000원 (3000원 할인)
+```
+
+**[Solution](Solutions.md#exercise-23-computing-a-discounted-price-and-the-discount-amount)**
+
+---
+
+<br>
+
+## Exercise 24: Printing Each Byte in Hexadecimal
+
+**Textbook Problem:** Chapter 4 programming assignment 10
+
+**Problem:** Write a program that reads an unsigned integer in hexadecimal and prints the value of each byte in hexadecimal, in order from the least significant byte. Use a bitmask with the `&` operator.
+
+**Sample Run:**
+
+```text
+16진수로 데이터를 입력하세요: 0xa1b2c3d4
+byte 0 : d4
+byte 1 : c3
+byte 2 : b2
+byte 3 : a1
+```
+
+**[Solution](Solutions.md#exercise-24-printing-each-byte-in-hexadecimal)**
+
+---
+
+<br>
+
+## Exercise 25: Building an RGB Color with Overflow Handling
+
+**Textbook Problem:** Chapter 4 programming assignment 11
+
+**Problem:** The RGB notation for 24-bit true color represents a color using 8 bits each for red, green, and blue. An RGB color is stored in a 32-bit unsigned integer, which stores the color information in the order red, green, blue starting from the least significant byte and leaves the most significant byte unused. This bit layout is the same as Figure 2 of Exercise 3. Write a program that reads red, green, and blue, builds the RGB color, and prints it. Print the RGB color in hexadecimal so that its value is easy to read byte by byte. If a value greater than 255 is entered for red, green, or blue, it must be handled as an overflow. That is, if 256 is entered for red, 0, not 256, must be stored in red.
+
+**Sample Run:**
+
+```text
+red? 256
+green? 128
+blue? 255
+RGB 색상: FF8000
+```
+
+**[Solution](Solutions.md#exercise-25-building-an-rgb-color-with-overflow-handling)**
