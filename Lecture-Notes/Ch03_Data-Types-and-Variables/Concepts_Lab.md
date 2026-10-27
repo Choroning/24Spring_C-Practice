@@ -437,7 +437,7 @@ When 3 is entered and Enter is pressed, `scanf(" %d", &data);` stores the binary
 
 ## 6. Practice Problems
 
-The following problems practice setting the formats of input and output with format specifiers. Each program compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The following problems practice setting the formats of input and output with format specifiers.
 
 ### 6.1 Setting the Output Format of Three Real Numbers
 

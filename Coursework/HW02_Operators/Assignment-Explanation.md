@@ -119,7 +119,7 @@ int main()
 
 ### 2.3 Output and Edge Cases
 
-**Output:** Identical to the sample run. 10 is 1 × 8 + 2 = `012` in octal and `0xa` in hexadecimal. The program prints no newline at the end of the output.
+**Output:** 10 is 1 × 8 + 2 = `012` in octal and `0xa` in hexadecimal. The program prints no newline at the end of the output.
 
 ```text
 enter no: 10
@@ -203,7 +203,7 @@ int main()
 
 ### 3.3 Output and Edge Cases
 
-**Output:** Identical to the sample run, except that each format string ends with `" \n"`, so every line ends with one trailing space.
+**Output:** Each format string ends with `" \n"`, so every line ends with one trailing space.
 
 ```text
 Enter 3 values: 1 2 4

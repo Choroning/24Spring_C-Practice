@@ -237,7 +237,7 @@ Each `printf` prints `a` and `b` at that point according to the format string `"
 
 ### 4.3 Output and Undefined Behavior
 
-Compiling and running the program of the problem with gcc and with clang gives the same output, shown below.
+Compiled with gcc or with clang, the program of the problem prints the following.
 
 ```text
 3 , 0 
@@ -324,7 +324,7 @@ int main()
 
 ### 5.3 Output and Edge Cases
 
-**Output:** Identical to the three sample runs. The program prints no newline at the end of the output. In the third run, -12 > -3 is false, so `max1` becomes -3, and -3 > -24 is true, so `max2` is also -3.
+**Output:** The program prints no newline at the end of the output. In the third run, -12 > -3 is false, so `max1` becomes -3, and -3 > -24 is true, so `max2` is also -3.
 
 ```text
 Input 3 values: 3 -4 9

@@ -311,8 +311,6 @@ The postfix increment and decrement operators belong to level 1, and the prefix 
 
 ## 7. Practice Problems
 
-Each program compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
-
 ### 7.1 Predicting Increment Operator Results
 
 **Problem:** Predict the output of the following program.

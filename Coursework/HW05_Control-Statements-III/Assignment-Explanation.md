@@ -147,7 +147,7 @@ int main()
 
 ### 2.3 Output and Edge Cases
 
-**Output:** Identical to the sample run. 234 is out of range and ignored, and the remaining values 3, 9, 54, 87, 5, and 3 give the maximum 87 and the minimum 3. `-- Error -- ` and the result line each end with one trailing space.
+**Output:** 234 is out of range and ignored, and the remaining values 3, 9, 54, 87, 5, and 3 give the maximum 87 and the minimum 3. `-- Error -- ` and the result line each end with one trailing space.
 
 ```text
 Input value(no): 3
@@ -252,7 +252,7 @@ int main()
 
 ### 3.3 Output and Edge Cases
 
-**Output:** Identical to the two sample runs. The separator ends with one trailing space, and no newline is printed after the last line.
+**Output:** The separator ends with one trailing space, and no newline is printed after the last line.
 
 ```text
 >> Input value: 1
@@ -325,7 +325,7 @@ int main()
 
 ### 4.3 Output
 
-Identical to the sample run, ending without a newline.
+The output ends without a newline.
 
 ```text
 1 - 2 + 3 - 4 + 5 - 6 + 7 - 8 + 9 - 10 = -5
@@ -396,7 +396,7 @@ int main()
 
 ### 5.3 Output
 
-Identical to the sample run. A trailing space remains after the last number of each line.
+A trailing space remains after the last number of each line.
 
 ```text
 0 

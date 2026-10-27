@@ -199,7 +199,7 @@
 - **Precision `.2`:** Writing `.2` between `%` and `f` rounds at the third digit after the decimal point and prints up to the second digit. 3.141592 becomes `3.14`. `%f` without a precision prints 6 digits after the decimal point, as in `3.141592`.
 - **Field width:** Adding a field width, as in `%4.2f`, gives the same result because `3.14` is 4 characters long. With a larger width, `%6.2f` pads the front with spaces, as in `  3.14`.
 
-The program with the blank filled in is as follows. It compiles with `gcc -std=c99 -Wall` without warnings, and running it prints the same output as the sample run. This code has no `return` statement, but since C99 `main` returns 0 when it reaches its end, so the program terminates normally (option ④ of Exercise 4).
+The program with the blank filled in is as follows. This code has no `return` statement, but since C99 `main` returns 0 when it reaches its end, so the program terminates normally (option ④ of Exercise 4).
 
 **Code:**
 
@@ -280,7 +280,7 @@ An initial value is not required in a declaration; giving one with the declarati
 - **② `&ch`:** `scanf` needs the memory address at which to store the input value, so the address-of operator `&` is put before the variable name. Passing `ch` without `&` passes not an address but the value of `ch` (an uninitialized garbage value), which causes undefined behavior, and clang with `-Wall` warns "format specifies type 'char *' but the argument has type 'int'".
 - **③ `%c`:** The format specifier that prints the one character stored in a `char` variable. Writing `%d` here prints the character's code (65 for `A`) instead of the character.
 
-The program with the blanks filled in is as follows. It compiles with `gcc -std=c99 -Wall` without warnings, and entering `A` prints `ch = A`. This program prints no input prompt, so when it runs it waits for input on an empty line.
+The program with the blanks filled in is as follows. Entering `A` prints `ch = A`. This program prints no input prompt, so when it runs it waits for input on an empty line.
 
 **Code:**
 
@@ -336,7 +336,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same four lines as the sample run.
+**Output:**
 
 ```text
 int main(void)
@@ -391,7 +391,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run. Entering 171 prints the two-digit hexadecimal number `ab`, because 171 = 16 × 10 + 11.
+**Output:** Entering 171 prints the two-digit hexadecimal number `ab`, because 171 = 16 × 10 + 11.
 
 ```text
 10진수 정수? 10
@@ -452,7 +452,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run.
+**Output:**
 
 ```text
 연? 2022
@@ -518,7 +518,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run. Entering 13, 5, and 9 pads only the one-digit minutes and seconds with 0.
+**Output:** Entering 13, 5, and 9 pads only the one-digit minutes and seconds with 0.
 
 ```text
 시? 1
@@ -589,7 +589,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and, as in the sample run, prints 50.25 × 1000 = 50250 won. 2.01 dollars is also converted correctly to 2010 won.
+**Output:** The program prints 50.25 × 1000 = 50250 won. 2.01 dollars is also converted correctly to 2010 won.
 
 ```text
 달러? 50.25
@@ -644,7 +644,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run.
+**Output:**
 
 ```text
 옷 사이즈(S,M,L)? M
@@ -696,7 +696,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run.
+**Output:**
 
 ```text
 실수 2개? 12.34 0.5
@@ -758,7 +758,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same output as the sample run.
+**Output:**
 
 ```text
 pi = 3.14
@@ -838,7 +838,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering `0x12` prints the same output as the sample run. The octal `012` is 8 × 1 + 2 = 10, and the decimal `18` is the same value as `0x12`.
+**Output:** Entering `0x12` gives the following output. The octal `012` is 8 × 1 + 2 = 10, and the decimal `18` is the same value as `0x12`.
 
 ```text
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
@@ -100,7 +100,7 @@ void move_point(int *x, int *y, int move)
 }
 ```
 
-**Output:** `scanf_s` is a function provided by Visual Studio (MSVC); it belongs to Annex K, which is optional in the C11 standard, and is not declared in the standard libraries used by gcc and clang. The `scanf_s` calls in this code read only integers (`%d`), so they behave like `scanf`, and with gcc or clang the code is compiled by defining a macro, as in `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c -lm`. This produces one warning that the local variable `distance` in `main()` is unused. Entering the same values as in the sample runs gives the following results, with the entered values shown as they appear in a terminal.
+**Output:** `scanf_s` is a function provided by Visual Studio (MSVC); it belongs to Annex K, which is optional in the C11 standard, and is not declared in the standard libraries used by gcc and clang. The `scanf_s` calls in this code read only integers (`%d`), so they behave like `scanf`, and with gcc or clang the code is compiled by defining a macro, as in `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c -lm`. This produces one warning that the local variable `distance` in `main()` is unused. Entering the values of the sample runs gives the following results, with the entered values shown as they appear in a terminal.
 
 ```text
 p1 좌표 입력(x1, y1 좌표값 입력): 1 1
@@ -124,7 +124,7 @@ p2 = (3, -5)
 p2를 x축과 y축으로 각각 3만큼 이동 = (6, -2)
 ```
 
-The computed results match the sample runs. The first distance is $\sqrt{2^2 + 6^2} = \sqrt{40} \approx 6.324555$, and the second is $\sqrt{5^2 + 9^2} = \sqrt{106} \approx 10.295630$. The output format differs in three ways. First, the input prompts read `(x1, y1 좌표값 입력)` and `(x2, y2 좌표값 입력)` instead of `(x축, y축 좌표값 입력)`. Second, `만큼` follows the displacement without a space. Third, the distance is printed with five decimal places (`%.5f`), so the second distance appears as `10.29563` instead of `10.2956`. The distances in the sample runs are printed with six significant digits (the default form of `%g`). The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
+The first distance is $\sqrt{2^2 + 6^2} = \sqrt{40} \approx 6.324555$, and the second is $\sqrt{5^2 + 9^2} = \sqrt{106} \approx 10.295630$. The output format differs in three ways. First, the input prompts read `(x1, y1 좌표값 입력)` and `(x2, y2 좌표값 입력)` instead of `(x축, y축 좌표값 입력)`. Second, `만큼` follows the displacement without a space. Third, the distance is printed with five decimal places (`%.5f`), so the second distance appears as `10.29563` instead of `10.2956`. The distances in the sample runs are printed with six significant digits (the default form of `%g`). The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
 > **Note:** The requirements state that `compute_distance()` returns the distance and contains no output statement, but this code returns nothing and prints inside the function. To follow the requirements, declare it as `double compute_distance(int x1, int y1, int x2, int y2)`, return the distance with `return sqrt(...);`, receive it in `main()` with `distance = compute_distance(x1, y1, x2, y2);`, and print it with `printf`. The `distance` variable declared in the example code is then used as well, and the warning disappears.
 
@@ -236,7 +236,7 @@ void selectionSort(int p[], int size)
 }
 ```
 
-**Output:** As in Exercise 1, compiling with `gcc -std=c99 -Wall` and `-Dscanf_s=scanf` produces no warnings. The numbers differ on every run according to the seed set by `srand(time(NULL))`. One example run that generates 5 sets is shown below.
+**Output:** As in Exercise 1, compile with `gcc -std=c99 -Wall` and `-Dscanf_s=scanf`. The numbers differ on every run according to the seed set by `srand(time(NULL))`. One example run that generates 5 sets is shown below.
 
 ```text
 몇 세트의 로또 번호를 생성할까요? 5
@@ -249,6 +249,6 @@ void selectionSort(int p[], int size)
 행운을 빕니다!
 ```
 
-Each set has no duplicates and is sorted in ascending order, and the column alignment matches the sample run. The prompt says `로또 번호` instead of the sample run's `복권 번호`, and because two spaces are printed after each number, each line ends with trailing spaces.
+Each set has no duplicates and is sorted in ascending order. The prompt says `로또 번호` instead of the sample run's `복권 번호`, and because two spaces are printed after each number, each line ends with trailing spaces.
 
 > **Note:** When 6 numbers are drawn independently, the probability that none is duplicated is $\frac{45 \times 44 \times 43 \times 42 \times 41 \times 40}{45^6} \approx 0.706$. So about 29% of the attempts are redrawn because of duplicates on average, and getting one set takes about 1.42 draws on average. Also, `rand() % 45` has a bias toward slightly more frequent small numbers when `RAND_MAX + 1` is not a multiple of 45, but the bias is negligible for the purpose of this program.

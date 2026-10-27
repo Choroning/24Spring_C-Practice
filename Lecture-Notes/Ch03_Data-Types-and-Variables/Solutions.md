@@ -121,7 +121,7 @@
 
 **Answer:** ③, ⑤
 
-**Explanation:** A variable declaration writes the variable name after the data type and ends with a semicolon, and the variable name must follow the identifier rules. An identifier uses only letters, digits, and the underscore (`_`), cannot start with a digit, cannot be a keyword, and cannot contain spaces ([Chapter 3, Section 3.2](Concepts_Lecture.md#32-identifiers-and-naming-rules)). Compiling the six options with `gcc -std=c99` shows that only ③ and ⑤ compile without errors.
+**Explanation:** A variable declaration writes the variable name after the data type and ends with a semicolon, and the variable name must follow the identifier rules. An identifier uses only letters, digits, and the underscore (`_`), cannot start with a digit, cannot be a keyword, and cannot contain spaces ([Chapter 3, Section 3.2](Concepts_Lecture.md#32-identifiers-and-naming-rules)). Of the six options, only ③ and ⑤ compile without errors.
 
 - **① (incorrect):** `default` is a keyword used in the `switch` statement, so it cannot be used as a variable name.
 - **② (incorrect):** No symbol other than the underscore can be used in an identifier, so `%_of_market`, which contains `%`, cannot be a variable name. It must be changed to something like `percent_of_market`.
@@ -271,7 +271,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall square.c -o square` without warnings and prints the same results as the sample run.
+**Output:**
 
 ```text
 한 변의 길이 ? 5
@@ -325,7 +325,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall rectangle.c -o rectangle` without warnings and prints the same results as the sample run.
+**Output:**
 
 ```text
 가로의 길이? 10
@@ -379,7 +379,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall energy.c -o energy` without warnings, and the first run matches the sample run. The second run enters the mass and the height as real numbers, and 9.8 × 2.5 × 1.2 = 29.4.
+**Output:** The first run uses the input of the sample run. The second run enters the mass and the height as real numbers, and 9.8 × 2.5 × 1.2 = 29.4.
 
 ```text
 질량(kg)? 10
@@ -435,7 +435,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall triangle.c -o triangle` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 밑변과 높이? 3 7
@@ -492,7 +492,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall usd2krw.c -o usd2krw` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 USD? 150
@@ -549,7 +549,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall krw2usd.c -o krw2usd` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 KRW? 500000
@@ -605,7 +605,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall yard.c -o yard` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 길이(yd)? 100
@@ -656,7 +656,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall inch.c -o inch` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 길이(in)? 10
@@ -704,7 +704,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall pyeong.c -o pyeong` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 아파트의 면적(제곱미터)? 113
@@ -755,7 +755,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall power.c -o power` without warnings, and the first run matches the sample run. The second and third runs enter the decimal notation 12.34 and the exponent notation 1.234e2 given in the problem, and $12.34^2 = 152.2756$, $12.34^3 = 1879.080904$ and $123.4^2 = 15227.56$, $123.4^3 = 1879080.904$ are printed rounded to 6 decimal places.
+**Output:** The first run uses the input of the sample run. The second and third runs enter the decimal notation 12.34 and the exponent notation 1.234e2 given in the problem, and $12.34^2 = 152.2756$, $12.34^3 = 1879.080904$ and $123.4^2 = 15227.56$, $123.4^3 = 1879080.904$ are printed rounded to 6 decimal places.
 
 ```text
 실수? 3.0e-1

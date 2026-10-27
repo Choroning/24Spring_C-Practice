@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
@@ -179,7 +179,7 @@ static char *gets_s(char *s, size_t n) {
 }
 ```
 
-Compiling this way produces two warnings (`-Wparentheses`) that ask for parentheses to make the assignment inside the conditions `if (result = my_strcmp(...))` explicit. Entering the same string as in the sample run gives the following result.
+Compiling this way produces two warnings (`-Wparentheses`) that ask for parentheses to make the assignment inside the conditions `if (result = my_strcmp(...))` explicit. Entering the string of the sample run gives the following result.
 
 ```text
 문자열(str1) 입력: c is fun!!
@@ -209,7 +209,7 @@ str1 = c is fun!!
 str3 = C is powerful
 ```
 
-All computed results match the sample run. Only two prompt lines differ: the uppercase result is labeled `str2를 대문자로 변환` instead of `str1을 대문자로 변환`, and the reversed result `str2를 역순으로 변환` instead of `str2의 역순`. Since the string converted to uppercase is `str2`, the code's label matches the actual behavior better. The last line of the sample run, `Program ended with exit code: 0`, is the exit message added by the Xcode console.
+Two prompt lines differ from the sample run: the uppercase result is labeled `str2를 대문자로 변환` instead of `str1을 대문자로 변환`, and the reversed result `str2를 역순으로 변환` instead of `str2의 역순`. Since the string converted to uppercase is `str2`, the code's label matches the actual behavior better. The last line of the sample run, `Program ended with exit code: 0`, is the exit message added by the Xcode console.
 
 > **Note:** **Differences from the requirements.** The requirements ask for `strSwap()` to be implemented with pointer arithmetic, but this code obtains the addresses with subscript notation, as in `&p1[i]` and `&p2[i]`. `&p1[i]` is the same address as `p1 + i`, so the behavior is identical; to follow the notation of the requirement, write `swap(p1 + i, p2 + i);` ([Chapter 8, Section 2.2](../Ch08_Pointers/Concepts_Lecture.md#22-pointer-as-array)). Also, writing the assignment in the condition as `if ((result = my_strcmp("abc", "abcd")) != 0)` makes the intent clear and removes the warning.
 

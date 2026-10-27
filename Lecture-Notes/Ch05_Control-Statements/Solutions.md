@@ -115,7 +115,7 @@ int main(void)
 }
 ```
 
-**Output:** These are the results of running eight cases in order: the five cases of the sample runs plus quadrant 2, quadrant 3, and the negative side of the y-axis. The classification matches the sample runs, but the wording differs. The input prompt is `좌표 (x, y)? `, the coordinates are printed with a space after the comma, as in `(0, 0)`, and the quadrant is printed as `제1사분면에` instead of `1사분면 위에`.
+**Output:** These are the results of running eight cases in order: the five cases of the sample runs plus quadrant 2, quadrant 3, and the negative side of the y-axis. The wording differs from the sample runs. The input prompt is `좌표 (x, y)? `, the coordinates are printed with a space after the comma, as in `(0, 0)`, and the quadrant is printed as `제1사분면에` instead of `1사분면 위에`.
 
 ```text
 좌표 (x, y)? 0 0
@@ -205,7 +205,7 @@ int main()
 }
 ```
 
-**Output:** The converted values match the three sample runs. The error message, `입력 오류! 온도 단위는 C(혹은 c)와 F(혹은 f)만 허용됩니다.`, is worded differently from the sample run, and every output ends without a newline. 32°C is 32 × 9 / 5 + 32 = 89.6°F, and 100°F is (100 - 32) × 5 / 9 = 37.777...°C.
+**Output:** The error message, `입력 오류! 온도 단위는 C(혹은 c)와 F(혹은 f)만 허용됩니다.`, is worded differently from the sample run, and every output ends without a newline. 32°C is 32 × 9 / 5 + 32 = 89.6°F, and 100°F is (100 - 32) × 5 / 9 = 37.777...°C.
 
 ```text
 온도? 32C
@@ -283,7 +283,7 @@ int main()
 }
 ```
 
-**Output:** The values of the roots and the classification match the three sample runs. The wording differs from the sample runs, as in `입력하신 이차 방정식의 해는 x1 = 1, x2 = -0.666667입니다.` and `입력하신 이차 방정식의 중근 x = 0.666667입니다.`, and the output ends without a newline. The last run enters 0 for a.
+**Output:** The wording differs from the sample runs, as in `입력하신 이차 방정식의 해는 x1 = 1, x2 = -0.666667입니다.` and `입력하신 이차 방정식의 중근 x = 0.666667입니다.`, and the output ends without a newline. The last run enters 0 for a.
 
 ```text
 이차 방정식의 상관계수 a, b, c 입력: 3 -1 -2
@@ -352,7 +352,7 @@ int main()
 }
 ```
 
-**Output:** The sum and the average match the sample run. The result labels read `입력된 수의 합` and `입력된 수의 평균` instead of `입력된 정수의 합`.
+**Output:** The result labels read `입력된 수의 합` and `입력된 수의 평균` instead of `입력된 정수의 합`.
 
 ```text
 정수 입력(종료: -1): 10
@@ -483,7 +483,7 @@ int main()
 }
 ```
 
-**Output:** Menu item 1 and the error handling give the same results as the sample runs. The code's separator has 31 `-` characters, longer than the 24 in the sample runs, the triangle is printed right after the size is entered without a blank line, and some messages end with a trailing space. Each run printed a triangle and then ended with 5.
+**Output:** The code's separator has 31 `-` characters, longer than the 24 in the sample runs, the triangle is printed right after the size is entered without a blank line, and some messages end with a trailing space. Each run prints a triangle and then ends with 5.
 
 ```text
 -------------------------------
@@ -656,7 +656,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and all three inputs give the same results as the original code with the conditional operator. The last run is the case of two equal numbers.
+**Output:** All three inputs give the same results as the original code with the conditional operator. The last run is the case of two equal numbers.
 
 ```text
 두 수를 입력하세요: 3 7
@@ -753,7 +753,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering a peak-season month, a high-season month, and another month one at a time gives the same results as the original `switch` statement.
+**Output:** Entering a peak-season month, a high-season month, and another month one at a time gives the same results as the original `switch` statement.
 
 ```text
 몇 월? 7
@@ -844,7 +844,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the original `for` statement. 1 + 2 + ... + 10 = 55, and 10! = 3,628,800 is within the range of `int`.
+**Output:** It gives the same result as the original `for` statement. 1 + 2 + ... + 10 = 55, and 10! = 3,628,800 is within the range of `int`.
 
 ```text
 합:55, 곱:3628800
@@ -970,7 +970,7 @@ int main(void)
 3. `n < 5`, that is `2 < 5`, is true, so `n += 5` makes `n` 7. The `n -= 5` of the inner `else` is not executed.
 4. `printf` prints `n = 7`.
 
-**Output:** Compiling the code as it is with `gcc -std=c99 -Wall` produces no warnings, and the output is as follows.
+**Output:**
 
 ```text
 n = 7
@@ -1004,7 +1004,7 @@ n = 7
 
 So `n` is 1 + 5 + 7 = 13.
 
-**Output:** Compiling the code as it is with `gcc -std=c99 -Wall` produces no warnings, and the output is as follows.
+**Output:**
 
 ```text
 n = 13
@@ -1065,7 +1065,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 91 prints `학점: A` as in the sample run. The following runs enter the boundary values 90, 89, 60, and 59 and the out-of-range value 101.
+**Output:** Entering 91 prints `학점: A`. The following runs enter the boundary values 90, 89, 60, and 59 and the out-of-range value 101.
 
 ```text
 점수? 91
@@ -1143,7 +1143,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering rank 10 of 80 prints `학점: B` as in the sample run. The following runs enter the ranks at range boundaries: 8 (10%), 9 (11.25%), 72 (90%), and 73 (91.25%).
+**Output:** Entering rank 10 of 80 prints `학점: B`. The following runs enter the ranks at range boundaries: 8 (10%), 9 (11.25%), 72 (90%), and 73 (91.25%).
 
 ```text
 등수? 10
@@ -1238,7 +1238,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 2020 prints the same result as the sample run. The following runs enter the common year 2023 and 1900 and 2000, which check the third rule.
+**Output:** The runs enter 2020, the input of the sample run, followed by the common year 2023 and 1900 and 2000, which check the third rule.
 
 ```text
 연도? 2020
@@ -1338,7 +1338,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 350 prints the same result as the sample run. The following runs enter the boundary values 300 and 301 and then 0. The totals for 300 kWh and 301 kWh differ by 4,200 won because, besides the 200 won for the 1 kWh of excess, the basic charge changes from 1,000 won to 5,000 won with the tier.
+**Output:** The runs enter 350, the input of the sample run, followed by the boundary values 300 and 301 and then 0. The totals for 300 kWh and 301 kWh differ by 4,200 won because, besides the 200 won for the 1 kWh of excess, the basic charge changes from 1,000 won to 5,000 won with the tier.
 
 ```text
 월 사용량 (kWh)? 350
@@ -1418,7 +1418,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same result for the sample input. The following runs compute the three operations on 0xAB and 0xCC one by one, then enter the expression without spaces and with the unsupported operator `+`.
+**Output:** After the input of the sample run, the following runs compute the three operations on 0xAB and 0xCC one by one, then enter the expression without spaces and with the unsupported operator `+`.
 
 ```text
 비트 연산식? 0xabcdef12 & 0xF0F0F0F0
@@ -1482,7 +1482,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and prints the same four lines as the sample run. One separating space remains at the end of each line.
+**Output:** Four lines are printed, and one separating space remains at the end of each line.
 
 ```text
   ! " # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 
@@ -1538,7 +1538,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 11 and 20 prints the 20 multiples from 11 to 220 as in the sample run. A space is printed after each number, so one space remains at the end of the line. The second run enters 0 as the integer.
+**Output:** Entering 11 and 20 prints the 20 multiples from 11 to 220. A space is printed after each number, so one space remains at the end of the line. The second run enters 0 as the integer.
 
 ```text
 양의 정수? 11
@@ -1615,7 +1615,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 350, 250, and 0 in turn, as in the sample run, computes twice and then ends.
+**Output:** Entering 350, 250, and 0 in turn computes twice and then ends.
 
 ```text
 월 사용량 (kWh)? 350
@@ -1702,7 +1702,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 12 prints `12는 소수가 아닙니다.` as in the sample run. The following runs enter 7, 2, 1, 97, and 2147483647, which is both the maximum `int` value and a prime.
+**Output:** Entering 12 prints `12는 소수가 아닙니다.`. The following runs enter 7, 2, 1, 97, and 2147483647, which is both the maximum `int` value and a prime.
 
 ```text
 양의 정수? 12
@@ -1782,7 +1782,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings, and entering 100 prints the 25 primes on three lines as in the sample run.
+**Output:** Entering 100 prints the 25 primes on three lines.
 
 ```text
 양의 정수? 100

@@ -145,7 +145,7 @@ int main()
 
 ### 2.3 Output and Edge Cases
 
-**Output:** The result for the lowercase `q` matches the sample run. For the uppercase `G`, the sample run shows `-> Input error!`, but the code has a branch that converts uppercase to lowercase, so it prints `-> Changed upper case G to lower case g!`. For `5`, which is not a letter, the error message is printed.
+**Output:** For the uppercase `G`, the sample run shows `-> Input error!`, but the code has a branch that converts uppercase to lowercase, so it prints `-> Changed upper case G to lower case g!`. For `5`, which is not a letter, the error message is printed.
 
 ```text
 >> Input char: q
@@ -224,7 +224,7 @@ int main()
 
 ### 3.3 Output and Edge Cases
 
-**Output:** The classification matches the two sample runs, except that each sentence ends with `.` instead of the `!` in the sample runs. The last run enters the negative odd number -3.
+**Output:** Each sentence ends with `.` instead of the `!` in the sample runs. The last run enters the negative odd number -3.
 
 ```text
 >> Input value: 3
@@ -330,7 +330,7 @@ int main()
 
 ### 4.3 Output and Edge Cases
 
-**Output:** Entering representative and boundary values of each grade interval gives the same results as the `if` statement of the example code. The program prints no newline at the end of the output.
+**Output:** For representative and boundary values of each grade interval, the program prints the same grades as the `if` statement of the example code. The program prints no newline at the end of the output.
 
 ```text
 >> Input score(0~100): 100
@@ -441,7 +441,7 @@ int main()
 
 ### 5.3 Output and Edge Cases
 
-**Output:** Entering a value from each group and an out-of-range value gives the same results as the `switch` statement of the example code. The program prints no newline at the end of the output.
+**Output:** For a value from each group and an out-of-range value, the program prints the same messages as the `switch` statement of the example code. The program prints no newline at the end of the output.
 
 ```text
 >> Input grade(1~7): 1
@@ -554,7 +554,7 @@ int main()
 
 ### 6.3 Output and Edge Cases
 
-**Output:** Identical to the three sample runs; the results for the other two languages are shown as well.
+**Output:** The inputs of the three sample runs plus inputs for the other two languages (`j`, `L`).
 
 ```text
 >> Input the character: p

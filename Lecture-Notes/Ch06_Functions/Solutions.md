@@ -180,7 +180,7 @@ int main()
 }
 ```
 
-**Output:** The same list of leap years as in the sample run is printed. Because a space is printed after each year, every line ends with one trailing space, and the last line ends without a newline because `count` is not a multiple of 10 after its 7 years.
+**Output:** Because a space is printed after each year, every line ends with one trailing space, and the last line ends without a newline because `count` is not a multiple of 10 after its 7 years.
 
 ```text
 -------------------------------------------------
@@ -264,7 +264,7 @@ int main()
 }
 ```
 
-**Output:** Compiled with `-Dscanf_s=scanf` and given the four inputs of the sample runs in turn, the program produces the same results as the four sample runs. Because the output does not end with a newline, the next shell prompt continues on the same line in a terminal.
+**Output:** The program, compiled with `-Dscanf_s=scanf`, is given the four inputs of the sample runs in turn. Because the output does not end with a newline, the next shell prompt continues on the same line in a terminal.
 
 ```text
 연도와 월을 입력하세요: 2017 4
@@ -622,7 +622,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings. The problem has no sample run, so the results are shown for `10 + 30`, in the input form of the comment, for an integer division, and for the unsupported operator `%`, in that order.
+**Output:** The problem has no sample run, so the results are shown for `10 + 30`, in the input form of the comment, for an integer division, and for the unsupported operator `%`, in that order.
 
 ```text
 수식 ? 10 + 30
@@ -695,7 +695,7 @@ int get_seconds(int hours, int minutes, int seconds)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings. The problem has no sample run, so the result for 1 hour 30 minutes 15 seconds is shown. 1 × 3600 + 30 × 60 + 15 = 5415 seconds.
+**Output:** The problem has no sample run, so the result for 1 hour 30 minutes 15 seconds is shown. 1 × 3600 + 30 × 60 + 15 = 5415 seconds.
 
 ```text
 시간 분 초? 1 30 15
@@ -731,7 +731,7 @@ int get_seconds(int hours, int minutes, int seconds)
 - **Number of iterations:** The loop runs ten times with `i` from 0 to 9, and then `i < data` becomes false and the loop ends. The body changed only its own `data`, so the `data` of `main()` stays 10.
 - **Output:** The `data` in `printf` is the local variable of `main()`, so `data = 10` is printed. The global `data` (100) is hidden inside `main()` and never used.
 
-**Output:** Compiling the problem's code with `gcc -std=c99 -Wall` and running it gives the same result without warnings.
+**Output:**
 
 ```text
 data = 10
@@ -791,7 +791,7 @@ void print_multiples(int num, int count)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 정수? 3
@@ -849,7 +849,7 @@ int get_perimeter(int width, int height)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 가로? 100
@@ -909,7 +909,7 @@ double get_distance(int x1, int y1, int x2, int y2)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run. The distance between (0, 0) and (3, 4) is $\sqrt{9 + 16} = 5$.
+**Output:** The distance between (0, 0) and (3, 4) is $\sqrt{9 + 16} = 5$.
 
 ```text
 직선의 시작점 좌표? 0 0
@@ -966,7 +966,7 @@ int computeDiscount(int price, int rate)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 할인율(%)? 20
@@ -1038,7 +1038,7 @@ void print_menu(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 1
@@ -1128,7 +1128,7 @@ int get_blue(unsigned int rgb)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 RGB 색상? 0xff0080
@@ -1194,7 +1194,7 @@ int is_leap_year(int year)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run. Spaces are printed only between years, so no space is left at the end of a line.
+**Output:** Spaces are printed only between years, so no space is left at the end of a line.
 
 ```text
 2000 2004 2008 2012 2016 2020 2024 2028 2032 2036
@@ -1277,7 +1277,7 @@ int is_valid_date(int year, int month, int day)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run. Month 13 fails the month check, and June 31 fails the day check because it exceeds June's 30 days.
+**Output:** Month 13 fails the month check, and June 31 fails the day check because it exceeds June's 30 days.
 
 ```text
 날짜 (연 월 일)? 2022 13 1
@@ -1354,7 +1354,7 @@ void print_binary(unsigned int num)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 정수? 0xabcd1234
@@ -1427,7 +1427,7 @@ void print_divisors(int num)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 양의 정수? 100
@@ -1509,7 +1509,7 @@ int is_prime(int num)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 1~N 사이의 소수를 구합니다. N은? 100
@@ -1585,7 +1585,7 @@ void accumulate(char op, int operand)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall` without warnings and gives the same result as the sample run.
+**Output:**
 
 ```text
 0 + 22

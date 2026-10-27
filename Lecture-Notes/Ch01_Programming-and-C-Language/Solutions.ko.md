@@ -300,7 +300,7 @@ int main(void)
 }
 ```
 
-**실행 결과:** 같은 코드를 `gcc -std=c99 -Wall second.c -o second`로 컴파일하면 경고 없이 컴파일되고, 실행하면 실행 예시와 같은 세 줄이 출력된다.
+**실행 결과:** gcc에서는 같은 코드를 `gcc -std=c99 -Wall second.c -o second`로 컴파일하여 실행한다.
 
 ```text
 Second C Program
@@ -342,7 +342,7 @@ int main(void)
 }
 ```
 
-**실행 결과:** `gcc -std=c99 -Wall calculator.c -o calculator`로 경고 없이 컴파일되며, 실행 예시와 같은 결과가 출력된다.
+**실행 결과:**
 
 ```text
 55 + 33 = 88

@@ -222,7 +222,7 @@ A **format specifier** is a symbol that specifies where and in what format the v
 
 ## 4. Practice Problems
 
-The following problems practice printing the values of variables with format specifiers. Each program compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The following problems practice printing the values of variables with format specifiers.
 
 ### 4.1 Sum of Integer Variables
 

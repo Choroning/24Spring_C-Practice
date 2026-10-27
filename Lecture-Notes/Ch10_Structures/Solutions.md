@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 **Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
@@ -131,7 +131,7 @@ void sort_student_arr(struct student p[], int size) {
 }
 ```
 
-**Output:** `#pragma warning(disable:4996)` and `#pragma warning(disable:6031)` are MSVC-specific directives that turn off Visual Studio's warnings C4996 (use of security-risk functions such as `scanf`) and C6031 (ignored return value). Compiling with `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c` produces warnings that these two `#pragma` directives are unknown, but execution is not affected. Entering the same values as in the sample run gives the following result.
+**Output:** `#pragma warning(disable:4996)` and `#pragma warning(disable:6031)` are MSVC-specific directives that turn off Visual Studio's warnings C4996 (use of security-risk functions such as `scanf`) and C6031 (ignored return value). Compiling with `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c` produces warnings that these two `#pragma` directives are unknown, but execution is not affected. Entering the values of the sample run gives the following result.
 
 ```text
 A반 학생 수를 입력하세요: 5
@@ -170,7 +170,7 @@ A반 학생 수를 입력하세요: 5
  김ㅇㅇ     53    41    37    43.67    5
 ```
 
-The sort order, averages, and ranks match the sample run. For example, 이ㅇㅇ's average is (97 + 84 + 87) / 3 = 268 / 3 ≈ 89.33, and 김ㅇㅇ's average is 131 / 3 ≈ 43.67. The prompts (`A반 학생 수를 입력하세요:`, `이름을 입력하세요:`, `국어 점수:`, and so on), the length of the table's separator lines, and the column spacing differ from the sample run, and there is no blank line before the table after the last student is entered. Also, `%-10s` pads to a width in bytes, not in screen columns, and a Hangul character takes 3 bytes in UTF-8, so only one space is padded after `이ㅇㅇ` (9 bytes). On a Windows console that stores Hangul in 2 bytes (CP949), the same code places the columns differently.
+이ㅇㅇ's average is (97 + 84 + 87) / 3 = 268 / 3 ≈ 89.33, and 김ㅇㅇ's average is 131 / 3 ≈ 43.67. The prompts (`A반 학생 수를 입력하세요:`, `이름을 입력하세요:`, `국어 점수:`, and so on), the length of the table's separator lines, and the column spacing differ from the sample run, and there is no blank line before the table after the last student is entered. Also, `%-10s` pads to a width in bytes, not in screen columns, and a Hangul character takes 3 bytes in UTF-8, so only one space is padded after `이ㅇㅇ` (9 bytes). On a Windows console that stores Hangul in 2 bytes (CP949), the same code places the columns differently.
 
 > **Caution:** If `size` is greater than `MAX_STD` (20), the program writes past the `classA` array, so it is safer to check that the entered `size` is between 1 and `MAX_STD`. Also, `scanf("%s", p->name)` has no length limit, so a width such as `%19s` is needed to prevent an overflow from a name longer than 19 bytes (7 or more Hangul characters in UTF-8). Students with the same average do not share a rank but receive different ranks according to their sorted positions.
 
@@ -281,7 +281,7 @@ int computeArea(const Rect* p) {
 }
 ```
 
-**Output:** It compiles without warnings with `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q2.c`. Entering the same values as in the two sample runs gives the following results.
+**Output:** Entering the values of the two sample runs gives the following results.
 
 ```text
 사각형의 좌표를 입력하세요.
@@ -306,7 +306,7 @@ y 좌표가 반대로 입력되어 서로 교환합니다.
 사각형의 면적 = 36
 ```
 
-The second run matches the sample run. (-2, 5) and (7, 5) have the same y coordinate and (1, 10) and (1, -4) have the same x coordinate, so they are not rectangles, and (-2, 5) and (4, -1) give a width of 6 and a height of 6, so the area is 36. The first run gives the area (7 - 1) × (10 - 3) = 42, as in the sample run, but prints the extra line `y 좌표가 반대로 입력되어 서로 교환합니다.`. In the first sample run, the upper-left y (3) is smaller than the lower-right y (10), as in a screen coordinate system where y increases downward, while in the second sample run the upper-left y (5) is larger than the lower-right y (-1), so the two samples use different coordinate systems. This code is based on the mathematical coordinate system but normalizes the coordinates whichever way they are entered, so it computes the areas of both samples correctly.
+(-2, 5) and (7, 5) have the same y coordinate and (1, 10) and (1, -4) have the same x coordinate, so they are not rectangles, and (-2, 5) and (4, -1) give a width of 6 and a height of 6, so the area is 36. The first run gives the area (7 - 1) × (10 - 3) = 42 and prints an extra line that the sample run does not have, `y 좌표가 반대로 입력되어 서로 교환합니다.`. In the first sample run, the upper-left y (3) is smaller than the lower-right y (10), as in a screen coordinate system where y increases downward, while in the second sample run the upper-left y (5) is larger than the lower-right y (-1), so the two samples use different coordinate systems. This code is based on the mathematical coordinate system but normalizes the coordinates whichever way they are entered, so it computes the areas of both samples correctly.
 
 > **Note:** **Differences from the requirements.** The requirements say not to change the prototype `int isRectangle(Rect r);`, but this code changes it to `int isRectangle(Rect* r);` so that it can swap coordinates and normalize the original, and it also prints messages inside the check function. To keep the prototype, `isRectangle()` should only return `r.leftUp.x != r.rightDown.x && r.leftUp.y != r.rightDown.y` for the `r` received by value, and `computeArea()` should multiply the absolute values of the width and height. Then the area is the same whichever coordinate system is used for input, and the first run gives the same result as the sample run without the message.
 

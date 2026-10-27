@@ -57,7 +57,7 @@
 - **Surface area:** Writing the denominator as a floating-point literal, as in `height / 3.0`, avoids integer division. With `height / 3`, the term would be 0 for a height of 1 and the result would be wrong. In `volume / (PI * height * height)`, both the numerator and the denominator are `double`.
 - **Output:** Since C99, `%lf` in `printf` means the same as `%f` and prints six digits after the decimal point.
 
-Simplifying the formula gives $\frac{V}{\pi h^2} = \frac{3a^2 + h^2}{6h}$, so $S = 2\pi h \cdot \frac{a^2 + h^2}{2h} = \pi (a^2 + h^2)$, the curved surface area of a spherical cap. With the macro value 3.14159265 used as π, h = 1 and a = 1 give $2 \times 3.14159265 \approx 6.283185$, and h = 12 and a = 20 give $544 \times 3.14159265 \approx 1709.026402$, matching the sample runs.
+Simplifying the formula gives $\frac{V}{\pi h^2} = \frac{3a^2 + h^2}{6h}$, so $S = 2\pi h \cdot \frac{a^2 + h^2}{2h} = \pi (a^2 + h^2)$, the curved surface area of a spherical cap. With the macro value 3.14159265 used as π, h = 1 and a = 1 give $2 \times 3.14159265 \approx 6.283185$, and h = 12 and a = 20 give $544 \times 3.14159265 \approx 1709.026402$.
 
 **Code:** [Lab_Q1.c](../../Coursework/Lab04_Operators/Lab_Q1.c)
 
@@ -94,7 +94,7 @@ int main()
 }
 ```
 
-**Output:** Entering the same values as in the two sample runs prints the same volume and surface area. Because of the `" \n"` at the end of the format strings, the code leaves one trailing space at the end of each line. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
+**Output:** Because of the `" \n"` at the end of the format strings, the code leaves one trailing space at the end of each line. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
 ```text
 헬멧의 높이: 1
@@ -182,7 +182,7 @@ int main()
 }
 ```
 
-**Output:** The converted values match the two sample runs. However, the code prints an extra `"\n"` before the separator, so a blank line appears above it, and the separator has 33 `-` characters instead of the 35 in the sample runs. Each result line ends with one trailing space.
+**Output:** The code prints an extra `"\n"` before the separator, so a blank line appears above it, and the separator has 33 `-` characters instead of the 35 in the sample runs. Each result line ends with one trailing space.
 
 ```text
 시간을 차례로 입력하세요(시,분,초): 2 10 47
@@ -266,7 +266,7 @@ int main()
 }
 ```
 
-**Output:** The RGB values match the two sample runs. The input prompts read `(0~255)` instead of `(0-255)`, the code prints no blank line before `RGB =`, and it prints no newline after the last line.
+**Output:** The input prompts read `(0~255)` instead of `(0-255)`, the code prints no blank line before `RGB =`, and it prints no newline after the last line.
 
 ```text
 Red 값 입력(0~255): 255
@@ -357,7 +357,7 @@ int main()
 } 
 ```
 
-**Output:** The extracted values match the two sample runs. The output format differs as follows. Because the conversion specifier is a lowercase `x`, the output is lowercase, as in `0x03` instead of `0X03`, and the number of spaces after `Red`, `Green`, and `Blue`, the space before the parenthesis, and the trailing space also differ from the sample runs. In the second run, where Green is 0, the `#` flag adds no prefix to 0, so `0000` is printed instead of `0x00`. The input prompt reads `RGB 값을 입력`.
+**Output:** The output format differs from the sample runs as follows. Because the conversion specifier is a lowercase `x`, the output is lowercase, as in `0x03` instead of `0X03`, and the number of spaces after `Red`, `Green`, and `Blue`, the space before the parenthesis, and the trailing space also differ from the sample runs. In the second run, where Green is 0, the `#` flag adds no prefix to 0, so `0000` is printed instead of `0x00`. The input prompt reads `RGB 값을 입력`.
 
 ```text
 RGB 값을 입력(16진수 6자리): A73803
@@ -653,7 +653,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall entrance_fee.c -o entrance_fee` without warnings, and the results for July, in the peak season, and December, outside it, are as follows.
+**Output:** The results for July, in the peak season, and December, outside it, are as follows.
 
 ```text
 what month? 7
@@ -698,7 +698,7 @@ entrance fee = 35000
 - **Integer promotion:** `a` and `b`, of type `unsigned char`, are promoted to `int` before the operations ([Chapter 4, Section 9.1](Concepts_Lecture.md#91-implicit-promotion)). Therefore `~a` inverts all 32 bits, making the upper 24 bits all 1, and `b << 2` becomes `0x3c0`, which exceeds 8 bits.
 - **Assignment:** Assigning the result `0xfffffff2` to `c`, of type `unsigned char`, cuts off the upper bits and keeps only the lower 8 bits `1111 0010` ([Chapter 3, Section 1.1](../Ch03_Data-Types-and-Variables/Concepts_Lecture.md#overflow-and-underflow)). In the lower 8 bits alone, this is the OR of `0011 0010` from `~a` and `1100 0000` from `b << 2`, so `z = f2` is printed.
 
-Compiling the program in the problem with `gcc -std=c99 -Wall bitwise.c -o bitwise` produces no warnings, and its output is as follows.
+The output of the program in the problem is as follows.
 
 ```text
 z = 3d
@@ -747,7 +747,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall density.c -o density` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 질량(g)? 33
@@ -804,7 +804,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall electric_bill.c -o electric_bill` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 월 사용량(kWh)? 375
@@ -854,7 +854,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall electric_bill_basic.c -o electric_bill_basic` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 기본 요금? 2500
@@ -903,7 +903,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall month_check.c -o month_check` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 몇 월? 15
@@ -962,7 +962,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall fahrenheit.c -o fahrenheit` without warnings and prints the same result as the sample run. For a Fahrenheit temperature with a fractional part, 98.6, the input value is printed as it is.
+**Output:** For a Fahrenheit temperature with a fractional part, 98.6, the input value is printed as it is.
 
 ```text
 화씨온도? 72
@@ -1016,7 +1016,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall kinetic_energy.c -o kinetic_energy` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 질량(kg)? 5.5
@@ -1067,7 +1067,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall concentration.c -o concentration` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 용매(g)? 200
@@ -1143,7 +1143,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall discount.c -o discount` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 제품의 가격? 12000
@@ -1203,7 +1203,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall bytes.c -o bytes` without warnings and prints the same result as the sample run.
+**Output:**
 
 ```text
 16진수로 데이터를 입력하세요: 0xa1b2c3d4
@@ -1273,7 +1273,7 @@ int main(void)
 }
 ```
 
-**Output:** It compiles with `gcc -std=c99 -Wall rgb_color.c -o rgb_color` without warnings and prints the same result as the sample run. The 256 entered for red is stored as 0.
+**Output:** The 256 entered for red is stored as 0.
 
 ```text
 red? 256

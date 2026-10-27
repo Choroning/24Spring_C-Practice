@@ -68,7 +68,7 @@ gcc -std=c99 -Wall -o Q3 Q3.c && ./Q3
 gcc -std=c99 -Wall -o Q4 Q4.c && ./Q4
 ```
 
-All four programs compile without warnings. `Q1.c` uses `sqrt()` from `<math.h>`, so with gcc on Linux it needs `-lm`, which links the math library; on macOS it can be omitted. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
+`Q1.c` uses `sqrt()` from `<math.h>`, so with gcc on Linux it needs `-lm`, which links the math library; on macOS it can be omitted. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
 ---
 
@@ -161,7 +161,7 @@ int main()
 }
 ```
 
-**Output:** Entering the same values as in the sample run gives the average 6.76 and the standard deviation 16.03. Unlike the sample run, there is no blank line between the input and `배열의 내용:`, and the values are separated by a single space, so the line ends with one trailing space. There is no newline after the last line.
+**Output:** Entering the values of the sample run gives the average 6.76 and the standard deviation 16.03. Unlike the sample run, there is no blank line between the input and `배열의 내용:`, and the values are separated by a single space, so the line ends with one trailing space. There is no newline after the last line.
 
 ```text
 >> Input data (1): 1.4
@@ -253,7 +253,7 @@ int main()
 }
 ```
 
-**Output:** Entering the same values as in the sample run prints the largest value 100 and the smallest value -49. However, the second result line follows the string in the code and has a space before the colon, as in `가장 작은 값 : -49`, which differs by one space from the sample run.
+**Output:** Entering the values of the sample run prints the largest value 100 and the smallest value -49. However, the second result line follows the string in the code and has a space before the colon, as in `가장 작은 값 : -49`, which differs by one space from the sample run.
 
 ```text
 >> Input data (1): 97
@@ -339,7 +339,7 @@ int main()
 }
 ```
 
-**Output:** The same original and reversed arrays as in the sample run are printed. Because the first `printf` begins with `\n`, there is one blank line at the very start of the output, and because two spaces are printed after each value, each line ends with two trailing spaces.
+**Output:** The original and reversed arrays are printed. Because the first `printf` begins with `\n`, there is one blank line at the very start of the output, and because two spaces are printed after each value, each line ends with two trailing spaces.
 
 ```text
 
@@ -442,7 +442,7 @@ int main()
 }
 ```
 
-**Output:** Entering the same values as in the sample runs prints the same results as the sample runs. 3 is at indices 1, 3, and 6, so the count is 3, and 4 is not in the array.
+**Output:** 3 is at indices 1, 3, and 6, so the count is 3, and 4 is not in the array.
 
 ```text
 배열의 내용: 7 3 9 3 12 5 3 8 1 9

@@ -299,7 +299,7 @@ int main()
 
 ## 2. String Practice
 
-The following problems practice processing strings by the null character without library functions such as `strlen` and `isupper`. The solution code is the example files in this unit folder; each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The following problems practice processing strings by the null character without library functions such as `strlen` and `isupper`. The solution code is the example files in this unit folder.
 
 ### 2.1 Length of a String
 
@@ -428,7 +428,7 @@ int main()
 AbCde 
 ```
 
-`pc[1] = 'B';` compiles without a compile error, but at run time the program terminates abnormally at that line, and the last `puts(pc);` is not executed. Most operating systems place string literals in read-only memory, so an attempt to write causes a memory access violation. The result above was run on macOS, where the program ended with a bus error (SIGBUS); in Visual Studio the debugger reports a write access violation exception.
+`pc[1] = 'B';` compiles without a compile error, but at run time the program terminates abnormally at that line, and the last `puts(pc);` is not executed. Most operating systems place string literals in read-only memory, so an attempt to write causes a memory access violation. On macOS the program ends with a bus error (SIGBUS), as in the result above; in Visual Studio the debugger reports a write access violation exception.
 
 > **Caution:** A pointer that points to a string literal should be declared with `const`, as in `const char *pc = "AbCde";`. Then the compiler catches a write such as `pc[1] = 'B';` as an error ([Chapter 9, Section 6.2](Concepts_Lecture.md#62-const-char)).
 
@@ -463,7 +463,7 @@ ABCde
 
 ## 4. String Pointer Practice
 
-The solution code is the example files in this unit folder; each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs. In programs whose messages end without `\n`, the next prompt follows the message directly in a real terminal.
+The solution code is the example files in this unit folder. In programs whose messages end without `\n`, the next prompt follows the message directly in a real terminal.
 
 ### 4.1 Reversing a String
 

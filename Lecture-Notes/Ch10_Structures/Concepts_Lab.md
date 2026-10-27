@@ -36,8 +36,6 @@
 
 ## 1. Structure Basics
 
-All code in this section compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
-
 ### 1.1 Information in Separate Variables
 
 Consider a small program that manages a student's grades. The information needed is the name (`char name[]`), the Korean score (`int kor`), the English score (`int eng`), and the average (`double ave`). With what has been covered so far, each piece of information is declared as a separate variable.

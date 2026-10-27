@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-10-27
 
 > **Learning Objectives:**
 > 1. Sort an integer array in ascending order with selection sort and trace the array state at each step
@@ -124,14 +124,14 @@ int main()
 
 ### 1.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as follows.
+The output is as follows.
 
 ```text
 > 정렬 전:  52  31  28  17  46
 > 정렬 후:  17  28  31  46  52
 ```
 
-It matches the sample run. However, no newline is printed after the last line, so in a terminal the next shell prompt appears on the same line. `Program ended with exit code: 0` in the sample run is the exit message added by the Xcode console, and the same holds for the other sample runs in this document.
+No newline is printed after the last line, so in a terminal the next shell prompt appears on the same line. `Program ended with exit code: 0` in the sample run is the exit message added by the Xcode console, and the same holds for the other sample runs in this document.
 
 > **Note:** Selection sort always makes $n(n-1)/2$ comparisons regardless of the input (10 for 5 elements), so its time complexity is $O(n^2)$, and it makes at most $n - 1$ swaps. In this array the minimum is already in place at `i = 2`, so 3 swaps occur.
 
@@ -225,8 +225,6 @@ Compiling with `gcc -std=c99 -Wall` (as of Apple clang on macOS) produces three 
   9 10  0  0
 ```
 
-It matches the sample run.
-
 > **Caution:** The second and third parameters of `printMat()` are named `cols` and `rows`, which is reversed. `main()` passes the number of rows 3 to `cols` and the number of columns 4 to `rows`, and the loops are written accordingly, so the result is correct, but renaming them `int rows, int cols` as in the requirements avoids confusing readers. Also, because the column size is fixed as `[4]`, passing a value other than 4 as the third argument would compute the row boundaries incorrectly.
 
 ---
@@ -311,7 +309,7 @@ int main()
 
 ### 3.3 Output
 
-It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as follows.
+The output is as follows.
 
 ```text
                중간  기말  팀플  출석  총점
@@ -323,7 +321,7 @@ It compiles without warnings with `gcc -std=c99 -Wall`, and the output is as fol
 항목별 평균:    25.0  25.6  26.4   8.4  85.4
 ```
 
-All scores, totals, and averages match the sample run. Because four or two spaces are printed before each value, the column spacing differs slightly from the sample run, and no newline is printed after the last line.
+Because four or two spaces are printed before each value, the column spacing differs slightly from the sample run, and no newline is printed after the last line.
 
 > **Note:** Storing the sums in the extra row and column of the same array lets one array handle the whole table, but remember that the average row holds sums, not averages, and must be divided when printed. To store the averages exactly, a separate `double` array is clearer.
 

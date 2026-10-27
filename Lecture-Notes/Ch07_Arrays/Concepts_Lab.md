@@ -143,7 +143,7 @@ int main(void)
 
 ## 2. One-Dimensional Array Practice
 
-The elements of an array can be handled one by one, but that is inefficient for a large array, so they are processed by making the index the variable of a loop ([Chapter 7, Section 3.2](Concepts_Lecture.md#32-array-with-loops)). The following programs compile with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The elements of an array can be handled one by one, but that is inefficient for a large array, so they are processed by making the index the variable of a loop ([Chapter 7, Section 3.2](Concepts_Lecture.md#32-array-with-loops)).
 
 ### 2.1 Printing the Number of Days per Month
 
@@ -397,7 +397,7 @@ Each of the declarations above is a separate example. The two declarations witho
 
 ## 4. Array Search and Matrix Practice
 
-The solution code of the following problems is the example files in this unit folder. Each file compiles with `gcc -std=c99 -Wall` without warnings, and the outputs are from actual runs.
+The solution code of the following problems is the example files in this unit folder.
 
 ### 4.1 Finding the Position of a Value in an Array
 
