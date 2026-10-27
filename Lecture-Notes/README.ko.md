@@ -2,13 +2,13 @@
 
 [레포지토리 안내](../README.ko.md) | [English](README.md) | [한국어](README.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-10-27
 
 | 단원 | 주제 | 문서 |
 |:-----|:-----|:-----|
-| [1장 프로그래밍과 C 언어](Ch01_Programming-and-C-Language/) | 소프트웨어와 프로그램, 프로그래밍 언어, 기계 종속 언어와 기계 독립 언어, C 언어의 역사, 특징, 활용 분야, C 프로그램의 개발 과정과 빌드 과정, 오류의 종류와 디버깅 | [강의 노트](Ch01_Programming-and-C-Language/Concepts_Lecture.ko.md) |
-| [2장 C 프로그램의 기본](Ch02_C-Program-Basics/) | 프로그램 구조, 주석, `main` 함수와 종료 코드, 콘솔 입출력, `printf`와 `scanf`, 입출력에서의 변수 활용, C 문장 | [강의 노트](Ch02_C-Program-Basics/Concepts_Lecture.ko.md) |
-| [3장 데이터 타입과 변수](Ch03_Data-Types-and-Variables/) | 정수형, 실수형, 문자형, 진법, 2의 보수와 IEEE 754, 변수의 선언과 초기화, 식별자 규칙, 리터럴 상수, 매크로 상수(`#define`), `const` 변수, 형식 지정자와 출력 폭, 묵시적 형 변환과 캐스팅, `sizeof` 연산자 | [강의 노트](Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md) |
+| [1장 프로그래밍과 C 언어](Ch01_Programming-and-C-Language/) | 소프트웨어와 프로그램, 프로그래밍 언어, 기계 종속 언어와 기계 독립 언어, C 언어의 역사, 특징, 활용 분야, C 프로그램의 개발 과정과 빌드 과정, 오류의 종류와 디버깅 | [강의 노트](Ch01_Programming-and-C-Language/Concepts_Lecture.ko.md), [연습 문제](Ch01_Programming-and-C-Language/Exercises.ko.md), [풀이](Ch01_Programming-and-C-Language/Solutions.ko.md) |
+| [2장 C 프로그램의 기본](Ch02_C-Program-Basics/) | 프로그램 구조, 주석, `main` 함수와 종료 코드, 콘솔 입출력, `printf`와 `scanf`, 입출력에서의 변수 활용, C 문장 | [강의 노트](Ch02_C-Program-Basics/Concepts_Lecture.ko.md), [연습 문제](Ch02_C-Program-Basics/Exercises.ko.md), [풀이](Ch02_C-Program-Basics/Solutions.ko.md) |
+| [3장 데이터 타입과 변수](Ch03_Data-Types-and-Variables/) | 정수형, 실수형, 문자형, 진법, 2의 보수와 IEEE 754, 변수의 선언과 초기화, 식별자 규칙, 리터럴 상수, 매크로 상수(`#define`), `const` 변수, 형식 지정자와 출력 폭, 묵시적 형 변환과 캐스팅, `sizeof` 연산자 | [강의 노트](Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md), [연습 문제](Ch03_Data-Types-and-Variables/Exercises.ko.md), [풀이](Ch03_Data-Types-and-Variables/Solutions.ko.md) |
 | [4장 연산자](Ch04_Operators/) | 수식과 피연산자, 산술 연산자와 정수 나눗셈, 나머지 연산자, 증감 연산자, 관계 연산자, 논리 연산자와 단락 평가, 비트 연산자와 시프트 연산자, 대입 연산자, 조건 연산자, 수식에서의 형 변환, 연산자 우선순위와 결합 방향 | [강의 노트](Ch04_Operators/Concepts_Lecture.ko.md), [연습 문제](Ch04_Operators/Exercises.ko.md), [풀이](Ch04_Operators/Solutions.ko.md) |
 | [5장 제어문](Ch05_Control-Statements/) | `if`, `if-else`, `else if`, 중첩 `if`, `switch`, `for`, `while`, `do-while`, 중첩 반복문, `break`, `continue`, `goto`, `return`, 카운터와 누적기, 최댓값과 최솟값 추적, 입력 검증 반복, 메뉴 기반 프로그램 | [강의 노트](Ch05_Control-Statements/Concepts_Lecture.ko.md), [연습 문제](Ch05_Control-Statements/Exercises.ko.md), [풀이](Ch05_Control-Statements/Solutions.ko.md) |
 | [6장 함수](Ch06_Functions/) | 함수의 필요성과 종류, 함수 정의, 반환형, 매개변수와 인수, 함수 호출과 함수 원형, 지역 변수와 전역 변수, 유효 범위 규칙, 함수 호출 오버헤드, 재귀 함수 | [강의 노트](Ch06_Functions/Concepts_Lecture.ko.md), [연습 문제](Ch06_Functions/Exercises.ko.md), [풀이](Ch06_Functions/Solutions.ko.md) |
