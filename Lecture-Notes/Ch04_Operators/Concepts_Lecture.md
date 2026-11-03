@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -706,8 +706,14 @@ printf("%zu\n", sizeof(a + b));  // 4 (int), not 1 (char)
 
 **Usual arithmetic conversion** (for binary operators):
 
-```text
-char / short → int → long → long long → float → double → long double
+```mermaid
+graph LR
+    c["char / short"] --> i["int"]
+    i --> l["long"]
+    l --> ll["long long"]
+    ll --> f["float"]
+    f --> d["double"]
+    d --> ld["long double"]
 ```
 
 *Figure 2. Type ranking in the usual arithmetic conversions*

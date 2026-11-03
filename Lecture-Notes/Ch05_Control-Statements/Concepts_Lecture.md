@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -55,12 +55,12 @@
 
 By default, C executes statements **sequentially** (top to bottom). **Control statements** alter this flow by branching or repeating.
 
-```text
-Program Flow
-├── Sequential   ← default (top to bottom)
-├── Conditional  ← choose which path to take
-├── Loop         ← repeat a block
-└── Branch       ← jump to another location
+```mermaid
+graph TD
+    flow["Program Flow"] --> seq["Sequential<br>default (top to bottom)"]
+    flow --> cond["Conditional<br>choose which path to take"]
+    flow --> loop["Loop<br>repeat a block"]
+    flow --> br["Branch<br>jump to another location"]
 ```
 
 *Figure 1. The four structures of program flow*
@@ -95,18 +95,11 @@ if (condition) {
 
 **Execution flow:**
 
-```text
-        ┌───────────┐
-        │ condition │
-        └────┬──────┘
-        true │  false
-             ▼          ──────► (skip)
-       ┌────────────┐
-       │ statement  │
-       └────────────┘
-             │
-             ▼
-        (next code)
+```mermaid
+flowchart TD
+    cond{"condition"} -->|"true"| stmt["statement"]
+    cond -->|"false (skip)"| next["next code"]
+    stmt --> next
 ```
 
 *Figure 2. Execution flow of the if statement*
@@ -158,20 +151,12 @@ if (condition) {
 
 **Execution flow:**
 
-```text
-       ┌───────────┐
-       │ condition │
-       └────┬──────┘
-   true     │     false
-     ▼      │       ▼
-┌───────┐   │   ┌────────┐
-│ if    │   │   │ else   │
-│ block │   │   │ block  │
-└───────┘   │   └────────┘
-   │        │        │
-   └────────┴────────┘
-            ▼
-       (next code)
+```mermaid
+flowchart TD
+    cond{"condition"} -->|"true"| ifb["if block"]
+    cond -->|"false"| elb["else block"]
+    ifb --> next["next code"]
+    elb --> next
 ```
 
 *Figure 3. Execution flow of the if-else statement*
@@ -424,18 +409,13 @@ for (initialization; condition; update) {
 
 **Execution flow:**
 
-```text
-      init
-        │
-        ▼
-┌─► condition ──false──► exit
-│       │
-│      true
-│       ▼
-│   loop body
-│       │
-│       ▼
-└── update
+```mermaid
+flowchart TD
+    init["init"] --> cond{"condition"}
+    cond -->|"true"| body["loop body"]
+    body --> upd["update"]
+    upd --> cond
+    cond -->|"false"| done["exit"]
 ```
 
 *Figure 4. Execution flow of the for statement*
@@ -504,14 +484,11 @@ while (condition) {
 
 **Execution flow:**
 
-```text
-    ┌─► condition ──false──► exit
-    │       │
-    │      true
-    │       ▼
-    │   loop body
-    │       │
-    └───────┘
+```mermaid
+flowchart TD
+    cond{"condition"} -->|"true"| body["loop body"]
+    body --> cond
+    cond -->|"false"| done["exit"]
 ```
 
 *Figure 5. Execution flow of the while statement*
@@ -566,15 +543,11 @@ do {
 
 **Execution flow:**
 
-```text
-    ┌───────┐
-    │       ▼
-    │   loop body(execute first)
-    │       │
-    │       ▼
-    │   condition ──false──► exit
-    │       │
-    └──── true
+```mermaid
+flowchart TD
+    body["loop body (execute first)"] --> cond{"condition"}
+    cond -->|"true"| body
+    cond -->|"false"| done["exit"]
 ```
 
 *Figure 6. Execution flow of the do-while statement*

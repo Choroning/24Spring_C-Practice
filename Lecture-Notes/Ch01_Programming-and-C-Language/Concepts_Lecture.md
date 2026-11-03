@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -45,16 +45,16 @@
 
 **Hardware** refers to the physical components of a computer (CPU, memory, storage, peripherals, etc.). **Software** is the collection of programs that run on the hardware and tell it what to do; software that runs on a smartphone is commonly called an **app**.
 
-```text
-Computer System
-├── Hardware
-│   ├── CPU (Central Processing Unit)
-│   ├── Memory (RAM)
-│   ├── Storage (HDD/SSD)
-│   └── I/O Devices (keyboard, monitor, etc.)
-└── Software
-    ├── System Software (OS, drivers, utilities)
-    └── Application Software (word processors, games, etc.)
+```mermaid
+graph TD
+    sys["Computer System"] --> hw["Hardware"]
+    sys --> sw["Software"]
+    hw --> cpu["CPU (Central Processing Unit)"]
+    hw --> mem["Memory (RAM)"]
+    hw --> sto["Storage (HDD/SSD)"]
+    hw --> io["I/O Devices (keyboard, monitor, etc.)"]
+    sw --> ssw["System Software (OS, drivers, utilities)"]
+    sw --> asw["Application Software (word processors, games, etc.)"]
 ```
 
 *Figure 1. Hardware and software that make up a computer system*
@@ -95,21 +95,11 @@ The machine code `10110000 01100001` in the table is the binary code that corres
 - A **compiler** or **interpreter** translates them to machine code.
 - They are generally **machine-independent**, so the same source code can run on different platforms once it is translated for each platform.
 
-```text
-Source Code (High-Level)
-        │
-        ▼
-   ┌──────────┐
-   │ Compiler │  ← translates entire program at once
-   └──────────┘
-        │
-        ▼
-Machine Code (Binary)
-        │
-        ▼
-   ┌──────────┐
-   │   CPU    │  ← executes
-   └──────────┘
+```mermaid
+flowchart TD
+    src["Source Code (High-Level)"] --> comp["Compiler<br>(translates entire program at once)"]
+    comp --> mc["Machine Code (Binary)"]
+    mc --> cpu["CPU<br>(executes)"]
 ```
 
 *Figure 2. A high-level program translated by a compiler and executed by the CPU*
@@ -225,14 +215,14 @@ An **embedded system** is a device that contains a special-purpose computer, and
 
 3. **Foundation for other languages:** Learning C makes it significantly easier to learn C++, Java, C#, JavaScript, Go, Rust, and others, since they borrow heavily from C's syntax and semantics.
 
-```text
-C (1972)
-├── C++ (1979): adds OOP, templates, STL
-├── Objective-C (1984): adds Smalltalk-style OOP
-├── Java (1995): C-like syntax, garbage collection, JVM
-├── C# (2000): Microsoft's answer to Java
-├── Go (2009): simplicity of C + concurrency
-└── Rust (2010): C-level performance + memory safety
+```mermaid
+graph TD
+    c["C (1972)"] --> cpp["C++ (1979): adds OOP, templates, STL"]
+    c --> objc["Objective-C (1984): adds Smalltalk-style OOP"]
+    c --> java["Java (1995): C-like syntax, garbage collection, JVM"]
+    c --> cs["C#35; (2000): Microsoft's answer to Java"]
+    c --> go["Go (2009): simplicity of C + concurrency"]
+    c --> rust["Rust (2010): C-level performance + memory safety"]
 ```
 
 *Figure 4. Languages influenced by C*
@@ -249,21 +239,14 @@ C (1972)
 
 The overall process of creating a C program follows four main phases, and when an error occurs, the program is debugged and the process returns to an earlier phase.
 
-```text
-┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│  1. Design   │───▶│ 2. Write     │───▶│ 3. Compile   │───▶│ 4. Execute   │
-│  (algorithm) │    │ (source code)│    │ (build)      │    │ (run & test) │
-└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
-                                               │
-                                          errors?
-                                               │
-                                               ▼
-                                        ┌──────────────┐
-                                        │  5. Debug    │
-                                        │  (fix errors)│
-                                        └──────────────┘
-                                               │
-                                               └──── go back to step 2 or 3
+```mermaid
+flowchart LR
+    design["1. Design<br>(algorithm)"] --> write["2. Write<br>(source code)"]
+    write --> compile["3. Compile<br>(build)"]
+    compile --> run["4. Execute<br>(run & test)"]
+    compile -->|"errors?"| debug["5. Debug<br>(fix errors)"]
+    debug -->|"go back to step 2"| write
+    debug -->|"go back to step 3"| compile
 ```
 
 *Figure 5. Development process of a C program*
@@ -284,40 +267,18 @@ An **algorithm**, planned in the design phase, is a procedure or method for solv
 
 When you "compile" a C program, multiple stages happen behind the scenes. The full build pipeline is as follows.
 
-```text
-  hello.c          stdio.h
-     │                │
-     ▼                │
-┌────────────┐        │
-│Preprocessor│◀───────┘   (#include, #define expansion)
-└────────────┘
-     │
-     ▼
-  hello.i          (preprocessed source: all macros expanded)
-     │
-     ▼
-┌────────────┐
-│  Compiler  │             (C code → assembly code)
-└────────────┘
-     │
-     ▼
-  hello.s          (assembly source)
-     │
-     ▼
-┌────────────┐
-│ Assembler  │             (assembly → object code)
-└────────────┘
-     │
-     ▼
-  hello.o          (object file: machine code, not yet executable)
-     │
-     ▼
-┌────────────┐
-│   Linker   │◀─── library files (libc.a, etc.)
-└────────────┘
-     │
-     ▼
-  hello.exe        (final executable)
+```mermaid
+flowchart TD
+    src["hello.c"] --> pre["Preprocessor<br>(#include, #define expansion)"]
+    hdr["stdio.h"] --> pre
+    pre --> fi["hello.i<br>(preprocessed source: all macros expanded)"]
+    fi --> comp["Compiler<br>(C code → assembly code)"]
+    comp --> fs["hello.s<br>(assembly source)"]
+    fs --> asm["Assembler<br>(assembly → object code)"]
+    asm --> fo["hello.o<br>(object file: machine code, not yet executable)"]
+    fo --> link["Linker"]
+    lib["library files (libc.a, etc.)"] --> link
+    link --> exe["hello.exe<br>(final executable)"]
 ```
 
 *Figure 6. Building an executable through preprocessing, compiling, assembling, and linking*

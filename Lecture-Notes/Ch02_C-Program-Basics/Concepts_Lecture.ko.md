@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-19
+> **최종 수정일:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -52,13 +52,13 @@ int main(void)        // 진입점 함수
 }
 ```
 
-```text
-C 프로그램 구조
-├── 전처리기 지시문       #include <stdio.h>
-├── main 함수            int main(void) { ... }
-│   ├── 실행문           printf("...\n");
-│   └── 반환문           return 0;
-└── 기타 함수            (6장에서 학습)
+```mermaid
+graph TD
+    prog["C 프로그램 구조"] --> pre["전처리기 지시문<br>#include #lt;stdio.h#gt;"]
+    prog --> main["main 함수<br>int main(void) { ... }"]
+    main --> stmt["실행문<br>printf(#quot;...\n#quot;);"]
+    main --> ret["반환문<br>return 0;"]
+    prog --> other["기타 함수<br>(6장에서 학습)"]
 ```
 
 *그림 1. C 프로그램의 구조*
@@ -197,10 +197,10 @@ OS 또는 호출 스크립트는 이 종료 코드를 검사하여 프로그램�
 
 라이브러리를 사용하려면 그 라이브러리의 헤더 파일을 `#include`로 포함해야 한다.
 
-```text
-┌──────────┐    stdin     ┌─────────┐    stdout    ┌──────────┐
-│   키보드   │ ──────────▶  │  프로그램 │ ──────────▶  │   화면    │
-└──────────┘   (scanf)    └─────────┘   (printf)   └──────────┘
+```mermaid
+flowchart LR
+    kb["키보드"] -->|"stdin<br>(scanf)"| prog["프로그램"]
+    prog -->|"stdout<br>(printf)"| scr["화면"]
 ```
 
 *그림 2. 표준 입력과 표준 출력의 흐름*

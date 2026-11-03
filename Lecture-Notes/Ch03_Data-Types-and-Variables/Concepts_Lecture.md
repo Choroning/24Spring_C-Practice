@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -52,19 +52,19 @@
 
 A **data type** determines the memory size and binary representation needed to store a value. The way a computer system represents and stores values as binary data is called the binary representation of data types, and every value has a data type. The compiler uses the data type to decide how many bytes to allocate and how to interpret the stored bits.
 
-```text
-Data Types
-├── Primitive Types          ← this chapter
-│   ├── char (character)
-│   ├── short, int, long, long long (integer)
-│   └── float, double, long double (floating-point)
-├── Derived Types            ← Chapters 7, 8
-│   ├── Array
-│   └── Pointer
-└── User-Defined Types       ← Chapter 10
-    ├── struct
-    ├── union
-    └── enum
+```mermaid
+graph TD
+    dt["Data Types"] --> basic["Primitive Types<br>(this chapter)"]
+    dt --> derived["Derived Types<br>(Chapters 7, 8)"]
+    dt --> user["User-Defined Types<br>(Chapter 10)"]
+    basic --> ch["char (character)"]
+    basic --> intg["short, int, long, long long (integer)"]
+    basic --> fp["float, double, long double (floating-point)"]
+    derived --> arr["Array"]
+    derived --> ptr["Pointer"]
+    user --> st["struct"]
+    user --> un["union"]
+    user --> enm["enum"]
 ```
 
 *Figure 1. Classification of data types in C*
@@ -647,8 +647,13 @@ scanf("%d", &num);  // & (address-of operator) is required
 
 When operands differ in type, C **promotes** the smaller type to the larger type.
 
-```text
-char → int → long → float → double → long double
+```mermaid
+graph LR
+    c["char"] --> i["int"]
+    i --> l["long"]
+    l --> f["float"]
+    f --> d["double"]
+    d --> ld["long double"]
 ```
 
 *Figure 4. Order in which types are promoted in arithmetic*
