@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -52,19 +52,19 @@
 
 **데이터 타입**은 값을 저장하는 데 필요한 메모리의 크기와 2진 표현을 결정한다. 컴퓨터 시스템에서 2진 데이터로 값을 표현하고 저장하는 방식을 데이터 타입의 2진 표현이라고 하며, 모든 값에는 데이터 타입이 있다. 컴파일러는 데이터 타입에 따라 몇 바이트를 할당하고, 저장된 비트를 어떻게 해석할지 결정한다.
 
-```text
-데이터 타입
-├── 기본 데이터 타입           ← 이번 장
-│   ├── char (문자형)
-│   ├── short, int, long, long long (정수형)
-│   └── float, double, long double (실수형)
-├── 파생 데이터 타입           ← 7장, 8장
-│   ├── 배열
-│   └── 포인터
-└── 사용자 정의 타입          ← 10장
-    ├── 구조체 (struct)
-    ├── 공용체 (union)
-    └── 열거체 (enum)
+```mermaid
+graph TD
+    dt["데이터 타입"] --> basic["기본 데이터 타입<br>(이번 장)"]
+    dt --> derived["파생 데이터 타입<br>(7장, 8장)"]
+    dt --> user["사용자 정의 타입<br>(10장)"]
+    basic --> ch["char (문자형)"]
+    basic --> intg["short, int, long, long long (정수형)"]
+    basic --> fp["float, double, long double (실수형)"]
+    derived --> arr["배열"]
+    derived --> ptr["포인터"]
+    user --> st["구조체 (struct)"]
+    user --> un["공용체 (union)"]
+    user --> enm["열거체 (enum)"]
 ```
 
 *그림 1. C의 데이터 타입 분류*
@@ -647,8 +647,13 @@ scanf("%d", &num);  // & (주소 연산자)가 반드시 필요
 
 피연산자의 타입이 다를 때, C는 작은 타입을 큰 타입으로 **승격(promotion)** 한다.
 
-```text
-char → int → long → float → double → long double
+```mermaid
+graph LR
+    c["char"] --> i["int"]
+    i --> l["long"]
+    l --> f["float"]
+    f --> d["double"]
+    d --> ld["long double"]
 ```
 
 *그림 4. 산술 연산에서 타입이 승격되는 순서*
