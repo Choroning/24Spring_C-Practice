@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -106,11 +106,11 @@ The duplicated loop is gone. If the factorial algorithm needs to change, only `f
 
 C programs use three categories of functions:
 
-```text
-Functions in C
-├── 1. Entry-point function  ← main()
-├── 2. Library functions     ← printf(), scanf(), sqrt(), ...
-└── 3. User-defined functions← written by the programmer
+```mermaid
+graph TD
+    fn["Functions in C"] --> entry["1. Entry-point function<br>main()"]
+    fn --> lib["2. Library functions<br>printf(), scanf(), sqrt(), ..."]
+    fn --> user["3. User-defined functions<br>written by the programmer"]
 ```
 
 *Figure 1. Three kinds of functions in C*
@@ -129,14 +129,11 @@ Functions in C
 
 To use a function in C, three elements are needed:
 
-```text
-Three Requirements for Using a Function
-┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│  Definition  │    │  Declaration │    │    Call      │
-│              │    │              │    │              │
-│ What it does │    │ Promise of   │    │ Actually run │
-│ (full body)  │    │ existence    │    │ the function │
-└──────────────┘    └──────────────┘    └──────────────┘
+```mermaid
+flowchart TD
+    def["Definition<br>What it does (full body)"]
+    decl["Declaration<br>Promise of existence"]
+    call["Call<br>Actually run the function"]
 ```
 
 *Figure 2. Three elements of using a function*
