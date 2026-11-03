@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-19
+> **Last Updated:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -52,13 +52,13 @@ int main(void)        // entry point function
 }
 ```
 
-```text
-C Program Structure
-├── Preprocessor Directives   #include <stdio.h>
-├── main Function             int main(void) { ... }
-│   ├── Statements            printf("...\n");
-│   └── Return Statement      return 0;
-└── Other Functions           (Chapter 6)
+```mermaid
+graph TD
+    prog["C Program Structure"] --> pre["Preprocessor Directives<br>#include #lt;stdio.h#gt;"]
+    prog --> main["main Function<br>int main(void) { ... }"]
+    main --> stmt["Statements<br>printf(#quot;...\n#quot;);"]
+    main --> ret["Return Statement<br>return 0;"]
+    prog --> other["Other Functions<br>(Chapter 6)"]
 ```
 
 *Figure 1. Structure of a C program*
@@ -197,10 +197,10 @@ A **console program** runs in a console (command prompt): it takes input from th
 
 To use a library, its header file must be included with `#include`.
 
-```text
-┌──────────┐    stdin     ┌─────────┐    stdout    ┌──────────┐
-│ Keyboard │ ──────────▶  │ Program │ ──────────▶  │  Screen  │
-└──────────┘   (scanf)    └─────────┘   (printf)   └──────────┘
+```mermaid
+flowchart LR
+    kb["Keyboard"] -->|"stdin<br>(scanf)"| prog["Program"]
+    prog -->|"stdout<br>(printf)"| scr["Screen"]
 ```
 
 *Figure 2. Flow of standard input and standard output*
