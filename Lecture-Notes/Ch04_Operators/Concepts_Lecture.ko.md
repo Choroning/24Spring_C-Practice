@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-04
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -706,8 +706,14 @@ printf("%zu\n", sizeof(a + b));  // 4 (int), 1 (char)이 아님
 
 **일반 산술 변환** (이항 연산자용):
 
-```text
-char / short → int → long → long long → float → double → long double
+```mermaid
+graph LR
+    c["char / short"] --> i["int"]
+    i --> l["long"]
+    l --> ll["long long"]
+    ll --> f["float"]
+    f --> d["double"]
+    d --> ld["long double"]
 ```
 
 *그림 2. 일반 산술 변환의 타입 순위*
