@@ -3,7 +3,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
 
-이 레포지토리는 컴퓨터언어Ⅰ과 컴퓨터언어실습Ⅰ 과목의 이중 언어 강의 노트와 수업 결과물을 정리한 아카이브입니다.
+이 레포지토리는 컴퓨터언어Ⅰ과 컴퓨터언어실습Ⅰ 과목의 강의 노트와 수업 결과물을 정리한 아카이브입니다.
 
 *작성자: 박철원 (고려대학교(세종), 컴퓨터소프트웨어학과) - 2024년 기준 1학년*
 <br><br>
@@ -26,9 +26,8 @@
 - `Coursework/`에는 컴퓨터언어실습Ⅰ의 과제(`HW01`\~`HW10`)와 장별 실습 코드(`Lab04`\~`Lab10`)가 있습니다.
 - 단원은 교재의 장 번호(`Ch01`\~`Ch10`)를 따르고, `Ch11`\~`Ch13`은 교재와 수업에서 다루지 않은 C 언어의 주요 주제를 보충한 단원입니다. 모든 문서는 영어(`.md`)와 한국어(`.ko.md`) 파일이 짝을 이룹니다.
 
-> **🤖 AI 에이전트 활용**
-> 컴퓨터언어실습Ⅰ은 코드를 스스로 작성하도록 했습니다.
-> [Claude Code](https://claude.ai/download)를 노트 정리와 번역, 레포지토리 정리에 활용했습니다.
+> **🤖 생성형 AI 도구 사용**
+> 이 과목은 생성형 AI 도구 사용을 제한하며, 이 레포지토리는 문서화에 [Claude Code](https://claude.ai/download)를 사용합니다.
 
 <br><a name="course-information"></a>
 ## 📚 강의 정보

@@ -3,7 +3,7 @@
 ![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
 
-This repository archives bilingual lecture notes and coursework for the Computer Language Ⅰ and Computer Language and Training Ⅰ courses.
+This repository archives lecture notes and coursework for the Computer Language Ⅰ and Computer Language and Training Ⅰ courses.
 
 *Author: Cheolwon Park (Korea University Sejong, CSE) - Year 1 (Freshman) as of 2024*
 <br><br>
@@ -26,9 +26,8 @@ This repository archives bilingual lecture notes and coursework for the Computer
 - `Coursework/` holds the assignments of Computer Language and Training Ⅰ (`HW01`-`HW10`) and the chapter lab code (`Lab04`-`Lab10`).
 - Units follow the textbook's chapter numbers (`Ch01`-`Ch10`), and `Ch11`-`Ch13` are supplementary units on major C topics that neither the textbooks nor the courses covered. Every document comes as an English (`.md`) and Korean (`.ko.md`) pair.
 
-> **🤖 AI Agent Usage**
-> Computer Language and Training Ⅰ required students to write their own code.
-> [Claude Code](https://claude.ai/download) was used to organize and translate the notes and to restructure the repository.
+> **🤖 Use of Generative AI Tools**
+> This course restricts the use of generative AI tools; this repository uses [Claude Code](https://claude.ai/download) for documentation.
 
 <br><a name="course-information"></a>
 ## 📚 Course Information
