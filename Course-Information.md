@@ -2,7 +2,7 @@
 
 [Repository Guide](README.md) | [English](Course-Information.md) | [한국어](Course-Information.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-09
 
 ## Table of Contents
 
@@ -199,6 +199,7 @@
 - Unlike the progress in the syllabus (arrays in week 9, strings in week 10, pointers in week 11, function calling methods in week 12, structures in weeks 13-14, and applications of functions in week 15), the actual classes followed the textbook chapter order, covering arrays in week 10, pointers in weeks 11-12, strings in weeks 13-14, and structures in weeks 14-15.
 - The midterm exam was held in week 8 and the final exam in week 16, and the lectures ended in week 15.
 - The textbook chapter numbers, Chapters 1-10, correspond to `Ch01`-`Ch10` in this repository, and the lab code numbers in `Coursework` (`Lab04`-`Lab10`) follow the same chapter numbers. The units are listed in the [`Lecture-Notes` index](Lecture-Notes/README.md).
+- `Ch11`-`Ch13` are supplementary units on major C topics that neither the textbooks nor the two courses covered, so they do not correspond to any week in the schedule above.
 
 ### Computer Language and Training Ⅰ (DCCS103-03)
 
