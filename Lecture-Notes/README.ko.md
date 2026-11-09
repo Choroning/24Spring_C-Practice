@@ -26,3 +26,4 @@
 | 단원 | 주제 | 문서 |
 |:-----|:-----|:-----|
 | [11장 동적 메모리와 포인터 심화](Ch11_Dynamic-Memory-and-Advanced-Pointers/) | 메모리 영역과 저장 기간, `malloc`, `calloc`, `realloc`, `free`, 크기 계산과 실패 처리, 메모리 누수, 댕글링 포인터, 이중 해제, 범위 초과, 새니타이저와 `leaks`, `memcpy`, `memmove`, `memset`, `memcmp`, 동적 배열, 동적 문자열, 동적 2차원 배열, 연결 리스트, 이중 포인터, 배열 포인터, `void` 포인터, 함수 포인터, 콜백 함수, 복잡한 선언, `qsort`, `bsearch`, 비교 함수 | [강의 노트](Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md), [예제 코드](Ch11_Dynamic-Memory-and-Advanced-Pointers/) |
+| [12장 파일 입출력과 프로그램 구성](Ch12_File-IO-and-Program-Structure/) | 명령행 인수(`argc`, `argv`, `strtol`, 옵션, 종료 상태), 스트림과 버퍼링, 텍스트 파일과 이진 파일 입출력, 오류 처리(`errno`, `ferror`, 자원 정리), 전처리기와 매크로, 헤더 파일과 분할 컴파일, 저장 부류와 연결, 컴파일 옵션과 Makefile | [강의 노트](Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md), [예제 코드](Ch12_File-IO-and-Program-Structure/) |
