@@ -2,7 +2,9 @@
 
 [Repository Guide](../README.md) | [English](README.md) | [한국어](README.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-09
+
+## Textbook Units
 
 | Unit | Topics | Documents |
 |:-----|:-----|:-----|
@@ -16,3 +18,11 @@
 | [Chapter 8 Pointers](Ch08_Pointers/) | The concept, declaration, and initialization of pointers, the dereference operator, `const` pointers, pointer arithmetic, the relationship between arrays and pointers, pass by value and pass by address, returning multiple values through pointers, passing arrays to functions | [Lecture notes](Ch08_Pointers/Concepts_Lecture.md), [Lab notes](Ch08_Pointers/Concepts_Lab.md), [Exercises](Ch08_Pointers/Exercises.md), [Solutions](Ch08_Pointers/Solutions.md), [Example code](Ch08_Pointers/) |
 | [Chapter 9 Strings](Ch09_Strings/) | Characters and strings, character arrays, string functions in `<string.h>` (`strlen`, `strcpy`, `strcmp`, `strcat`, `strchr`, `strstr`, `strtok`), character functions in `<ctype.h>`, string I/O (`fgets`, `gets_s`, `puts`), data conversion functions (`sscanf`, `sprintf`), string pointers, string arrays | [Lecture notes](Ch09_Strings/Concepts_Lecture.md), [Lab notes](Ch09_Strings/Concepts_Lab.md), [Exercises](Ch09_Strings/Exercises.md), [Solutions](Ch09_Strings/Solutions.md), [Example code](Ch09_Strings/) |
 | [Chapter 10 Structures](Ch10_Structures/) | Defining, declaring, and initializing structures, member access, structure assignment and comparison, arrays of structures, structure pointers, passing structures to functions, nested structures, `enum`, `union`, `typedef` | [Lecture notes](Ch10_Structures/Concepts_Lecture.md), [Lab notes](Ch10_Structures/Concepts_Lab.md), [Exercises](Ch10_Structures/Exercises.md), [Solutions](Ch10_Structures/Solutions.md) |
+
+## Supplementary Units
+
+These units cover major C topics that neither the textbooks nor the courses covered.
+
+| Unit | Topics | Documents |
+|:-----|:-----|:-----|
+| [Chapter 11 Dynamic Memory and Advanced Pointers](Ch11_Dynamic-Memory-and-Advanced-Pointers/) | Memory segments and storage durations, `malloc`, `calloc`, `realloc`, `free`, size calculation and failure handling, memory leaks, dangling pointers, double free, out-of-bounds access, sanitizers and `leaks`, `memcpy`, `memmove`, `memset`, `memcmp`, dynamic arrays, dynamic strings, dynamic 2D arrays, linked lists, double pointers, pointers to arrays, `void` pointers, function pointers, callback functions, complex declarations, `qsort`, `bsearch`, comparison functions | [Lecture notes](Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.md), [Example code](Ch11_Dynamic-Memory-and-Advanced-Pointers/) |
