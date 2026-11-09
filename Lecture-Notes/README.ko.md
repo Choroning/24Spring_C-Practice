@@ -2,7 +2,9 @@
 
 [레포지토리 안내](../README.ko.md) | [English](README.md) | [한국어](README.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-09
+
+## 교재 단원
 
 | 단원 | 주제 | 문서 |
 |:-----|:-----|:-----|
@@ -16,3 +18,11 @@
 | [8장 포인터](Ch08_Pointers/) | 포인터의 개념, 선언, 초기화, 역참조 연산자, `const` 포인터, 포인터 연산, 배열과 포인터의 관계, 값에 의한 전달과 주소에 의한 전달, 포인터를 이용한 여러 값 반환, 함수에 배열 전달 | [강의 노트](Ch08_Pointers/Concepts_Lecture.ko.md), [실습 노트](Ch08_Pointers/Concepts_Lab.ko.md), [연습 문제](Ch08_Pointers/Exercises.ko.md), [풀이](Ch08_Pointers/Solutions.ko.md), [예제 코드](Ch08_Pointers/) |
 | [9장 문자열](Ch09_Strings/) | 문자와 문자열, 문자 배열, `<string.h>`의 문자열 함수(`strlen`, `strcpy`, `strcmp`, `strcat`, `strchr`, `strstr`, `strtok`), `<ctype.h>`의 문자 함수, 문자열 입출력(`fgets`, `gets_s`, `puts`), 데이터 변환 함수(`sscanf`, `sprintf`), 문자열 포인터, 문자열 배열 | [강의 노트](Ch09_Strings/Concepts_Lecture.ko.md), [실습 노트](Ch09_Strings/Concepts_Lab.ko.md), [연습 문제](Ch09_Strings/Exercises.ko.md), [풀이](Ch09_Strings/Solutions.ko.md), [예제 코드](Ch09_Strings/) |
 | [10장 구조체](Ch10_Structures/) | 구조체의 정의, 선언, 초기화, 멤버 접근, 구조체 대입과 비교, 구조체 배열, 구조체 포인터, 함수에 구조체 전달, 중첩 구조체, `enum`, `union`, `typedef` | [강의 노트](Ch10_Structures/Concepts_Lecture.ko.md), [실습 노트](Ch10_Structures/Concepts_Lab.ko.md), [연습 문제](Ch10_Structures/Exercises.ko.md), [풀이](Ch10_Structures/Solutions.ko.md) |
+
+## 보충 단원
+
+교재와 수업에서 다루지 않은 C 언어의 주요 주제를 보충한 단원이다.
+
+| 단원 | 주제 | 문서 |
+|:-----|:-----|:-----|
+| [11장 동적 메모리와 포인터 심화](Ch11_Dynamic-Memory-and-Advanced-Pointers/) | 메모리 영역과 저장 기간, `malloc`, `calloc`, `realloc`, `free`, 크기 계산과 실패 처리, 메모리 누수, 댕글링 포인터, 이중 해제, 범위 초과, 새니타이저와 `leaks`, `memcpy`, `memmove`, `memset`, `memcmp`, 동적 배열, 동적 문자열, 동적 2차원 배열, 연결 리스트, 이중 포인터, 배열 포인터, `void` 포인터, 함수 포인터, 콜백 함수, 복잡한 선언, `qsort`, `bsearch`, 비교 함수 | [강의 노트](Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md), [예제 코드](Ch11_Dynamic-Memory-and-Advanced-Pointers/) |
