@@ -2,14 +2,14 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
 > **Learning Objectives:**
-> 1. Print an integer in decimal, octal, and hexadecimal with the `%d`, `%o`, and `%x` conversions of `printf` and the `#` flag
+> 1. Print an integer in decimal, octal, and hexadecimal with `printf`
 > 2. Align output digits with a field width and precision (`%6d`, `%6.1lf`)
-> 3. Divide by a floating-point literal to obtain the average of integers as a floating-point value
+> 3. Obtain the average of integer inputs as a floating-point value
 > 4. Design a simple calculation program that combines input, arithmetic, and formatted output
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03)
@@ -40,12 +40,17 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This assignment prints an input integer in several bases (Problem 1), prints the sum and average of three integers with aligned digits (Problem 2), and freely writes a program that uses the input, output, and operations learned so far (Problem 3). Problems 1 and 2 come from the exercises of Chapter 3 (input and output statements) of the textbook.
 
 ```text
 Coursework/HW02_Operators/
 ├── Assignment-Explanation.ko.md   # this document (Korean)
 ├── Assignment-Explanation.md      # this document (English)
+├── Original/
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
     ├── Q1.c                       # Problem 1: printing a value in different bases
     ├── Q2.c                       # Problem 2: basic arithmetic

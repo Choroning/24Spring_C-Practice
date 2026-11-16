@@ -2,16 +2,16 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4, 5
 
 > **Learning Objectives:**
 > 1. Find the values produced by the relational, logical, and `sizeof` operators and explain why those values result
 > 2. Express conditions involving ranges and negation as expressions with relational and logical operators
-> 3. Trace expressions that mix prefix and postfix increment and decrement operators step by step and identify undefined behavior
+> 3. Trace expressions that mix prefix and postfix increment and decrement operators step by step and decide whether the language rules determine their results
 > 4. Explain the form and evaluation order of the conditional operator `? :`
-> 5. Find the maximum of three values by applying the conditional operator twice
+> 5. Find the maximum of three values with the conditional operator alone
 > 6. Check boundary conditions to confirm that the result is correct even for inputs with equal or negative values
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03)
@@ -31,7 +31,7 @@
 - [4. Problem 3: Increment, Decrement, and Assignment](#4-problem-3-increment-decrement-and-assignment)
   - [4.1 Problem](#41-problem)
   - [4.2 Solution](#42-solution)
-  - [4.3 Output and Undefined Behavior](#43-output-and-undefined-behavior)
+  - [4.3 Output](#43-output)
 - [5. Problem 4: Comparing Magnitudes](#5-problem-4-comparing-magnitudes)
   - [5.1 Problem](#51-problem)
   - [5.2 Solution](#52-solution)
@@ -45,12 +45,17 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This assignment consists of four problems on the operators of Chapter 4. Problems 1 and 3 are written problems that ask for the output of a given program and the reason for that output, Problem 2 is a written problem that expresses conditions stated in words as expressions with relational and logical operations, and Problem 4 is a coding problem that finds the largest of three integers with only the conditional operator, without an `if` statement. Problem 1 is a partly modified version of exercise 7 in Chapter 4 of the textbook, and Problem 2 modifies exercise 1 in Chapter 5 so that it can be answered without an `if` statement. The conditional operator is an expression that chooses one of two values by a condition, so Problem 4 practices expressing a selection structure as an expression rather than a statement.
 
 ```text
 Coursework/HW03_Control-Statements-I/
 ├── Assignment-Explanation.ko.md   # this document (Korean)
 ├── Assignment-Explanation.md      # this document (English)
+├── Original/
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
     └── Q4.c                       # Problem 4: comparing magnitudes
 ```
@@ -235,7 +240,7 @@ int main()
 
 Each `printf` prints `a` and `b` at that point according to the format string `"%d , %d \n"`, so on every line ` , ` comes between the two values and one space remains at the end of the line.
 
-### 4.3 Output and Undefined Behavior
+### 4.3 Output
 
 Compiled with gcc or with clang, the program of the problem prints the following.
 

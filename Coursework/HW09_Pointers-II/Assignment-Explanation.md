@@ -2,11 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 
 > **Learning Objectives:**
 > 1. Sort an integer array in ascending order with selection sort and trace the array state at each step
-> 2. Explain why the column size must be written in the parameter when a 2D array is passed to a function
+> 2. Explain the rules for declaring a parameter that receives a 2D array
 > 3. Find the value of each element of a partially initialized 2D array
 > 4. Traverse the rows and columns of a 2D array to compute row totals and column averages
 
@@ -36,6 +36,8 @@
 <br>
 
 ## 1. Selection Sort
+
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
 
 ### 1.1 Problem
 

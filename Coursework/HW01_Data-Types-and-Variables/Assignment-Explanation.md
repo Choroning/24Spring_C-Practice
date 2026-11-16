@@ -2,14 +2,14 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2, 3
 
 > **Learning Objectives:**
 > 1. Explain the stages from source code to an executable and the concepts of variables and ASCII codes
 > 2. Declare an integer variable, assign or initialize its value, and print it
-> 3. Print the same integer value with `%d` and `%c` and explain the relationship between ASCII codes and characters
+> 3. Print an integer value and its corresponding ASCII character and explain the relationship between ASCII codes and characters
 > 4. Match an output format with format specifiers that set field width, alignment, and zero padding
 > 5. Perform the four arithmetic operations and the remainder operation on values stored in variables and explain the result of integer division
 
@@ -20,15 +20,31 @@
 ## Table of Contents
 
 - [1. Assignment Layout and How to Run](#1-assignment-layout-and-how-to-run)
-- [2. Written Questions](#2-written-questions)
-  - [2.1 Stages of Building an Executable](#21-stages-of-building-an-executable)
-  - [2.2 Variables](#22-variables)
-  - [2.3 ASCII Code](#23-ascii-code)
-- [3. Coding Problems](#3-coding-problems)
-  - [3.1 Q1. Variable Practice (1)](#31-q1-variable-practice-1)
-  - [3.2 Q2. Variable Practice (2)](#32-q2-variable-practice-2)
-  - [3.3 Q3. Variable Practice (3)](#33-q3-variable-practice-3)
-  - [3.4 Q4. Variable Practice (4)](#34-q4-variable-practice-4)
+- [2. Written Question 1: Stages of Building an Executable](#2-written-question-1-stages-of-building-an-executable)
+  - [2.1 Problem](#21-problem)
+  - [2.2 Solution](#22-solution)
+- [3. Written Question 2: Variables](#3-written-question-2-variables)
+  - [3.1 Problem](#31-problem)
+  - [3.2 Solution](#32-solution)
+- [4. Written Question 3: ASCII Code](#4-written-question-3-ascii-code)
+  - [4.1 Problem](#41-problem)
+  - [4.2 Solution](#42-solution)
+- [5. Problem 1: Variable Practice (1)](#5-problem-1-variable-practice-1)
+  - [5.1 Problem](#51-problem)
+  - [5.2 Solution](#52-solution)
+  - [5.3 Output and Edge Cases](#53-output-and-edge-cases)
+- [6. Problem 2: Variable Practice (2)](#6-problem-2-variable-practice-2)
+  - [6.1 Problem](#61-problem)
+  - [6.2 Solution](#62-solution)
+  - [6.3 Output and Edge Cases](#63-output-and-edge-cases)
+- [7. Problem 3: Variable Practice (3)](#7-problem-3-variable-practice-3)
+  - [7.1 Problem](#71-problem)
+  - [7.2 Solution](#72-solution)
+  - [7.3 Output and Edge Cases](#73-output-and-edge-cases)
+- [8. Problem 4: Variable Practice (4)](#8-problem-4-variable-practice-4)
+  - [8.1 Problem](#81-problem)
+  - [8.2 Solution](#82-solution)
+  - [8.3 Output and Edge Cases](#83-output-and-edge-cases)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -38,12 +54,17 @@
 
 ## 1. Assignment Layout and How to Run
 
-This assignment practices declaring, initializing, and assigning variables and the format specifiers of `printf`, covered in Chapters 2 and 3. It consists of three written questions and four coding problems (Q1-Q4), and the coding problems require submitting a code analysis and a screenshot of the output along with the code. Q2 is textbook problem 2-6, and Q3 is textbook problem 3-4.
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
+This assignment practices declaring, initializing, and assigning variables and the format specifiers of `printf`, covered in Chapters 2 and 3. It consists of three written questions and four coding problems (Problems 1-4), and the coding problems require submitting a code analysis and a screenshot of the output along with the code. Problem 2 is Chapter 2 exercise 6 of the textbook, and Problem 3 is Chapter 3 exercise 4.
 
 ```text
 Coursework/HW01_Data-Types-and-Variables/
 ├── Assignment-Explanation.ko.md
 ├── Assignment-Explanation.md
+├── Original/
+│   ├── Assignment.ko.md
+│   └── Assignment.md
 └── Solution/
     ├── Q1.c    # declaring, assigning, and printing a variable
     ├── Q2.c    # printing an integer and its ASCII character
@@ -67,13 +88,15 @@ The last line of each sample run, `Program ended with exit code: 0`, is not prin
 
 <br>
 
-## 2. Written Questions
+## 2. Written Question 1: Stages of Building an Executable
 
-### 2.1 Stages of Building an Executable
+### 2.1 Problem
 
-**Problem:** Explain each stage that source code goes through to become an executable.
+Explain each stage that source code goes through to become an executable.
 
-**Explanation:** Source code becomes an executable through four stages: preprocessing, compiling, assembling, and linking.
+### 2.2 Solution
+
+Source code becomes an executable through four stages: preprocessing, compiling, assembling, and linking.
 
 | Stage | What It Does | Result |
 |:-----|:-----|:-----|
@@ -86,27 +109,43 @@ The last line of each sample run, `Program ended with exit code: 0`, is not prin
 
 In Visual Studio, a single build command runs all four stages. An object file is produced only when there are no errors up to the compiling stage, and an executable only when there are no errors up to the linking stage. The detailed process is summarized in [Chapter 1, Section 3.2](../../Lecture-Notes/Ch01_Programming-and-C-Language/Concepts_Lecture.md#32-build-process).
 
-### 2.2 Variables
+---
 
-**Problem:** What is a variable?
+<br>
 
-**Explanation:** A **variable** is a memory space given a name for storing a value, and its value can change while the program runs. The computer accesses each byte of memory by its address, but when writing code the programmer accesses the space by the variable's name instead of the address. A variable must be declared with a data type and a name before use, and the data type determines how much memory the variable occupies (`int` is usually 4 bytes) and how the stored bits are interpreted. Giving a value at the moment of declaration is called **initialization**, and storing a value in an existing variable with `=` is called **assignment**. See [Chapter 2, Section 2.4](../../Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lecture.md#24-variables-in-io) and [Chapter 3, Section 3](../../Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lecture.md#3-variables) for details.
+## 3. Written Question 2: Variables
 
-### 2.3 ASCII Code
+### 3.1 Problem
 
-**Problem:** What is ASCII code?
+What is a variable?
 
-**Explanation:** **ASCII (American Standard Code for Information Interchange)** is a 7-bit character code that assigns an integer code to each character. Its 128 codes from 0 to 127 consist of 33 control characters (0-31 and 127) and 95 printable characters (32-126). For example, `'A'` is 65, `'a'` is 97, and `'0'` is 48. Storing a character in a C `char` variable actually stores its ASCII code, so printing the same value with `%d` gives the code and with `%c` gives the character. See [Chapter 3, Section 1.3](../../Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lecture.md#13-character-type) for details.
+### 3.2 Solution
+
+A **variable** is a memory space given a name for storing a value, and its value can change while the program runs. The computer accesses each byte of memory by its address, but when writing code the programmer accesses the space by the variable's name instead of the address. A variable must be declared with a data type and a name before use, and the data type determines how much memory the variable occupies (`int` is usually 4 bytes) and how the stored bits are interpreted. Giving a value at the moment of declaration is called **initialization**, and storing a value in an existing variable with `=` is called **assignment**. See [Chapter 2, Section 2.4](../../Lecture-Notes/Ch02_C-Program-Basics/Concepts_Lecture.md#24-variables-in-io) and [Chapter 3, Section 3](../../Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lecture.md#3-variables) for details.
 
 ---
 
 <br>
 
-## 3. Coding Problems
+## 4. Written Question 3: ASCII Code
 
-### 3.1 Q1. Variable Practice (1)
+### 4.1 Problem
 
-**Problem:** Referring to the sample run, write code that performs the following steps.
+What is ASCII code?
+
+### 4.2 Solution
+
+**ASCII (American Standard Code for Information Interchange)** is a 7-bit character code that assigns an integer code to each character. Its 128 codes from 0 to 127 consist of 33 control characters (0-31 and 127) and 95 printable characters (32-126). For example, `'A'` is 65, `'a'` is 97, and `'0'` is 48. Storing a character in a C `char` variable actually stores its ASCII code, so printing the same value with `%d` gives the code and with `%c` gives the character. See [Chapter 3, Section 1.3](../../Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lecture.md#13-character-type) for details.
+
+---
+
+<br>
+
+## 5. Problem 1: Variable Practice (1)
+
+### 5.1 Problem
+
+Referring to the sample run, write code that performs the following steps.
 
 - (a) Declare a variable that can hold an integer
 - (b) Assign the integer data `2020` to the variable
@@ -119,6 +158,8 @@ data: 2020
 
 Program ended with exit code: 0
 ```
+
+### 5.2 Solution
 
 **Approach:** Because the problem presents declaration, assignment, and printing as separate steps, the solution writes a declaration and an assignment statement separately instead of an initialization (`int data = 2020;`).
 
@@ -146,6 +187,8 @@ int main()
 }
 ```
 
+### 5.3 Output and Edge Cases
+
 **Actual Output:**
 
 ```text
@@ -156,9 +199,17 @@ The format string has no `\n` at the end, so the line does not end after the out
 
 **Edge cases:** Calling `printf` before the assignment in (b) would read an uninitialized local variable and print a garbage value, which is undefined behavior. 2020 is within the range of `int` (-2,147,483,648 to 2,147,483,647), so no overflow occurs.
 
-### 3.2 Q2. Variable Practice (2)
+---
 
-**Problem:** Write a program that initializes the variable `val` to an arbitrary integer between 0 and 255 and prints the value stored in the variable and the corresponding ASCII character.
+<br>
+
+## 6. Problem 2: Variable Practice (2)
+
+### 6.1 Problem
+
+**Textbook Problem:** Chapter 2 exercise 6
+
+Write a program that initializes the variable `val` to an arbitrary integer between 0 and 255 and prints the value stored in the variable and the corresponding ASCII character.
 
 **Sample Run:**
 
@@ -169,6 +220,8 @@ Program ended with exit code: 0
 ```
 
 **Reference:** In the sample above, `val` is initialized to `98`, and the printed `98` and the character `b` are the information stored in `val`. (The output text means "The character corresponding to ASCII of val 98: b".)
+
+### 6.2 Solution
 
 **Approach:** `int val = 65;` declares the variable and gives it a value at the same time (initialization). The same variable is passed to `printf` twice with different format specifiers. `%d` prints the value as a decimal integer, and `%c` converts the `int` argument to `unsigned char` and prints the single character with that code. So although only one value is stored, both the integer 65 and the character `A` are printed.
 
@@ -191,6 +244,8 @@ int main()
 }
 ```
 
+### 6.3 Output and Edge Cases
+
 **Actual Output:**
 
 ```text
@@ -205,9 +260,17 @@ The sample run initializes `val` to 98 and the solution initializes it to 65, so
 - 128-255 are not ASCII values, so the output depends on the terminal's character encoding. In a UTF-8 terminal, this single byte is not a valid character and appears as a broken character.
 - The source file is saved in UTF-8, so the Korean text in the format string prints correctly in UTF-8 terminals on macOS and Linux, but it may be garbled in a Windows console whose code page is CP949.
 
-### 3.3 Q3. Variable Practice (3)
+---
 
-**Problem:** Referring to the sample run and the figure, initialize the integer variables `no`, `in`, and `out` and print them.
+<br>
+
+## 7. Problem 3: Variable Practice (3)
+
+### 7.1 Problem
+
+**Textbook Problem:** Chapter 3 exercise 4
+
+Referring to the sample run and the figure, initialize the integer variables `no`, `in`, and `out` and print them.
 
 ![Figure 2. Output columns and alignment of variables no, in, and out](../../images/HW01_Output-Format.png)
 
@@ -223,6 +286,8 @@ Print the variables `no`, `in`, and `out` so that they occupy 5, 6, and 6 column
 Program ended with exit code: 0
 ```
 
+### 7.2 Solution
+
 **Approach:** Read the initial values `no` = 34, `in` = 124, and `out` = 512 from the digits in the figure's columns, and specify the field width, alignment, and zero padding together in each format specifier ([Chapter 3, Section 5.2](../../Lecture-Notes/Ch03_Data-Types-and-Variables/Concepts_Lecture.md#52-width-and-alignment)).
 
 | Variable | Format Specifier | Meaning | Output |
@@ -231,7 +296,7 @@ Program ended with exit code: 0
 | `in` | `%-6d` | Width 6, left-aligned | `124␣␣␣` |
 | `out` | `%06d` | Width 6, right-aligned, empty columns filled with 0 | `000512` |
 
-*Table 2. Format specifiers and output in Q3 (␣ is a space)*
+*Table 2. Format specifiers and output in Problem 3 (␣ is a space)*
 
 The three format specifiers are written back to back without spaces in a single format string `"%5d%-6d%06d"`, so 5 + 6 + 6 = 17 characters are printed on one line. The three trailing spaces of `in` create the gap between `124` and `000512`.
 
@@ -257,6 +322,8 @@ int main()
 }
 ```
 
+### 7.3 Output and Edge Cases
+
 **Actual Output:**
 
 ```text
@@ -271,9 +338,15 @@ The output matches the first line of the sample run character for character, inc
 - When `-` and `0` are used together, `0` is ignored. `%-06d` is the same as `%-6d`, and gcc and clang warn about this combination.
 - When a negative number is zero-padded, the sign comes first. If `out` were -512, `%06d` would print `-00512`.
 
-### 3.4 Q4. Variable Practice (4)
+---
 
-**Problem:** Declare two variables `vOne` and `vTwo`, initialize them to `13` and `3`, and, referring to the sample run, write code that performs and prints the four arithmetic operations. Do not print by inserting integer values directly inside the `printf` statements.
+<br>
+
+## 8. Problem 4: Variable Practice (4)
+
+### 8.1 Problem
+
+Declare two variables `vOne` and `vTwo`, initialize them to `13` and `3`, and, referring to the sample run, write code that performs and prints the four arithmetic operations. Do not print by inserting integer values directly inside the `printf` statements.
 
 **Sample Run:**
 
@@ -286,6 +359,8 @@ The output matches the first line of the sample run character for character, inc
 
 Program ended with exit code: 0
 ```
+
+### 8.2 Solution
 
 **Approach:** Both operands and the result are printed through variables and expressions, so no integer literal appears inside `printf`. Each line uses three format specifiers and passes `vOne`, `vTwo`, and the result in order, and the result is computed directly in the argument position, as in `vOne + vTwo`.
 
@@ -318,6 +393,8 @@ int main()
 }
 ```
 
+### 8.3 Output and Edge Cases
+
 **Actual Output:**
 
 ```text
@@ -328,7 +405,7 @@ int main()
 13 % 3 = 1
 ```
 
-Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its own line.
+Unlike Problems 1-3, every format string has a `\n`, so each result is printed on its own line.
 
 **Edge cases:**
 
@@ -346,7 +423,7 @@ Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its o
 |:-----|:-----|
 | Build Stages | Source code becomes an executable through preprocessing, compiling, assembling, and linking. |
 | Variables | A variable is a named memory space for storing a value, declared with a data type and a name before use. |
-| Declaration, Assignment, Initialization | Q1 assigns with `=` after the declaration, and Q2-Q4 initialize at the declaration. |
+| Declaration, Assignment, Initialization | Problem 1 assigns with `=` after the declaration, and Problems 2-4 initialize at the declaration. |
 | ASCII Code | ASCII is a 7-bit code that assigns each character an integer code from 0 to 127, and 32-126 are the printable characters. |
 | `%d` and `%c` | For the same integer value, `%d` prints it in decimal and `%c` prints the character with that code. |
 | Field Width and Alignment | `%5d` right-aligns, `%-6d` left-aligns, `%06d` zero-pads, and the width is a minimum width. |
@@ -359,7 +436,7 @@ Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its o
 
 ## Self-Check Questions
 
-1. **`%d` and `%c`:** What is printed if the initial value in Q2 is changed to 48?
+1. **`%d` and `%c`:** What is printed if the initial value in Problem 2 is changed to 48?
 
    <details>
    <summary>Answer</summary>
@@ -377,7 +454,7 @@ Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its o
 
    </details>
 
-3. **Integer division and remainder:** If `vOne` is changed to 17 and `vTwo` to 5 in Q4, what are the results on the `/` and `%` lines?
+3. **Integer division and remainder:** If `vOne` is changed to 17 and `vTwo` to 5 in Problem 4, what are the results on the `/` and `%` lines?
 
    <details>
    <summary>Answer</summary>
@@ -386,7 +463,7 @@ Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its o
 
    </details>
 
-4. **`%%`:** What goes wrong if the last `printf` in Q4 uses a single `%` instead of `%%`?
+4. **`%%`:** What goes wrong if the last `printf` in Problem 4 uses a single `%` instead of `%%`?
 
    <details>
    <summary>Answer</summary>
@@ -395,7 +472,7 @@ Unlike Q1-Q3, every format string has a `\n`, so each result is printed on its o
 
    </details>
 
-5. **Uninitialized variable:** What is printed if the line `data = 2020;` is deleted from Q1?
+5. **Uninitialized variable:** What is printed if the line `data = 2020;` is deleted from Problem 1?
 
    <details>
    <summary>Answer</summary>

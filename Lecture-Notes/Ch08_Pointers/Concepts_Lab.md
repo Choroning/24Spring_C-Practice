@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 9
 
@@ -345,6 +345,16 @@ The solution code of the following problems is the example files in this unit fo
 ### 4.1 Predicting the Results of Pointer Expressions
 
 **Problem:** With the size-6 integer array `arr` initialized to `{ 1, -3, 5, -6, 12, 4 }` and `int *p = arr;`, predict the five lines of output.
+
+```c
+printf("1. %d \n", p[2]);
+printf("2. %d \n", *p + 1);
+printf("3. %d \n", *(p + 1));
+printf("4. %d \n", *(p + 3));
+
+*p = arr[2] - *p;
+printf("5. %d \n", arr[0]);
+```
 
 **Solution:** The dereference operator `*` is a unary operator, so it binds before the binary operator `+`. This precedence makes the difference between `*p + 1` and `*(p + 1)` ([Chapter 4 Lab, Section 6](../Ch04_Operators/Concepts_Lab.md#6-operator-precedence-and-associativity)).
 

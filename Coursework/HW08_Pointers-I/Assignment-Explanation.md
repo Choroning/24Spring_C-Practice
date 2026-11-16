@@ -2,13 +2,13 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 
 > **Learning Objectives:**
 > 1. Write a function that swaps two of the caller's variables through pointer parameters
 > 2. Pass the addresses of array elements to a function and store element-wise results in another array
 > 3. Decide what a function should handle when its prototype is fixed and explain the reason
-> 4. Pass an address received through a pointer parameter on to another function as it is to sort three of the caller's variables
+> 4. Sort three of the caller's variables in ascending order with a function that receives their addresses
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03) / Cheolwon Park
 
@@ -36,6 +36,8 @@
 <br>
 
 ## 1. Swapping
+
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
 
 ### 1.1 Problem
 

@@ -2,12 +2,12 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 
 > **Learning Objectives:**
 > 1. Update the maximum and minimum in a `while` loop that ends at the sentinel 0 while filtering out-of-range inputs
-> 2. Compute a sum and an average with `do-while` by reading an input first and then handling the sentinel
-> 3. Compute an alternating-sign sum with a `for` statement and the remainder operator
+> 2. Compute the sum and the average of the numbers read until 0 is entered, and handle the case in which 0 is entered first
+> 3. Compute an alternating-sign sum with a `for` statement
 > 4. Print a pattern whose number of items per line grows and then shrinks with nested `for` statements
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03)
@@ -42,12 +42,17 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This loop assignment practices `while`, `do-while`, `for`, and nested `for` one at a time. Problems 1 and 2 read values until the sentinel 0 is entered, and Problems 3 and 4 are `for` loops with a fixed number of iterations.
 
 ```text
 Coursework/HW05_Control-Statements-III/
 ├── Assignment-Explanation.ko.md   # this document (Korean)
 ├── Assignment-Explanation.md      # this document (English)
+├── Original/
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
     ├── Q1.c                       # Problem 1: maximum and minimum (while)
     ├── Q2.c                       # Problem 2: sum and average (do-while)

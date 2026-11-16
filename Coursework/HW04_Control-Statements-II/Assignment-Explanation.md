@@ -2,16 +2,16 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5
 
 > **Learning Objectives:**
-> 1. Determine and convert the case of an English letter by comparing ranges of ASCII codes
-> 2. Determine whether an integer, including a negative one, is odd or even with the remainder operator
+> 1. Determine and convert the case of an input English letter
+> 2. Determine whether an integer, including a negative one, is odd or even
 > 3. Turn range conditions into integer cases of a `switch` statement and handle out-of-range values separately
 > 4. Rewrite a `switch` statement with grouped cases as an `if-else` statement using `||`
-> 5. Handle uppercase and lowercase input with the same statements by placing case labels one after another
+> 5. Handle uppercase and lowercase input with the same output in a `switch` statement
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03)
 
@@ -49,12 +49,17 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This assignment practices `if` and `switch` statements with exercises from Chapter 5 (conditional statements) of the textbook. Problems 1 and 2 classify characters and integers with `if-else`, Problems 3 and 4 rewrite `if` and `switch` statements with the same behavior into each other, and Problem 5 branches on a character input with a `switch` statement.
 
 ```text
 Coursework/HW04_Control-Statements-II/
 ├── Assignment-Explanation.ko.md   # this document (Korean)
 ├── Assignment-Explanation.md      # this document (English)
+├── Original/
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
     ├── Q1.c                       # Problem 1: letter conversion
     ├── Q2.c                       # Problem 2: odd or even

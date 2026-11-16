@@ -2,14 +2,14 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 
 > **Learning Objectives:**
 > 1. Store input real numbers in an array and compute their average and standard deviation
-> 2. Initialize the maximum and minimum with the first element and update them by comparing with the remaining elements
-> 3. Reverse the order of array elements using the correspondence between indices `i` and `n - 1 - i`
+> 2. Find the maximum and the minimum by comparing array elements
+> 3. Reverse the order of array elements
 > 4. Explain the difference between the population standard deviation and the sample standard deviation
-> 5. Find every position of a value in an array by sequential search and decide whether the value is present from the number of matches
+> 5. Find every position at which a value is stored in an array and decide whether the value is present
 
 **Problem Source:** Prof. Jonguk Lee, Computer Language and Training Ⅰ (DCCS103-03) / Cheolwon Park
 
@@ -47,10 +47,15 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This assignment consists of four problems that store values in a one-dimensional array and process them with loops ([Chapter 7](../../Lecture-Notes/Ch07_Arrays/Concepts_Lecture.md)). The assignment included free items in which students set and solved two of their own problems for understanding arrays, and Problems 3 and 4 are these free items.
 
 ```text
 Coursework/HW07_Arrays/
+├── Original/
+│   ├── Assignment.ko.md    # assignment handout (Korean)
+│   └── Assignment.md       # assignment handout (English)
 └── Solution/
     ├── Q1.c    # Problem 1: average and standard deviation of 10 real numbers
     ├── Q2.c    # Problem 2: maximum and minimum of 7 integers

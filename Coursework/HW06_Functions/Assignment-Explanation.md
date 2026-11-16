@@ -2,10 +2,10 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 
 > **Learning Objectives:**
-> 1. Write a function that computes the sum from 0 to the input by choosing the loop direction from the sign of the input
+> 1. Write a function that computes the sum from 0 to the input, including a negative input
 > 2. Use a function that tests a condition and returns 1 or 0 in a conditional expression
 > 3. Explain the layout that declares function prototypes before `main()` and places the definitions after `main()`
 > 4. Identify inputs for which the accumulated sum exceeds the range of `int`
@@ -36,10 +36,15 @@
 
 ## 1. Assignment Layout and How to Run
 
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
+
 This assignment consists of two problems that write and call user-defined functions. Both solutions follow the layout that declares the function prototype before `main()` and places the definition after `main()` ([Chapter 6, Section 2.6](../../Lecture-Notes/Ch06_Functions/Concepts_Lecture.md#26-function-declaration-prototype)).
 
 ```text
 Coursework/HW06_Functions/
+├── Original/
+│   ├── Assignment.ko.md    # assignment handout (Korean)
+│   └── Assignment.md       # assignment handout (English)
 └── Solution/
     ├── Q1.c    # Problem 1: sum from 0 to the input with getSum()
     └── Q2.c    # Problem 2: sum of only the positive values with getSign()
@@ -81,9 +86,9 @@ Program ended with exit code: 0
 Program ended with exit code: 0
 ```
 
-As the second sample run shows, a negative input is summed going down from 0 to that number. For -3, the sum is 0 + (-1) + (-2) + (-3) = -6.
-
 ### 2.2 Solution Approach
+
+As the second sample run shows, a negative input is summed going down from 0 to that number. For -3, the sum is 0 + (-1) + (-2) + (-3) = -6.
 
 `getSum()` computes the sum by splitting into three cases according to the sign of the parameter `val`.
 
@@ -191,9 +196,9 @@ Read 10 arbitrary integers from the user in turn and, referring to the sample ru
 Program ended with exit code: 0
 ```
 
-The positive values in the sample run are 3, 2, 1, 2, 5, and 6, and their sum is 19.
-
 ### 3.2 Solution Approach
+
+The positive values in the sample run are 3, 2, 1, 2, 5, and 6, and their sum is 19.
 
 `getSign()` returns 1 if the parameter `tmp` is greater than 0 and 0 otherwise. `main()` increases `i` from 1 to 10, prints the prompt `>> (i) Input value: `, reads an integer, and adds it to `sum` only when `if (getSign(val))` is true. A condition in C is true whenever it is nonzero, so the return value of `getSign()` can be used as the condition directly without a comparison.
 

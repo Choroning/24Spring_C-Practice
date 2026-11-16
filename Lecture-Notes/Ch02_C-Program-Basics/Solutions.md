@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -543,7 +543,7 @@ int main(void)
 입력한 시간은 100:-5:07입니다.
 ```
 
-A problem that practices field width, alignment, and zero padding together is [HW01 Q3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.md#33-q3-variable-practice-3).
+A problem that practices field width, alignment, and zero padding together is [HW01 Problem 3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.md#7-problem-3-variable-practice-3).
 
 ---
 

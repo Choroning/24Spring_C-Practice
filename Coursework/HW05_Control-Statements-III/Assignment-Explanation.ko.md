@@ -2,12 +2,12 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-16
 
 > **학습 목표:**
 > 1. 감시값 0으로 끝나는 `while` 반복에서 범위 밖의 입력을 걸러 내며 최댓값과 최솟값을 갱신할 수 있다
-> 2. `do-while`로 입력을 먼저 받은 뒤 감시값을 처리하여 합과 평균을 구할 수 있다
-> 3. `for`문과 나머지 연산으로 부호가 번갈아 바뀌는 합을 계산할 수 있다
+> 2. 0이 입력될 때까지 받은 수의 합과 평균을 구하고, 처음부터 0이 입력된 경우를 따로 처리할 수 있다
+> 3. `for`문으로 부호가 번갈아 바뀌는 합을 계산할 수 있다
 > 4. 중첩 `for`문으로 줄마다 출력 개수가 늘었다가 줄어드는 패턴을 출력할 수 있다
 
 **문항 출처:** 이종욱 교수, 컴퓨터언어실습Ⅰ (DCCS103-03)
@@ -42,12 +42,17 @@
 
 ## 1. 과제 구성과 실행 방법
 
+> **풀어 보기:** 이 문서는 정답과 풀이를 담고 있다. 먼저 [과제 안내문](Original/Assignment.ko.md)의 문제를 직접 풀어 본 뒤 읽는다.
+
 `while`, `do-while`, `for`와 중첩 `for`를 하나씩 연습하는 반복문 과제이다. 문제 1과 2는 감시값 0이 입력될 때까지 값을 읽는 반복이고, 문제 3과 4는 반복 횟수가 정해진 `for` 반복이다.
 
 ```text
 Coursework/HW05_Control-Statements-III/
 ├── Assignment-Explanation.ko.md   # 이 문서 (한국어)
 ├── Assignment-Explanation.md      # 이 문서 (영어)
+├── Original/
+│   ├── Assignment.ko.md           # 과제 안내문 (한국어)
+│   └── Assignment.md              # 과제 안내문 (영어)
 └── Solution/
     ├── Q1.c                       # 문제 1: 최댓값과 최솟값 (while)
     ├── Q2.c                       # 문제 2: 합과 평균 (do-while)

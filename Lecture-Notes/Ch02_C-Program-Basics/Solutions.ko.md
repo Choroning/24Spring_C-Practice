@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-16
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -543,7 +543,7 @@ int main(void)
 입력한 시간은 100:-5:07입니다.
 ```
 
-문자 폭, 정렬, 0 채움을 함께 연습하는 문제는 [HW01 Q3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.ko.md#33-q3-변수-연습-3)에 있다.
+문자 폭, 정렬, 0 채움을 함께 연습하는 문제는 [HW01 문제 3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.ko.md#7-문제-3-변수-연습-3)에 있다.
 
 ---
 

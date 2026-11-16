@@ -2,14 +2,14 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-16
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8
 
 > **Learning Objectives:**
-> 1. Sort an array by selection sort and find its median according to whether the number of elements is odd or even
-> 2. Count the uppercase and lowercase letters in a string by comparing character code ranges
-> 3. Reverse a string in place by moving two pointers inward from both ends
+> 1. Sort an array and find its median according to whether the number of elements is odd or even
+> 2. Count the uppercase and lowercase letters in a string
+> 3. Write a function that reverses a string and stores the result
 > 4. Read a line containing spaces with `fgets` and remove the trailing newline
 > 5. Identify whitespace characters with `isspace` and print a string split at whitespace
 
@@ -43,6 +43,8 @@
 <br>
 
 ## 1. Finding the Median
+
+> **Try It First:** This document contains the answers and solutions. Solve the problems in the [assignment handout](Original/Assignment.md) yourself before reading on.
 
 ### 1.1 Problem
 
