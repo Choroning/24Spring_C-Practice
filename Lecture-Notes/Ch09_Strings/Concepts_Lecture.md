@@ -578,7 +578,7 @@ msg = "World";   // OK: can change what the pointer points to
 
 ### 6.3 Guidelines
 
-| Use Case | Declaration | Mutable? |
+| Use Case | Declaration | Mutable |
 |:---------|:------------|:---------|
 | Need to modify the string | `char str[] = "Hello";` | Yes |
 | Read-only string reference | `const char *str = "Hello";` | No |

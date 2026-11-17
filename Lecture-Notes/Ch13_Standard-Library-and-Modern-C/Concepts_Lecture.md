@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 
 > **Learning Objectives:**
 > 1. Classify the standard headers by purpose and explain the difference between hosted and freestanding environments
@@ -608,7 +608,7 @@ The standard classifies behavior that it does not fix to a single outcome as imp
 
 > **Definition:** **Undefined behavior.** Behavior for which the standard imposes no requirements. There is no guarantee about the behavior of the whole program, which may produce wrong results, crash, or be exploited.
 
-| Kind | What the standard fixes | Documentation | Can programs rely on it | Examples |
+| Kind | What the standard fixes | Documentation | Safe to rely on | Examples |
 |:-----|:-----|:-----|:-----|:-----|
 | Implementation-defined | the range of possible behaviors | required | yes, if the implementation is fixed | sign of `char`, `sizeof(int)`, right shift of a negative value |
 | Unspecified | the set of possible behaviors | not required | no | evaluation order of function arguments, values of padding bytes |

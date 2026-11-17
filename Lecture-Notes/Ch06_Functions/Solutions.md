@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -304,13 +304,13 @@ int main()
 
 **Answer:** ③, ④
 
-**Explanation:** A function is a named block of code that performs a specific task, and the caller can use a function without knowing its internal implementation ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
+**Explanation:** A function is a named block of code that performs a specific task, and the caller can use a function without knowing its internal implementation ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-the-need-for-functions)).
 
 - **① (correct):** A function groups the code that performs a specific job and gives it a name, and the name runs the grouped code.
 - **② (correct):** A function can be seen as a black box that takes input through its parameters, performs a fixed job, and produces a result as its return value.
 - **③ (incorrect):** All that is needed to call a function is how to use it: its name, parameters, and return type. This is just as `printf` can be called with only the declaration that `<stdio.h>` provides, without knowing its internal code ([Chapter 6, Section 1.2](Concepts_Lecture.md#12-function-types)).
 - **④ (incorrect):** A function's code exists only once in the program. Calling a function does not copy its code; the flow of execution (control) passes to the function and returns to the caller when the function ends ([Chapter 6, Section 4](Concepts_Lecture.md#4-function-call-overhead)). Compilers may also perform inline expansion, which places the body of a small function at the call site during optimization, but that is the compiler's choice for reducing call overhead.
-- **⑤ (correct):** As in the factorial example of [Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions), a repeated part of code already written can be taken out and defined as a function.
+- **⑤ (correct):** As in the factorial example of [Chapter 6, Section 1.1](Concepts_Lecture.md#11-the-need-for-functions), a repeated part of code already written can be taken out and defined as a function.
 
 ---
 
@@ -326,7 +326,7 @@ int main()
 
 **Answer:** ②, ③, ⑤
 
-**Explanation:** Functions give four benefits: code reuse, modularity, readability, and maintainability ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
+**Explanation:** Functions give four benefits: code reuse, modularity, readability, and maintainability ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-the-need-for-functions)).
 
 - **① (not an advantage):** The opposite is true. With functions, the same code is defined once and called where needed instead of being copied to several places, so code duplication decreases and the code appears only once in the executable file.
 - **② (an advantage):** A function written once can be called from many places in a program and reused in other programs.

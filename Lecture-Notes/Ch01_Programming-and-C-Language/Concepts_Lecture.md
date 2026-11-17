@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -25,7 +25,7 @@
   - [2.1 History](#21-history)
   - [2.2 Features](#22-features)
   - [2.3 Applications](#23-applications)
-  - [2.4 Why Learn C](#24-why-learn-c)
+  - [2.4 Reasons to Learn C](#24-reasons-to-learn-c)
 - [3. C Program Development](#3-c-program-development)
   - [3.1 Development Process](#31-development-process)
   - [3.2 Build Process](#32-build-process)
@@ -110,7 +110,7 @@ flowchart TD
 
 | Property | Machine-Dependent | Machine-Independent |
 |:---------|:-----------------:|:-------------------:|
-| Tied to specific CPU? | Yes | No |
+| Tied to a specific CPU | Yes | No |
 | Examples | Machine language, Assembly | C, Java, Python |
 | Portability | Cannot move between architectures | Same source runs on different systems |
 | Performance | Maximum (direct hardware control) | Usually slightly lower (limits of compiler optimization, runtime translation in interpreters) |
@@ -207,7 +207,7 @@ An **embedded system** is a device that contains a special-purpose computer, and
 
 > **Key Point:** The Linux kernel (over 30 million lines of code) is written almost entirely in C. This demonstrates that C scales from tiny embedded systems to massive, complex software.
 
-### 2.4 Why Learn C
+### 2.4 Reasons to Learn C
 
 1. **Fundamentals:** C teaches how computers actually work. Along with control structures, functions, and user-defined types, you deal directly with memory layout, pointers, stack vs heap, and manual resource management, so you can understand the inner workings of programs that other languages hide. These concepts apply everywhere.
 
@@ -426,7 +426,7 @@ The steps for making a C program in Visual Studio are: create an empty project, 
 | C History | Dennis Ritchie created C at Bell Labs in 1972, and the standards continued as K&R C, ANSI C (C89), C99, C11, and C23. |
 | C Features | C is concise and flexible, offers performance and portability, and supports both high-level features and low-level access. |
 | C Applications | C is used in operating systems, language implementations, databases, embedded systems, game engines, and more. |
-| Why Learn C | C builds fundamentals, teaches the lingua franca of systems programming, and lays the foundation for C++, Java, Go, and Rust. |
+| Reasons to Learn C | C builds fundamentals, teaches the lingua franca of systems programming, and lays the foundation for C++, Java, Go, and Rust. |
 | Development Process | Development proceeds through design, writing, compiling, and execution, and repeats with debugging when errors occur. |
 | Build Process | An executable is produced through the preprocessor, compiler, assembler, and linker. |
 | Compile Error | Syntax or type mistakes are caught during compilation. |

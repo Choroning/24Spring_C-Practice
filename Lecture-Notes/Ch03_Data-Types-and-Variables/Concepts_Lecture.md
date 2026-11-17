@@ -359,7 +359,7 @@ int hex = 0x1B;    // hexadecimal (prefix 0x)
 
 ### 2.2 Integer Representation (Two's Complement)
 
-**How does the computer represent negative integers?**
+**Representation of negative integers in the computer**
 
 Modern systems use **two's complement**. In signed integer types, the most significant bit (MSB) is the **sign bit**: `0` = positive, `1` = negative.
 
@@ -388,7 +388,7 @@ Besides two's complement, negative numbers can be represented by **sign-magnitud
 
 In 3 bits, sign-magnitude and one's complement represent only the 7 values from -3 to +3 and have two representations of zero (+0 and -0), whereas two's complement represents the 8 values from -4 to +3 and has a single zero. An unsigned 3-bit integer represents 0-7.
 
-**Why two's complement?**
+**Reasons for using two's complement**
 - There is only one representation for zero (unlike sign-magnitude and one's complement).
 - The adder works the same way for positive and negative numbers, so subtraction can be done as addition of a negative number.
 - The hardware implementation is simple.

@@ -18,7 +18,7 @@
 ## Table of Contents
 
 - [1. Copying Variables and Memory Addresses](#1-copying-variables-and-memory-addresses)
-  - [1.1 Can a Be Changed Through b](#11-can-a-be-changed-through-b)
+  - [1.1 Changing a Through b](#11-changing-a-through-b)
   - [1.2 Printing Memory Addresses](#12-printing-memory-addresses)
 - [2. Pointers](#2-pointers)
   - [2.1 A Variable That Stores an Address](#21-a-variable-that-stores-an-address)
@@ -40,7 +40,7 @@
 
 ## 1. Copying Variables and Memory Addresses
 
-### 1.1 Can a Be Changed Through b
+### 1.1 Changing a Through b
 
 With `int a = 3;` declared, consider whether the value of `a` can be changed to 5 using another variable `b`. The following code, which creates `b` with `int b = a;` and then executes `b = 5;`, does not change `a`. The code is [Example_VariableCopy.c](Example_VariableCopy.c).
 

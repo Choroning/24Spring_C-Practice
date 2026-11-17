@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -222,7 +222,7 @@ Pointers also make it possible to write code that works on the pointed-to variab
 
 The `const` keyword can restrict what a pointer can modify. Its meaning depends on where `const` is placed.
 
-| Declaration | Meaning | Can change `*p`? | Can change `p`? |
+| Declaration | Meaning | `*p` modifiable | `p` modifiable |
 |:------------|:--------|:-----------------|:----------------|
 | `const int *p` | Pointer to const int | No | Yes |
 | `int *const p` | Const pointer to int | Yes | No |
@@ -419,7 +419,7 @@ p++;        // OK: p now points to arr[1]
 
 ### 3.1 Pass by Value vs Pass by Reference
 
-| Method | Mechanism | Can modify original? |
+| Method | Mechanism | Original modifiable |
 |:-------|:----------|:---------------------|
 | Pass by value | Function receives a **copy** of the argument | No |
 | Pass by reference | Function receives the **address** via a pointer | Yes |

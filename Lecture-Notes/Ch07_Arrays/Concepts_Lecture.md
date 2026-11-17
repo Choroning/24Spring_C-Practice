@@ -18,7 +18,7 @@
 ## Table of Contents
 
 - [1. Array Basics](#1-array-basics)
-  - [1.1 Why Arrays](#11-why-arrays)
+  - [1.1 The Need for Arrays](#11-the-need-for-arrays)
   - [1.2 Array Concepts](#12-array-concepts)
   - [1.3 Array Declaration](#13-array-declaration)
   - [1.4 `sizeof` with Arrays](#14-sizeof-with-arrays)
@@ -54,7 +54,7 @@
 
 ## 1. Array Basics
 
-### 1.1 Why Arrays
+### 1.1 The Need for Arrays
 
 Without arrays, storing five scores requires five separate variables:
 
@@ -829,7 +829,7 @@ int r = rand() % (max - min + 1) + min;
 
 | Concept | Key Summary |
 |:-----|:-----|
-| Why arrays | An array replaces many variables of the same type with one name so that they can be processed with loops. |
+| The need for arrays | An array replaces many variables of the same type with one name so that they can be processed with loops. |
 | Array concepts | An array stores elements of the same type in contiguous memory and accesses them by a zero-based index, and each element is a variable. |
 | Declaration | The size in `type name[SIZE];` must be an integer constant greater than 0; a `#define` constant can be used, but a `const` variable is not a constant expression. |
 | `sizeof` | `sizeof(arr) / sizeof(arr[0])` is the element count of the array. |

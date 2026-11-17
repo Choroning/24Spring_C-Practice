@@ -18,7 +18,7 @@
 ## Table of Contents
 
 - [1. Function Concepts](#1-function-concepts)
-  - [1.1 Why Functions](#11-why-functions)
+  - [1.1 The Need for Functions](#11-the-need-for-functions)
   - [1.2 Function Types](#12-function-types)
   - [1.3 Function Requirements](#13-function-requirements)
 - [2. Function Basics](#2-function-basics)
@@ -43,7 +43,7 @@
 
 ## 1. Function Concepts
 
-### 1.1 Why Functions
+### 1.1 The Need for Functions
 
 A **function** is a named, reusable block of code that performs a specific task. A function can be viewed as a black box that takes inputs (parameters) and produces a result (return value); the caller can use the function without knowing how it is implemented. Without functions, programs become long, repetitive, and hard to maintain. Functions provide four core benefits:
 
@@ -138,7 +138,7 @@ flowchart TD
 
 *Figure 2. Three elements of using a function*
 
-| Element | Purpose | Required? |
+| Element | Purpose | Required |
 |:--------|:--------|:----------|
 | **Definition** | Implements the function (header + body) | Yes, exactly once |
 | **Declaration** (prototype) | Tells the compiler the function exists (return type, name, parameters) | Needed if the call appears **before** the definition |
@@ -760,7 +760,7 @@ int countDigits(int n) {
 
 | Concept | Key Summary |
 |:-----|:-----|
-| Why Functions | Functions improve code reuse, modularity, readability, and maintainability. |
+| The Need for Functions | Functions improve code reuse, modularity, readability, and maintainability. |
 | Function Types | Functions are divided into the entry-point function (`main`), library functions (`printf`, `scanf`), and user-defined functions. |
 | Function Requirements | Using a function requires a definition, a declaration (prototype), and a call, and the declaration can be omitted if the definition comes before the call. |
 | Function Definition | A function definition consists of a header made of the return type, name, and parameter list, and a body enclosed in `{}`. |

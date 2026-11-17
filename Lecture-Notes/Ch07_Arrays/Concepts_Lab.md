@@ -18,7 +18,7 @@
 ## Table of Contents
 
 - [1. One-Dimensional Arrays](#1-one-dimensional-arrays)
-  - [1.1 What an Array Is](#11-what-an-array-is)
+  - [1.1 Definition of an Array](#11-definition-of-an-array)
   - [1.2 Declaring Arrays and Accessing Elements](#12-declaring-arrays-and-accessing-elements)
   - [1.3 Initializing Arrays](#13-initializing-arrays)
 - [2. One-Dimensional Array Practice](#2-one-dimensional-array-practice)
@@ -43,7 +43,7 @@
 
 ## 1. One-Dimensional Arrays
 
-### 1.1 What an Array Is
+### 1.1 Definition of an Array
 
 An **array** secures several variables of the same data type at once in a contiguous memory space. Instead of declaring variables one by one, as in `int a, b, c, d, e;`, declaring `int arr[5];` places five `int`s side by side in memory, all handled by the same name `arr` and a number ([Chapter 7, Section 1.2](Concepts_Lecture.md#12-array-concepts)).
 

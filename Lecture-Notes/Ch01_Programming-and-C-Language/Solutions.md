@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -102,7 +102,7 @@
 
 **Answer:** ③, ⑤
 
-**Explanation:** The reasons to learn C come down to three: foundational strength, the common language of systems programming, and the foundation for other languages ([Chapter 1, Section 2.4](Concepts_Lecture.md#24-why-learn-c)).
+**Explanation:** The reasons to learn C come down to three: foundational strength, the common language of systems programming, and the foundation for other languages ([Chapter 1, Section 2.4](Concepts_Lecture.md#24-reasons-to-learn-c)).
 
 - **① (a reason):** OS APIs, hardware interfaces, and countless algorithms and libraries are developed and published in C, so C serves as a common language among programmers.
 - **② (a reason):** Since much material and many libraries are written in C, knowing C makes it easy to use such programming information.

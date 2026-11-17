@@ -17,7 +17,7 @@
 
 ## Table of Contents
 
-- [1. What a Function Is](#1-what-a-function-is)
+- [1. The Concept of a Function](#1-the-concept-of-a-function)
 - [2. Writing Functions](#2-writing-functions)
   - [2.1 y = x + 3 as a C Function](#21-y--x--3-as-a-c-function)
   - [2.2 Prototype, Call, and Definition](#22-prototype-call-and-definition)
@@ -41,9 +41,9 @@
 
 <br>
 
-## 1. What a Function Is
+## 1. The Concept of a Function
 
-A **function** in C starts from the same idea as a function in mathematics. A mathematical function such as sin, cos, or a linear or quadratic function can be divided into three parts, an input, the work it does, and a result, and for the linear function y = x + 3 they are as follows ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
+A **function** in C starts from the same idea as a function in mathematics. A mathematical function such as sin, cos, or a linear or quadratic function can be divided into three parts, an input, the work it does, and a result, and for the linear function y = x + 3 they are as follows ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-the-need-for-functions)).
 
 | Part | In y = x + 3 | In a C function |
 |:-----|:-----|:-----|
@@ -203,7 +203,7 @@ void showStar(void)     // definition
 
 ### 2.5 Why Functions Are Used and Their Four Forms
 
-Functions are defined for the following reasons ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-why-functions)).
+Functions are defined for the following reasons ([Chapter 6, Section 1.1](Concepts_Lecture.md#11-the-need-for-functions)).
 
 - **Better program quality through modularity:** Functions divided by feature can be written and tested separately.
 - **Ease of maintenance and extension:** To change a feature, only that function needs to be modified.
