@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -157,7 +157,7 @@ char str[10];
 strcpy(str, "Hello");  // correct way to copy a string into an array
 ```
 
-> **Note:** **Tip.** You can modify individual characters (`str[0] = 'X'`), but you cannot replace the entire string with `=`. Always use `strcpy()` for whole-string assignment after declaration.
+Individual characters can be modified (`str[0] = 'X'`), but the entire string cannot be replaced with `=`. After declaration, `strcpy()` must be used to assign a whole string.
 
 ---
 
@@ -373,7 +373,7 @@ for (int i = 0; str[i] != '\0'; i++) {
 printf("%s\n", str);   // HELLO, WORLD!
 ```
 
-> **Note:** **Tip.** `toupper` and `tolower` return the character unchanged if it is not a letter. Therefore they can be called without first checking whether the character is a letter.
+`toupper` and `tolower` return the character unchanged if it is not a letter. Therefore they can be called without first checking whether the character is a letter.
 
 ---
 
@@ -442,7 +442,7 @@ gets_s(line, 100);   // reads line without '\n'
 
 *Table 7. Comparison of string input functions*
 
-> **Note:** **Tip.** Use `fgets` for reading full lines. It is safe and available on all systems. Strip the trailing `'\n'` if it is not needed.
+`fgets` is used for reading full lines because it is safe and available on all systems. The trailing `'\n'` must be stripped if it is not needed.
 
 ### 4.3 `puts`
 
@@ -513,7 +513,7 @@ sprintf(result, "x = %d, pi = %.2f", x, pi);
 printf("%s\n", result);   // x = 42, pi = 3.14
 ```
 
-> **Note:** **Tip.** `sscanf` and `sprintf` are the string equivalents of `scanf` and `printf` and are useful for parsing and formatting data within strings. They are often used together with line I/O: a line is read with `gets_s` or `fgets` and values are extracted with `sscanf`, or a string is built with `sprintf` and printed with `puts`. `sprintf` also does not check the size of the destination array, so `snprintf` (C99), which takes the size, is safer.
+`sscanf` and `sprintf` are the string equivalents of `scanf` and `printf` and are useful for parsing and formatting data within strings. They are often used together with line I/O: a line is read with `gets_s` or `fgets` and values are extracted with `sscanf`, or a string is built with `sprintf` and printed with `puts`. `sprintf` also does not check the size of the destination array, so `snprintf` (C99), which takes the size, is safer.
 
 ---
 
@@ -597,7 +597,7 @@ const char *message = "Hello";
 // message[0] = 'h';           // compile error
 ```
 
-> **Note:** **Tip.** As a rule of thumb, use `char[]` when you need to change the string contents, and `const char*` when you only need to read or pass the string around. Store strings that are entered by the user or can change in character arrays, and represent strings that do not change during execution as string literals. Use a `char*` pointer only to point to a modifiable string (a character array), and use a `const char*` pointer to point to a string literal or to access a character array read-only.
+As a rule of thumb, `char[]` is used when the string contents must change, and `const char*` when the string is only read or passed around. Strings that are entered by the user or can change are stored in character arrays, and strings that do not change during execution are represented as string literals. A `char*` pointer is used only to point to a modifiable string (a character array), and a `const char*` pointer is used to point to a string literal or to access a character array read-only.
 
 When defining a function that takes a string as a parameter, follow these rules. If the string is an output parameter, use a `char*` parameter and also receive the size of the character array, so that changes to the string inside the function do not exceed the array size. If the string is an input parameter, use a `const char*` parameter; the end of the string can be found by its null character, so there is no need to receive the array size. Inside the function, the pointer can be indexed and handled like a character array.
 
@@ -643,7 +643,7 @@ for (int i = 0; i < 3; i++) {
 strcpy(names[1], "Bobby");   // OK: each row is a mutable char array
 ```
 
-> **Key Point:** The column size (20) must be large enough for the **longest string + 1**. Shorter strings waste the remaining space. Every string must fit within the fixed column size.
+The column size (20) must be large enough for the **longest string + 1**, and every string must fit within this fixed column size. Shorter strings waste the remaining space.
 
 ### 7.2 Array of String Pointers
 
@@ -692,7 +692,7 @@ names[1] = "Bobby";   // OK: changes the pointer, not the string
 
 *Table 10. Comparison of a 2D character array and an array of string pointers*
 
-> **Note:** **Tip.** If you need to both **read and modify** strings, use a 2D `char` array. If you only need a **read-only list** of string constants, use an array of `const char*` pointers for efficiency.
+If strings must be both **read and modified**, a 2D `char` array is used. If only a **read-only list** of string constants is needed, an array of `const char*` pointers is more efficient.
 
 ---
 

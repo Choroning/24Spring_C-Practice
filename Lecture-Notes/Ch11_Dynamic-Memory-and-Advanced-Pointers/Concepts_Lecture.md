@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 
 > **Learning Objectives:**
 > 1. Distinguish the memory segments of a program and the three storage durations, and explain why the address of a local variable must not be returned
@@ -51,6 +51,7 @@
   - [7.2 `bsearch`](#72-bsearch)
   - [7.3 Sorting Structures and Pitfalls of Comparison Functions](#73-sorting-structures-and-pitfalls-of-comparison-functions)
 - [Concept Applications](#concept-applications)
+- [Glossary](#glossary)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 - [References](#references)
@@ -121,7 +122,7 @@ The C11 standard has four storage durations: static, thread, automatic, and allo
 
 *Table 1. Comparison of the three storage durations*
 
-> **Definition:** An **indeterminate value** is a value for which the standard fixes nothing: it is either an unspecified valid value of the type or a representation that denotes no value (a trap representation) [1, Section 3.19.2]. Uninitialized automatic variables and the contents of a block returned by `malloc` are indeterminate and must not be read and used.
+An **indeterminate value** is a value for which the standard fixes nothing: it is either an unspecified valid value of the type or a representation that denotes no value (a trap representation) [1, Section 3.19.2]. Uninitialized automatic variables and the contents of a block returned by `malloc` are indeterminate and must not be read and used.
 
 **Scope** is the part of the source code in which a name can be used ([Chapter 6, Section 3.3](../Ch06_Functions/Concepts_Lecture.md#33-scope-rules)), and **lifetime** is the part of execution during which an object exists. A `static` local variable has block scope but a program-long lifetime, so `next_ticket` in [Example_StorageDuration.c](Example_StorageDuration.c) continues from the previous value on every call and returns 101, 102, and 103. The detailed rules of `static` are in [Chapter 12, Section 8.2](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.md#82-static-local-variables).
 
@@ -304,8 +305,6 @@ arr = tmp;                  // update only on success
 
 The edge cases are as follows. `realloc(NULL, size)` is the same as `malloc(size)` [1, Section 7.22.3.5]. After a successful call the old pointer must not be used, even if its value is the same. `realloc(ptr, 0)` was implementation-defined through C17, with implementations differing on whether they returned a null pointer and freed the old block [6], and it became undefined behavior in C23 [4, Section 7.24.3.7]. When the size can be zero, check first and call `free`.
 
-> **Key Point:** Always receive the result of `realloc` in a temporary pointer, and never use the old pointer after it succeeds.
-
 ### 2.4 Size Calculation and Failure Handling
 
 | Incorrect Calculation | Problem | Correct Form |
@@ -364,11 +363,7 @@ Other causes are a failed `arr = realloc(arr, ...)` (Section 2.3) and freeing a 
 
 ### 3.2 Dangling Pointers and Double Free
 
-> **Definition:** A **dangling pointer** is a pointer that still holds the address of an object whose lifetime has ended.
-
-> **Definition:** **Use after free** is the error of reading or writing a freed block through a pointer.
-
-> **Definition:** A **double free** is the error of freeing a block that has already been freed.
+> **Definition:** A **dangling pointer** is a pointer that still holds the address of an object whose lifetime has ended. The error of reading or writing a freed block through such a pointer is called use after free, and the error of freeing a block that has already been freed is called a double free.
 
 According to the standard, when an object's lifetime ends, the value of a pointer to it itself becomes indeterminate, so not only dereferencing it but also using the value in a comparison is forbidden [1, Sections 6.2.4 and J.2]. A freed block may soon be reused by another `malloc`, so a use after free can read or overwrite other data. Compiling `free(p); printf("%d\n", *p);` with the compiler's memory-error checking, `-fsanitize=address` (AddressSanitizer, ASan), reports the following when run (trimmed; addresses are examples).
 
@@ -528,9 +523,7 @@ On a little-endian system the first byte of `256` is `0x00` and the first byte o
 
 ### 5.1 A Growable Array
 
-> **Definition:** A **dynamic array** is an array of contiguous memory that grows by moving to larger blocks as elements are added.
-
-> **Definition:** **Capacity** is the number of elements the current block can hold. It is greater than or equal to the size, which is the number of elements actually stored.
+> **Definition:** A **dynamic array** is an array of contiguous memory that grows by moving to larger blocks as elements are added. The number of elements the current block can hold is called its capacity, which is greater than or equal to the size, the number of elements actually stored.
 
 Keeping both the element count and the capacity means `realloc` is called only when the capacity runs out. The complete code is [Example_DynamicArray.c](Example_DynamicArray.c).
 
@@ -575,11 +568,9 @@ size  513  capacity 1024  copies so far 1023
 1000 pushes copied 1023 elements
 ```
 
-> **Definition:** **Amortized cost** is the average cost per operation obtained by dividing the total cost of a sequence of operations by the number of operations. It is not a probabilistic average; it holds for the total on the worst-case input.
+**Amortized cost** is the average cost per operation obtained by dividing the total cost of a sequence of operations by the number of operations. It is not a probabilistic average; it holds for the total on the worst-case input.
 
 Insertion into a dynamic array is **amortized** O(1). O(1) means a constant time independent of the number of elements, and O(n) a time proportional to it. A single insertion that triggers reallocation takes O(n), so saying every insertion is O(1) is wrong. This analysis is an upper bound that assumes every reallocation copies everything.
-
-> **Key Point:** If size and capacity are tracked separately and the capacity doubles when full, the total number of elements copied while inserting `n` elements is less than `2n`.
 
 ### 5.2 Dynamic Strings and `strdup`
 
@@ -671,9 +662,7 @@ To decide the column count at run time too, the C99 variable-length array type c
 
 > **Definition:** A **self-referential structure** is a structure with a member that points to a structure of its own type.
 
-> **Definition:** A **linked list** is a linear data structure in which each element stores the address of the next element, so the elements are joined by pointers.
-
-> **Definition:** A **node** is one structure in a linked list that holds one piece of data and a pointer to the next element.
+> **Definition:** A **linked list** is a linear data structure in which each element stores the address of the next element, so the elements are joined by pointers. One structure in a linked list that holds one piece of data and a pointer to the next element is called a node.
 
 ```c
 typedef struct node {
@@ -817,9 +806,7 @@ Another representative use of a double pointer is `char **` for passing an array
 
 ### 6.2 Pointers to Arrays and Arrays of Pointers
 
-> **Definition:** An **array of pointers** is an array whose elements are pointers.
-
-> **Definition:** A **pointer to an array** is a pointer that points to an entire array.
+> **Definition:** An **array of pointers** is an array whose elements are pointers. Conversely, a pointer that points to an entire array is called a pointer to an array.
 
 `[]` has higher precedence than `*`, so parentheses decide the meaning. The difference shows with `sizeof` (with a 4-byte `int` and 8-byte pointers).
 
@@ -1088,6 +1075,24 @@ Comparing floating-point numbers with `(int)(x - y)` turns a difference of less 
 | The `double` elements of a block returned by `calloc` are always guaranteed to be 0.0 in ISO C. | **F.** All bits zero is not guaranteed to represent 0.0. |
 | `qsort` keeps the input order of elements with equal keys. | **F.** The standard does not require stability, and the order is not kept on macOS. |
 | Using `sizeof *p` in the `malloc` size calculation means the expression need not change if the type of `p` changes. | **T.** Unless `*p` has a variable-length array type, `sizeof` does not evaluate its operand; it computes only the size of its type. |
+
+---
+
+<br>
+
+## Glossary
+
+| English | Korean | One-Line Definition |
+|:-----|:-----|:-----|
+| Indeterminate Value | 불확정 값 | A value for which the standard fixes nothing: it is either an unspecified valid value of the type or a representation that denotes no value (a trap representation) [1, Section 3.19.2]. Uninitialized automatic variables and the contents of a block returned by `malloc` are indeterminate and must not be read and used. |
+| Use After Free | 해제 후 사용 | The error of reading or writing a freed block through a pointer. |
+| Double Free | 이중 해제 | The error of freeing a block that has already been freed. |
+| Capacity | 용량 | The number of elements the current block can hold. It is greater than or equal to the size, which is the number of elements actually stored. |
+| Amortized Cost | 분할 상환 비용 | The average cost per operation obtained by dividing the total cost of a sequence of operations by the number of operations. It is not a probabilistic average; it holds for the total on the worst-case input. |
+| Node | 노드 | One structure in a linked list that holds one piece of data and a pointer to the next element. |
+| Pointer to an Array | 배열 포인터 | A pointer that points to an entire array. |
+
+*Table 11. Glossary*
 
 ---
 

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -173,7 +173,7 @@ printf("Element count: %lu\n", sizeof(arr) / sizeof(arr[0])); // 5
 
 *Table 4. Results of `sizeof` expressions on an array*
 
-> **Note:** **Tip.** `sizeof(arr) / sizeof(arr[0])` is the standard idiom for computing the element count of an array without hard-coding the size.
+`sizeof(arr) / sizeof(arr[0])` is the standard idiom for computing the element count of an array without hard-coding the size.
 
 > **Note:** **Format specifier for `sizeof`.** The result of `sizeof` has the unsigned integer type `size_t`, so since C99 the correct way to print it is `%zu`. The `%lu` in the code above works on 64-bit Linux and macOS, where `size_t` is the same as `unsigned long`, but not in environments such as 64-bit Windows, where the two types have different sizes.
 
@@ -267,7 +267,7 @@ You can then compute the size with `sizeof`:
 int len = sizeof(z) / sizeof(z[0]);  // 3
 ```
 
-> **Note:** **Tip.** Omitting the size is convenient for small, fixed lists. For large arrays or arrays that need a named constant size, use `#define`.
+Omitting the size is convenient for small, fixed lists. For large arrays or arrays that need a named constant size, `#define` is used.
 
 ### 2.3 Without Initialization
 
@@ -306,7 +306,7 @@ arr[i] = 77;           // arr = {10, 20, 77, 40, 99}
 arr[i - 1] = 88;       // arr = {10, 88, 77, 40, 99}
 ```
 
-> **Key Point:** The index can be a literal (`arr[3]`), a variable (`arr[i]`), or any integer expression (`arr[i-1]`, `arr[2+3]`).
+The index can be a literal (`arr[3]`), a variable (`arr[i]`), or any integer expression (`arr[i-1]`, `arr[2+3]`).
 
 ### 3.2 Array with Loops
 
@@ -344,7 +344,7 @@ for (int i = 0; i < SIZE; i++) {
 printf("Sum: %d\n", sum);
 ```
 
-> **Note:** **Tip.** Always use `i < SIZE` (not `i <= SIZE`) as the loop condition. Valid indices are `0` to `SIZE - 1`.
+The loop condition uses `i < SIZE`, not `i <= SIZE`. Valid indices are `0` to `SIZE - 1`.
 
 ### 3.3 Index Out of Bounds
 
@@ -399,7 +399,7 @@ if (i == 5) {
 
 If the loop ends without `break`, `i` becomes 5, so `i == 5` means all elements are equal. Another way is to set a flag variable (for example, `is_equal`) to 1 and change it to 0 when a different element is found.
 
-> **Note:** **Array names and pointers.** The rule that an array name is used as a starting address, and how to pass an array to a function, are covered together with pointers in Chapter 8.
+The rule that an array name is used as a starting address, and how to pass an array to a function, are covered together with pointers in Chapter 8.
 
 ---
 
@@ -524,7 +524,7 @@ int z[][2] = {1, 2, 3, 4, 5, 6, 7};   // int z[4][2] = {{1,2}, {3,4}, {5,6}, {7,
 // int v[2][] = {{1, 2}, {3, 4}};    // compile error: the column size cannot be omitted
 ```
 
-> **Note:** **Tip.** Using inner braces `{{...}, {...}}` makes the row structure clear and is the preferred style.
+Using inner braces `{{...}, {...}}` makes the row structure clear and is the preferred style.
 
 ---
 
@@ -663,7 +663,7 @@ int main(void) {
 }
 ```
 
-> **Key Point:** Using an array and a loop replaces 11 separate variables and makes the code scalable and readable.
+Using an array and a loop replaces 11 separate variables and makes the code scalable and readable.
 
 ### 5.5 Sequential Search
 
@@ -740,7 +740,7 @@ Pass 3: min_idx=3 (25), no effective swap
 
 Example 7-11 in the textbook works the same way and skips the swap when `i` equals the index of the minimum.
 
-> **Key Point:** Selection sort has time complexity $O(n^2)$. It is simple to implement and understand, but not efficient for large datasets.
+Selection sort has time complexity $O(n^2)$. It is simple to implement and understand, but not efficient for large datasets.
 
 > **[Algorithms]** Analyzing running time with asymptotic notation such as $O(n)$ and $O(n^2)$, merge sort, which sorts in $O(n \log n)$ time and is faster than selection sort, and binary search, which finds a key in a sorted array in $O(\log n)$ time, are covered in Algorithms. The sequential search of Section 5.5 and the selection sort of this section are the simplest search and sort and serve as the starting point for that analysis and comparison.
 
@@ -780,7 +780,7 @@ for (int i = 0; i < SIZE; i++) {
 }
 ```
 
-> **Note:** **Tip.** The key is mapping a value to an index (`index = (value - base) / interval`). This turns counting into a simple array increment.
+The key to frequency counting is mapping a value to an index (`index = (value - base) / interval`). This turns counting into a simple array increment.
 
 ### 5.8 Random Numbers (`rand`, `srand`, `time`)
 

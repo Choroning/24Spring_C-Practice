@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -245,7 +245,7 @@ void printIfPositive(int n) {
 }   // implicit return here
 ```
 
-> **Note:** **Preview.** To send back several values from a function, pass pointers as parameters. The function can then modify the caller's variables directly through those pointers; Chapter 8 covers this in detail.
+To send back several values from a function, pointers are passed as parameters. The function can then modify the caller's variables directly through those pointers; Chapter 8 covers this in detail.
 
 ### 2.3 Function Name
 
@@ -270,7 +270,7 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 
 *Table 7. Naming conventions for function names*
 
-> **Note:** **Tip.** Choose **one** naming convention and use it consistently throughout your program. Use verb and noun combinations that describe what the function does (`getFactorial`, `isLeapYear`, `printMenu`).
+**One** naming convention is chosen and used consistently throughout the program, and function names combine a verb and a noun that describe what the function does (`getFactorial`, `isLeapYear`, `printMenu`).
 
 > **Caution:** In C, you **cannot** define two functions with the same name (no overloading). Each function name must be unique within the program.
 
@@ -451,7 +451,7 @@ int isLeapYear(int year) {
 
 *Table 9. Rules for function prototypes*
 
-> **Note:** **Tip.** Always include parameter names in prototypes even though they are optional. The names serve as documentation, so `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
+Parameter names are optional, but it is better to always include them in prototypes. The names serve as documentation, so `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
 
 **What goes wrong without a prototype:**
 
@@ -584,7 +584,7 @@ int main() {
 }
 ```
 
-> **Caution:** Avoid overusing global variables. They make it hard to track which functions modify them, leading to **hidden dependencies** and bugs that are difficult to debug. Prefer passing values as parameters.
+Overusing global variables makes it hard to track which functions modify them, leading to **hidden dependencies** and bugs that are difficult to debug. Values are therefore passed as parameters wherever possible.
 
 ### 3.3 Scope Rules
 
@@ -642,7 +642,7 @@ When the same name exists at multiple levels:
 
 *Table 12. Accessible range of variables at each scope level*
 
-> **Note:** **Tip.** Avoid naming local variables the same as global variables. Shadowing makes code confusing and is a common source of bugs. Use distinct, descriptive names.
+Local and global variables should not share a name. Shadowing makes code confusing and is a common source of bugs, so distinct, descriptive names are used.
 
 ---
 
@@ -688,7 +688,7 @@ for (int i = 0; i < 1000000; i++) {
 
 > **Key Point:** C++ introduced `inline` functions to mitigate this overhead. `inline` is a request to expand the function body directly at the call site and eliminate the call and return steps, but the compiler decides whether to actually expand it. C99 also supports the `inline` keyword, but its linkage rules differ slightly from C++.
 
-> **Note:** **Tip.** Do not avoid functions just to reduce overhead. The readability, maintainability, and reusability benefits of functions far outweigh the small performance cost in nearly all cases. Only optimize if profiling reveals an actual bottleneck.
+There is no need to avoid functions just to reduce overhead. The readability, maintainability, and reusability benefits of functions far outweigh the small performance cost in nearly all cases, so optimization is done only when profiling reveals an actual bottleneck.
 
 ---
 

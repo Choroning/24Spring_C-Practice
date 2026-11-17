@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -157,7 +157,7 @@ unsigned char red = 300;
 
 > **Caution:** In the C standard, wraparound of unsigned integer types is defined behavior: the result is the remainder modulo $2^N$ ($N$ is the number of bits). In contrast, signed integer arithmetic that goes out of range, such as `INT_MAX + 1`, is undefined behavior, and the result of converting an out-of-range value to a signed integer type, as in `char n = 128;`, is implementation-defined. Most two's complement systems produce the wrapped results shown above, but compiler optimizations may not assume wraparound, so do not write code that relies on signed integer overflow.
 
-> **Note:** **Tip on range constants.** Include `<limits.h>` to access constants like `INT_MAX`, `INT_MIN`, `SHRT_MAX`, etc.
+Including `<limits.h>` gives access to type range constants such as `INT_MAX`, `INT_MIN`, and `SHRT_MAX`.
 
 ### 1.2 Floating-Point Types
 
@@ -261,7 +261,7 @@ char lower = ch + 32;  // 'm' (109)
 
 Printing the same `char` value with `%c`, `%d`, and `%#x` gives the character, its decimal code, and its hexadecimal code with `0x`. For example, `'M'` prints as `M`, `77`, and `0x4d`. `char` is also useful as an integer type for storing small integers (with `char n = 97;`, `n + 1` is 98), and `unsigned char` is mainly used to store 1 byte of binary data, as in `unsigned char flags = 0x81;` (binary data `10000001`).
 
-> **Note:** **Tip on case conversion.** In ASCII, the code difference between an uppercase letter and its lowercase letter is always 32 (`'a' - 'A' == 32`).
+In ASCII, the code difference between an uppercase letter and its lowercase letter is always 32 (`'a' - 'A' == 32`).
 
 #### Escape Sequences
 
@@ -626,7 +626,7 @@ printf("%06d", out);    // 000512 (zero-padded, width 6)
 
 Running the three statements in a row prints them joined with no line breaks: `   34124   000512`.
 
-> **Note:** **Width and alignment at a glance.** `%Nd` right-aligns in N columns (default), `%-Nd` left-aligns, and `%0Nd` fills the empty positions with 0.
+In summary, `%Nd` right-aligns in N columns (default), `%-Nd` left-aligns, and `%0Nd` fills the empty positions with 0.
 
 ### 5.3 `scanf`
 
@@ -716,7 +716,7 @@ printf("%d\n", sizeof("x"));   // 2  ('x' + '\0')
 
 > **Caution:** The result type of `sizeof` is `size_t`, an unsigned integer type, so since C99 it is correct to print it with `%zu` (`printf("%zu\n", sizeof(int));`). Using `%d` as in the examples above makes gcc and clang warn about a format mismatch, and on 64-bit systems where `size_t` is 8 bytes it is, strictly speaking, undefined behavior.
 
-> **Note:** In C, a character literal like `'x'` has type `int` (4 bytes), not `char` (1 byte). This is a C-specific quirk; in C++, `sizeof('x')` is 1.
+As seen in Section 4.1, a character literal like `'x'` has type `int` (4 bytes) in C, not `char` (1 byte). This is a C-specific quirk; in C++, `sizeof('x')` is 1.
 
 ---
 

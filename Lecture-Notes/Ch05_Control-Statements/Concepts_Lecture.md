@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -73,7 +73,7 @@ graph TD
 
 *Table 1. Classification of control statements*
 
-> **Key Point:** The **ternary operator** (`? :`) is a conditional *expression*, not a statement, but it serves a purpose similar to a conditional statement, as in `max = (a > b) ? a : b;`.
+The **ternary operator** (`? :`) is a conditional *expression*, not a statement, but it serves a purpose similar to a conditional statement, as in `max = (a > b) ? a : b;`.
 
 ---
 
@@ -112,7 +112,7 @@ if (score >= 60) {
 }
 ```
 
-> **Note:** **Judging true and false.** In C, any non-zero value is **true**, and zero is **false**. So `if (1)` always executes, and `if (0)` never executes.
+In C, any non-zero value is **true**, and zero is **false**. So `if (1)` always executes, and `if (0)` never executes.
 
 ### 2.2 Compound Statements / Blocks
 
@@ -257,7 +257,7 @@ if (x == 0 && y == 0) {
 }
 ```
 
-> **Caution:** Deeply nested `if` statements become hard to read. Consider using `else if` ladders or early returns to flatten the structure.
+Deeply nested `if` statements become hard to read, so it is better to flatten the structure with `else if` ladders or early returns.
 
 ### 2.6 Multiple Independent `if`
 
@@ -387,7 +387,7 @@ default:
 
 *Table 3. Comparison of the if-else and switch statements*
 
-> **Note:** **Choosing between switch and if-else.** Use `switch` when comparing a single variable against many **constant integer/char values**. Use `if-else` for ranges, floating-point comparisons, or complex conditions.
+When a single variable is compared against many **constant integer/char values**, `switch` is the better choice, and `if-else` is used for ranges, floating-point comparisons, or complex conditions.
 
 ---
 
@@ -666,7 +666,7 @@ printf("Result: %d\n", sum);  // -5
 
 *Table 4. Comparison of the for, while, and do-while statements*
 
-> **Key Point:** Any `for` loop can be rewritten as a `while` loop and vice versa. Choose whichever makes the intent clearest.
+Any `for` loop can be rewritten as a `while` loop and vice versa, so the form that makes the intent clearest is chosen.
 
 ```c
 // Equivalent loops:
@@ -732,7 +732,7 @@ for (int i = 1; i <= 10; i++) {
 // Output: 1 3 5 7 9
 ```
 
-> **Note:** **Where continue jumps.** `continue` in a `for` loop jumps to the **update** expression (`i++`), not the condition. In a `while` loop, it jumps directly to the **condition** check. Therefore, in a `while` loop, make sure the loop variable is updated before `continue`, or the loop may never end.
+In a `for` loop, `continue` jumps to the **update** expression (`i++`), not the condition, and in a `while` loop it jumps directly to the **condition** check. Therefore, in a `while` loop, if the loop variable is not updated before `continue`, the loop may never end.
 
 ### 4.3 `goto`
 

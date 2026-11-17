@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -283,7 +283,7 @@ printf("Line 2\n");
 // Line 2
 ```
 
-> **Note:** **Cursor position.** Multiple `printf` calls continue printing from the last cursor position of the previous output. Think of `printf` as appending to the current cursor position.
+Multiple `printf` calls continue printing from the last cursor position of the previous output; that is, `printf` appends text at the current cursor position.
 
 ### 2.3 `scanf`
 
@@ -392,7 +392,7 @@ int main(void)
 }
 ```
 
-> **Note:** **Tip on initializing variables.** Always initialize variables before using them. Uninitialized local variables hold garbage values and cause unpredictable results.
+Variables are always initialized before they are used. Uninitialized local variables hold garbage values and cause unpredictable results.
 
 ---
 
@@ -427,7 +427,7 @@ int main(void)
 
 Statements execute **sequentially**, from top to bottom, one after another. Execution proceeds in order unless a control statement (conditional or loop) changes the flow. Blocks enclosed in braces and control statements such as `if` and `for` do not end with a semicolon.
 
-> **Note:** Conditional (`if`, `switch`) and loop (`for`, `while`, `do-while`) statements are introduced briefly here for awareness. Detailed coverage is in Chapter 5.
+Conditional (`if`, `switch`) and loop (`for`, `while`, `do-while`) statements are introduced briefly here for awareness. Detailed coverage is in Chapter 5.
 
 ---
 
