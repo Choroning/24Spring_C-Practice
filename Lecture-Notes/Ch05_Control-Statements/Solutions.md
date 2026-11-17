@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -1188,7 +1188,7 @@ int main(void)
 
 This is the same problem as Exercise 1, so the [solution of Exercise 1](#exercise-1-quadrant-of-a-point-in-the-plane) is used as it is. The result of the classification is the same, but the message format differs. The textbook's sample run reads with the prompt `점의 좌표 (x, y)? ` and prints only the quadrant, as in `4사분면에 있습니다.`, whereas the code of Exercise 1 reads with `좌표 (x, y)? `, prints the coordinates together with `제4사분면에 위치합니다.`, and also distinguishes points on the axes and the origin.
 
-**Output:** The result of compiling the code of Exercise 1 ([Lab_Q1.c](../../Coursework/Lab05_Control-Statements/Lab_Q1.c)) with `gcc -std=c99 -Wall -Dscanf_s=scanf` and entering the sample input `10 -10`.
+**Output:** The result of entering the sample input `10 -10` into the code of Exercise 1 ([Lab_Q1.c](../../Coursework/Lab05_Control-Statements/Lab_Q1.c)).
 
 ```text
 좌표 (x, y)? 10 -10
@@ -1265,7 +1265,7 @@ int main(void)
 
 This is the same problem as Exercise 2, so the [solution of Exercise 2](#exercise-2-converting-between-celsius-and-fahrenheit) is used as it is. Exercise 2 handles the unit character with a `switch` statement regardless of case, so it covers all the conditions of this problem. The converted values are the same, but the output format differs. The textbook's sample run prints the input temperature to two decimal places, as in `27.00`, whereas the code of Exercise 2 reads the temperature as an integer, prints it as `27`, and does not end the line at the end of the output.
 
-**Output:** The result of compiling the code of Exercise 2 ([Lab_Q2.c](../../Coursework/Lab05_Control-Statements/Lab_Q2.c)) with `gcc -std=c99 -Wall -Dscanf_s=scanf` and entering the sample input `27 C`. 27 × 9 / 5 + 32 = 80.6.
+**Output:** The result of entering the sample input `27 C` into the code of Exercise 2 ([Lab_Q2.c](../../Coursework/Lab05_Control-Statements/Lab_Q2.c)). 27 × 9 / 5 + 32 = 80.6.
 
 ```text
 온도? 27 C

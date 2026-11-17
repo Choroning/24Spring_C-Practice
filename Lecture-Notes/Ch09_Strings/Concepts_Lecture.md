@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -245,7 +245,7 @@ strncmp("Hello", "Help", 3);   // returns 0  (first 3 chars are equal)
 strncmp("Hello", "Help", 4);   // returns < 0  ('l' < 'p')
 ```
 
-> **Caution:** Never use `==` to compare strings! `s1 == s2` compares **pointer addresses**, not string contents. Always use `strcmp`.
+> **Caution:** Never use `==` to compare strings. `s1 == s2` compares **pointer addresses**, not string contents. Always use `strcmp`.
 
 ### 2.4 `strcat` / `strncat`
 
@@ -313,7 +313,7 @@ while (token != NULL) {
 // David
 ```
 
-> **Caution:** `strtok` modifies the original string! If you need to preserve it, make a copy first with `strcpy`. For the same reason, a string literal, which cannot be modified, must not be passed to `strtok`.
+> **Caution:** `strtok` modifies the original string. If you need to preserve it, make a copy first with `strcpy`. For the same reason, a string literal, which cannot be modified, must not be passed to `strtok`.
 
 ---
 

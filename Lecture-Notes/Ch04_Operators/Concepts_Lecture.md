@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -694,7 +694,7 @@ int abs_val = (x >= 0) ? x : -x;
 
 When operands in an expression have different types, C automatically **promotes** smaller types to larger types before performing the operation.
 
-**Integer promotion:** `char` and `short` are always promoted to `int` when used in any arithmetic expression.
+**Integer promotion:** `char` and `short` are promoted to `int` when used in an arithmetic expression. If `int` cannot represent every value of the original type, as for `unsigned short` where `short` and `int` have the same size, the operand is promoted to `unsigned int` instead.
 
 ```c
 char a = 10, b = 20;
@@ -865,7 +865,7 @@ if ((a & b) == 0) { ... } // ✅ Correct and readable
 | Compound assignment | `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `\|=`, `^=`, `<<=`, `>>=` combine an operation with assignment. |
 | Chained assignment | `a = b = c = 0` associates right to left and is evaluated as `a = (b = (c = 0))`. |
 | Ternary operator | `condition ? true_val : false_val` writes a simple if/else as a single expression. |
-| Implicit promotion | `char` and `short` are always promoted to `int` in arithmetic expressions. |
+| Implicit promotion | `char` and `short` are promoted to `int` in arithmetic expressions, or to `unsigned int` when `int` cannot represent all their values. |
 | Cast operator | `(type)expr` converts a type explicitly and applies only to the immediately following operand. |
 | Precedence | Operators bind in the order postfix, unary, multiplicative, additive, shift, relational, bitwise, logical, conditional, assignment, and comma. |
 | Associativity | Most binary operators associate left to right, while unary, assignment, and ternary operators associate right to left. |

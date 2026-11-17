@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -704,7 +704,7 @@ int main(void)
 12.340000 - 0.500000 = 11.840000
 ```
 
-> **Caution:** **Reading a `double` with `%f` in `scanf`.** Writing `scanf("%f %f", &x, &y);` makes `scanf` store a value in `float` format in the memory of a `double` variable, which causes undefined behavior. Compiling with `-Wall`, clang warns "format specifies type 'float *' but the argument has type 'double *'", and running the program in this environment prints values unrelated to the input, as follows.
+> **Caution:** **Reading a `double` with `%f` in `scanf`.** Writing `scanf("%f %f", &x, &y);` makes `scanf` store a value in `float` format in the memory of a `double` variable, which causes undefined behavior. Compiling with `-Wall`, clang warns "format specifies type 'float *' but the argument has type 'double *'", and running the program can print values unrelated to the input, as follows.
 
 ```text
 실수 2개? 12.34 0.5

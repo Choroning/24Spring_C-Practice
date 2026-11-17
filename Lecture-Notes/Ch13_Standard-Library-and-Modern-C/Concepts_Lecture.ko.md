@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-09
+> **최종 수정일:** 2026-11-17
 
 > **학습 목표:**
 > 1. 표준 헤더를 용도별로 구분하고 호스트 환경과 프리스탠딩 환경의 차이를 설명할 수 있다
@@ -224,7 +224,7 @@ offset  0     1  2  3    4  5  6  7    8 .................. 15
       └─────┴──────────┴─────────────┴────────────────────────┘
 ```
 
-*그림 1. `offsetof`로 확인한 `struct record`의 바이트 배치*
+*그림 1. `offsetof`로 구한 `struct record`의 바이트 배치*
 
 ### 2.4 `<limits.h>`와 `<float.h>`
 
@@ -342,7 +342,7 @@ Christopher is 20 years (truncated)
 
 *표 6. 제거되었거나 피해야 할 표준 함수와 대안*
 
-이 환경의 macOS SDK는 `gets`를 호환성을 위해 남겨 두었지만 컴파일 경고와 실행 시 경고 `warning: this program uses gets(), which is unsafe.`를 낸다. `strcpy_s` 같은 C11의 부록 K(Annex K) 함수는 선택 사항이며, WG14 문서 N1967은 현장 경험을 근거로 제거를 권고했고[7] Visual Studio의 `_s` 함수도 일부 시그니처가 표준과 다르다[8]. 이식성이 필요한 코드에서는 `_s` 함수 대신 `snprintf`와 크기 검사를 쓴다.
+macOS SDK는 `gets`를 호환성을 위해 남겨 두었지만 컴파일 경고와 실행 시 경고 `warning: this program uses gets(), which is unsafe.`를 낸다. `strcpy_s` 같은 C11의 부록 K(Annex K) 함수는 선택 사항이며, WG14 문서 N1967은 현장 경험을 근거로 제거를 권고했고[7] Visual Studio의 `_s` 함수도 일부 시그니처가 표준과 다르다[8]. 이식성이 필요한 코드에서는 `_s` 함수 대신 `snprintf`와 크기 검사를 쓴다.
 
 > **참고:** **Visual Studio의 C4996.** Visual Studio는 `sprintf`, `strcpy`, `scanf` 등에 C4996 경고를 내고 `_s` 함수를 권한다. 소스의 맨 앞에 `#define _CRT_SECURE_NO_WARNINGS`를 쓰면 경고를 끌 수 있다([3장 실습 5.1절](../Ch03_Data-Types-and-Variables/Concepts_Lab.ko.md#51-c4996-경고)).
 
@@ -370,7 +370,7 @@ static double average(const int *a, int n) {
 Assertion failed: (n > 0), function average, file average.c, line 6.
 ```
 
-위는 `average(data, 0)`을 호출한 실행의 출력이고, 이때 셸의 종료 코드는 134(128 + SIGABRT의 번호 6)이다. `NDEBUG` 매크로를 정의하고 `<assert.h>`를 포함하면 `assert`는 `((void)0)`이 되어 사라지므로[1, 7.2절], `-DNDEBUG`로 컴파일하면 같은 호출이 검사 없이 이 환경에서 `nan`을 출력한다.
+위는 `average(data, 0)`을 호출한 실행의 출력이고, 이때 셸의 종료 코드는 134(128 + SIGABRT의 번호 6)이다. `NDEBUG` 매크로를 정의하고 `<assert.h>`를 포함하면 `assert`는 `((void)0)`이 되어 사라지므로[1, 7.2절], `-DNDEBUG`로 컴파일하면 같은 호출이 검사 없이 macOS에서 `nan`을 출력한다.
 
 > **주의:** `assert` 안의 식은 `NDEBUG`가 정의되면 평가되지 않는다. 따라서 `assert(fclose(fp) == 0);`처럼 부작용이 있는 호출을 넣으면 릴리스 빌드에서 호출 자체가 사라진다. `int r = fclose(fp); assert(r == 0);`로 나누어 쓴다. `assert`는 프로그래머의 실수를 찾는 도구이며, 사용자 입력이나 파일 오류처럼 정상 실행 중에 일어나는 상황은 `if`로 처리한다.
 
@@ -423,7 +423,7 @@ va_arg 3회: 30 반환                       total = 60
 
 *그림 3. `va_start`와 `va_arg`로 가변 인수를 꺼내는 과정의 개념적 모형*
 
-인수의 개수는 고정 매개변수로 받거나(`sum`), 서식 문자열로 알리거나(`printf`), 끝 표시 값을 두어(`NULL` 등) 함수가 알아내야 한다. `va_arg`에 쓴 타입이 승격된 뒤 실제 전달된 타입과 호환되지 않으면 동작이 정의되지 않는다(양쪽 모두에서 표현 가능한 값을 부호만 다른 정수 타입으로 읽는 경우와 `void *`와 문자 포인터 사이의 경우는 예외이다)[1, 7.16.1.1절]. `...`으로 전달되는 인수에는 **기본 인수 승격(default argument promotions)** 이 적용되어[1, 6.5.2.2절] `char`와 `short`는 `int`로, `float`는 `double`로 전달되므로 `va_arg(ap, float)`이나 `va_arg(ap, char)`는 잘못된 코드이다. clang은 다음과 같이 경고하며, 이런 프로그램은 이 환경에서 `1.5f + 2.5f`에 대해 `0.000000`을 출력하였다.
+인수의 개수는 고정 매개변수로 받거나(`sum`), 서식 문자열로 알리거나(`printf`), 끝 표시 값을 두어(`NULL` 등) 함수가 알아내야 한다. `va_arg`에 쓴 타입이 승격된 뒤 실제 전달된 타입과 호환되지 않으면 동작이 정의되지 않는다(양쪽 모두에서 표현 가능한 값을 부호만 다른 정수 타입으로 읽는 경우와 `void *`와 문자 포인터 사이의 경우는 예외이다)[1, 7.16.1.1절]. `...`으로 전달되는 인수에는 **기본 인수 승격(default argument promotions)** 이 적용되어[1, 6.5.2.2절] `char`와 `short`는 `int`로, `float`는 `double`로 전달되므로 `va_arg(ap, float)`이나 `va_arg(ap, char)`는 잘못된 코드이다. clang은 다음과 같이 경고하며, 이런 프로그램은 macOS에서 `1.5f + 2.5f`에 대해 `0.000000`을 출력한다.
 
 ```text
 warning: second argument to 'va_arg' is of promotable type 'float'; this va_arg has undefined behavior because arguments will be promoted to 'double' [-Wvarargs]
@@ -516,7 +516,7 @@ big-endian               12    34    56    78
 
 *그림 5. 같은 값 `0x12345678`의 두 가지 바이트 순서*
 
-객체의 바이트는 `unsigned char *`로 읽어 확인한다(문자 타입 접근은 6.4절에서 허용된다). 이 환경에서는 `78 56 34 12` 순서로 출력되었다. 파일이나 네트워크로 데이터를 주고받을 때 메모리를 그대로 쓰면 엔디언이 다른 시스템에서 값이 뒤바뀌므로([12장 4.4절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#44-구조체를-파일에-저장할-때의-주의점)), 값의 수학적 자리에 시프트를 적용해 바이트를 직접 정한다. 이 코드는 호스트의 엔디언과 무관하게 동작한다.
+객체의 바이트는 `unsigned char *`로 읽어 확인한다(문자 타입 접근은 6.4절에서 허용된다). 리틀 엔디언인 arm64 macOS에서는 `78 56 34 12` 순서로 출력된다. 파일이나 네트워크로 데이터를 주고받을 때 메모리를 그대로 쓰면 엔디언이 다른 시스템에서 값이 뒤바뀌므로([12장 4.4절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#44-구조체를-파일에-저장할-때의-주의점)), 값의 수학적 자리에 시프트를 적용해 바이트를 직접 정한다. 이 코드는 호스트의 엔디언과 무관하게 동작한다.
 
 ```c
 static void store_be32(unsigned char out[4], uint32_t v) {
@@ -529,7 +529,7 @@ static void store_be32(unsigned char out[4], uint32_t v) {
 
 `store_be32`의 결과는 어느 플랫폼에서든 `12 34 56 78`이다. 코드는 [Example_ByteOrder.c](Example_ByteOrder.c)이다. C23은 `<stdbit.h>`의 `__STDC_ENDIAN_NATIVE__`로 실행 환경의 엔디언을 나타낸다[2, 7.18.2절].
 
-> **[컴퓨터네트워크]** 인터넷 프로토콜의 헤더는 빅 엔디언을 표준 순서로 쓰며 이를 네트워크 바이트 순서라 한다. POSIX의 `htonl`, `ntohl`은 호스트 순서와 네트워크 순서를 변환한다[13]. 이 환경의 리틀 엔디언 시스템에서 `htonl(0x12345678)`은 `0x78563412`이다.
+> **[컴퓨터네트워크]** 인터넷 프로토콜의 헤더는 빅 엔디언을 표준 순서로 쓰며 이를 네트워크 바이트 순서라 한다. POSIX의 `htonl`, `ntohl`은 호스트 순서와 네트워크 순서를 변환한다[13]. 리틀 엔디언 시스템에서 `htonl(0x12345678)`은 `0x78563412`이다.
 
 ### 5.3 `volatile`
 
@@ -664,7 +664,7 @@ a = a + 1;     // 정의되지 않은 동작: 부호 있는 오버플로
 overflow.c:9:11: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
 ```
 
-이 환경에서 `a`가 -2147483648이 된 것은 하드웨어의 덧셈 결과가 그대로 쓰였을 뿐 표준이 보장하는 결과가 아니다. 안전하게 계산하려면 연산하기 전에 범위를 검사한다. `a > INT_MAX - b`는 `b`가 양수일 때 넘치지 않는 비교이지만, `a + b > INT_MAX`는 덧셈 자체가 먼저 넘치므로 소용이 없다. 코드는 [Example_CheckedArithmetic.c](Example_CheckedArithmetic.c)이다.
+macOS에서 `a`가 -2147483648이 된 것은 하드웨어의 덧셈 결과가 그대로 쓰였을 뿐 표준이 보장하는 결과가 아니다. 안전하게 계산하려면 연산하기 전에 범위를 검사한다. `a > INT_MAX - b`는 `b`가 양수일 때 넘치지 않는 비교이지만, `a + b > INT_MAX`는 덧셈 자체가 먼저 넘치므로 소용이 없다. 코드는 [Example_CheckedArithmetic.c](Example_CheckedArithmetic.c)이다.
 
 ### 6.3 평가 순서와 순서점
 
@@ -688,7 +688,7 @@ flowchart LR
 
 *그림 8. `i = i++`에서 같은 변수에 대한 두 부작용의 순서가 없는 모습*
 
-`i = i++`는 같은 스칼라 객체에 대한 두 부작용이 순서 없이 일어나므로 정의되지 않은 동작이다[1, 6.5절]. 반면 `f(a(), b())`에서 `a()`와 `b()`의 호출은 겹치지 않고 어느 쪽이든 먼저 실행되지만 그 순서는 정해지지 않은 불확정 순서이므로 미지정 동작이다[1, 6.5.2.2절]. 이 환경의 clang은 `a`를 먼저 호출했지만 다른 컴파일러는 `b`를 먼저 호출해도 표준에 맞다.
+`i = i++`는 같은 스칼라 객체에 대한 두 부작용이 순서 없이 일어나므로 정의되지 않은 동작이다[1, 6.5절]. 반면 `f(a(), b())`에서 `a()`와 `b()`의 호출은 겹치지 않고 어느 쪽이든 먼저 실행되지만 그 순서는 정해지지 않은 불확정 순서이므로 미지정 동작이다[1, 6.5.2.2절]. macOS의 Apple clang은 `a`를 먼저 호출하지만 다른 컴파일러는 `b`를 먼저 호출해도 표준에 맞다.
 
 | 식 | 판단 | 이유 |
 |:-----|:-----|:-----|
@@ -856,7 +856,7 @@ m ──► ┌─────────────┬───────�
        sizeof(*m) = 8        text[] 공간
 ```
 
-*그림 11. 유연 배열 멤버를 가진 구조체의 메모리 배치 (이 플랫폼)*
+*그림 11. 유연 배열 멤버를 가진 구조체의 메모리 배치 (`size_t`가 8바이트인 경우)*
 
 유연 배열 멤버를 두려면 이름 있는 멤버가 하나 이상 더 있어야 한다. 이런 구조체는 대입해도 배열 부분이 복사되지 않으며, 다른 구조체의 멤버나 배열의 원소가 될 수 없다[1, 6.7.2.1절].
 
@@ -936,7 +936,7 @@ atomic = 4000000
 
 `plain_count++`는 읽기, 증가, 쓰기로 나뉘어 값이 사라지며, 데이터 경합이므로 표준상 정의되지 않은 동작이다[1, 5.1.2.4절]. `-fsanitize=thread`로 실행하면 `WARNING: ThreadSanitizer: data race`가 보고된다. 표준 스레드 API는 `<threads.h>`의 `thrd_create`, `thrd_join`, `mtx_lock` 등이며 선택 사항이다. glibc는 2.28부터[24], Visual Studio는 2022 17.8부터 제공한다[8].
 
-| 매크로 | 정의되어 있으면 | 이 환경 |
+| 매크로 | 정의되어 있으면 | Apple clang 21 |
 |:-----|:-----|:-----|
 | `__STDC_NO_VLA__` | VLA를 지원하지 않음 | 정의 안 됨 |
 | `__STDC_NO_ATOMICS__` | `_Atomic`, `<stdatomic.h>` 없음 | 정의 안 됨 |
@@ -946,7 +946,7 @@ atomic = 4000000
 
 *표 14. C11 조건부 기능의 매크로와 Apple clang 21의 상태*
 
-C11에는 이 밖에 유니코드 리터럴 `u"..."`, `U"..."`, `u8"..."`(이 환경에 없는 `<uchar.h>`의 `char16_t`는 `uint_least16_t`와 같은 타입이다), `gets` 제거, 파일의 `"x"` 모드([12장 3.1절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#31-fopen과-fclose)), `aligned_alloc`, `quick_exit`, `timespec_get`이 있다.
+C11에는 이 밖에 유니코드 리터럴 `u"..."`, `U"..."`, `u8"..."`(macOS에 없는 `<uchar.h>`의 `char16_t`는 `uint_least16_t`와 같은 타입이다), `gets` 제거, 파일의 `"x"` 모드([12장 3.1절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#31-fopen과-fclose)), `aligned_alloc`, `quick_exit`, `timespec_get`이 있다.
 
 > **참고:** **Visual Studio의 C11 지원.** `/std:c11`, `/std:c17`은 Visual Studio 2019 16.8 이후의 옵션이고 `_Generic`, `_Static_assert`, `_Noreturn`, `restrict`를 지원한다[21]. 원자성은 VS 2022 17.5부터 `/experimental:c11atomics`로 일부 지원하며, VLA와 `aligned_alloc`은 지원하지 않는다[21], [8].
 
@@ -956,7 +956,7 @@ C17(ISO/IEC 9899:2018)은 C11의 결함 보고를 반영한 표준으로 새로�
 
 ### 7.5 C23의 주요 기능
 
-C23(ISO/IEC 9899:2024)은 키워드 정비, 널 포인터 상수, 컴파일 시점 상수, 타입 추론 등 많은 기능을 추가하였다[2], [25]. 아래 코드는 Apple clang 21의 `-std=c23`으로 확인하였고, 전체 코드는 [Example_C23Features.c](Example_C23Features.c)이다.
+C23(ISO/IEC 9899:2024)은 키워드 정비, 널 포인터 상수, 컴파일 시점 상수, 타입 추론 등 많은 기능을 추가하였다[2], [25]. 아래 코드는 C23 모드(`-std=c23`)로 컴파일해야 하며, 전체 코드는 [Example_C23Features.c](Example_C23Features.c)이다.
 
 ```c
 // 키워드: bool, true, false, static_assert, alignas, alignof, thread_local
@@ -1015,7 +1015,7 @@ nibble = nibble + 1uwb;                 // 0으로 순환한다
 
 `<stdbit.h>`의 `stdc_count_ones`, 새로 표준에 들어온 함수와 매크로인 `strdup`, `strndup`, `memccpy`, `memset_explicit`, `timegm`, `unreachable`, 2의 보수 의무화, `realloc`의 크기 0 호출을 정의되지 않은 동작으로 바꾼 것([11장 2.3절](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md#23-realloc)), 매개변수 이름 생략, 선언 앞의 라벨, `printf`의 `%b` 등도 있다[2, 부록 M].
 
-> **주의:** 컴파일러가 C23을 지원해도 라이브러리 기능은 C 라이브러리에 달려 있다. 이 환경의 macOS SDK에는 `memset_explicit`의 선언과 `<stdbit.h>`가 없고, C23의 `printf` 변환인 `%b`와 `int32_t`용 `%w32d`는 변환되지 않고 글자 `b`, `w32d`로 출력되었다.
+> **주의:** 컴파일러가 C23을 지원해도 라이브러리 기능은 C 라이브러리에 달려 있다. macOS SDK에는 `memset_explicit`의 선언과 `<stdbit.h>`가 없고, C23의 `printf` 변환인 `%b`와 `int32_t`용 `%w32d`는 변환되지 않고 글자 `b`, `w32d`로 출력된다.
 
 ### 7.6 컴파일러 지원 현황과 표준 선택
 

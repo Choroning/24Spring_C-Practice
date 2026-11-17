@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-04
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -145,7 +145,7 @@ Timeline of C
 1999    C99: inline functions, variable-length arrays, // comments
 2011    C11: multi-threading, _Generic, bounds-checking
 2018    C18: bug fixes for C11 (no new features)
-2023    C23: latest standard (nullptr, #embed, auto type inference)
+2024    C23: latest standard, ISO/IEC 9899:2024 (nullptr, #embed, auto type inference)
 ──────────────────────────────────────────────────────────────
 ```
 

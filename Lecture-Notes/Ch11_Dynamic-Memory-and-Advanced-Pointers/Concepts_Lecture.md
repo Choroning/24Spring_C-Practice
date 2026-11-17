@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-09
+> **Last Updated:** 2026-11-17
 
 > **Learning Objectives:**
 > 1. Distinguish the memory segments of a program and the three storage durations, and explain why the address of a local variable must not be returned
@@ -61,7 +61,7 @@
 
 ## 1. Memory Layout of a Program
 
-The C standard has no concept of a stack or a heap, which Section 1.1 defines. The standard calls a region of memory that holds a value an **object** and specifies only, through storage duration, when an object exists [1, Section 6.2.4]. The memory layout in this section is not part of the standard; it is a common model that most implementations follow. Results described as observed on this machine come from Apple clang 21 on macOS arm64.
+The C standard has no concept of a stack or a heap, which Section 1.1 defines. The standard calls a region of memory that holds a value an **object** and specifies only, through storage duration, when an object exists [1, Section 6.2.4]. The memory layout in this section is not part of the standard; it is a common model that most implementations follow. Implementation-specific results in this chapter are those of Apple clang 21 on macOS arm64.
 
 ### 1.1 Code, Data, Heap, and Stack Segments
 
@@ -93,7 +93,7 @@ The code segment (text) holds machine instructions, and the read-only data segme
 
 > **Definition:** The **heap** is a memory area from which a program requests blocks of a chosen size at run time, and which keeps them until they are freed. It shares only its name with the heap data structure.
 
-The following output shows the addresses of objects placed in each segment. The code is [Example_StorageDuration.c](Example_StorageDuration.c). The addresses are examples; on this machine they changed on every run.
+The following output shows the addresses of objects placed in each segment. The code is [Example_StorageDuration.c](Example_StorageDuration.c). The addresses are examples and change on every run.
 
 ```text
 string literal : 0x1026b0700
@@ -147,7 +147,7 @@ int main(void) {
 }
 ```
 
-The compiler warns with `warning: address of stack memory associated with local variable 'value' returned`. If the warning is ignored, the result cannot be predicted: on this machine, compiling with `-O0` printed 777, and compiling with `-O2` printed a garbage value such as 143556992. The 777 appeared because the frame of `fill_stack` reused the location where the frame of `make_value` had been.
+The compiler warns with `warning: address of stack memory associated with local variable 'value' returned`. If the warning is ignored, the result cannot be predicted: with Apple clang on macOS, compiling with `-O0` prints 777, and compiling with `-O2` prints a garbage value such as 143556992. The 777 appeared because the frame of `fill_stack` reused the location where the frame of `make_value` had been.
 
 ```text
 while make_value runs              after return, while fill_stack runs
@@ -175,7 +175,7 @@ while make_value runs              after return, while fill_stack runs
 
 1. **When the size is known only at run time:** If the number of input items is unknown, the program must either reserve a large array in advance and waste memory or exceed the array and cause a buffer overflow.
 2. **When data must outlive the function that created it:** If the caller must keep using data created by a function, automatic variables cannot be used (Section 1.3).
-3. **When the data is large:** The stack has a limited size. The default limit on this machine, checked with `ulimit -s`, is 8176 KB, and the default stack size in Visual Studio is 1 MB [2]. A program that used a local array `int big[10000000];` (40 MB) ended with a segmentation fault (the operating system terminating a program that accessed memory it may not access) on this machine. A stack overflow does not report failure through a value the way `malloc` does.
+3. **When the data is large:** The stack has a limited size. The default limit on macOS, as reported by `ulimit -s`, is 8176 KB, and the default stack size in Visual Studio is 1 MB [2]. A program that uses a local array `int big[10000000];` (40 MB) ends with a segmentation fault (the operating system terminating a program that accessed memory it may not access) on macOS. A stack overflow does not report failure through a value the way `malloc` does.
 4. **When the size changes:** Data that grows or shrinks during execution cannot be represented with a fixed-size array (Section 5.1).
 
 | Comparison | When the Size Is Decided | Lifetime | Failure Detection | Resizing |
@@ -244,7 +244,7 @@ The rules of `malloc` and `free` are as follows [1, Section 7.22.3].
 - The contents of a block returned by `malloc` are indeterminate, so they must not be read before being written.
 - `free(NULL)` does nothing, so `free` can be called without a null check.
 - `free` must be given exactly the address returned by an allocation function; passing an address inside a block or the address of a local variable is undefined behavior.
-- The behavior of `malloc(0)` is implementation-defined: it returns either a null pointer or a pointer that must not be dereferenced, and either may be passed to `free`. On this machine it returned a non-null pointer.
+- The behavior of `malloc(0)` is implementation-defined: it returns either a null pointer or a pointer that must not be dereferenced, and either may be passed to `free`. On macOS it returns a non-null pointer.
 
 `free(arr)` receives a copy of the pointer value, so it cannot change the caller's variable. The freed address stays in `arr`, so `arr = NULL;` must be written explicitly.
 
@@ -258,7 +258,7 @@ The rules of `malloc` and `free` are as follows [1, Section 7.22.3].
 void *calloc(size_t nmemb, size_t size);
 ```
 
-`calloc` allocates a block for `nmemb` elements of `size` bytes each and fills it with **all bits zero**. Because it takes the two sizes separately, it can check for multiplication overflow internally. The C23 standard states that it returns a null pointer if the product wraps around `size_t` [4, Section 7.24.3.2], and on this machine `calloc(SIZE_MAX, 2)` returned a null pointer. `SIZE_MAX`, defined in `<stdint.h>`, is the largest value of `size_t`.
+`calloc` allocates a block for `nmemb` elements of `size` bytes each and fills it with **all bits zero**. Because it takes the two sizes separately, it can check for multiplication overflow internally. The C23 standard states that it returns a null pointer if the product wraps around `size_t` [4, Section 7.24.3.2], and on macOS `calloc(SIZE_MAX, 2)` returns a null pointer. `SIZE_MAX`, defined in `<stdint.h>`, is the largest value of `size_t`.
 
 | Function | Arguments | Contents | Typical Use |
 |:----|:----|:----|:----|
@@ -289,7 +289,7 @@ ptr ─► ┌────┬────┬────┬────┐      
 
 *Figure 4. `realloc` extending a block in place and moving it*
 
-The code that prints whether the address changes as the size grows is [Example_Realloc.c](Example_Realloc.c). On this machine, growing from 5 elements to 6 and 8 kept the same address, and growing to 16 and 1000 moved the block (`arr[4]` stayed 50 throughout). Which case occurs depends on the implementation, so a program must not assume either.
+The code that prints whether the address changes as the size grows is [Example_Realloc.c](Example_Realloc.c). In one run on macOS, growing from 5 elements to 6 and 8 kept the same address, and growing to 16 and 1000 moved the block (`arr[4]` stayed 50 throughout). Which case occurs depends on the implementation, so a program must not assume either.
 
 `arr = realloc(arr, new_size);` is common incorrect code. On failure a null pointer comes back and the old block remains, but its address has been overwritten by `NULL`, so it can no longer be freed. Always receive the result through a temporary pointer.
 
@@ -317,7 +317,7 @@ The edge cases are as follows. `realloc(NULL, size)` is the same as `malloc(size
 
 *Table 5. Common size calculation errors and the correct forms*
 
-Multiplication associates left to right, so in the last row an `int` overflow in `rows * cols` is undefined behavior. Placing `sizeof(int)` first makes the whole calculation in `size_t`. Even in `size_t`, a value that is too large wraps around to a small one. On this machine, with an 8-byte `size_t` and a 4-byte `int`, `n = SIZE_MAX / 2 + 2` makes `n * sizeof(int)` equal to 4; `malloc` succeeds, but accessing what is assumed to be `n` elements goes out of bounds. Checking by division before multiplying avoids the overflow.
+Multiplication associates left to right, so in the last row an `int` overflow in `rows * cols` is undefined behavior. Placing `sizeof(int)` first makes the whole calculation in `size_t`. Even in `size_t`, a value that is too large wraps around to a small one. With an 8-byte `size_t` and a 4-byte `int`, `n = SIZE_MAX / 2 + 2` makes `n * sizeof(int)` equal to 4; `malloc` succeeds, but accessing what is assumed to be `n` elements goes out of bounds. Checking by division before multiplying avoids the overflow.
 
 ```c
 if (n > SIZE_MAX / sizeof *p) {     // does n * sizeof *p overflow?
@@ -423,7 +423,7 @@ WRITE of size 4 at 0x603000000fb4 thread T0
 
 An out-of-bounds write on the heap does not stop immediately; it corrupts the allocator's bookkeeping or a neighboring block, and the program often aborts much later in some `malloc` or `free`. The location of the symptom may not be the cause.
 
-Reading an uninitialized block is also an error. A program that summed four `malloc`ed `int` values without initializing them printed 0 in an ordinary build, and under `-fsanitize=address,undefined` UndefinedBehaviorSanitizer (UBSan) reported an integer overflow while summing ASan's fill value (the byte `0xBE`). A result that differs between builds of the same code is a typical symptom of indeterminate values. ASan and UBSan do not detect this error itself, and MemorySanitizer, which does, is supported only on Linux, NetBSD, and FreeBSD [9]. The clang on this machine reported that `-fsanitize=memory` is not supported.
+Reading an uninitialized block is also an error. A program that summed four `malloc`ed `int` values without initializing them printed 0 in an ordinary build, and under `-fsanitize=address,undefined` UndefinedBehaviorSanitizer (UBSan) reported an integer overflow while summing ASan's fill value (the byte `0xBE`). A result that differs between builds of the same code is a typical symptom of indeterminate values. ASan and UBSan do not detect this error itself, and MemorySanitizer, which does, is supported only on Linux, NetBSD, and FreeBSD [9]. Apple clang on macOS does not support `-fsanitize=memory`.
 
 ### 3.4 Tools for Finding Errors
 
@@ -440,7 +440,7 @@ Reading an uninitialized block is also an error. A program that summed four `mal
 
 *Table 6. Tools for finding memory errors*
 
-The following is the result on this machine (Apple clang, macOS arm64) of checking, with `leaks --atExit -- ./prog`, a program that calls a function `use_buffer(n)` that never frees its `malloc`ed block three times with `n` set to 10, 20, and 30 (trimmed).
+The following is the result, with Apple clang on macOS arm64, of checking, with `leaks --atExit -- ./prog`, a program that calls a function `use_buffer(n)` that never frees its `malloc`ed block three times with `n` set to 10, 20, and 30 (trimmed).
 
 ```text
 Process 160: 2 leaks for 144 total leaked bytes.
@@ -451,9 +451,9 @@ Process 160: 2 leaks for 144 total leaked bytes.
 
 Blocks of 40, 80, and 120 bytes were leaked, but only the first two were reported (sizes are rounded up to the allocation unit and shown as 48 and 96). `leaks` searches memory for values that look like pointers and treats reachable blocks as in use [17], so a leftover value of a local variable can hide a leak.
 
-- ASan's leak checking could not be used on this machine. The Clang documentation says it can be enabled on macOS with `ASAN_OPTIONS=detect_leaks=1` [10], but Apple clang on this machine printed `detect_leaks is not supported on this platform.` On Linux, ASan checks leaks by default [10].
-- On this machine the returned stack address of Section 1.3 was not reported by ASan in its default configuration, and with `ASAN_OPTIONS=detect_stack_use_after_return=1` it was reported as `stack-use-after-return`. On Linux this check is enabled by default [10].
-- `leaks` could not finish its report for a program built with ASan, so leak checking is done on a build without sanitizers.
+- ASan's leak checking cannot be used with Apple clang on macOS. The Clang documentation says it can be enabled on macOS with `ASAN_OPTIONS=detect_leaks=1` [10], but with Apple clang this option prints `detect_leaks is not supported on this platform.` On Linux, ASan checks leaks by default [10].
+- On macOS the returned stack address of Section 1.3 is not reported by ASan in its default configuration, and with `ASAN_OPTIONS=detect_stack_use_after_return=1` it is reported as `stack-use-after-return`. On Linux this check is enabled by default [10].
+- `leaks` cannot finish its report for a program built with ASan, so leak checking is done on a build without sanitizers.
 
 Sanitizers and `leaks` find only errors on paths taken in that run, so the absence of a report does not prove the absence of errors.
 
@@ -485,7 +485,7 @@ copying front first  [ 1 ][ 1 ][ 1 ][ 1 ][ 1 ][ 1 ]   ← rereads values already
 
 *Figure 6. The result of `memmove` on overlapping regions and the problem with copying from the front*
 
-Calling `memcpy` on overlapping regions, as in `memcpy(&a[1], &a[0], 5 * sizeof a[0]);`, is incorrect code. On this machine ASan reported `memcpy-param-overlap`, and without sanitizers the program printed `1 1 2 3 4 4` at `-O0` and `1 1 2 3 4 5` at `-O2`. A result that happens to be right cannot be trusted, so use `memmove` when the regions may overlap. Unlike `strcpy`, `memcpy` does not look for a null character, so it can also copy strings of known length and ordinary objects such as structures and arrays.
+Calling `memcpy` on overlapping regions, as in `memcpy(&a[1], &a[0], 5 * sizeof a[0]);`, is incorrect code. On macOS, ASan reports `memcpy-param-overlap`, and in one run without sanitizers the program printed `1 1 2 3 4 4` at `-O0` and `1 1 2 3 4 5` at `-O2`. A result that happens to be right cannot be trusted, so use `memmove` when the regions may overlap. Unlike `strcpy`, `memcpy` does not look for a null character, so it can also copy strings of known length and ordinary objects such as structures and arrays.
 
 ### 4.2 `memset` and `memcmp`
 
@@ -518,7 +518,7 @@ printf("%d\n", p == q);                                  // 1
 printf("%d\n", memcmp(&p, &q, sizeof p) == 0);           // 0
 ```
 
-On this little-endian machine the first byte of `256` is `0x00` and the first byte of `1` is `0x01`, so `memcmp` judges `x` to be smaller. Endianness is covered in [Chapter 13, Section 5.2](../Ch13_Standard-Library-and-Modern-C/Concepts_Lecture.md#52-endianness). `0.0` and `-0.0` are equal as values but differ in their bits. Comparing structures with `memcmp` also compares padding bytes and cannot be trusted ([Chapter 10, Section 1.7](../Ch10_Structures/Concepts_Lecture.md#17-structure-comparison)).
+On a little-endian system the first byte of `256` is `0x00` and the first byte of `1` is `0x01`, so `memcmp` judges `x` to be smaller. Endianness is covered in [Chapter 13, Section 5.2](../Ch13_Standard-Library-and-Modern-C/Concepts_Lecture.md#52-endianness). `0.0` and `-0.0` are equal as values but differ in their bits. Comparing structures with `memcmp` also compares padding bytes and cannot be trusted ([Chapter 10, Section 1.7](../Ch10_Structures/Concepts_Lecture.md#17-structure-comparison)).
 
 ---
 
@@ -601,7 +601,7 @@ The caller must `free` the returned string. A line of unknown length is read a p
 
 A function that does the same thing is `strdup`. `strdup(s)` returns a copy of `s` made as if by `malloc`, and the returned pointer is released with `free`. `strdup` was a POSIX function for a long time [19], and it joined the ISO C standard in C23 [4, Section 7.26.2.6][20].
 
-> **Caution:** With glibc, compiling in a strict standard mode such as `-std=c17` does not expose POSIX declarations by default, so `#define _POSIX_C_SOURCE 200809L` may be needed at the top of the source [21]. On this machine (macOS), the code compiled under `-std=c17 -pedantic` with no extra definition.
+> **Caution:** With glibc, compiling in a strict standard mode such as `-std=c17` does not expose POSIX declarations by default, so `#define _POSIX_C_SOURCE 200809L` may be needed at the top of the source [21]. On macOS, the code compiles under `-std=c17 -pedantic` with no extra definition.
 
 > **Note:** **Visual Studio.** The MSVC CRT emits warning C4996 for the POSIX name `strdup` and recommends the name `_strdup` [22]. `_strdup` also allocates with `malloc`, so release it with `free` [23]. For portability, write `string_duplicate` above yourself or define `_CRT_NONSTDC_NO_WARNINGS` [24].
 
@@ -856,13 +856,13 @@ int **q = (int **)m;
 printf("%d\n", q[1][0]);
 ```
 
-Writing `int **q = m;` without the cast makes clang on this machine emit an `incompatible pointer types` warning. Running it with the forced cast made UBSan report `load of misaligned address 0x000400000003 for type 'int'` on this machine, and the program ended with a bus error (the operating system terminating a program that accessed an invalid address). `q[1]` reads the pointer 8 bytes from the start, but that location holds the integers `m[0][2]` (3) and `m[1][0]` (4), read on this little-endian machine as the address `0x0000000400000003`.
+Writing `int **q = m;` without the cast makes clang emit an `incompatible pointer types` warning. Running it with the forced cast under UBSan on macOS reports `load of misaligned address 0x000400000003 for type 'int'`, and the program ends with a bus error (the operating system terminating a program that accessed an invalid address). `q[1]` reads the pointer 8 bytes from the start, but that location holds the integers `m[0][2]` (3) and `m[1][0]` (4), read on a little-endian system as the address `0x0000000400000003`.
 
 ### 6.3 `void` Pointers
 
 > **Definition:** A **`void` pointer** is the pointer type `void *`, which does not specify the data type of the object it points to.
 
-`void *` converts to and from any object pointer without a cast [1, Section 6.3.2.3], which is why `malloc` returns `void *`. Because the pointed-to type is unknown, however, a value cannot be obtained through `*p` (`int x = *p;` is a compile error), and `p + 1` is not allowed in ISO C because `sizeof(void)` is not defined [1, Section 6.5.6]. GCC and clang compute it in units of one byte as an extension [25], but with `-pedantic` they warn; clang on this machine reports `warning: arithmetic on a pointer to void is a GNU extension`.
+`void *` converts to and from any object pointer without a cast [1, Section 6.3.2.3], which is why `malloc` returns `void *`. Because the pointed-to type is unknown, however, a value cannot be obtained through `*p` (`int x = *p;` is a compile error), and `p + 1` is not allowed in ISO C because `sizeof(void)` is not defined [1, Section 6.5.6]. GCC and clang compute it in units of one byte as an extension [25], but with `-pedantic` they warn; clang reports `warning: arithmetic on a pointer to void is a GNU extension`.
 
 To work in bytes, convert to `unsigned char *`. `void *` makes generic functions that are not tied to a specific type possible. The complete code is [Example_GenericPointers.c](Example_GenericPointers.c).
 
@@ -1017,7 +1017,7 @@ int compare_string(const void *a, const void *b) {
 }
 ```
 
-Despite its name, the standard does not require `qsort` to be a quicksort, and it guarantees neither running time nor stability (keeping the input order of elements that compare equal) [27]. The order of elements that compare equal is unspecified [1, Section 7.22.5.2]. On this machine, sorting by score only did not keep the input order among equal scores.
+Despite its name, the standard does not require `qsort` to be a quicksort, and it guarantees neither running time nor stability (keeping the input order of elements that compare equal) [27]. The order of elements that compare equal is unspecified [1, Section 7.22.5.2]. On macOS, sorting by score only does not keep the input order among equal scores, as follows.
 
 ```text
 input (score+letter): 3a 1b 3c 2d 1e 3f 2g 1h 3i 2j
@@ -1086,7 +1086,7 @@ Comparing floating-point numbers with `(int)(x - y)` turns a difference of less 
 | `int **` is the same type as a parameter receiving `int [][3]`. | **F.** `int [][3]` is `int (*)[3]`, which differs from `int **`, for which pointers exist in memory. |
 | Copying overlapping regions with `memcpy` is undefined behavior. | **T.** Use `memmove` when the regions may overlap. |
 | The `double` elements of a block returned by `calloc` are always guaranteed to be 0.0 in ISO C. | **F.** All bits zero is not guaranteed to represent 0.0. |
-| `qsort` keeps the input order of elements with equal keys. | **F.** The standard does not require stability, and the order was not kept on this machine. |
+| `qsort` keeps the input order of elements with equal keys. | **F.** The standard does not require stability, and the order is not kept on macOS. |
 | Using `sizeof *p` in the `malloc` size calculation means the expression need not change if the type of `p` changes. | **T.** Unless `*p` has a variable-length array type, `sizeof` does not evaluate its operand; it computes only the size of its type. |
 
 ---

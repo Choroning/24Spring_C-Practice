@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -488,7 +488,7 @@ An assignment that solves the same sequential search with an array of size 10 is
 
 **Problem:** Transpose the 3 × 3 matrix `int matA[][3] = { {5, 7, 4}, {6, 1, 8}, {3, 2, 7} };` into `int matB[3][3] = { 0 };` and print both matrices. Transposing turns each row into a column.
 
-**Solution:** The element at row i, column j of the transposed matrix is the element at row j, column i of the original. So a double `for` loop visits every (i, j) and executes `matB[j][i] = matA[i][j];`. The output uses the same double loop, printing each row with `%3d` and then ending the line. The comment at the start of the code is an attempt to pass the two-dimensional array to a function for printing; passing a two-dimensional array to a function is covered in [HW09 Problem 2](../../Coursework/HW09_Pointers-II/Assignment-Explanation.md#2-printing-a-2d-array).
+**Solution:** The element at row i, column j of the transposed matrix is the element at row j, column i of the original. So a double `for` loop visits every (i, j) and executes `matB[j][i] = matA[i][j];`. The output uses the same double loop, printing each row with `%3d` and then ending the line. The comment at the start of the code is an attempt to pass the two-dimensional array to a function for printing; passing a two-dimensional array to a function is covered in [Chapter 11, Section 6.2](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.md#62-pointers-to-arrays-and-arrays-of-pointers).
 
 **Code:** [Example_Transpose.c](Example_Transpose.c)
 

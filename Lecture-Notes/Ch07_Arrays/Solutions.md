@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -77,7 +77,7 @@ int main()
 }
 ```
 
-**Output:** Compiled with `gcc -std=c99 -Wall -Dscanf_s=scanf` and given the digits of the sample run, the program prints the check digit 2. The output format, however, differs from the sample run in two places. The loop that prints the input repeats the whole `"입력된 숫자: %d"`, so `입력된 숫자: ` is printed 11 times, once per digit, and the last line has a colon after `is`, as in `The check digit is: 2`. To match the sample run, move `printf("입력된 숫자: ");` before the loop and run only `printf("%d", dig[i]);` inside it.
+**Output:** Given the digits of the sample run, the program prints the check digit 2. The output format, however, differs from the sample run in two places. The loop that prints the input repeats the whole `"입력된 숫자: %d"`, so `입력된 숫자: ` is printed 11 times, once per digit, and the last line has a colon after `is`, as in `The check digit is: 2`. To match the sample run, move `printf("입력된 숫자: ");` before the loop and run only `printf("%d", dig[i]);` inside it.
 
 ```text
 Please enter the first eleven UPC digits, separated by white space: 

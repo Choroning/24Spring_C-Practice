@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -264,7 +264,7 @@ int main()
 }
 ```
 
-**Output:** The program, compiled with `-Dscanf_s=scanf`, is given the four inputs of the sample runs in turn. Because the output does not end with a newline, the next shell prompt continues on the same line in a terminal.
+**Output:** The result of entering the four inputs of the sample runs in turn. Because the output does not end with a newline, the next shell prompt continues on the same line in a terminal.
 
 ```text
 연도와 월을 입력하세요: 2017 4

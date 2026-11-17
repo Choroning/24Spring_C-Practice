@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-17
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4, 5
 
@@ -62,7 +62,7 @@ Coursework/HW03_Control-Statements-I/
 
 *Figure 1. Directory layout of HW3*
 
-Problems 1, 2, and 3 are written problems, so their answers and explanations are given in this document without solution files. The outputs of Problems 1 and 3 come from compiling and running the programs of the problems as they are.
+Problems 1, 2, and 3 are written problems, so their answers and explanations are given in this document without solution files.
 
 The program of Problem 4 was written in Visual Studio (MSVC) and uses `scanf_s` for input. `scanf_s` is provided by MSVC and is missing from most standard libraries used with gcc and clang, so in other environments the code is compiled without changes by replacing it with `scanf` through the `-Dscanf_s=scanf` option. Problem 4 is compiled and run as follows.
 
@@ -135,7 +135,7 @@ The output layout is also part of the result. The format string `" %d"` of the f
 
 ### 2.3 Output
 
-Compiling and running the program of the problem as it is gives the following output. The values of Table 1 appear in the output layout described above.
+Running the program of the problem gives the following output. The values of Table 1 appear in the output layout described above.
 
 ```text
  0 1 1 0
@@ -150,7 +150,7 @@ Compiling and running the program of the problem as it is gives the following ou
  8 
 ```
 
-> **Caution:** The result of `sizeof` has the unsigned integer type `size_t`, so compiling this program with `gcc -std=c99 -Wall` gives a format mismatch warning (`-Wformat`) on the four lines that print `sizeof` with `%d`. This environment still prints the values above, but printing with `%d` in a 64-bit environment where `size_t` is larger than `int` is in principle undefined behavior. Since C99, use `%zu` as in `printf(" %zu \n", sizeof(3.2));`, or convert to `int` as in `(int)sizeof(3.2)` and print with `%d`.
+> **Caution:** The result of `sizeof` has the unsigned integer type `size_t`, so compiling this program with `gcc -std=c99 -Wall` gives a format mismatch warning (`-Wformat`) on the four lines that print `sizeof` with `%d`. Most environments still print the values above, but printing with `%d` in a 64-bit environment where `size_t` is larger than `int` is in principle undefined behavior. Since C99, use `%zu` as in `printf(" %zu \n", sizeof(3.2));`, or convert to `int` as in `(int)sizeof(3.2)` and print with `%d`.
 
 ---
 

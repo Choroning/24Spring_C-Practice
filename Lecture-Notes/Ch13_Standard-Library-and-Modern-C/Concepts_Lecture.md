@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-09
+> **Last Updated:** 2026-11-17
 
 > **Learning Objectives:**
 > 1. Classify the standard headers by purpose and explain the difference between hosted and freestanding environments
@@ -224,7 +224,7 @@ offset  0     1  2  3    4  5  6  7    8 .................. 15
       └─────┴──────────┴─────────────┴────────────────────────┘
 ```
 
-*Figure 1. Byte layout of `struct record` confirmed with `offsetof`*
+*Figure 1. Byte layout of `struct record` obtained with `offsetof`*
 
 ### 2.4 `<limits.h>` and `<float.h>`
 
@@ -342,7 +342,7 @@ Christopher is 20 years (truncated)
 
 *Table 6. Removed and discouraged standard functions and their alternatives*
 
-The macOS SDK here keeps `gets` for compatibility, but it produces a compiler warning and the run-time warning `warning: this program uses gets(), which is unsafe.`. The Annex K functions of C11, such as `strcpy_s`, are optional; WG14 document N1967 recommended their removal based on field experience [7], and some signatures of the `_s` functions in Visual Studio differ from the standard [8]. Code that must be portable should use `snprintf` and size checks instead of the `_s` functions.
+The macOS SDK keeps `gets` for compatibility, but it produces a compiler warning and the run-time warning `warning: this program uses gets(), which is unsafe.`. The Annex K functions of C11, such as `strcpy_s`, are optional; WG14 document N1967 recommended their removal based on field experience [7], and some signatures of the `_s` functions in Visual Studio differ from the standard [8]. Code that must be portable should use `snprintf` and size checks instead of the `_s` functions.
 
 > **Note:** **C4996 in Visual Studio.** Visual Studio issues warning C4996 for `sprintf`, `strcpy`, `scanf`, and similar functions and recommends the `_s` functions. Writing `#define _CRT_SECURE_NO_WARNINGS` at the beginning of the source disables the warning ([Chapter 3 Lab, Section 5.1](../Ch03_Data-Types-and-Variables/Concepts_Lab.md#51-warning-c4996)).
 
@@ -370,7 +370,7 @@ static double average(const int *a, int n) {
 Assertion failed: (n > 0), function average, file average.c, line 6.
 ```
 
-The above is the output of a run that calls `average(data, 0)`; the shell's exit code is then 134 (128 + signal 6, SIGABRT). If the macro `NDEBUG` is defined when `<assert.h>` is included, `assert` becomes `((void)0)` and disappears [1, Section 7.2], so compiling with `-DNDEBUG` makes the same call print `nan` here without any check.
+The above is the output of a run that calls `average(data, 0)`; the shell's exit code is then 134 (128 + signal 6, SIGABRT). If the macro `NDEBUG` is defined when `<assert.h>` is included, `assert` becomes `((void)0)` and disappears [1, Section 7.2], so compiling with `-DNDEBUG` makes the same call print `nan` on macOS without any check.
 
 > **Caution:** The expression inside `assert` is not evaluated when `NDEBUG` is defined. Therefore a call with side effects, as in `assert(fclose(fp) == 0);`, disappears entirely in a release build. Write `int r = fclose(fp); assert(r == 0);` instead. `assert` is a tool for finding programmer errors; situations that occur in normal execution, such as bad user input or file errors, must be handled with `if`.
 
@@ -423,7 +423,7 @@ va_arg 3rd call: returns 30                    total = 60
 
 *Figure 3. Conceptual model of extracting variadic arguments with `va_start` and `va_arg`*
 
-The function must learn the number of arguments through a fixed parameter (`sum`), a format string (`printf`), or a terminating value (such as `NULL`). If the type given to `va_arg` is not compatible with the type actually passed after promotion, the behavior is undefined (except when reading a value representable in both as the integer type that differs only in sign, and between `void *` and a character pointer) [1, Section 7.16.1.1]. Arguments passed through `...` undergo the **default argument promotions** [1, Section 6.5.2.2]: `char` and `short` are passed as `int` and `float` as `double`, so `va_arg(ap, float)` and `va_arg(ap, char)` are incorrect. clang warns as follows, and such a program printed `0.000000` for `1.5f + 2.5f` in this environment.
+The function must learn the number of arguments through a fixed parameter (`sum`), a format string (`printf`), or a terminating value (such as `NULL`). If the type given to `va_arg` is not compatible with the type actually passed after promotion, the behavior is undefined (except when reading a value representable in both as the integer type that differs only in sign, and between `void *` and a character pointer) [1, Section 7.16.1.1]. Arguments passed through `...` undergo the **default argument promotions** [1, Section 6.5.2.2]: `char` and `short` are passed as `int` and `float` as `double`, so `va_arg(ap, float)` and `va_arg(ap, char)` are incorrect. clang warns as follows, and such a program prints `0.000000` for `1.5f + 2.5f` on macOS.
 
 ```text
 warning: second argument to 'va_arg' is of promotable type 'float'; this va_arg has undefined behavior because arguments will be promoted to 'double' [-Wvarargs]
@@ -516,7 +516,7 @@ big-endian               12    34    56    78
 
 *Figure 5. Two byte orders of the same value `0x12345678`*
 
-The bytes of an object are examined by reading it through `unsigned char *` (character type access is permitted, as Section 6.4 explains). In this environment the bytes were printed in the order `78 56 34 12`. If a program writes memory as it is to a file or network, the value is reversed on a system of the other endianness ([Chapter 12, Section 4.4](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.md#44-cautions-when-storing-structures-in-files)), so bytes are determined directly by applying shifts to the numeric value. This code works independently of the host's endianness.
+The bytes of an object are examined by reading it through `unsigned char *` (character type access is permitted, as Section 6.4 explains). On little-endian arm64 macOS the bytes are printed in the order `78 56 34 12`. If a program writes memory as it is to a file or network, the value is reversed on a system of the other endianness ([Chapter 12, Section 4.4](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.md#44-cautions-when-storing-structures-in-files)), so bytes are determined directly by applying shifts to the numeric value. This code works independently of the host's endianness.
 
 ```c
 static void store_be32(unsigned char out[4], uint32_t v) {
@@ -529,7 +529,7 @@ static void store_be32(unsigned char out[4], uint32_t v) {
 
 The result of `store_be32` is `12 34 56 78` on every platform. The code is [Example_ByteOrder.c](Example_ByteOrder.c). C23 indicates the endianness of the execution environment with `__STDC_ENDIAN_NATIVE__` in `<stdbit.h>` [2, Section 7.18.2].
 
-> **[Computer Networks]** Internet protocol headers use big-endian as the standard order, called network byte order. POSIX `htonl` and `ntohl` convert between host order and network order [13]. On the little-endian system here, `htonl(0x12345678)` is `0x78563412`.
+> **[Computer Networks]** Internet protocol headers use big-endian as the standard order, called network byte order. POSIX `htonl` and `ntohl` convert between host order and network order [13]. On a little-endian system, `htonl(0x12345678)` is `0x78563412`.
 
 ### 5.3 `volatile`
 
@@ -664,7 +664,7 @@ Compiling with `-fsanitize=undefined` makes UndefinedBehaviorSanitizer (UBSan) r
 overflow.c:9:11: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
 ```
 
-That `a` became -2147483648 here merely reflects the hardware's addition; the standard does not guarantee this result. To compute safely, check the range before the operation. `a > INT_MAX - b` is a comparison that does not overflow when `b` is positive, whereas `a + b > INT_MAX` is useless because the addition itself overflows first. The code is [Example_CheckedArithmetic.c](Example_CheckedArithmetic.c).
+That `a` becomes -2147483648 on macOS merely reflects the hardware's addition; the standard does not guarantee this result. To compute safely, check the range before the operation. `a > INT_MAX - b` is a comparison that does not overflow when `b` is positive, whereas `a + b > INT_MAX` is useless because the addition itself overflows first. The code is [Example_CheckedArithmetic.c](Example_CheckedArithmetic.c).
 
 ### 6.3 Evaluation Order and Sequence Points
 
@@ -688,7 +688,7 @@ flowchart LR
 
 *Figure 8. Two side effects on the same variable with no order in `i = i++`*
 
-`i = i++` has undefined behavior because two side effects on the same scalar object are unsequenced [1, Section 6.5]. In contrast, in `f(a(), b())`, the calls to `a()` and `b()` do not interleave and one of them runs first, but which one is not specified; they are indeterminately sequenced, so this is unspecified behavior [1, Section 6.5.2.2]. clang here called `a` first, but another compiler may call `b` first and still conform.
+`i = i++` has undefined behavior because two side effects on the same scalar object are unsequenced [1, Section 6.5]. In contrast, in `f(a(), b())`, the calls to `a()` and `b()` do not interleave and one of them runs first, but which one is not specified; they are indeterminately sequenced, so this is unspecified behavior [1, Section 6.5.2.2]. Apple clang on macOS calls `a` first, but another compiler may call `b` first and still conform.
 
 | Expression | Judgment | Reason |
 |:-----|:-----|:-----|
@@ -856,7 +856,7 @@ m ──► ┌─────────────┬───────�
        sizeof(*m) = 8        space for text[]
 ```
 
-*Figure 11. Memory layout of a structure with a flexible array member (this platform)*
+*Figure 11. Memory layout of a structure with a flexible array member (with an 8-byte `size_t`)*
 
 A structure needs at least one other named member to have a flexible array member. Assigning such a structure does not copy the array part, and such a structure cannot be a member of another structure or an element of an array [1, Section 6.7.2.1].
 
@@ -936,7 +936,7 @@ atomic = 4000000
 
 `plain_count++` splits into a read, an increment, and a write, so increments are lost, and as a data race it is undefined behavior [1, Section 5.1.2.4]. Running with `-fsanitize=thread` reports `WARNING: ThreadSanitizer: data race`. The standard thread API is `thrd_create`, `thrd_join`, `mtx_lock`, and so on in `<threads.h>`, which is optional; glibc provides it from version 2.28 [24], and Visual Studio from 2022 17.8 [8].
 
-| Macro | If defined | Here |
+| Macro | If defined | Apple clang 21 |
 |:-----|:-----|:-----|
 | `__STDC_NO_VLA__` | VLAs not supported | not defined |
 | `__STDC_NO_ATOMICS__` | no `_Atomic` or `<stdatomic.h>` | not defined |
@@ -946,7 +946,7 @@ atomic = 4000000
 
 *Table 14. C11 conditional feature macros and their state on Apple clang 21*
 
-C11 also includes the Unicode literals `u"..."`, `U"..."`, and `u8"..."` (`char16_t` from `<uchar.h>`, absent here, is the same type as `uint_least16_t`), the removal of `gets`, the file `"x"` mode ([Chapter 12, Section 3.1](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.md#31-fopen-and-fclose)), `aligned_alloc`, `quick_exit`, and `timespec_get`.
+C11 also includes the Unicode literals `u"..."`, `U"..."`, and `u8"..."` (`char16_t` from `<uchar.h>`, absent on macOS, is the same type as `uint_least16_t`), the removal of `gets`, the file `"x"` mode ([Chapter 12, Section 3.1](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.md#31-fopen-and-fclose)), `aligned_alloc`, `quick_exit`, and `timespec_get`.
 
 > **Note:** **C11 support in Visual Studio.** `/std:c11` and `/std:c17` are available from Visual Studio 2019 16.8 and support `_Generic`, `_Static_assert`, `_Noreturn`, and `restrict` [21]. Atomics are partially supported with `/experimental:c11atomics` from VS 2022 17.5, while VLAs and `aligned_alloc` are not supported [21], [8].
 
@@ -956,7 +956,7 @@ C17 (ISO/IEC 9899:2018) incorporates defect reports against C11 and adds **no** 
 
 ### 7.5 Major Features of C23
 
-C23 (ISO/IEC 9899:2024) added many features, including keyword cleanup, a null pointer constant, compile-time constants, and type inference [2], [25]. The code below was confirmed with Apple clang 21 in `-std=c23` mode, and the full code is [Example_C23Features.c](Example_C23Features.c).
+C23 (ISO/IEC 9899:2024) added many features, including keyword cleanup, a null pointer constant, compile-time constants, and type inference [2], [25]. The code below must be compiled in C23 mode (`-std=c23`), and the full code is [Example_C23Features.c](Example_C23Features.c).
 
 ```c
 // keywords: bool, true, false, static_assert, alignas, alignof, thread_local
@@ -1015,7 +1015,7 @@ nibble = nibble + 1uwb;                 // wraps around to 0
 
 C23 also includes `stdc_count_ones` in `<stdbit.h>`; the newly standardized functions and macro `strdup`, `strndup`, `memccpy`, `memset_explicit`, `timegm`, and `unreachable`; mandatory two's complement; making a size-zero `realloc` undefined ([Chapter 11, Section 2.3](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.md#23-realloc)); unnamed parameters; labels before declarations; and `%b` in `printf` [2, Annex M].
 
-> **Caution:** Even when a compiler supports C23, library features depend on the C library. The macOS SDK here has no declaration of `memset_explicit` and no `<stdbit.h>`, and the C23 `printf` conversions `%b` and `%w32d` (for `int32_t`) were not converted and printed the letters `b` and `w32d`.
+> **Caution:** Even when a compiler supports C23, library features depend on the C library. The macOS SDK has no declaration of `memset_explicit` and no `<stdbit.h>`, and the C23 `printf` conversions `%b` and `%w32d` (for `int32_t`) are not converted and are printed as the letters `b` and `w32d`.
 
 ### 7.6 Compiler Support and Choosing a Standard
 

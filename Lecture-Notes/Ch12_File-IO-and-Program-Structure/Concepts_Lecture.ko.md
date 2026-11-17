@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-09
+> **최종 수정일:** 2026-11-17
 
 > **학습 목표:**
 > 1. `int main(int argc, char *argv[])`로 명령행 인수를 받아 검사하고 변환하며, 종료 상태로 결과를 알리는 프로그램을 작성할 수 있다
@@ -290,13 +290,13 @@ while ((opt = getopt(argc, argv, "un:")) != -1) {
 - C99부터 `main`의 닫는 `}`에 도달하면 0을 반환한다[1]. `main`에만 적용되는 규칙이고, `-std=c89 -pedantic`으로 컴파일하면 clang은 이 코드를 경고한다.
 - 0과 `EXIT_SUCCESS`는 성공, `EXIT_FAILURE`는 실패를 뜻한다. 그 밖의 값의 의미는 구현이 정한다[1].
 
-POSIX에서 부모 프로세스가 `wait`나 `waitpid`로 볼 수 있는 값은 상태의 **하위 8비트**뿐이다[12]. 따라서 값은 256으로 나눈 나머지로 보인다. bash의 `$?`로 확인한 결과는 `exit(3)`이 3, `exit(255)`가 255, `exit(256)`이 0, `exit(257)`이 1, `exit(1000)`이 232, `exit(-1)`이 255이다.
+POSIX에서 부모 프로세스가 `wait`나 `waitpid`로 볼 수 있는 값은 상태의 **하위 8비트**뿐이다[12]. 따라서 값은 256으로 나눈 나머지로 보인다. bash의 `$?`로 보면 `exit(3)`이 3, `exit(255)`가 255, `exit(256)`이 0, `exit(257)`이 1, `exit(1000)`이 232, `exit(-1)`이 255이다.
 
 > **주의:** `exit(256)`은 실패를 알리려는 의도와 달리 셸에서 **성공**으로 보인다. 종료 상태는 0, 1, 그리고 2처럼 작은 값으로 한정하는 것이 안전하다. 많은 도구는 사용법 오류에 2를 쓰며, Bash 내장 명령도 잘못된 사용에 2를 반환한다[3].
 
-`exit`는 `atexit`로 등록한 함수를 등록의 역순으로 호출한 뒤, 쓰지 않은 버퍼를 비우고 열린 스트림을 닫고 `tmpfile`로 만든 파일을 지운 다음 환경으로 종료 상태를 돌려준다[1]. `first`, `second`의 순서로 `atexit`에 등록하고 `printf("printed before exit\n");` 다음에 `exit`를 호출하면 `printed before exit`, `second registered`, `first registered`의 순서로 출력된다. `_Exit`는 `atexit` 함수를 호출하지 않으며, 스트림을 비우는지는 구현이 정한다[1]. `abort`도 스트림 처리가 구현 정의이다[1]. macOS에서 같은 코드를 시험하면 `_Exit` 전에 쓴 버퍼는 파일에 남지 않았고 `abort` 전에 쓴 버퍼는 남았지만, 이식성 있는 코드는 이 결과에 의존하면 안 된다.
+`exit`는 `atexit`로 등록한 함수를 등록의 역순으로 호출한 뒤, 쓰지 않은 버퍼를 비우고 열린 스트림을 닫고 `tmpfile`로 만든 파일을 지운 다음 환경으로 종료 상태를 돌려준다[1]. `first`, `second`의 순서로 `atexit`에 등록하고 `printf("printed before exit\n");` 다음에 `exit`를 호출하면 `printed before exit`, `second registered`, `first registered`의 순서로 출력된다. `_Exit`는 `atexit` 함수를 호출하지 않으며, 스트림을 비우는지는 구현이 정한다[1]. `abort`도 스트림 처리가 구현 정의이다[1]. macOS에서는 같은 코드에서 `_Exit` 전에 쓴 버퍼가 파일에 남지 않고 `abort` 전에 쓴 버퍼는 남지만, 이식성 있는 코드는 이 결과에 의존하면 안 된다.
 
-셸은 종료 상태로 다음 동작을 결정하며 0을 성공으로 본다[3]. `./repeat ok && echo next`는 성공일 때만, `./repeat -z || echo failed`는 실패일 때만 `echo`를 실행하고, 직전 명령의 상태는 `echo $?`로 확인한다. Windows의 명령 프롬프트에서는 `%ERRORLEVEL%`[13], PowerShell에서는 `$LASTEXITCODE`[14]가 같은 값을 보여 준다. 신호(signal, 운영체제가 프로세스에 사건을 알리는 통지)로 강제 종료된 프로그램의 상태는 bash가 128 + 신호 번호로 보고한다[3]. `abort`로 끝난 프로그램은 134(SIGABRT는 6번), 널 포인터를 역참조하여 끝난 프로그램은 139(SIGSEGV는 11번)로 관찰되었다.
+셸은 종료 상태로 다음 동작을 결정하며 0을 성공으로 본다[3]. `./repeat ok && echo next`는 성공일 때만, `./repeat -z || echo failed`는 실패일 때만 `echo`를 실행하고, 직전 명령의 상태는 `echo $?`로 확인한다. Windows의 명령 프롬프트에서는 `%ERRORLEVEL%`[13], PowerShell에서는 `$LASTEXITCODE`[14]가 같은 값을 보여 준다. 신호(signal, 운영체제가 프로세스에 사건을 알리는 통지)로 강제 종료된 프로그램의 상태는 bash가 128 + 신호 번호로 보고한다[3]. `abort`로 끝난 프로그램은 134(SIGABRT는 6번), 널 포인터를 역참조하여 끝난 프로그램은 139(SIGSEGV는 11번)로 나타난다.
 
 ### 1.8 완성 예제
 

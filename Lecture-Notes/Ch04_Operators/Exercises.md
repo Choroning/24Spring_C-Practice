@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -478,7 +478,9 @@ $$\text{density}(\text{g/cm}^3) = \frac{\text{mass}(\text{g})}{\text{volume}(\te
 
 **Problem:** Write a program that reads the monthly usage (kWh) and computes the electricity bill. The charge for the usage is 190 won/kWh.
 
-$$\text{electricity bill} = \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}$$
+```math
+\text{electricity bill} = \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}
+```
 
 **Sample Run:**
 
@@ -499,7 +501,9 @@ $$\text{electricity bill} = \text{monthly usage}(\text{kWh}) \times 190\,\text{w
 
 **Problem:** Write a program that reads a basic charge and the monthly usage (kWh) and computes the electricity bill. The charge for the usage is 190 won/kWh. The expression can be written with a compound assignment operator, without declaring a separate variable to store the basic charge.
 
-$$\text{electricity bill} = \text{basic charge} + \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}$$
+```math
+\text{electricity bill} = \text{basic charge} + \text{monthly usage}(\text{kWh}) \times 190\,\text{won/kWh}
+```
 
 **Sample Run:**
 
@@ -583,7 +587,9 @@ $$\text{kinetic energy} = \frac{1}{2} \times \text{mass} \times (\text{speed})^2
 
 **Problem:** Write a program that reads the mass of a solvent and the mass of a solute as integers and computes the percent concentration of the solution. The masses of the solvent and the solute are read in g.
 
-$$\text{percent concentration}(\%) = \frac{\text{mass of solute}}{\text{mass of solvent} + \text{mass of solute}} \times 100$$
+```math
+\text{percent concentration}(\%) = \frac{\text{mass of solute}}{\text{mass of solvent} + \text{mass of solute}} \times 100
+```
 
 **Sample Run:**
 

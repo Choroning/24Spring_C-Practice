@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-09
+> **Last Updated:** 2026-11-17
 
 > **Learning Objectives:**
 > 1. Write a program with `int main(int argc, char *argv[])` that receives, checks, and converts command-line arguments and reports its result through the exit status
@@ -290,13 +290,13 @@ The exit code returned by `return` in `main` ([Chapter 2, Section 1.4](../Ch02_C
 - Since C99, reaching the closing `}` of `main` returns 0 [1]. This rule applies only to `main`, and clang warns about such code when compiled with `-std=c89 -pedantic`.
 - 0 and `EXIT_SUCCESS` mean success, and `EXIT_FAILURE` means failure. The meaning of any other value is implementation-defined [1].
 
-In POSIX, a parent process can see only the **low 8 bits** of the status with `wait` or `waitpid` [12]. So a value appears modulo 256. The results checked with bash's `$?` are 3 for `exit(3)`, 255 for `exit(255)`, 0 for `exit(256)`, 1 for `exit(257)`, 232 for `exit(1000)`, and 255 for `exit(-1)`.
+In POSIX, a parent process can see only the **low 8 bits** of the status with `wait` or `waitpid` [12]. So a value appears modulo 256. As shown by bash's `$?`, the results are 3 for `exit(3)`, 255 for `exit(255)`, 0 for `exit(256)`, 1 for `exit(257)`, 232 for `exit(1000)`, and 255 for `exit(-1)`.
 
 > **Caution:** Contrary to the intent of reporting failure, `exit(256)` looks like **success** to the shell. It is safest to limit exit statuses to small values such as 0, 1, and 2. Many tools use 2 for usage errors, and Bash builtins also return 2 for incorrect usage [3].
 
-`exit` calls the functions registered with `atexit` in the reverse order of their registration, then flushes unwritten buffers, closes all open streams, removes files created by `tmpfile`, and returns the exit status to the environment [1]. If `first` and then `second` are registered with `atexit` and `exit` is called after `printf("printed before exit\n");`, the output order is `printed before exit`, `second registered`, `first registered`. `_Exit` does not call the `atexit` functions, and whether it flushes streams is implementation-defined [1]. Stream handling by `abort` is also implementation-defined [1]. Testing the same code on macOS left the buffer written before `_Exit` out of the file and the buffer written before `abort` in the file, but portable code must not depend on these results.
+`exit` calls the functions registered with `atexit` in the reverse order of their registration, then flushes unwritten buffers, closes all open streams, removes files created by `tmpfile`, and returns the exit status to the environment [1]. If `first` and then `second` are registered with `atexit` and `exit` is called after `printf("printed before exit\n");`, the output order is `printed before exit`, `second registered`, `first registered`. `_Exit` does not call the `atexit` functions, and whether it flushes streams is implementation-defined [1]. Stream handling by `abort` is also implementation-defined [1]. On macOS, the same code leaves the buffer written before `_Exit` out of the file and the buffer written before `abort` in the file, but portable code must not depend on these results.
 
-The shell uses the exit status to decide what to do next, treating 0 as success [3]. `./repeat ok && echo next` runs `echo` only on success, `./repeat -z || echo failed` runs it only on failure, and `echo $?` shows the status of the last command. In the Windows Command Prompt `%ERRORLEVEL%` [13] and in PowerShell `$LASTEXITCODE` [14] show the same value. For a program killed by a signal (a notification the operating system sends a process about an event), bash reports 128 plus the signal number as the status [3]. A program ended by `abort` was observed with 134 (SIGABRT is signal 6), and one ended by dereferencing a null pointer with 139 (SIGSEGV is signal 11).
+The shell uses the exit status to decide what to do next, treating 0 as success [3]. `./repeat ok && echo next` runs `echo` only on success, `./repeat -z || echo failed` runs it only on failure, and `echo $?` shows the status of the last command. In the Windows Command Prompt `%ERRORLEVEL%` [13] and in PowerShell `$LASTEXITCODE` [14] show the same value. For a program killed by a signal (a notification the operating system sends a process about an event), bash reports 128 plus the signal number as the status [3]. A program ended by `abort` shows 134 (SIGABRT is signal 6), and one ended by dereferencing a null pointer shows 139 (SIGSEGV is signal 11).
 
 ### 1.8 A Complete Example
 
@@ -1034,7 +1034,7 @@ DEPS = $(OBJS:.o=.d)
 
 **True/False Check:**
 
-| Statement | Verdict and Reason |
+| Statement | Judgment and Reason |
 |:-----|:-----|
 | Since `argv[argc]` is always a null pointer, `argv` can be traversed up to the null pointer. | **T.** The C standard specifies `argv[argc]` as a null pointer (Section 1.2). |
 | `argv[0]` is always the absolute path of the executable. | **F.** It is only a string representing the program name, which the caller can set arbitrarily and which may be absent (Section 1.2). |

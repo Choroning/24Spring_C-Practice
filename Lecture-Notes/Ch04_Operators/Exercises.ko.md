@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -478,7 +478,9 @@ $$\text{밀도}(\text{g/cm}^3) = \frac{\text{질량}(\text{g})}{\text{부피}(\t
 
 **문제:** 월 사용량(kWh)을 입력받아 전기 요금을 계산하는 프로그램을 작성하라. 사용량에 따른 요금은 190원/kWh이다.
 
-$$\text{전기 요금} = \text{월 사용량}(\text{kWh}) \times 190\,\text{원/kWh}$$
+```math
+\text{전기 요금} = \text{월 사용량}(\text{kWh}) \times 190\,\text{원/kWh}
+```
 
 **실행 예시:**
 
@@ -499,7 +501,9 @@ $$\text{전기 요금} = \text{월 사용량}(\text{kWh}) \times 190\,\text{원/
 
 **문제:** 기본 요금과 월 사용량(kWh)을 입력받아 전기 요금을 계산하는 프로그램을 작성하라. 사용량에 따른 요금은 190원/kWh이다. 기본 요금을 저장할 변수를 별도로 선언하지 않고 복합 대입 연산자를 이용해서 연산식을 만들 수 있다.
 
-$$\text{전기 요금} = \text{기본 요금} + \text{월 사용량}(\text{kWh}) \times 190\,\text{원/kWh}$$
+```math
+\text{전기 요금} = \text{기본 요금} + \text{월 사용량}(\text{kWh}) \times 190\,\text{원/kWh}
+```
 
 **실행 예시:**
 
@@ -583,7 +587,9 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **문제:** 용매의 질량과 용질의 질량을 정수로 입력받아 용액의 퍼센트 농도를 구하는 프로그램을 작성하라. 용매의 질량과 용질의 질량은 g 단위로 입력받는다.
 
-$$\text{퍼센트 농도}(\%) = \frac{\text{용질의 질량}}{\text{용매의 질량} + \text{용질의 질량}} \times 100$$
+```math
+\text{퍼센트 농도}(\%) = \frac{\text{용질의 질량}}{\text{용매의 질량} + \text{용질의 질량}} \times 100
+```
 
 **실행 예시:**
 

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-17
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -704,7 +704,7 @@ int main(void)
 12.340000 - 0.500000 = 11.840000
 ```
 
-> **주의:** **`scanf`에서 `double`을 `%f`로 읽는 실수.** `scanf("%f %f", &x, &y);`로 쓰면 `scanf`가 `double` 변수의 메모리에 `float` 형식의 값을 저장하므로 정의되지 않은 동작이 발생한다. `-Wall`로 컴파일하면 clang이 "format specifies type 'float *' but the argument has type 'double *'" 경고를 내며, 이 환경에서 실행하면 다음처럼 입력과 무관한 값이 출력된다.
+> **주의:** **`scanf`에서 `double`을 `%f`로 읽는 실수.** `scanf("%f %f", &x, &y);`로 쓰면 `scanf`가 `double` 변수의 메모리에 `float` 형식의 값을 저장하므로 정의되지 않은 동작이 발생한다. `-Wall`로 컴파일하면 clang이 "format specifies type 'float *' but the argument has type 'double *'" 경고를 내며, 실행하면 다음처럼 입력과 무관한 값이 출력될 수 있다.
 
 ```text
 실수 2개? 12.34 0.5

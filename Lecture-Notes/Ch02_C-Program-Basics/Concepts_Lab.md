@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-17
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2
 
@@ -100,7 +100,9 @@ The two lines of output are the same, but the 6 of the second line is the intege
 
 To compute numbers, a place is needed to keep the data for the computation and take it out again. The place where a computer keeps data is **memory**, and programming languages keep and use data in areas of memory.
 
-> **Definition:** A **variable** is a memory area in which a program keeps data. A **variable declaration** tells the computer to secure a memory area for the data to be used.
+> **Definition:** A **variable** is a memory area in which a program keeps data.
+
+> **Definition:** A **variable declaration** tells the computer to secure a memory area for the data to be used.
 
 In languages such as C, C++, and Java, the memory space for data must be secured before the data is used. That is, a variable must be declared before it is used ([Chapter 3, Section 3.1](../Ch03_Data-Types-and-Variables/Concepts_Lecture.md#31-declaration-and-initialization)).
 
