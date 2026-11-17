@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -410,8 +410,6 @@ int main(void)
 10진수 -1은 16진수 ffffffff에 해당합니다.
 ```
 
-A similar problem that prints the input value in decimal, octal, and hexadecimal at once is [HW02 Problem 1](../../Coursework/HW02_Operators/Assignment-Explanation.md#2-problem-1-printing-a-value-in-different-bases).
-
 ---
 
 <br>
@@ -542,8 +540,6 @@ int main(void)
 초? 7
 입력한 시간은 100:-5:07입니다.
 ```
-
-A problem that practices field width, alignment, and zero padding together is [HW01 Problem 3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.md#7-problem-3-variable-practice-3).
 
 ---
 
@@ -873,5 +869,3 @@ int main(void)
 10진수: 0
 16진수: 0
 ```
-
-A similar problem that prints a value read in decimal with `%d`, `%#o`, and `%#x` is [HW02 Problem 1](../../Coursework/HW02_Operators/Assignment-Explanation.md#2-problem-1-printing-a-value-in-different-bases). That problem reads the input with `%d`, so an input such as `0x12` is read as 0.

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 7
 
@@ -535,7 +535,7 @@ The radian value of 180 degrees is 3.14
 
 **문제:** 정수 10개를 차례로 입력받으면서 함수 `getSign()`으로 각 정수가 양수인지 확인하고, 양수인 정수만 더한 결과를 출력하라.
 
-**풀이:** `getSign()`은 판별 결과를 1 또는 0으로 돌려주므로, `if (getSign(val))`처럼 반환값을 조건식으로 바로 쓸 수 있다. 입력은 `do-while`로 10번 반복한다. 이 코드의 `getSign()`은 0도 1로 판별하지만, 0을 더해도 합은 바뀌지 않으므로 결과는 양수만 더한 것과 같다. 같은 과제를 `for`문과 `val > 0` 조건으로 푼 코드는 [HW06 문제 2](../../Coursework/HW06_Functions/Assignment-Explanation.ko.md#3-문제-2-조건에-따라-합-구하기)에 있다.
+**풀이:** `getSign()`은 판별 결과를 1 또는 0으로 돌려주므로, `if (getSign(val))`처럼 반환값을 조건식으로 바로 쓸 수 있다. 입력은 `do-while`로 10번 반복한다. 이 코드의 `getSign()`은 0도 1로 판별하지만, 0을 더해도 합은 바뀌지 않으므로 결과는 양수만 더한 것과 같다.
 
 **코드:** [Example_PositiveSum.c](Example_PositiveSum.c)
 

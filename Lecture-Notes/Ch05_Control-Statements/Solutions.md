@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -667,8 +667,6 @@ int main(void)
 큰 수: 5
 ```
 
-The opposite problem, finding the maximum of three integers with the conditional operator only, is covered in [HW03 Problem 4](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#5-problem-4-comparing-magnitudes).
-
 > **Note:** The textbook's code has no `return 0;` at the end of `main`. From C99, reaching the closing brace of `main` is treated as returning 0, so this code also compiles without warnings. This exception applies only to `main` ([Chapter 2, Section 1.4](../Ch02_C-Program-Basics/Concepts_Lecture.md#14-exit-code)).
 
 ---
@@ -763,8 +761,6 @@ int main(void)
 몇 월? 12
 입장료 : 40000
 ```
-
-The same kind of rewriting from a `switch` statement to an `if` statement is also covered in [HW04 Problem 4](../../Coursework/HW04_Control-Statements-II/Assignment-Explanation.md#5-problem-4-switch-if-conversion-2).
 
 ---
 
@@ -1082,7 +1078,7 @@ int main(void)
 입력 오류! 점수는 0~100 사이여야 합니다.
 ```
 
-Handling the same cutoffs with a `switch` statement is shown in [Chapter 5, Section 2.7](Concepts_Lecture.md#27-switch) and [HW04 Problem 3](../../Coursework/HW04_Control-Statements-II/Assignment-Explanation.md#4-problem-3-switch-if-conversion-1).
+Handling the same cutoffs with a `switch` statement is shown in [Chapter 5, Section 2.7](Concepts_Lecture.md#27-switch).
 
 ---
 

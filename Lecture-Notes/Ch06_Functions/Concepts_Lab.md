@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 7
 
@@ -535,7 +535,7 @@ The radian value of 180 degrees is 3.14
 
 **Problem:** Read ten integers in turn, check with the function `getSign()` whether each is positive, and print the sum of only the positive integers.
 
-**Solution:** `getSign()` returns the result of the test as 1 or 0, so its return value can be used directly as a condition, as in `if (getSign(val))`. The input repeats ten times with `do-while`. The `getSign()` of this code also judges 0 as 1, but adding 0 does not change the sum, so the result is the same as adding only positive numbers. Code that solves the same task with a `for` statement and the condition `val > 0` is in [HW06 Problem 2](../../Coursework/HW06_Functions/Assignment-Explanation.md#3-problem-2-conditional-sum).
+**Solution:** `getSign()` returns the result of the test as 1 or 0, so its return value can be used directly as a condition, as in `if (getSign(val))`. The input repeats ten times with `do-while`. The `getSign()` of this code also judges 0 as 1, but adding 0 does not change the sum, so the result is the same as adding only positive numbers.
 
 **Code:** [Example_PositiveSum.c](Example_PositiveSum.c)
 

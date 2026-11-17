@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4
 
@@ -451,8 +451,6 @@ input two values: -3 -23
 MAX: -3
 ```
 
-세 정수 중 가장 큰 값을 조건 연산자만으로 구하는 문제는 [HW03 문제 4](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.ko.md#5-문제-4-대소-비교)에서 다룬다.
-
 ### 7.4 관계, 논리 연산과 sizeof의 결과 예측
 
 **문제:** 다음 코드의 실행 결과를 예측하라.
@@ -499,7 +497,7 @@ int main(void)
  8 
 ```
 
-`sizeof`의 결과는 `size_t`형이므로 C99부터는 `%zu`로 출력한다. 같은 형태로 변수 값과 `sizeof`를 바꾼 문제가 [HW03 문제 1](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.ko.md#2-문제-1-연산자의-결과값)에 있다.
+`sizeof`의 결과는 `size_t`형이므로 C99부터는 `%zu`로 출력한다.
 
 ---
 

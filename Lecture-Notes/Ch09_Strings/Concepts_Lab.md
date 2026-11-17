@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -380,8 +380,6 @@ int main()
 -> str: HELLO C 2024
 ```
 
-Counting the uppercase and lowercase letters of an input string is covered in [HW10 Problem 2](../../Coursework/HW10_Strings/Assignment-Explanation.md#2-string-search).
-
 ---
 
 <br>
@@ -534,7 +532,7 @@ void swap(char* a, char* b)
 -> A reverse str: 3 cbA
 ```
 
-`swap` receives the addresses of two characters, `&arr[i]` and `&arr[len - i - 1]`, and swaps the values at those places ([Chapter 8 Lab, Section 4.3](../Ch08_Pointers/Concepts_Lab.md#43-swapping-two-variables-with-a-function)). The array size `SIZE` is 10, so for input longer than 9 characters `fgets` reads only 9. A solution that moves two pointers inward from both ends is in [HW10 Problem 3](../../Coursework/HW10_Strings/Assignment-Explanation.md#3-string-reversal).
+`swap` receives the addresses of two characters, `&arr[i]` and `&arr[len - i - 1]`, and swaps the values at those places ([Chapter 8 Lab, Section 4.3](../Ch08_Pointers/Concepts_Lab.md#43-swapping-two-variables-with-a-function)). The array size `SIZE` is 10, so for input longer than 9 characters `fgets` reads only 9. Moving two pointers inward from both ends and swapping their characters gives the same result.
 
 ### 4.2 Breaking Lines at Spaces
 
@@ -576,7 +574,7 @@ love
 C
 ```
 
-> **Note:** The `strlen(str)` in the loop condition is called on every iteration and counts the length of the string again. This is no problem for short strings, but computing the length once before the loop, or using `str[i]` as the condition as in Section 2.2, avoids unnecessary computation. Also, the argument of `isspace` must be a value representable as `unsigned char`, so if bytes with codes of 128 or more, such as Korean text, can occur, write `isspace((unsigned char)str[i])`. Code that solves the same problem with `fgets` and `putchar` is in [HW10 Problem 4](../../Coursework/HW10_Strings/Assignment-Explanation.md#4-string-splitting).
+> **Note:** The `strlen(str)` in the loop condition is called on every iteration and counts the length of the string again. This is no problem for short strings, but computing the length once before the loop, or using `str[i]` as the condition as in Section 2.2, avoids unnecessary computation. Also, the argument of `isspace` must be a value representable as `unsigned char`, so if bytes with codes of 128 or more, such as Korean text, can occur, write `isspace((unsigned char)str[i])`.
 
 ### 4.3 Comparing Two Strings
 

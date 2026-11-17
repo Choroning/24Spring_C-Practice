@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -255,8 +255,6 @@ arr1  arr2  (arr1-arr2)
 
 > **Note:** The result of `sizeof` is the unsigned integer type `size_t`, and in a 64-bit (x64) build `size_t` is 8 bytes. Assigning this value to an `int` variable or comparing it with an `int` makes Visual Studio warn about possible data loss (C4267) or a signed/unsigned mismatch, whereas in a 32-bit (x86) build `size_t` is 4 bytes and this warning does not appear. Rather than switching the platform setting to x86, converting explicitly with `(int)` as in the code above, or using a `size_t` variable with `%zu`, avoids the warning in any build.
 
-Finding the maximum and minimum of seven array elements is covered in [HW07 Problem 2](../../Coursework/HW07_Arrays/Assignment-Explanation.md#3-problem-2-comparing-values-in-an-array).
-
 ---
 
 <br>
@@ -481,8 +479,6 @@ arr = 23 45 -34 23 -124 22 2
 ```
 
 > **Note:** `i` is an `int` and `sizeof(arr) / sizeof(arr[0])` is the unsigned `size_t`, so comparing them converts `i` to `size_t`. In this code `i` never becomes negative, so the result is the same, but a stricter warning option (`-Wextra`) reports a sign-comparison warning (the note of Section 2.3).
-
-An assignment that solves the same sequential search with an array of size 10 is in [HW07 Problem 4](../../Coursework/HW07_Arrays/Assignment-Explanation.md#5-problem-4-finding-a-value-in-an-array).
 
 ### 4.2 Transposing a Matrix
 

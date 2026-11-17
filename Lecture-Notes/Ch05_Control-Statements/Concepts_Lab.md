@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5, 6
 
@@ -786,7 +786,7 @@ Input error!
 
 **Problem:** Print the alternating sum `1 - 2 + 3 - 4 + ...` with its expression, extending it one term per line from 1 to 10.
 
-**Solution:** The outer `for` statement repeats for i = 1 to 10, adding odd i and subtracting even i to obtain the sum so far, `sum`. The inner `for` statement repeats for j = 2 to i and prints the expression, putting ` + ` before odd j and ` - ` before even j. 1 is the first term of the expression, so it is printed separately before the inner loop ([Chapter 5, Section 3.4](Concepts_Lecture.md#34-nested-loops)). The form that prints only the result up to 10 is covered in [HW05 Problem 3](../../Coursework/HW05_Control-Statements-III/Assignment-Explanation.md#4-problem-3-loop-practice-3).
+**Solution:** The outer `for` statement repeats for i = 1 to 10, adding odd i and subtracting even i to obtain the sum so far, `sum`. The inner `for` statement repeats for j = 2 to i and prints the expression, putting ` + ` before odd j and ` - ` before even j. 1 is the first term of the expression, so it is printed separately before the inner loop ([Chapter 5, Section 3.4](Concepts_Lecture.md#34-nested-loops)).
 
 ```c
 #include <stdio.h>
@@ -876,8 +876,6 @@ int main(void)
 ```
 
 > **Note:** The sum of consecutive integers can also be computed without a loop by the formula for an arithmetic series, (small + large) × (large - small + 1) / 2. From 4 to 9 it is 13 × 6 / 2 = 39. This formula takes a few multiplications regardless of the number of terms, but it must be checked that the product does not exceed the range of `int`.
-
-The loop problem that reads integers from 1 to 100 until 0 is entered and finds the maximum and minimum is covered in [HW05 Problem 1](../../Coursework/HW05_Control-Statements-III/Assignment-Explanation.md#2-problem-1-loop-practice-1).
 
 ---
 

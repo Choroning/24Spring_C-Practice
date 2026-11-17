@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -380,8 +380,6 @@ int main()
 -> str: HELLO C 2024
 ```
 
-입력 문자열의 대문자와 소문자의 개수를 세는 문제는 [HW10 문제 2](../../Coursework/HW10_Strings/Assignment-Explanation.ko.md#2-문자열-검색)에서 다룬다.
-
 ---
 
 <br>
@@ -534,7 +532,7 @@ void swap(char* a, char* b)
 -> A reverse str: 3 cbA
 ```
 
-`swap`은 두 문자의 주소 `&arr[i]`와 `&arr[len - i - 1]`을 받아 그 자리의 값을 맞바꾼다([8장 실습 4.3절](../Ch08_Pointers/Concepts_Lab.ko.md#43-함수로-두-변수의-값-교환)). 배열의 크기 `SIZE`가 10이므로 9자를 넘는 입력은 `fgets`가 9자까지만 읽는다. 두 포인터를 양 끝에서 안쪽으로 옮기는 방식의 풀이는 [HW10 문제 3](../../Coursework/HW10_Strings/Assignment-Explanation.ko.md#3-문자열-뒤집기)에 있다.
+`swap`은 두 문자의 주소 `&arr[i]`와 `&arr[len - i - 1]`을 받아 그 자리의 값을 맞바꾼다([8장 실습 4.3절](../Ch08_Pointers/Concepts_Lab.ko.md#43-함수로-두-변수의-값-교환)). 배열의 크기 `SIZE`가 10이므로 9자를 넘는 입력은 `fgets`가 9자까지만 읽는다. 두 포인터를 양 끝에서 안쪽으로 옮기며 맞바꾸는 방식으로도 같은 결과를 얻는다.
 
 ### 4.2 공백에서 줄 바꾸기
 
@@ -576,7 +574,7 @@ love
 C
 ```
 
-> **참고:** 반복 조건의 `strlen(str)`은 반복할 때마다 호출되어 문자열의 길이를 다시 센다. 짧은 문자열에서는 문제가 없지만, 길이를 반복 전에 한 번 구해 두거나 2.2절처럼 `str[i]`를 조건으로 쓰면 불필요한 계산을 줄일 수 있다. 또 `isspace`의 인수는 `unsigned char`로 나타낼 수 있는 값이어야 하므로, 한글처럼 코드 값이 128 이상인 바이트가 들어올 수 있으면 `isspace((unsigned char)str[i])`로 쓴다. 같은 문제를 `fgets`와 `putchar`로 푼 코드는 [HW10 문제 4](../../Coursework/HW10_Strings/Assignment-Explanation.ko.md#4-문자열-분리)에 있다.
+> **참고:** 반복 조건의 `strlen(str)`은 반복할 때마다 호출되어 문자열의 길이를 다시 센다. 짧은 문자열에서는 문제가 없지만, 길이를 반복 전에 한 번 구해 두거나 2.2절처럼 `str[i]`를 조건으로 쓰면 불필요한 계산을 줄일 수 있다. 또 `isspace`의 인수는 `unsigned char`로 나타낼 수 있는 값이어야 하므로, 한글처럼 코드 값이 128 이상인 바이트가 들어올 수 있으면 `isspace((unsigned char)str[i])`로 쓴다.
 
 ### 4.3 두 문자열 비교
 

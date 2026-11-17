@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -667,8 +667,6 @@ int main(void)
 큰 수: 5
 ```
 
-조건 연산자만으로 세 정수의 최댓값을 구하는 반대 방향의 문제는 [HW03 문제 4](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.ko.md#5-문제-4-대소-비교)에서 다룬다.
-
 > **참고:** 교재의 코드는 `main` 끝에 `return 0;`이 없다. C99부터는 `main`의 닫는 중괄호에 도달하면 0을 반환한 것으로 처리하므로 이 코드도 경고 없이 컴파일된다. 이 예외는 `main`에만 적용된다([2장 1.4절](../Ch02_C-Program-Basics/Concepts_Lecture.ko.md#14-종료-코드)).
 
 ---
@@ -763,8 +761,6 @@ int main(void)
 몇 월? 12
 입장료 : 40000
 ```
-
-같은 방식으로 `switch`문을 `if`문으로 바꾸는 문제는 [HW04 문제 4](../../Coursework/HW04_Control-Statements-II/Assignment-Explanation.ko.md#5-문제-4-switch-if-변환-2)에서도 다룬다.
 
 ---
 
@@ -1082,7 +1078,7 @@ int main(void)
 입력 오류! 점수는 0~100 사이여야 합니다.
 ```
 
-같은 기준을 `switch`문으로 처리하는 방법은 [5장 2.7절](Concepts_Lecture.ko.md#27-switch)과 [HW04 문제 3](../../Coursework/HW04_Control-Statements-II/Assignment-Explanation.ko.md#4-문제-3-switch-if-변환-1)에 있다.
+같은 기준을 `switch`문으로 처리하는 방법은 [5장 2.7절](Concepts_Lecture.ko.md#27-switch)에 있다.
 
 ---
 

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -410,8 +410,6 @@ int main(void)
 10진수 -1은 16진수 ffffffff에 해당합니다.
 ```
 
-입력받은 값을 10진수, 8진수, 16진수로 한꺼번에 출력하는 비슷한 문제는 [HW02 문제 1](../../Coursework/HW02_Operators/Assignment-Explanation.ko.md#2-문제-1-값의-n진수-출력)에 있다.
-
 ---
 
 <br>
@@ -542,8 +540,6 @@ int main(void)
 초? 7
 입력한 시간은 100:-5:07입니다.
 ```
-
-문자 폭, 정렬, 0 채움을 함께 연습하는 문제는 [HW01 문제 3](../../Coursework/HW01_Data-Types-and-Variables/Assignment-Explanation.ko.md#7-문제-3-변수-연습-3)에 있다.
 
 ---
 
@@ -873,5 +869,3 @@ int main(void)
 10진수: 0
 16진수: 0
 ```
-
-10진수로 입력받은 값을 `%d`, `%#o`, `%#x`로 출력하는 비슷한 문제는 [HW02 문제 1](../../Coursework/HW02_Operators/Assignment-Explanation.ko.md#2-문제-1-값의-n진수-출력)에 있다. 그 문제는 입력을 `%d`로 받으므로 `0x12` 같은 입력은 0으로 읽힌다.

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -534,8 +534,6 @@ Applying `sizeof` to each expression confirms this through the size of the resul
 - **(11):** `x |= z` is `x = x | z`, so binary `01 | 11` = `11`, that is, 3 is assigned to `x` ([Chapter 4, Section 6.1](Concepts_Lecture.md#61-bitwise-and-or-xor-not)).
 - **(12):** The precedence order is `+`, `>`, `?:`, `=`, so this is `y = (((x + 1) > z) ? y : (y - 1))`. `x + 1 > z` is 2 > 3, which is false, so `y - 1` = 1 is selected and assigned to `y` ([Chapter 4, Section 8.1](Concepts_Lecture.md#81-ternary-operator), [Section 10.1](Concepts_Lecture.md#101-precedence-table)).
 
-A similar problem that prints the values of relational and logical operators is in [HW03 Problem 1](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#2-problem-1-values-of-operators), and a problem that traces increment, decrement, and assignment statement by statement is in [HW03 Problem 3](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#4-problem-3-increment-decrement-and-assignment).
-
 ---
 
 <br>
@@ -632,7 +630,7 @@ A similar problem that prints the values of relational and logical operators is 
 
 **Answer:** `(month >= 6 && month <= 8) ? 70000 : 35000`
 
-**Explanation:** The condition of being June or later and August or earlier is `month >= 6 && month <= 8`, two relational expressions joined by `&&`, and the conditional operator gives 70000 as the value of the expression if the condition is true and 35000 if it is false ([Chapter 4, Section 8.1](Concepts_Lecture.md#81-ternary-operator)). The relational operators have higher precedence than `&&`, and `&&` has higher precedence than the conditional operator, so writing `month >= 6 && month <= 8 ? 70000 : 35000` without parentheses is the same ([Chapter 4, Section 10.1](Concepts_Lecture.md#101-precedence-table)). Writing it as in mathematics, `6 <= month <= 8`, is computed as `(6 <= month) <= 8`, and since the left comparison result, 0 or 1, is always 8 or less, the condition is always true. A similar problem that writes range conditions as expressions is in [HW03 Problem 2](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#3-problem-2-writing-conditions-as-expressions).
+**Explanation:** The condition of being June or later and August or earlier is `month >= 6 && month <= 8`, two relational expressions joined by `&&`, and the conditional operator gives 70000 as the value of the expression if the condition is true and 35000 if it is false ([Chapter 4, Section 8.1](Concepts_Lecture.md#81-ternary-operator)). The relational operators have higher precedence than `&&`, and `&&` has higher precedence than the conditional operator, so writing `month >= 6 && month <= 8 ? 70000 : 35000` without parentheses is the same ([Chapter 4, Section 10.1](Concepts_Lecture.md#101-precedence-table)). Writing it as in mathematics, `6 <= month <= 8`, is computed as `(6 <= month) <= 8`, and since the left comparison result, 0 or 1, is always 8 or less, the condition is always true.
 
 The code with the blank filled in is as follows.
 

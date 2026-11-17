@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 9
 
@@ -503,7 +503,7 @@ int main()
 2. a, b: 5, 3 
 ```
 
-> **Note:** This method reassigns `a` and `b` in `main`, so the function does not change the caller's variables directly. Also, if `a + b` exceeds the range of `int`, overflow occurs. To change the caller's variables directly, the function must receive the addresses of the variables as parameters, as in `void swap(int *x, int *y)`, and swap `*x` and `*y`; this solution is in [HW08 Problem 1](../../Coursework/HW08_Pointers-I/Assignment-Explanation.md#1-swapping) ([Chapter 8, Section 3.2](Concepts_Lecture.md#32-modifying-a-variable-through-a-pointer)).
+> **Note:** This method reassigns `a` and `b` in `main`, so the function does not change the caller's variables directly. Also, if `a + b` exceeds the range of `int`, overflow occurs. To change the caller's variables directly, the function must receive the addresses of the variables as parameters, as in `void swap(int *x, int *y)`, and swap `*x` and `*y` ([Chapter 8, Section 3.2](Concepts_Lecture.md#32-modifying-a-variable-through-a-pointer)).
 
 ---
 

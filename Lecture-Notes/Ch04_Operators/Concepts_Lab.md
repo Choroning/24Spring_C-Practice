@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-18
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4
 
@@ -451,8 +451,6 @@ input two values: -3 -23
 MAX: -3
 ```
 
-Finding the largest of three integers with the conditional operator only is covered in [HW03 Problem 4](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#5-problem-4-comparing-magnitudes).
-
 ### 7.4 Predicting Relational, Logical, and sizeof Results
 
 **Problem:** Predict the output of the following code.
@@ -499,7 +497,7 @@ int main(void)
  8 
 ```
 
-The result of `sizeof` has the type `size_t`, so from C99 it is printed with `%zu`. A problem of the same form with different variable values and `sizeof` operands is in [HW03 Problem 1](../../Coursework/HW03_Control-Statements-I/Assignment-Explanation.md#2-problem-1-values-of-operators).
+The result of `sizeof` has the type `size_t`, so from C99 it is printed with `%zu`.
 
 ---
 
