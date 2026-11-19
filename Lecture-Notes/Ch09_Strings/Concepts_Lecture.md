@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -22,6 +22,7 @@
   - [1.1 Characters vs Strings](#11-characters-vs-strings)
   - [1.2 Declaration and Initialization](#12-declaration-and-initialization)
   - [1.3 Usage](#13-usage)
+  - [1.4 Processing Strings with the Null Character](#14-processing-strings-with-the-null-character)
 - [2. Standard String Functions (`<string.h>`)](#2-standard-string-functions-stringh)
   - [2.1 `strlen`](#21-strlen)
   - [2.2 `strcpy` / `strncpy`](#22-strcpy--strncpy)
@@ -29,6 +30,8 @@
   - [2.4 `strcat` / `strncat`](#24-strcat--strncat)
   - [2.5 `strchr` / `strstr`](#25-strchr--strstr)
   - [2.6 `strtok`](#26-strtok)
+  - [2.7 Comparing and Swapping Strings](#27-comparing-and-swapping-strings)
+  - [2.8 Implementing String Functions Directly](#28-implementing-string-functions-directly)
 - [3. Character Functions (`<ctype.h>`)](#3-character-functions-ctypeh)
   - [3.1 Classification](#31-classification)
   - [3.2 Conversion](#32-conversion)
@@ -36,6 +39,7 @@
   - [4.1 `scanf` / `printf` with `%s`](#41-scanf--printf-with-s)
   - [4.2 `fgets` / `gets_s`](#42-fgets--gets_s)
   - [4.3 `puts`](#43-puts)
+  - [4.4 Common Problems in String Input](#44-common-problems-in-string-input)
 - [5. Data Conversion Functions (`<stdlib.h>`, `<stdio.h>`)](#5-data-conversion-functions-stdlibh-stdioh)
   - [5.1 String to Number](#51-string-to-number)
   - [5.2 `sscanf` / `sprintf`](#52-sscanf--sprintf)
@@ -43,9 +47,13 @@
   - [6.1 `char*` String Pointer](#61-char-string-pointer)
   - [6.2 `const char*`](#62-const-char)
   - [6.3 Guidelines](#63-guidelines)
+  - [6.4 Writing Functions That Take String Parameters](#64-writing-functions-that-take-string-parameters)
+  - [6.5 Storage of `char[]` Versus `char*`](#65-storage-of-char-versus-char)
 - [7. String Arrays](#7-string-arrays)
   - [7.1 2D `char` Array](#71-2d-char-array)
   - [7.2 Array of String Pointers](#72-array-of-string-pointers)
+  - [7.3 Memory Comparison of the Two Kinds of String Arrays](#73-memory-comparison-of-the-two-kinds-of-string-arrays)
+- [Concept Applications](#concept-applications)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -158,6 +166,34 @@ strcpy(str, "Hello");  // correct way to copy a string into an array
 ```
 
 Individual characters can be modified (`str[0] = 'X'`), but the entire string cannot be replaced with `=`. After declaration, `strcpy()` must be used to assign a whole string.
+
+### 1.4 Processing Strings with the Null Character
+
+The end of a string is marked not by a length but by the null character, so a loop that processes a string proceeds until it meets `'\0'` rather than counting elements. The following code counts the length directly and converts lowercase letters to uppercase while counting the characters that were uppercase originally.
+
+```c
+char s[20] = "Hello, C";
+int n = 0, i, upper = 0;
+
+while (s[n] != '\0')                    // until the null character
+    n++;
+printf("length = %d\n", n);
+
+for (i = 0; s[i] != '\0'; i++) {
+    if (s[i] >= 'a' && s[i] <= 'z')
+        s[i] = s[i] - 'a' + 'A';        // lowercase to uppercase
+    else if (s[i] >= 'A' && s[i] <= 'Z')
+        upper++;
+}
+printf("%s, originally uppercase = %d\n", s, upper);
+```
+
+```text
+length = 8
+HELLO, C, originally uppercase = 2
+```
+
+`"Hello, C"` consists of the 8 characters `H`, `e`, `l`, `l`, `o`, `,`, a space, and `C`, and `s[8]` is `'\0'`, so the first loop stops when `n` is 8. The array size 20 plays no part in deciding where the loop ends. In the second loop, `s[i] - 'a' + 'A'` uses the property that lowercase and uppercase letters differ by the same code in ASCII (Chapter 3, Section 1.3), and the comma and space match neither condition and remain as they are. The original uppercase letters are `H` and `C`, 2 in all. This approach assumes that `'\0'` is present, so if it is used on a character array without `'\0'`, as cautioned in Section 1.2, the loop continues past the array and the behavior is undefined. The standard functions that do the same jobs are `strlen` of Section 2 and `toupper` of Section 3.
 
 ---
 
@@ -315,6 +351,109 @@ while (token != NULL) {
 
 > **Caution:** `strtok` modifies the original string. If you need to preserve it, make a copy first with `strcpy`. For the same reason, a string literal, which cannot be modified, must not be passed to `strtok`.
 
+### 2.7 Comparing and Swapping Strings
+
+`strcmp(s1, s2)` compares two strings one character at a time from the front, and at the first differing characters it decides the result by comparing their codes. It returns a negative value if `s1` comes first, 0 if they are equal, and a positive value if `s1` comes later; the magnitude of the return value differs between implementations, so only its sign is tested. The following checks the result of each comparison by its sign.
+
+```c
+printf("%d\n", strcmp("apple", "apricot") < 0);
+printf("%d\n", strcmp("apple", "app") > 0);
+printf("%d\n", strcmp("Zebra", "apple") < 0);
+printf("%d\n", strcmp("abc", "abc") == 0);
+printf("%d\n", strncmp("apple", "apricot", 2) == 0);
+```
+
+```text
+1
+1
+1
+1
+1
+```
+
+| Comparison | First Differing Position | Sign of the Result and Reason |
+|:-----|:-----|:-----|
+| `"apple"` and `"apricot"` | Index 2 (`'p'` and `'r'`) | Negative, `'p'` (112) < `'r'` (114) |
+| `"apple"` and `"app"` | Index 3 (`'l'` and `'\0'`) | Positive, the shorter one ends first and `'\0'` (0) is smaller |
+| `"Zebra"` and `"apple"` | Index 0 (`'Z'` and `'a'`) | Negative, uppercase `'Z'` (90) < lowercase `'a'` (97) |
+| `"abc"` and `"abc"` | None | 0, all characters and the null character are equal |
+| `"apple"` and `"apricot"`, first 2 characters only | None | 0, `strncmp` compares only up to n characters |
+
+*Table 4. How `strcmp` compares*
+
+The order of `strcmp` resembles dictionary order, but it follows character codes, so in ASCII every uppercase letter comes before every lowercase letter. To compare while ignoring case, compare copies of the two strings converted with `tolower` of Section 3.
+
+When two strings are swapped, a temporary array is used with three calls to `strcpy`, because an array cannot be assigned with `=` (Section 1.3). The following code swaps two words if they are not in dictionary order.
+
+```c
+char a[20] = "banana", b[20] = "apple", temp[20];
+
+if (strcmp(a, b) > 0) {         // if a comes after b
+    strcpy(temp, a);
+    strcpy(a, b);
+    strcpy(b, temp);
+}
+printf("%s %s\n", a, b);
+```
+
+```text
+apple banana
+```
+
+Since `'b'` is greater than `'a'`, `strcmp(a, b)` is positive, and the three copies exchange the two contents. All three arrays must then be large enough to hold the other string. If the two arrays differ in size, copying the longer string into the shorter array can cause the buffer overrun of Section 2.2.
+
+### 2.8 Implementing String Functions Directly
+
+The behavior of the standard string functions becomes clear when they are implemented directly with only pointers and the null character. The following functions do the same jobs as `strlen`, `strcpy`, and `strcat`.
+
+```c
+size_t my_strlen(const char *s)
+{
+    const char *p = s;
+
+    while (*p != '\0')          // move p up to the null character
+        p++;
+    return (size_t)(p - s);     // the number of slots moved is the length
+}
+
+char *my_strcpy(char *dest, const char *src)
+{
+    char *d = dest;
+
+    while ((*d++ = *src++) != '\0')     // copy one character at a time, through the null
+        ;
+    return dest;
+}
+
+char *my_strcat(char *dest, const char *src)
+{
+    my_strcpy(dest + my_strlen(dest), src);     // copy from the position of dest's null
+    return dest;
+}
+
+int main(void)
+{
+    char buf[20];
+
+    my_strcpy(buf, "data");
+    printf("%s %zu\n", buf, my_strlen(buf));
+    my_strcat(buf, "base");
+    printf("%s %zu\n", buf, my_strlen(buf));
+    return 0;
+}
+```
+
+```text
+data 4
+database 8
+```
+
+- **`my_strlen`:** It moves `p` until it reaches the null character, then obtains the number of characters as the difference `p - s` of two pointers into the same array (Chapter 8, Section 2.1). For `"data"`, `p` moves 4 slots, and 4 is returned.
+- **`my_strcpy`:** The condition `(*d++ = *src++) != '\0'` does three things at once: it assigns `*src` to `*d`, moves both pointers to the next slot, and tests whether the character just assigned is the null character. The loop ends after the null character has also been copied, so the copy always ends with a null character. The loop body is the null statement of Chapter 5, Section 3.7. Copying `"data"` performs 5 assignments: `'d'`, `'a'`, `'t'`, `'a'`, and `'\0'`.
+- **`my_strcat`:** `dest + my_strlen(dest)` is the position of the null character of `dest`. Copying `src` from that position overwrites the null character and appends `src`. When `buf` is `"data"`, `"base"` is copied from offset 4, giving `"database"`.
+
+This implementation also shows the same weakness as the standard functions. None of the functions knows the size of `dest`, so if the string to be copied is longer than the array, the buffer overrun of Section 2.2 occurs. This is why functions that also take the size should be used.
+
 ---
 
 <br>
@@ -335,7 +474,7 @@ All functions below require `#include <ctype.h>`. They take an `int` (character)
 | `isspace(c)` | `c` is whitespace (space, `\t`, `\n`, etc.) |
 | `isxdigit(c)` | `c` is a hexadecimal digit (`0-9`, `A-F`, `a-f`) |
 
-*Table 4. Character classification functions of `<ctype.h>`*
+*Table 5. Character classification functions of `<ctype.h>`*
 
 ```c
 #include <ctype.h>
@@ -355,7 +494,7 @@ if (isdigit(c))  printf("Digit\n");      // (not printed)
 | `toupper(c)` | Returns uppercase version of `c` (if `c` is a lowercase letter) |
 | `tolower(c)` | Returns lowercase version of `c` (if `c` is an uppercase letter) |
 
-*Table 5. Case conversion functions of `<ctype.h>`*
+*Table 6. Case conversion functions of `<ctype.h>`*
 
 ```c
 printf("%c\n", toupper('a'));   // A
@@ -401,7 +540,7 @@ printf("Hello, %s!\n", name);
 | `Alice` | `"Alice"` |
 | `Alice Bob` | `"Alice"` (stops at space; `"Bob"` remains in buffer) |
 
-*Table 6. Values stored by `scanf("%s", name)` for each input*
+*Table 7. Values stored by `scanf("%s", name)` for each input*
 
 > **Caution:** `scanf("%s", ...)` has no length limit by default, so it can overflow the buffer. With a width specifier such as `scanf("%19s", name)`, at most 19 characters are read, leaving room for `'\0'`. When reading a string with Visual Studio's `scanf_s`, pass the array size as well, as in `scanf_s("%s", name, (unsigned)sizeof(name))`; if a string longer than the array is entered, the first element is set to the null character and the result is an empty string.
 
@@ -440,9 +579,11 @@ gets_s(line, 100);   // reads line without '\n'
 | `fgets(str, n, stdin)` | Newline or `n-1` chars | Yes | Yes |
 | `gets_s(str, n)` | Newline | No | Yes |
 
-*Table 7. Comparison of string input functions*
+*Table 8. Comparison of string input functions*
 
 `fgets` is used for reading full lines because it is safe and available on all systems. The trailing `'\n'` must be stripped if it is not needed.
+
+When the entered line is longer than the array, `fgets` reads only one character fewer than the array size, appends the null character, and stops; the rest remains in the buffer, and the next `fgets` continues reading it. Reading `programming` twice with a `buf` of size 8, the first call obtains `program` (7 characters) and the second the remaining `ming` and the newline (5 characters). Hence if the string read does not end with `'\n'`, it can be concluded that the line has not been read completely.
 
 ### 4.3 `puts`
 
@@ -453,6 +594,58 @@ char str[] = "Hello, World!";
 puts(str);    // prints: Hello, World!\n
 // equivalent to: printf("%s\n", str);
 ```
+
+### 4.4 Common Problems in String Input
+
+Two problems that often arise in string input are explained by the input buffer (Chapter 5, Section 3.8). The following program shows the two problems in turn.
+
+```c
+char word[20], rest[40], line[40];
+int age = 0;
+
+scanf("%19s", word);
+fgets(rest, sizeof(rest), stdin);
+printf("word = [%s], rest = [%s]\n", word, rest);
+
+scanf("%d", &age);
+fgets(line, sizeof(line), stdin);
+printf("age = %d, line = [%s], len = %zu\n", age, line, strlen(line));
+```
+
+```text
+Kim Minsu
+21
+Seoul
+```
+
+Entering the three lines above prints the following.
+
+```text
+word = [Kim], rest = [ Minsu
+]
+age = 21, line = [
+], len = 1
+```
+
+First, `%s` stops reading when it meets a whitespace character. From `"Kim Minsu"`, only `Kim` goes into `word`, and `" Minsu\n"`, from the space on, remains in the buffer and is taken by the next `fgets`. To read a whole line containing spaces, use `fgets`, not `scanf("%s")`. Second, because of the `'\n'` that `scanf("%d")` leaves after reading 21, the `fgets` that follows does not wait for the user's input but reads just the newline, producing a string of length 1. `Seoul` is never read.
+
+The second problem is solved by discarding the characters left in the buffer after `scanf`, up to the newline. In the following code, `getchar()` is a function that reads one character from the buffer and returns it, and the loop discards the remaining characters until it reads `'\n'`. Then the `'\n'` at the end of the line read by `fgets` is found with `strcspn` and removed.
+
+```c
+scanf("%d", &age);
+while ((c = getchar()) != '\n' && c != EOF)     // discard the rest of the line
+    ;
+fgets(line, sizeof(line), stdin);
+line[strcspn(line, "\n")] = '\0';               // remove the '\n' at the end of the line
+```
+
+```text
+age? 21
+address? Seoul Mapo
+[21] [Seoul Mapo] len = 10
+```
+
+`c` must be declared `int` so that it can distinguish `EOF` (a negative value) returned by `getchar` from every character code. A program that reads integers and strings together also often reads all input line by line with `fgets` from the start and extracts numbers with the `sscanf` of Section 5.
 
 ---
 
@@ -470,7 +663,7 @@ These functions are declared in `<stdlib.h>`.
 | `atof(str)` | `double` | `atof("3.14")` returns `3.14` |
 | `atol(str)` | `long` | `atol("1000000")` returns `1000000L` |
 
-*Table 8. Functions that convert strings to numbers*
+*Table 9. Functions that convert strings to numbers*
 
 ```c
 #include <stdlib.h>
@@ -585,7 +778,7 @@ msg = "World";   // OK: can change what the pointer points to
 | Function parameter (read-only) | `void print(const char *s);` | No |
 | Function parameter (modifiable) | `void modify(char *s);` | Yes |
 
-*Table 9. String declarations by use case*
+*Table 10. String declarations by use case*
 
 ```c
 // Mutable string (array: copies the literal)
@@ -602,6 +795,105 @@ As a rule of thumb, `char[]` is used when the string contents must change, and `
 When defining a function that takes a string as a parameter, follow these rules. If the string is an output parameter, use a `char*` parameter and also receive the size of the character array, so that changes to the string inside the function do not exceed the array size. If the string is an input parameter, use a `const char*` parameter; the end of the string can be found by its null character, so there is no need to receive the array size. Inside the function, the pointer can be indexed and handled like a character array.
 
 When calling such a function, a `char*` parameter accepts only character arrays and `char*` pointers as arguments, and the contents of the string may change after the call. A `const char*` parameter accepts character arrays, string literals, `char*` pointers, and `const char*` pointers, and the contents of the string do not change after the call.
+
+### 6.4 Writing Functions That Take String Parameters
+
+Following the guidelines of Section 6.3, a function that only reads a string is written with a `const char*` parameter, and a function that changes a string with a `char*` parameter. The following `count_space` counts spaces, and `reverse` reverses a string in place.
+
+```c
+int count_space(const char *s)
+{
+    int count = 0;
+
+    while (*s != '\0') {        // while the character s points to is not null
+        if (*s == ' ')
+            count++;
+        s++;                    // move to the next character
+    }
+    return count;
+}
+
+void reverse(char *s)
+{
+    int i = 0, j = 0;
+    char t;
+
+    while (s[j] != '\0')        // move j to the position of the null character
+        j++;
+    j--;                        // position of the last character
+    while (i < j) {
+        t = s[i];
+        s[i] = s[j];
+        s[j] = t;
+        i++;
+        j--;
+    }
+}
+
+int main(void)
+{
+    char text[] = "to be or not";
+
+    printf("spaces = %d\n", count_space(text));
+    printf("spaces = %d\n", count_space("a b c d"));
+    reverse(text);
+    printf("%s\n", text);
+    return 0;
+}
+```
+
+```text
+spaces = 3
+spaces = 3
+ton ro eb ot
+```
+
+The `s++` in `count_space` only moves the parameter `s`, a copy of the address received as the argument, to the next character, so the caller's array or pointer does not change. Both character arrays and string literals can be passed to a `const char*` parameter. `reverse` exchanges characters while narrowing the end indices `i` and `j` toward the middle; it differs from the array reversal of Chapter 7, Section 5.3 only in finding the end by the position of the null character instead of the element count. For the 12-character `"to be or not"`, it stops after 6 exchanges, when `i` is 6 and `j` is 5.
+
+Passing from a `const` side to a non-`const` side is not allowed. Passing `const char *p` to a `char*` parameter makes Clang issue the warning `passing 'const char *' to parameter of type 'char *' discards qualifiers`. On the other hand, in C the type of a string literal is a `char` array without `const`, so passing a literal to a `char*` parameter, as in `reverse("abc")`, compiles without a warning. However, if the function tries to change the literal, the behavior is undefined as in Section 6.1, and a program that ran `char *p = "abc"; p[0] = 'X';` on arm64 macOS terminated abnormally with a bus error (SIGBUS). A string to be changed must always be passed as a character array. Declaring the parameters of functions that only read strings as `const char *` lets the compiler catch such mistakes.
+
+### 6.5 Storage of `char[]` Versus `char*`
+
+`char arr[] = "hello";` and `const char *ptr = "hello";` seem to handle the same string, but they are placed in memory differently.
+
+```c
+char arr[] = "hello";
+const char *ptr = "hello";
+const char *ptr2 = "hello";
+
+printf("arr: %p, sizeof %zu\n", (void *)arr, sizeof arr);
+printf("ptr: %p, sizeof %zu, &ptr %p\n", (void *)ptr, sizeof ptr, (void *)&ptr);
+printf("ptr == ptr2: %d, arr == ptr: %d\n", ptr == ptr2, arr == ptr);
+arr[0] = 'j';
+ptr = "world";
+printf("%s %s\n", arr, ptr);
+```
+
+```text
+arr: 0x16fd1eb04, sizeof 6
+ptr: 0x1000e0590, sizeof 8, &ptr 0x16fd1eaf8
+ptr == ptr2: 1, arr == ptr: 0
+jello world
+```
+
+```text
+local variable area (0x16f...)             string constant area (0x100...)
+┌────────────────────────────┐           ┌────────────────────────────┐
+│ arr: h  e  l  l  o  \0     │           │ "hello\0"  @0x1000e0590    │
+├────────────────────────────┤           └────────────────────────────┘
+│ ptr: 0x1000e0590 ──────────┼─────────────────▲
+└────────────────────────────┘
+arr: 6-byte array, modifiable              constant: used as read-only
+ptr: 8-byte address
+```
+
+*Figure 4. Memory areas where a char array and a char pointer are placed*
+
+For `arr`, an array holding 6 characters (including the null character) is created in the local variable area, and the contents of the string constant are copied into that array. That is why `sizeof arr` is 6 and the contents can be changed with `arr[0] = 'j'`. `ptr` is one 8-byte pointer holding the address of `"hello"` in the program's string constant area. In the output, the different address ranges of `arr` (0x16f...) and `ptr` (0x100...) indicate that the two areas differ. That `ptr` and `ptr2` point to the same address is because the compiler merged string constants with the same contents into one; this is behavior the compiler may choose, so it is not relied on. `ptr = "world";` only makes the pointer point to another constant and copies no characters, whereas `arr = "world";` is a compile error because an array cannot be assigned.
+
+The string constant area remains for as long as the program runs, so a function returning the address of a string constant, as in `return "hello";`, is safe, unlike the address of a local variable in Chapter 8, Section 3.5. In contrast, `char arr[] = "hello";` inside a function is a local array, so returning its address creates a dangling pointer.
+
+Two mistakes that confuse character arrays with string constants are reported by Clang as warnings. First, initializing with a string longer than the array, as in `char s[5] = "hello!";`, gives the warning `initializer-string for char array is too long`, and only the first 5 characters go into the array, making a character array without a null character. Second, `if (t == "abc")` compares not the contents of the two strings but the address of the array `t` with the address of the string constant, so Clang issues the warning `result of comparison against a string literal is unspecified (use an explicit string comparison function instead)`. Like `arr == ptr` in Section 6.5, this comparison can be false even when the contents are equal, so content comparison must always use `strcmp(t, "abc") == 0`. Both cases compile, so if the warnings are not read, the problem is noticed only from the results.
 
 ---
 
@@ -629,7 +921,7 @@ names[1]: [ B ][ o ][ b ][ \0 ][ \0 ][ \0 ][ \0 ]...[ \0 ]  (20 bytes)
 names[2]: [ C ][ h ][ a ][ r ][ l ][ i ][ e ][ \0 ]...[ \0 ]  (20 bytes)
 ```
 
-*Figure 4. Memory layout of `char names[3][20]`*
+*Figure 5. Memory layout of `char names[3][20]`*
 
 Each string is accessed with only the row index, as in `names[i]`, and the `j`-th character of the `i`-th string is accessed with both the row and column indices, as in `names[i][j]`.
 
@@ -665,7 +957,7 @@ names[1] ──► "Bob\0"      (4 bytes in read-only memory)
 names[2] ──► "Charlie\0"  (8 bytes in read-only memory)
 ```
 
-*Figure 5. Pointer array names pointing to string literals*
+*Figure 6. Pointer array names pointing to string literals*
 
 ```c
 // Access and print
@@ -690,9 +982,67 @@ names[1] = "Bobby";   // OK: changes the pointer, not the string
 | Wasted space | Yes (padding with `'\0'`) | No |
 | Typical use | Mutable string table | Read-only lookup table |
 
-*Table 10. Comparison of a 2D character array and an array of string pointers*
+*Table 11. Comparison of a 2D character array and an array of string pointers*
 
 If strings must be both **read and modified**, a 2D `char` array is used. If only a **read-only list** of string constants is needed, an array of `const char*` pointers is more efficient.
+
+### 7.3 Memory Comparison of the Two Kinds of String Arrays
+
+Storing the same four strings in the two-dimensional character array of Section 7.1 and the array of string pointers of Section 7.2 and measuring their sizes gives the following.
+
+```c
+char a[4][20] = { "avengers", "iron man", "thor", "captain america" };
+const char *p[4] = { "avengers", "iron man", "thor", "captain america" };
+size_t lit = sizeof("avengers") + sizeof("iron man") + sizeof("thor") + sizeof("captain america");
+
+printf("2D array: %zu bytes, row %zu\n", sizeof a, sizeof a[0]);
+printf("pointer array: %zu bytes + literals %zu bytes\n", sizeof p, lit);
+printf("%p %p\n", (void *)a[0], (void *)a[1]);
+a[2][0] = 'T';
+printf("%s %s\n", a[2], p[2]);
+```
+
+```text
+2D array: 80 bytes, row 20
+pointer array: 32 bytes + literals 39 bytes
+0x16f4eaab8 0x16f4eaacc
+Thor thor
+```
+
+```text
+a (4 rows, 20 columns, 80 bytes)     p (4 pointers, 32 bytes)
+a[0] avengers\0.......... (20)       p[0] ──► "avengers\0"         (9)
+a[1] iron man\0.......... (20)       p[1] ──► "iron man\0"         (9)
+a[2] thor\0.............. (20)       p[2] ──► "thor\0"             (5)
+a[3] captain america\0... (20)       p[3] ──► "captain america\0"  (16)
+```
+
+*Figure 7. Memory of a 2D character array and an array of string pointers*
+
+In the two-dimensional array, every row is 20 bytes, sized for the longest string, so 15 bytes are empty in the short `"thor"` row (the `.` in the figure). The address difference between `a[0]` and `a[1]` is 0xacc - 0xab8 = 0x14 = 20, the size of one row. The pointer array is smaller: 32 bytes for 4 pointers plus 39 bytes for the actual length + 1 of each string constant, 71 bytes in all. In exchange, the two-dimensional array gives each row its own character array, so contents can be changed, as in `a[2][0] = 'T'`, while the string constants pointed to by a `const char *` array cannot be changed. Use a two-dimensional character array when strings are read in or modified, and an array of string pointers when they are only read, as with a fixed list of names.
+
+---
+
+<br>
+
+## Concept Applications
+
+**True/False Check:**
+
+| Statement | Judgment and Reason |
+|:-----|:-----|
+| A `char` array of size 3 is enough to store `"abc"`. | **F.** 4 bytes are needed, including the null character. |
+| `strlen` returns the length including the null character. | **F.** `strlen` returns the number of characters before the null character. |
+| After declaring `char s[10];`, a string can be assigned with `s = "hi";`. | **F.** Arrays cannot be assigned, so `strcpy(s, "hi");` is used. |
+| If `strcmp` returns 0, the two strings have the same contents. | **T.** It is 0 if equal, and negative or positive by the first differing character otherwise. |
+| In ASCII, `strcmp("Zoo", "apple")` is negative. | **T.** The uppercase `'Z'` (90) is less than the lowercase `'a'` (97). |
+| `strncpy(dest, src, n)` always produces a null-terminated string. | **F.** If `src` has n or more characters, no null character is appended, so it must be added manually. |
+| Executing `p[0] = 'X';` through a `char *p` pointing to a string literal is undefined behavior. | **T.** A literal may reside in unmodifiable memory, and the program may terminate abnormally depending on the environment. |
+| `fgets` also stores the newline character of the line it reads, if there is room. | **T.** So when the newline is not wanted, it is found with `strcspn` or a similar method and replaced with a null character. |
+| `sizeof` gives the same value for `char arr[] = "hello";` and `const char *p = "hello";`. | **F.** `sizeof arr` is 6, the whole array, and `sizeof p` is 8 (64-bit), the size of a pointer. |
+| `scanf("%s", s)` can read a whole line containing spaces. | **F.** `%s` stops at whitespace, so a whole line is read with `fgets`. |
+| `if (s == "abc")` tests whether the contents of `s` are `"abc"`. | **F.** It compares two addresses, so content comparison uses `strcmp`. |
+| In a two-dimensional character array, every row occupies the same size. | **T.** Even a row with a short string is allocated memory of the declared column size. |
 
 ---
 
@@ -722,6 +1072,14 @@ If strings must be both **read and modified**, a 2D `char` array is used. If onl
 | `const char*` | It marks a string as read-only explicitly and prevents accidental modification. |
 | 2D `char` Array | Its rows have a fixed size and are mutable, but short strings waste space. |
 | Array of `char*` | It is flexible with no wasted space, but the strings are read-only if the pointers point to literals. |
+| Processing with the null character | String loops run while `s[i] != '\0'`, and the null character, not the array size, decides the end. |
+| Comparison by `strcmp` | The sign is set by the codes of the first differing characters; a shorter string comes first because of `'\0'`, and in ASCII uppercase precedes lowercase. |
+| Swapping strings | Arrays cannot be assigned with `=`, so strings are swapped with a temporary array and three `strcpy` calls, and all three arrays must be large enough. |
+| String parameters | A string only read is received as `const char*` and one changed as `char*`, and moving the pointer inside the function does not change the caller. |
+| Implementing string functions | `strlen` counts slots up to the null, `strcpy` copies through the null, and `strcat` copies from the null's position, and none of them knows the destination size. |
+| Problems in string input | `%s` stops at whitespace, and the `'\n'` left after `scanf` is read by the next `fgets`, so the rest of the line is discarded before reading. |
+| `char[]` versus `char*` | An array makes a modifiable copy in the local area, while a pointer holds only an address in the string constant area. |
+| Memory of the two string arrays | A 2D character array gives every row the same size and can be modified, while a pointer array, made of pointers and constants of actual length, is smaller but cannot change its contents. |
 
 ---
 
@@ -771,5 +1129,32 @@ If strings must be both **read and modified**, a 2D `char` array is used. If onl
    <summary>Answer</summary>
 
    The tokens are returned in the order `"2024"`, `"05"`, and `"28"`, and the next call returns `NULL`. Because `strtok` replaces the delimiter `'-'` with `'\0'`, the first string in `d` ends at `"2024"`, and `printf("%s", d)` prints `2024`.
+
+   </details>
+
+6. **Sign of `strcmp`:** Write the sign of each of `strcmp("cat", "car")`, `strcmp("car", "cart")`, and `strcmp("Car", "car")`, and explain why.
+
+   <details>
+   <summary>Answer</summary>
+
+   The first is positive because at index 2, `'t'` (116) > `'r'` (114). The second is negative because `"car"` ends first, and at index 3, `'\0'` (0) < `'t'` (116). The third is negative because at index 0, `'C'` (67) < `'c'` (99).
+
+   </details>
+
+7. **Null-character loop:** For `char w[10] = "level";`, how many times does the body of `for (i = 0; w[i] != '\0'; i++)` run? Describe how this loop can be used to decide whether `w` reads the same forward and backward (a palindrome).
+
+   <details>
+   <summary>Answer</summary>
+
+   `"level"` has 5 characters, so the body runs 5 times, and `i` is 5 after the loop. After obtaining the length n with this loop, move `k` from 0 to n / 2 - 1 and compare `w[k]` with `w[n - 1 - k]`; if all pairs are equal, it is a palindrome. `"level"` is a palindrome because (`l`, `l`) and (`e`, `e`) are equal.
+
+   </details>
+
+8. **String parameters:** `void shout(char *s)` changes every lowercase letter of a string to uppercase. Explain the difference between `shout(name)` (with `char name[] = "kim";`) and `shout("kim")`.
+
+   <details>
+   <summary>Answer</summary>
+
+   `name` is a character array, so the function can change its elements, and after the call `name` is `"KIM"`. `"kim"` is a string literal, so in C it compiles without a warning, but if the function tries to change its contents, the behavior is undefined, and the program usually terminates abnormally.
 
    </details>

@@ -2,9 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 9
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercise 1 is from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -13,6 +15,12 @@
 ## Table of Contents
 
 - [Exercise 1: String Manipulation](#exercise-1-string-manipulation)
+- [Exercise 2: Values of String Pointer Expressions](#exercise-2-values-of-string-pointer-expressions)
+- [Exercise 3: Values of String Array Expressions](#exercise-3-values-of-string-array-expressions)
+- [Exercise 4: Misuse of `strcpy`](#exercise-4-misuse-of-strcpy)
+- [Exercise 5: Printing Initials](#exercise-5-printing-initials)
+- [Exercise 6: Case-Insensitive String Comparison](#exercise-6-case-insensitive-string-comparison)
+- [Exercise 7: Counting Words](#exercise-7-counting-words)
 
 ---
 
@@ -134,3 +142,117 @@ Program ended with exit code: 0
 ```
 
 **[Solution](Solutions.md#exercise-1-string-manipulation)**
+
+---
+
+<br>
+
+## Exercise 2: Values of String Pointer Expressions
+
+**Textbook Problem:** Chapter 9 exercise 4
+
+**Problem:** Assume `const char *p = "summer";` and that the string `"summer"` is at address `0x8000`. Write the value printed by each statement.
+
+- (1) `printf("%p", p);`
+- (2) `printf("%p", p + 2);`
+- (3) `printf("%c", *p);`
+- (4) `printf("%c", p[1]);`
+- (5) `printf("%s", p + 1);`
+
+**[Solution](Solutions.md#exercise-2-values-of-string-pointer-expressions)**
+
+---
+
+<br>
+
+## Exercise 3: Values of String Array Expressions
+
+**Textbook Problem:** Chapter 9 exercise 10
+
+**Problem:** For `char movies[][20] = { "avengers", "iron man", "thor", "captain america" };`, write the value of each expression.
+
+- (1) `movies[0]`
+- (2) `sizeof(movies) / sizeof(movies[0])`
+- (3) `movies[0][1]`
+- (4) `movies[1][0]`
+- (5) `movies[2]`
+- (6) `sizeof(movies[0]) / sizeof(movies[0][0])`
+- (7) `sizeof(movies) / sizeof(movies[0][0])`
+- (8) `*movies[3]`
+
+**[Solution](Solutions.md#exercise-3-values-of-string-array-expressions)**
+
+---
+
+<br>
+
+## Exercise 4: Misuse of `strcpy`
+
+**Textbook Problem:** Chapter 9 exercise 2
+
+**Problem:** Select every piece of code below that misuses `strcpy`, and state what problem each causes.
+
+- ① `char s1[10]; strcpy(s1, "abc");`
+- ② `char s2[10] = "x"; strcpy("apple", s2);`
+- ③ `char s3[3]; strcpy(s3, "good job");`
+- ④ `char s4[] = "xyz", s5[4]; strcpy(s5, s4);`
+- ⑤ `strcpy("hello", "bye");`
+
+**[Solution](Solutions.md#exercise-4-misuse-of-strcpy)**
+
+---
+
+<br>
+
+## Exercise 5: Printing Initials
+
+**Textbook Problem:** Chapter 9 programming assignment 2
+
+**Problem:** Write a program that reads an English name on one line and prints the initials, collecting the first letter of each word in uppercase. Words are separated by spaces, and the program must work correctly even with several spaces before, after, or between words. Read the input with `fgets`.
+
+**Sample Run:**
+
+```text
+name? Son Heung Min
+initials: SHM
+name?   ada   lovelace
+initials: AL
+```
+
+**[Solution](Solutions.md#exercise-5-printing-initials)**
+
+---
+
+<br>
+
+## Exercise 6: Case-Insensitive String Comparison
+
+**Textbook Problem:** Chapter 9 programming assignment 6
+
+**Problem:** Write a function `int strcmp_ic(const char *lhs, const char *rhs)` that compares two strings without distinguishing case. The sign of the return value is the same as for `strcmp`: negative if `lhs` comes first, 0 if equal, and positive if it comes later. The two strings must be compared directly, one character at a time, without using `strcmp`. The results of the following three comparisons must all print as 1 (true).
+
+```c
+printf("%d\n", strcmp_ic("Avengers", "avengers") == 0);
+printf("%d\n", strcmp_ic("Thor", "thanos") > 0);
+printf("%d\n", strcmp_ic("iron", "Iron Man") < 0);
+```
+
+**[Solution](Solutions.md#exercise-6-case-insensitive-string-comparison)**
+
+---
+
+<br>
+
+## Exercise 7: Counting Words
+
+**Problem:** Write a function `int count_words(const char *s)` that returns the number of words in a string. A word is a run of characters other than spaces, tabs, and newlines, and words must be counted exactly even when whitespace characters repeat or appear at the start or end of the string.
+
+**Sample Run:** These are the results for the three strings `"to be or not to be"`, `"   leading and   double  spaces  "`, and `""`.
+
+```text
+6
+4
+0
+```
+
+**[Solution](Solutions.md#exercise-7-counting-words)**
