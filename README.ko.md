@@ -1,4 +1,4 @@
-# [2024학년도 봄학기] C프로그래밍
+# [2024학년도 봄학기] C 프로그래밍
 
 ![Last Commit](https://img.shields.io/github/last-commit/Choroning/24Spring_C-Practice)
 ![Languages](https://img.shields.io/github/languages/top/Choroning/24Spring_C-Practice)
