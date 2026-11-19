@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -21,6 +21,7 @@
   - [1.1 The Need for Functions](#11-the-need-for-functions)
   - [1.2 Function Types](#12-function-types)
   - [1.3 Function Requirements](#13-function-requirements)
+  - [1.4 Using Standard Library Functions](#14-using-standard-library-functions)
 - [2. Function Basics](#2-function-basics)
   - [2.1 Function Definition](#21-function-definition)
   - [2.2 Return Type](#22-return-type)
@@ -28,12 +29,19 @@
   - [2.4 Parameters and Arguments](#24-parameters-and-arguments)
   - [2.5 Function Call](#25-function-call)
   - [2.6 Function Declaration (Prototype)](#26-function-declaration-prototype)
+  - [2.7 Procedure for Designing a Function](#27-procedure-for-designing-a-function)
+  - [2.8 Cautions When Calling Functions](#28-cautions-when-calling-functions)
+  - [2.9 Common Mistakes in Defining and Calling Functions](#29-common-mistakes-in-defining-and-calling-functions)
+  - [2.10 Four Forms of Functions by Parameters and Return Values](#210-four-forms-of-functions-by-parameters-and-return-values)
 - [3. Local and Global Variables](#3-local-and-global-variables)
   - [3.1 Local Variables](#31-local-variables)
   - [3.2 Global Variables](#32-global-variables)
   - [3.3 Scope Rules](#33-scope-rules)
+  - [3.4 Tracing Block Scope](#34-tracing-block-scope)
+  - [3.5 The Call Stack and the Creation and Destruction of Local Variables](#35-the-call-stack-and-the-creation-and-destruction-of-local-variables)
 - [4. Function Call Overhead](#4-function-call-overhead)
 - [5. Recursive Functions (Introduction)](#5-recursive-functions-introduction)
+- [Concept Applications](#concept-applications)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -148,6 +156,43 @@ flowchart TD
 
 Of the three elements, only the declaration can be omitted; it is unnecessary when the function definition appears before the call.
 
+### 1.4 Using Standard Library Functions
+
+The definitions of standard library functions already exist in the library, so they can be called once their declarations are brought in by including a header file. Mathematical functions are declared in `<math.h>`, and general utility functions such as the absolute value of an integer in `<stdlib.h>`.
+
+```c
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    printf("%.4f %.1f %.1f\n", sqrt(2.0), pow(2.0, 10.0), fabs(-3.5));
+    printf("%.1f %.1f %.1f %.1f\n", floor(2.7), ceil(2.1), floor(-2.7), round(2.5));
+    printf("%d\n", abs(-7));
+    return 0;
+}
+```
+
+```text
+1.4142 1024.0 3.5
+2.0 3.0 -3.0 3.0
+7
+```
+
+| Function | Header | What It Does | Parameters and Return Type |
+|:-----|:-----|:-----|:-----|
+| `sqrt(x)` | `<math.h>` | Square root | Takes a `double`, returns a `double` |
+| `pow(x, y)` | `<math.h>` | x to the power y | Takes two `double` values, returns a `double` |
+| `fabs(x)` | `<math.h>` | Absolute value of a real number | Takes a `double`, returns a `double` |
+| `floor(x)`, `ceil(x)` | `<math.h>` | Largest integer not greater than x, smallest integer not less than x | Takes a `double`, returns a `double` |
+| `round(x)` | `<math.h>` | Rounds to the nearest integer, sending halfway values away from zero (C99) | Takes a `double`, returns a `double` |
+| `abs(n)` | `<stdlib.h>` | Absolute value of an integer | Takes an `int`, returns an `int` |
+
+*Table 4. Frequently used standard library functions*
+
+`floor(-2.7)` is the largest integer not greater than -2.7, so it is -3, not -2, which differs from the result -2 of the conversion `(int)-2.7`, which truncates toward zero. `round(2.5)` sends the halfway value away from zero, so it is 3. Mathematical functions handle real numbers, so for the absolute value of an integer `abs` is used instead of `fabs`. The rules of Section 2.4 apply to library functions as well: arguments are converted to the parameter types written in the prototype, and the return value has the return type of the prototype. With GCC on Linux, linking mathematical functions sometimes requires specifying the math library, as in `cc main.c -lm`.
+
 ---
 
 <br>
@@ -198,7 +243,7 @@ A function definition consists of a **header** and a **body**.
 | Parameter list | Comma-separated list of `type name` pairs that receive values from the caller |
 | Body `{}` | The block of code that executes when the function is called |
 
-*Table 4. Components of a function definition*
+*Table 5. Components of a function definition*
 
 ### 2.2 Return Type
 
@@ -210,7 +255,7 @@ The return type specifies what kind of value the function sends back.
 | `double` | Returns a floating-point number | `double getAverage(int a, int b)` |
 | `void` | Returns nothing | `void printMenu(void)` |
 
-*Table 5. Kinds of return types*
+*Table 6. Kinds of return types*
 
 ```c
 // int return type
@@ -255,10 +300,10 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 |:-----|:--------|
 | Must start with a letter or `_` | `factorial`, `_helper` |
 | Can contain letters, digits, `_` | `calc2dArea` |
-| Cannot be a C keyword | ~~`return`~~, ~~`int`~~ |
+| Cannot be a C keyword | `return` and `int` cannot be function names |
 | Case-sensitive | `factorial` and `Factorial` are different |
 
-*Table 6. Identifier rules for function names*
+*Table 7. Identifier rules for function names*
 
 **Naming conventions (recommended):**
 
@@ -268,7 +313,7 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 | camelCase | `verbNoun` | `getFactorial`, `isLeapYear` |
 | PascalCase | `VerbNoun` | `GetDaysOfMonth`, `PrintMenu` |
 
-*Table 7. Naming conventions for function names*
+*Table 8. Naming conventions for function names*
 
 **One** naming convention is chosen and used consistently throughout the program, and function names combine a verb and a noun that describe what the function does (`getFactorial`, `isLeapYear`, `printMenu`).
 
@@ -283,7 +328,7 @@ Function names follow the same **identifier rules** as variables (Chapter 3):
 | **Parameter** | Formal parameter | In the function **definition** | A local variable that receives the incoming value |
 | **Argument** | Actual parameter | At the function **call site** | The actual value or expression passed to the function |
 
-*Table 8. Comparison of parameters and arguments*
+*Table 9. Comparison of parameters and arguments*
 
 ```c
 //                 parameter (formal)
@@ -449,7 +494,7 @@ int isLeapYear(int year) {
 | Must end with a **semicolon** | `int factorial(int n);` (not `int factorial(int n) { }`) |
 | Typically placed **before `main()`** or in a header file | Convention for readability |
 
-*Table 9. Rules for function prototypes*
+*Table 10. Rules for function prototypes*
 
 Parameter names are optional, but it is better to always include them in prototypes. The names serve as documentation, so `double power(double base, int exponent);` is far more readable than `double power(double, int);`.
 
@@ -473,6 +518,188 @@ int factorial(int n) {
 ```
 
 > **Caution:** Since C99, implicit declaration (calling a function without a prior declaration) has been removed from the standard, so the compiler must issue a diagnostic. gcc 14 and later and clang 16 and later treat it as an **error** by default, while earlier versions only warn and assume a function returning `int`. Always provide a prototype or define the function before using it.
+
+### 2.7 Procedure for Designing a Function
+
+When a needed feature is made into a function, decide first how the function looks from outside, that is, its name, parameters, and return type, and write the body afterward. Taking a function that computes the greatest common divisor of two integers as an example, the procedure is as follows.
+
+1. **Choose the name.** Choose `get_gcd` so that what the function does is clear.
+2. **Decide which values to receive from the caller and write the parameter list.** Two integers whose greatest common divisor is to be found are needed, so the list is `int x, int y`.
+3. **Make the type of the result the return type.** The greatest common divisor is an integer, so it is `int`.
+4. **Write the body.** Parameters can be used inside the body like ordinary local variables, and more variables can be declared as needed. Here the Euclidean algorithm of Chapter 5, Section 5.6 is carried over as it is.
+
+```c
+int get_gcd(int x, int y)
+{
+    int r;
+
+    while (y != 0) {
+        r = x % y;
+        x = y;
+        y = r;
+    }
+    return x;
+}
+```
+
+The output of `printf("%d %d %d\n", get_gcd(84, 36), get_gcd(17, 5), get_gcd(9, 27));` is `12 1 9`. 84 and 36 become 12 through (84, 36) → (36, 12) → (12, 0), and 17 and 5, which are coprime, give 1. When the first argument is smaller, as with 9 and 27, the first iteration swaps them into (27, 9), so the caller need not care about the order. The function changes the values of the parameters `x` and `y`, but these are copies of the arguments, so the caller's values do not change (Section 2.4).
+
+The same procedure applies when a function is extracted from code already written. As in the example of Section 1.1, find code repeated in the same shape inside `main`, move that part into the body of a function, and make the values that differ in each repetition the parameters and the result the code produces the return value. Making each function do only one thing makes it easy to name and easy to reuse elsewhere.
+
+### 2.8 Cautions When Calling Functions
+
+**Arguments are evaluated first.** Since an argument is also an expression, a constant, a variable, an arithmetic expression, or a function call can be an argument, and the values of all arguments are computed before the function is called. `draw_line('=', len * 2)` computes `len * 2` first and passes the value, and `get_factorial(add(1, 3))` first calls `add(1, 3)`, receives the return value 4, and then calls `get_factorial(4)`. However, when there are several arguments, which one is evaluated first is not specified (Chapter 4, Section 3.5).
+
+**Passing an argument is initializing a parameter.** When a function is called, its parameters are created and initialized with the values of the arguments. In the following program, calling `get_area(r)` is like executing `double radius = r;`, so the `int` argument `r` is converted to `double` when it is passed.
+
+```c
+double get_area(double radius)
+{
+    const double pi = 3.14;
+
+    return pi * radius * radius;
+}
+
+int main(void)
+{
+    int r;
+
+    for (r = 1; r <= 5; r++)
+        printf("r = %d, area = %.2f\n", r, get_area(r));
+    return 0;
+}
+```
+
+```text
+r = 1, area = 3.14
+r = 2, area = 12.56
+r = 3, area = 28.26
+r = 4, area = 50.24
+r = 5, area = 78.50
+```
+
+Following the iteration in which `r` is 3, the value 3 of the argument `r` is converted to the `double` 3.0 and initializes `radius`, and the body computes 3.14 × 3.0 × 3.0 = 28.26 and returns it. The return value becomes the value of the call expression `get_area(r)` and is used as an argument of `printf`. When the function returns, `radius` and `pi` are destroyed, and they are created again in the next iteration.
+
+**The number of arguments must equal the number of parameters.** Where a prototype is visible, the compiler reports an error if arguments are missing or extra. The following are the errors Clang reported when 2 and 4 arguments were passed to `get_max`, which has 3 parameters. The textbook describes the case of extra arguments as a warning; since compilers handle this part differently, the count must match in either case.
+
+```text
+error: too few arguments to function call, expected 3, have 2
+error: too many arguments to function call, expected 3, have 4
+```
+
+**Arguments of a different type are converted implicitly.** When floating-point values are passed to `get_max`, whose parameters are `int`, as in `get_max(12.34, 0.5, 7.9)`, each argument is converted to `int`, so `get_max(12, 0, 7)` is called and 12 is returned. Assigning the return value 12 to a `double` variable gives 12.0; the fractional parts were already lost when the arguments were passed. Clang issues warnings such as `implicit conversion from 'double' to 'int' changes value from 12.34 to 12` for each argument. The same principle applies on return: if the type of the returned value differs from the return type, it is converted to the return type.
+
+**Functions are distinguished by name.** If a name is misspelled, as in `get_ma(1, 2, 3)`, the compiler reports an undeclared function, and calling a function that is declared but not defined causes a link error (Chapter 1, Section 3.3).
+
+### 2.9 Common Mistakes in Defining and Calling Functions
+
+Among the mistakes involving functions, the compiler catches most of the following five, so it is important to read the messages and connect them to their causes.
+
+```c
+int sign(int n)
+{
+    if (n > 0)
+        return 1;
+    else if (n < 0)
+        return -1;
+}                               // no return value when n is 0
+
+double half(double x);          // the prototype's return type is double
+
+int half(double x)              // the definition's return type is int
+{
+    return x / 2;
+}
+
+void hello(void)
+{
+    printf("hello\n");
+}
+
+int main(void)
+{
+    int r = hello();            // uses the return value of a void function
+    return 0;
+}
+```
+
+```text
+warning: non-void function does not return a value in all control paths [-Wreturn-type]
+error: conflicting types for 'half'
+error: initializing 'int' with an expression of incompatible type 'void'
+```
+
+- **A path without a return:** `sign(0)` meets no `return` and reaches the end of the function. If a function whose return type is not `void` has such a path, a warning is issued, and using its return value is undefined behavior. Put `return 0;` at the end so that every path returns a value.
+- **Mismatch between prototype and definition:** If the return type or parameter types of the prototype and the definition differ, it is a `conflicting types` error. It is safest to make the prototype by copying the header of the definition and appending a semicolon.
+- **Using the value of a `void` function:** The call expression of a function whose return type is `void` has no value, so it cannot be assigned or used in an operation.
+- **A semicolon after the header:** If a definition is ended with a semicolon, as in `int square(int x);`, and the body follows, that line becomes a prototype, and the `{ ... }` after it belongs to nothing, causing the error `expected identifier or '('`.
+- **A function definition inside a function:** Standard C does not allow defining a function inside another function. Clang reports `function definition is not allowed here` for a function defined inside `main`. All functions are defined side by side, outside other functions.
+
+### 2.10 Four Forms of Functions by Parameters and Return Values
+
+Functions fall into four forms according to whether they have parameters and whether they have a return value. Which form to use is decided by whether the function must receive values from outside and whether it must give values back.
+
+| Form | Example Prototype | Use |
+|:-----|:-----|:-----|
+| Neither parameters nor return value | `void print_line(void);` | Always does the same job, such as a fixed output |
+| Parameters only | `void print_stars(int n);` | Prints or processes according to the received values but returns no result |
+| Return value only | `int read_positive(void);` | Produces a value inside the function and returns it, as with input |
+| Both parameters and return value | `int max2(int a, int b);` | Returns a result computed from the received values |
+
+*Table 11. Forms of functions by parameters and return values*
+
+```c
+void print_line(void)
+{
+    printf("----------\n");
+}
+
+void print_stars(int n)
+{
+    int i;
+
+    for (i = 0; i < n; i++)
+        printf("*");
+    printf("\n");
+}
+
+int read_positive(void)
+{
+    int n;
+
+    do {
+        printf("positive integer? ");
+        scanf("%d", &n);
+    } while (n <= 0);
+    return n;
+}
+
+int max2(int a, int b)
+{
+    return a > b ? a : b;
+}
+
+int main(void)
+{
+    int n;
+
+    print_line();
+    n = read_positive();
+    print_stars(max2(n, 3));
+    print_line();
+    return 0;
+}
+```
+
+```text
+----------
+positive integer? -2
+positive integer? 5
+*****
+----------
+```
+
+`read_positive` asks again with the `do-while` of Chapter 5 until a positive number is entered and returns the value read. Entering `-2` makes the condition `n <= 0` true, so it asks once more, and the loop ends at 5. In `print_stars(max2(n, 3))`, `max2(5, 3)` in the argument position is called first and returns 5, after which `print_stars(5)` is called (Section 2.8). A function with a return value can be used like this as an argument of another function or within an expression, but `print_line()`, whose return type is `void`, can be called only as a statement.
 
 ---
 
@@ -513,7 +740,7 @@ int main() {
 | Initial value | **Undefined** (garbage) unless explicitly initialized |
 | Independence | Different functions can use the same variable name without conflict |
 
-*Table 10. Characteristics of local variables*
+*Table 12. Characteristics of local variables*
 
 ```c
 int main() {
@@ -568,7 +795,7 @@ All three calls to `increment()` change the same `count`, so `printCount()` prin
 | Initial value | **Automatically initialized to `0`** (unlike local variables) |
 | Accessibility | Any function defined after the declaration can access it |
 
-*Table 11. Characteristics of global variables*
+*Table 13. Characteristics of global variables*
 
 ```c
 #include <stdio.h>
@@ -585,6 +812,23 @@ int main() {
 ```
 
 Overusing global variables makes it hard to track which functions modify them, leading to **hidden dependencies** and bugs that are difficult to debug. Values are therefore passed as parameters wherever possible.
+
+A global variable also cannot be used before it is declared. The scope of a global variable runs **from the point of its declaration to the end of the file**, not over the whole file, so if a global variable is declared below a function, as in the following code, its name cannot be found inside that function.
+
+```c
+void show(void)
+{
+    printf("%d\n", total);      // total has not been declared yet
+}
+
+int total = 10;
+```
+
+```text
+error: use of undeclared identifier 'total'
+```
+
+This is why global variables are usually declared after `#include` and before all function definitions. Their lifetime also differs from that of local variables. A local variable is created when its block executes and destroyed when control leaves the block, whereas a global variable is created when the program starts and remains until the program ends. Because of this, a global variable can keep its value across many calls of a function, and it is initialized to 0 when no initial value is written.
 
 ### 3.3 Scope Rules
 
@@ -640,9 +884,108 @@ When the same name exists at multiple levels:
 | Function | Declared at the top of a function | From the declaration to the end of the function |
 | File (global) | Declared outside all functions | From declaration to end of file |
 
-*Table 12. Accessible range of variables at each scope level*
+*Table 14. Accessible range of variables at each scope level*
 
 Local and global variables should not share a name. Shadowing makes code confusing and is a common source of bugs, so distinct, descriptive names are used.
+
+### 3.4 Tracing Block Scope
+
+The textbook explains the scope rules with an example in which a global variable, a local variable of `main`, and a local variable of a `while` block all use the same name `x`. Even with the same name, variables declared in different places are different variables, and when a statement uses `x`, the declaration found first while searching outward from the innermost block enclosing that statement is chosen.
+
+```c
+int x = 1;                      // global x
+
+void show(void)
+{
+    printf("show: x = %d\n", x);
+}
+
+int main(void)
+{
+    int x = 10;                 // x of main
+    int i = 0;
+
+    printf("main: x = %d\n", x);
+    while (i < 2) {
+        int x = 100 + i;        // x of the while block
+
+        printf("while: x = %d\n", x);
+        i++;
+    }
+    printf("main: x = %d\n", x);
+    show();
+    return 0;
+}
+```
+
+```text
+main: x = 10
+while: x = 100
+while: x = 101
+main: x = 10
+show: x = 1
+```
+
+| Location of the Printing Statement | `x` Chosen | Reason |
+|:-----|:-----|:-----|
+| `main`, before `while` | `x` of `main` (10) | The declaration in the `main` block is inside the global one |
+| Inside the `while` block | The block's `x` (100, 101) | It is the innermost declaration and is created anew in each iteration |
+| `main`, after `while` | `x` of `main` (10) | The block's `x` is destroyed when control leaves the block |
+| Inside `show` | Global `x` (1) | `show` has no local declaration of `x`, and the `x` of `main` is visible only inside `main` |
+
+*Table 15. Where each variable of the same name is chosen*
+
+Being called from `main` does not make the `x` of `main` visible in `show`. Scope is decided not by the calling relationship but by where the declaration sits in the source code. With the `-Wshadow` option, Clang issues the warnings `declaration shadows a variable in the global scope` and `declaration shadows a local variable` for each such shadowing, so unintended shadowing can be found.
+
+### 3.5 The Call Stack and the Creation and Destruction of Local Variables
+
+Local variables and parameters receive their places in a memory area called the **call stack** when a function is called, and give the places back when the function returns. The area created on the stack when one function is called is called a **stack frame**. The following code prints the addresses of the parameter and local variable while the recursive function `depth` calls itself three times.
+
+```c
+int depth(int n)
+{
+    int local = n * 10;
+
+    printf("depth(%d): &n = %p, &local = %p\n", n, (void *)&n, (void *)&local);
+    if (n == 3)
+        return local;
+    return depth(n + 1);
+}
+
+int main(void)
+{
+    int result;
+
+    printf("main: &result = %p\n", (void *)&result);
+    result = depth(1);
+    printf("result = %d\n", result);
+    return 0;
+}
+```
+
+```text
+main: &result = 0x16f7b6b08
+depth(1): &n = 0x16f7b6ad8, &local = 0x16f7b6ad4
+depth(2): &n = 0x16f7b6a98, &local = 0x16f7b6a94
+depth(3): &n = 0x16f7b6a58, &local = 0x16f7b6a54
+result = 30
+```
+
+```text
+high address ┌────────────────────────┐
+             │ main:     result       │  0x...b08
+             ├────────────────────────┤
+             │ depth(1): n=1 local=10 │  0x...ad8
+             ├────────────────────────┤
+             │ depth(2): n=2 local=20 │  0x...a98
+             ├────────────────────────┤
+             │ depth(3): n=3 local=30 │  0x...a58   ← most recent call
+low address  └────────────────────────┘
+```
+
+*Figure 5. Frames of the call stack during the recursive calls*
+
+Each time the calls go one level deeper, the addresses of `n` and `local` drop by 0x40 (64) bytes. The stack in this environment grows from high addresses toward low addresses, and even the same function has its own `n` and `local` in a separate frame for each call. When `depth(3)` returns 30, its frame disappears, and the return value is passed through `return depth(n + 1);` of `depth(2)` to `depth(1)` and then to `main`. Why changing a parameter does not change the argument (Section 2.4), why the address of a local variable must not be returned (Chapter 8, Section 3.5), and why recursion without a base case causes a stack overflow (Section 5) all follow from this structure. The size of a frame and the direction in which the stack grows are decided by the compiler and the platform.
 
 ---
 
@@ -666,7 +1009,7 @@ Function Call Mechanism
 ─────────────────────────────────────────
 ```
 
-*Figure 5. Steps of a function call and return*
+*Figure 6. Steps of a function call and return*
 
 The exact steps and their order depend on the CPU and the calling convention. For example, on x86-64 the first several arguments are passed in registers rather than on the stack.
 
@@ -731,7 +1074,7 @@ factorial(4)
   → returns 4 * 6 = 24
 ```
 
-*Figure 6. Recursive call trace of factorial(4)*
+*Figure 7. Recursive call trace of factorial(4)*
 
 **Another example (counting the digits of a positive integer):**
 
@@ -751,6 +1094,72 @@ int countDigits(int n) {
 > **Caution:** A recursive function without a proper base case will call itself infinitely, causing a **stack overflow** (the call stack runs out of memory). Always ensure the base case is reachable.
 
 > **Key Point:** Any problem that can be solved recursively can also be solved with a loop (iteration), managing a stack explicitly if necessary. Recursion is elegant for problems that are naturally self-similar (factorial, Fibonacci, tree traversal), but iterative solutions are often more efficient due to lower function call overhead.
+
+Recursive functions and loops solve the same problems in different ways. Recursion has the advantage that a problem is turned into a smaller problem of the same shape, so the definition can be carried into code as it is, but every call incurs the call overhead of Section 4. In particular, when one call invokes itself twice or more, the number of calls grows quickly. The following code computes the Fibonacci number F(n) = F(n - 1) + F(n - 2) (F(0) = 0, F(1) = 1) recursively while counting the calls, and also computes the same value with a loop.
+
+```c
+int calls = 0;
+
+int fib(int n)
+{
+    calls++;
+    if (n <= 1)
+        return n;
+    return fib(n - 1) + fib(n - 2);
+}
+
+int fib_loop(int n)
+{
+    int a = 0, b = 1, t, i;
+
+    for (i = 0; i < n; i++) {
+        t = a + b;
+        a = b;
+        b = t;
+    }
+    return a;
+}
+
+int main(void)
+{
+    int n, f;
+
+    for (n = 5; n <= 25; n += 10) {
+        calls = 0;
+        f = fib(n);
+        printf("fib(%d) = %d, calls = %d, loop = %d\n", n, f, calls, fib_loop(n));
+    }
+    return 0;
+}
+```
+
+```text
+fib(5) = 5, calls = 15, loop = 5
+fib(15) = 610, calls = 1973, loop = 610
+fib(25) = 75025, calls = 242785, loop = 75025
+```
+
+`main` executes `f = fib(n);` as a separate statement before `calls` is read among the arguments of `printf`, so that the result does not depend on the evaluation order of the arguments. `fib(5)` calls `fib(4)` and `fib(3)`, and `fib(4)` calls `fib(3)` again, so the same value is computed many times. The number of calls C(n) satisfies C(n) = C(n - 1) + C(n - 2) + 1, so C(5) = 15, and it grows more than a hundredfold each time n increases by 10. The loop `fib_loop` repeats only n times, so it computes the same result far faster. The textbook likewise concludes that loops are better for performance, while recursion has the advantage of expressing an algorithm simply.
+
+Whether with recursion or a loop, it must also be checked that the result does not exceed the range of its type. Factorials grow quickly: up to 12! = 479001600 fits in an `int` (maximum 2147483647), but 13! = 6227020800 does not. Computing `factorial(13)` with the `factorial` above causes signed integer overflow and an untrustworthy result, so handling 13 or more requires changing the return type to `long long`. Even `long long` can hold only up to 20!.
+
+---
+
+<br>
+
+## Concept Applications
+
+**True/False Check:**
+
+| Statement | Judgment and Reason |
+|:-----|:-----|
+| In C, arguments are passed by value, so changing a parameter inside the function does not change the argument. | **T.** A parameter is a local variable initialized with a copy of the argument. |
+| If a function's definition precedes its call, no prototype is needed. | **T.** The compiler already knows the return type and parameters from the definition before meeting the call. |
+| A `void` function cannot use a `return` statement. | **F.** It can end early with `return;`, which has no value. |
+| Local variables inside a function are automatically initialized to 0. | **F.** The initial value of a local variable is undetermined; global variables are the ones initialized to 0. |
+| Inside a function called from `main`, the local variables of `main` can be used by name. | **F.** Scope is decided by where declarations are placed, so the local variables of `main` are visible only inside `main`. |
+| Each call of a recursive function creates its own parameters and local variables. | **T.** Each call gets a separate stack frame. |
+| Passing a floating-point argument to an `int` parameter passes the rounded value. | **F.** Converting a real number to `int` truncates toward zero, so 7.9 becomes 7. |
 
 ---
 
@@ -776,6 +1185,15 @@ int countDigits(int n) {
 | Function Call Overhead | Every call needs saving the return address and registers, passing arguments, and restoring them, so the share of overhead grows as the function gets smaller. |
 | Recursive Functions | A recursive function calls itself, and a stack overflow occurs if there is no base case or the base case is never reached. |
 | Multiple Return Values | A function cannot return several values directly, so pointer parameters are used, which Chapter 8 covers. |
+| Designing a function | Decide the name, parameters, and return type first, then write the body, extracting the varying values of repeated code as parameters. |
+| Evaluating and passing arguments | All arguments are computed first and their values initialize the parameters, being converted to the parameter types when they differ. |
+| Number of arguments | When a prototype is visible, the compiler diagnoses missing or extra arguments, and the count must always equal the number of parameters. |
+| Scope and lifetime of globals | A global can be used from its declaration to the end of the file, and it is created at program start and remains until the end. |
+| Recursion and iteration | Recursion carries a definition into code easily but has call overhead, and when calls branch, as with Fibonacci, it is far slower than a loop. |
+| Standard library functions | They are called after their declarations are brought in by headers; the functions of `<math.h>` handle `double`, and the absolute value of an integer is computed with `abs` of `<stdlib.h>`. |
+| Common function mistakes | A path without a return, a prototype that mismatches the definition, using the value of a `void` function, a semicolon after the header, and a function defined inside a function are typical. |
+| Block scope | With the same name, the declaration of the innermost block is chosen, and scope is decided by where declarations are placed, not by calling relationships. |
+| Call stack | Each call creates a stack frame holding its parameters and local variables, which disappears on return, and every recursive call has its own frame. |
 
 ---
 
@@ -827,3 +1245,48 @@ int countDigits(int n) {
    The global variable `g` is automatically initialized to 0 when the program starts, so it is guaranteed to be 0. The local variable `local` is not initialized automatically, so its value is indeterminate, and reading it before initializing it yields an unpredictable garbage value.
 
    </details>
+
+6. **Tracing argument passing:** When `int get_max(int a, int b, int c)` returns the largest of three numbers, what is the value of `d` after `double d = get_max(3.9, 7.2, 7.8);` executes?
+
+   <details>
+   <summary>Answer</summary>
+
+   The arguments are converted to the parameter type `int`, so `get_max(3, 7, 7)` is called, 7 is returned, and `d` is 7.0. The fractional parts are discarded when the arguments are passed, so the result is not 7.8, the maximum when compared as real numbers.
+
+   </details>
+
+7. **Number of recursive calls:** How many times in all is the function called when `fib` of Section 5 computes `fib(4)`? Compute it with C(n) = C(n - 1) + C(n - 2) + 1, starting from C(0) = C(1) = 1.
+
+   <details>
+   <summary>Answer</summary>
+
+   C(2) = 1 + 1 + 1 = 3, C(3) = 3 + 1 + 1 = 5, and C(4) = 5 + 3 + 1 = 9, so it is called 9 times. In the same way C(5) = 9 + 5 + 1 = 15, which agrees with the output in Section 5.
+
+   </details>
+
+8. **Designing a function:** Design, by the procedure of Section 2.7, a function that takes an integer n and returns the sum from 1 to n, and write it so that it returns 0 when n is 0 or less.
+
+   <details>
+   <summary>Answer</summary>
+
+   Choose the name `sum_to`, the parameter `int n`, and the return type `int`. The body is `int i, s = 0; for (i = 1; i <= n; i++) s += i; return s;`. When n is 0 or less, the loop never runs, so 0 is returned without a separate test. For example, `sum_to(10)` returns 55.
+
+   </details>
+
+9. **Return paths:** Explain the problem with the following function and correct it. `int is_even(int n) { if (n % 2 == 0) return 1; }`
+
+   <details>
+   <summary>Answer</summary>
+
+   When n is odd, no `return` executes and the function ends, so the return value is undetermined. Using that value is undefined behavior, and the compiler issues the warning `non-void function does not return a value in all control paths`. Add `return 0;` after the `if`, or return the value 1 or 0 of the relational expression directly, as in `return n % 2 == 0;`.
+
+   </details>
+
+10. **Library functions:** Write the values of `floor(-4.5)`, `ceil(-4.5)`, `round(-4.5)`, and `(int)-4.5`.
+
+    <details>
+    <summary>Answer</summary>
+
+    `floor(-4.5)` is -5.0, the largest integer not greater than -4.5, and `ceil(-4.5)` is -4.0, the smallest integer not less than -4.5. `round(-4.5)` sends the halfway value away from zero, so it is -5.0, and `(int)-4.5` truncates toward zero, so it is -4.
+
+    </details>
