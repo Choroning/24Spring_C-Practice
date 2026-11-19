@@ -2,11 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1-3 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -17,6 +17,12 @@
 - [Exercise 1: Computing the Check Digit of a UPC Barcode](#exercise-1-computing-the-check-digit-of-a-upc-barcode)
 - [Exercise 2: Selection Sort Variant](#exercise-2-selection-sort-variant)
 - [Exercise 3: Computing Frequency and Relative Frequency](#exercise-3-computing-frequency-and-relative-frequency)
+- [Exercise 4: Judging Array Declarations](#exercise-4-judging-array-declarations)
+- [Exercise 5: Output of Accumulating a 2D Array](#exercise-5-output-of-accumulating-a-2d-array)
+- [Exercise 6: Statements About Array Parameters](#exercise-6-statements-about-array-parameters)
+- [Exercise 7: Functions That Fill and Sum a Real Array](#exercise-7-functions-that-fill-and-sum-a-real-array)
+- [Exercise 8: Seat Reservation](#exercise-8-seat-reservation)
+- [Exercise 9: Rotating an Array to the Left](#exercise-9-rotating-an-array-to-the-left)
 
 ---
 
@@ -275,3 +281,282 @@ int main()
 > **Note:** **Macro constants.** The common requirement of these problems is to specify array sizes with macro constants, but the solution code writes the element count 40 and the number of intervals 5 as literals. Defining `#define SIZE 40` and `#define GROUPS 5` and using them in the array declarations, the loop conditions, and `(double)SIZE` in place of `40.0` would let the sizes be changed in one place ([Chapter 7, Section 1.5](Concepts_Lecture.md#15-using-define-and-sizeof-for-array-size)).
 
 > **Note:** **Bias of `rand() % 50`.** If `RAND_MAX + 1` is not a multiple of 50, some values of `rand() % 50` appear slightly more often than others. When `RAND_MAX` is 2,147,483,647, as in glibc, among the $2^{31}$ values `rand()` can produce, those with remainder 0-47 when divided by 50 number 42,949,673 each, and those with remainder 48 or 49 number 42,949,672 each. The difference is about 1 in 43 million, so it can be ignored in this problem.
+
+---
+
+<br>
+
+## Exercise 4: Judging Array Declarations
+
+**Textbook Problem:** Chapter 7 exercise 2
+
+**Problem:** Select which of six array declarations inside a function are wrong in ANSI C, and explain why some declarations differ from C99 on. The choices are in [Exercise 4](Exercises.md#exercise-4-judging-array-declarations).
+
+### Solution
+
+**Answer:** ②, ③, ⑤, ⑥
+
+**Explanation:** The size of an array must be an integer constant greater than 0 ([Chapter 7, Section 1.3](Concepts_Lecture.md#13-array-declaration)).
+
+- ① is correct.
+- ② An array of size 0 does not exist in the standard. Clang issues the warning `zero size arrays are an extension` under `-pedantic` and accepts it only as an extension.
+- ③ It has neither a size nor an initializer list, so the number of elements is unknown. Clang reports the error `definition of variable with array type needs an explicit size or an initializer`.
+- ④ The macro constant `MAX` becomes 10 in preprocessing, so it is the same as `int arr[10];` and is correct.
+- ⑤, ⑥ In C, a `const` variable and an ordinary variable are not constant expressions, so these are wrong in ANSI C. On compilers supporting C99 or later, these two declarations inside a function are interpreted as variable-length arrays (VLAs) and compile. Clang accepts both without a warning, but Visual Studio, which does not support VLAs, reports compile errors. Following the rule of the textbook and using macro constants for array sizes gives the same result on every compiler.
+
+---
+
+<br>
+
+## Exercise 5: Output of Accumulating a 2D Array
+
+**Textbook Problem:** A variation of Chapter 7 exercise 12
+
+**Problem:** Write the output of a program that accumulates the first 3 rows of a 4-by-3 array, only partly initialized, into its last row and then prints the whole array. The code is in [Exercise 5](Exercises.md#exercise-5-output-of-accumulating-a-2d-array).
+
+### Solution
+
+**Approach:** First draw the array after initialization, then follow only the elements the loop changes, `x[3][0]`, `x[3][1]`, and `x[3][2]`.
+
+In row-wise initialization, elements without enough initial values and the whole 4th row, which has none, are 0, so the array before the loop is as follows.
+
+```text
+x[0]:  2  4  6
+x[1]:  1  3  0
+x[2]:  5  0  0
+x[3]:  0  0  0
+```
+
+The outer loop visits the rows where `i` is 0, 1, and 2, and the inner loop visits each column and adds to `x[3][j]`. Therefore `x[3][0]` = 2 + 1 + 5 = 8, `x[3][1]` = 4 + 3 + 0 = 7, and `x[3][2]` = 6 + 0 + 0 = 6, and the first 3 rows do not change. `%2d` right-aligns in two columns, so each one-digit number gets one space in front.
+
+**Output:**
+
+```text
+ 2 4 6
+ 1 3 0
+ 5 0 0
+ 8 7 6
+```
+
+---
+
+<br>
+
+## Exercise 6: Statements About Array Parameters
+
+**Textbook Problem:** Chapter 7 exercise 6
+
+**Problem:** Select every wrong statement among seven statements about passing arrays as function arguments. The choices are in [Exercise 6](Exercises.md#exercise-6-statements-about-array-parameters).
+
+### Solution
+
+**Answer:** ①, ③, ⑦
+
+**Explanation:** ① A one-dimensional array parameter is declared with its size omitted, as in `int arr[]`, and a size, if written, is ignored. ③ The call passes the name of the array, that is, its starting address, not the value of the first element. ⑦ The parameter `arr` is actually a pointer holding an address, so `sizeof(arr)` is the size of a pointer (8 in a 64-bit environment), which is why the number of elements is received separately, as in ④ ([Chapter 7, Section 5.9](Concepts_Lecture.md#59-passing-arrays-as-function-arguments)). ②, ④, ⑤, and ⑥ are correct. In ⑥, passing an `int` array to a `double arr[]` parameter cannot be processed correctly because the size and interpretation of each element differ, and the compiler reports incompatible pointer types.
+
+---
+
+<br>
+
+## Exercise 7: Functions That Fill and Sum a Real Array
+
+**Textbook Problem:** Chapter 7 programming assignments 6 and 7
+
+**Problem:** Define and test `fill_array`, which fills every element of a `double` array with one value, and `sum_array`, which returns the sum of the elements. The sample run is in [Exercise 7](Exercises.md#exercise-7-functions-that-fill-and-sum-a-real-array).
+
+### Solution
+
+**Approach:** `fill_array`, which changes elements, takes `double arr[]`, and `sum_array`, which only reads them, takes `const double arr[]`; both functions take the number of elements as `size`.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define SIZE 5
+
+void fill_array(double arr[], int size, double value)
+{
+    int i;
+
+    for (i = 0; i < size; i++)
+        arr[i] = value;
+}
+
+double sum_array(const double arr[], int size)
+{
+    double sum = 0.0;
+    int i;
+
+    for (i = 0; i < size; i++)
+        sum += arr[i];
+    return sum;
+}
+
+int main(void)
+{
+    double data[SIZE];
+    int i;
+
+    fill_array(data, SIZE, 1.5);
+    printf("sum after fill = %.2f\n", sum_array(data, SIZE));
+
+    printf("five real numbers? ");
+    for (i = 0; i < SIZE; i++)
+        scanf("%lf", &data[i]);
+    printf("sum = %f\n", sum_array(data, SIZE));
+    return 0;
+}
+```
+
+- `fill_array(data, SIZE, 1.5)` passes the starting address of the array, so the function changes the elements of `data` directly. The sum is 1.5 × 5 = 7.50.
+- The accumulating variable `sum` of `sum_array` must be initialized to 0.0, and since the return type is `double`, the real-number sum is returned as it is.
+- `scanf("%lf", &data[i])` passes the address of one element. An array element is also a variable, so `&` is needed.
+
+**Output:**
+
+```text
+sum after fill = 7.50
+five real numbers? 12.3 4.34 54.45 0.125 0.0002
+sum = 71.215200
+```
+
+12.3 + 4.34 + 54.45 + 0.125 + 0.0002 = 71.2152, and `%f` prints 6 digits after the decimal point.
+
+---
+
+<br>
+
+## Exercise 8: Seat Reservation
+
+**Textbook Problem:** Chapter 7 programming assignment 10
+
+**Problem:** Write a reservation program that stores the states of 10 seats as 0 and 1 in an array and assigns free seats from the lowest number for each request. The detailed conditions and sample run are in [Exercise 8](Exercises.md#exercise-8-seat-reservation).
+
+### Solution
+
+**Approach:** Keeping a separate count `reserved` of reserved seats gives the number of remaining seats directly as `SEATS - reserved`. Assignment scans the array from the front, changes elements that are 0 to 1, and stops once the requested number has been assigned.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#define SEATS 10
+
+void print_seats(const int seat[], int size)
+{
+    int i;
+
+    printf("seats: [");
+    for (i = 0; i < size; i++)
+        printf("%c", seat[i] ? 'X' : 'O');
+    printf("]\n");
+}
+
+int main(void)
+{
+    int seat[SEATS] = { 0 };
+    int reserved = 0, want, i, given;
+
+    while (reserved < SEATS) {
+        print_seats(seat, SEATS);
+        printf("how many? ");
+        if (scanf("%d", &want) != 1 || want <= 0)
+            break;
+        if (want > SEATS - reserved) {
+            printf("only %d seats left\n", SEATS - reserved);
+            continue;
+        }
+        printf("reserved:");
+        for (i = 0, given = 0; i < SEATS && given < want; i++) {
+            if (seat[i] == 0) {
+                seat[i] = 1;
+                printf(" %d", i + 1);
+                given++;
+            }
+        }
+        printf("\n");
+        reserved += want;
+    }
+    print_seats(seat, SEATS);
+    return 0;
+}
+```
+
+- `int seat[SEATS] = { 0 };` starts with every seat free.
+- `print_seats` does not change the array, so it takes it as `const`, and it prints 0 and 1 as `O` and `X` with the conditional operator.
+- When the condition `reserved < SEATS` of the outer `while` becomes false, every seat is taken, so the loop ends. If the input is not an integer or is 0 or less, `break` ends it.
+- If more seats are requested than remain, only the notice is printed, and `continue` returns to the start of the loop, so the array and `reserved` do not change.
+- The assignment loop stops the moment `given < want` becomes false, so it never assigns more than requested. Seat numbers are printed as the index plus 1.
+
+**Output:** This is the result of entering 3, 4, 5, and 3 in order. In the iteration that requests 5 seats, only 3 remain, so nothing is assigned; after the last 3 seats are assigned, `reserved` becomes 10 and the loop ends.
+
+```text
+seats: [OOOOOOOOOO]
+how many? 3
+reserved: 1 2 3
+seats: [XXXOOOOOOO]
+how many? 4
+reserved: 4 5 6 7
+seats: [XXXXXXXOOO]
+how many? 5
+only 3 seats left
+seats: [XXXXXXXOOO]
+how many? 3
+reserved: 8 9 10
+seats: [XXXXXXXXXX]
+```
+
+---
+
+<br>
+
+## Exercise 9: Rotating an Array to the Left
+
+**Problem:** Write `rotate_left`, which rotates an integer array k places to the left, and handle the case where k is at least the number of elements. The sample run is in [Exercise 9](Exercises.md#exercise-9-rotating-an-array-to-the-left).
+
+### Solution
+
+**Approach:** A rotation by one place saves the first element in a temporary variable, pulls the remaining elements forward by one place, and puts the saved value at the end. This is repeated k times. With n elements, a rotation by n places equals the original array, so k is reduced to `k % size`.
+
+```c
+#include <stdio.h>
+#define SIZE 7
+
+void rotate_left(int arr[], int size, int k)
+{
+    int i, j, first;
+
+    k %= size;
+    for (i = 0; i < k; i++) {
+        first = arr[0];
+        for (j = 0; j < size - 1; j++)
+            arr[j] = arr[j + 1];
+        arr[size - 1] = first;
+    }
+}
+
+int main(void)
+{
+    int a[SIZE] = { 1, 2, 3, 4, 5, 6, 7 };
+    int i;
+
+    rotate_left(a, SIZE, 3);
+    for (i = 0; i < SIZE; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    rotate_left(a, SIZE, 11);
+    for (i = 0; i < SIZE; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}
+```
+
+Following a one-place rotation of `{1, 2, 3, 4, 5, 6, 7}`, `first` saves 1, `arr[0]` through `arr[5]` each receive the value of their right neighbor, 2, 3, 4, 5, 6, and 7, and then 1 is put in `arr[6]`, giving `{2, 3, 4, 5, 6, 7, 1}`. The condition of the inner loop is `j < size - 1`, so the last element read is `arr[size - 1]`, which stays within range. Three rotations give `4 5 6 7 1 2 3`. The 11 places of the second call equal `11 % 7` = 4 places, and together with the earlier 3 places, 7 places have been rotated in all, so the array returns to its original order.
+
+**Output:**
+
+```text
+4 5 6 7 1 2 3
+1 2 3 4 5 6 7
+```
+
+This method performs a one-place rotation, which moves n elements, k times, so the number of element moves is about k × n. Moving the first k elements into a temporary array of size k and pulling the rest forward at once reduces the number of moves to about n.

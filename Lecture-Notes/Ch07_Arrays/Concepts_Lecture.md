@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -23,6 +23,7 @@
   - [1.3 Array Declaration](#13-array-declaration)
   - [1.4 `sizeof` with Arrays](#14-sizeof-with-arrays)
   - [1.5 Using `#define` and `sizeof` for Array Size](#15-using-define-and-sizeof-for-array-size)
+  - [1.6 Memory Layout of an Array and Element Addresses](#16-memory-layout-of-an-array-and-element-addresses)
 - [2. Array Initialization](#2-array-initialization)
   - [2.1 Initializer List](#21-initializer-list)
   - [2.2 Omitting Size](#22-omitting-size)
@@ -32,10 +33,13 @@
   - [3.2 Array with Loops](#32-array-with-loops)
   - [3.3 Index Out of Bounds](#33-index-out-of-bounds)
   - [3.4 Copying and Comparing Arrays](#34-copying-and-comparing-arrays)
+  - [3.5 Common Mistakes with Arrays](#35-common-mistakes-with-arrays)
 - [4. Multidimensional Arrays](#4-multidimensional-arrays)
   - [4.1 2D Array Concept](#41-2d-array-concept)
   - [4.2 2D Declaration and Access](#42-2d-declaration-and-access)
   - [4.3 2D Initialization](#43-2d-initialization)
+  - [4.4 Using 2D Arrays: Row and Column Totals](#44-using-2d-arrays-row-and-column-totals)
+  - [4.5 Memory of a 2D Array and Position Computation](#45-memory-of-a-2d-array-and-position-computation)
 - [5. Array Applications](#5-array-applications)
   - [5.1 Finding Max / Min](#51-finding-max--min)
   - [5.2 Average and Standard Deviation](#52-average-and-standard-deviation)
@@ -45,6 +49,10 @@
   - [5.6 Selection Sort](#56-selection-sort)
   - [5.7 Frequency Counting](#57-frequency-counting)
   - [5.8 Random Numbers (`rand`, `srand`, `time`)](#58-random-numbers-rand-srand-time)
+  - [5.9 Passing Arrays as Function Arguments](#59-passing-arrays-as-function-arguments)
+  - [5.10 Inserting and Deleting Elements](#510-inserting-and-deleting-elements)
+  - [5.11 Matrix Addition and Transposition](#511-matrix-addition-and-transposition)
+- [Concept Applications](#concept-applications)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -213,6 +221,42 @@ The two expressions compute the same value. Instead of a macro constant, you can
 
 > **Key Point:** Prefer `#define` for array sizes. It makes your code maintainable and avoids magic numbers scattered throughout.
 
+### 1.6 Memory Layout of an Array and Element Addresses
+
+That the elements of an array are placed in "contiguous memory" can be confirmed by printing their addresses directly. `&a[i]` is the address of the i-th element, and the format specifier `%p` prints an address in hexadecimal. The operating system decides the actual address values at each run, so they change from run to run, but the spacing between elements is always the same.
+
+```c
+int a[5] = { 10, 20, 30, 40, 50 };
+int i;
+
+for (i = 0; i < 5; i++)
+    printf("a[%d] = %d, address %p\n", i, a[i], (void *)&a[i]);
+printf("a = %p, sizeof(a) = %zu\n", (void *)a, sizeof(a));
+```
+
+```text
+a[0] = 10, address 0x16b256af0
+a[1] = 20, address 0x16b256af4
+a[2] = 30, address 0x16b256af8
+a[3] = 40, address 0x16b256afc
+a[4] = 50, address 0x16b256b00
+a = 0x16b256af0, sizeof(a) = 20
+```
+
+The addresses of neighboring elements increase by 4, the size of `int`. In hexadecimal, `...af0`, `...af4`, `...af8`, and `...afc` are followed by `...b00`, since 0xafc + 4 = 0xb00. Drawn as a memory picture, it looks as follows.
+
+```text
+address     0x...af0  0x...af4  0x...af8  0x...afc  0x...b00
+          ┌─────────┬─────────┬─────────┬─────────┬─────────┐
+a         │   10    │   20    │   30    │   40    │   50    │
+          └─────────┴─────────┴─────────┴─────────┴─────────┘
+index         [0]       [1]       [2]       [3]       [4]
+```
+
+*Figure 2. Elements and addresses of the array a*
+
+In general, when the element type is T and the address of the first element is base, the address of `a[i]` is base + i × `sizeof(T)`. Given an index, the compiler computes the address with this formula and reads that position directly, so accessing one `a[i]` takes the same time however many elements there are. This formula is also why indices start at 0: the first element is 0 slots away from the starting address. The last line shows that the array name `a`, written without an index, equals the address of the first element; this relationship is treated in detail with pointers in Chapter 8. By the rules of the standard, an address passed to `%p` is cast to `(void *)`.
+
 ---
 
 <br>
@@ -280,6 +324,8 @@ printf("%d\n", arr[0]);  // garbage! Undefined behavior
 
 > **Caution:** Always initialize arrays before reading from them. Uninitialized local arrays contain unpredictable values. Use `= {0}` to zero-initialize when you do not have specific values.
 
+> **Note:** **Designated initializers.** From C99 on, specific elements can be initialized by writing indices in brackets, as in `int a[6] = { [2] = 7, [4] = 9 };`. Elements not designated become 0, so this array is `0 0 7 0 9 0`. The feature is not part of the ANSI C syntax of the textbook, so the initializer list written in order from the front remains the default.
+
 ---
 
 <br>
@@ -346,6 +392,27 @@ printf("Sum: %d\n", sum);
 
 The loop condition uses `i < SIZE`, not `i <= SIZE`. Valid indices are `0` to `SIZE - 1`.
 
+A problem that computes each element from the preceding ones is also solved simply with an array and a loop. The Fibonacci sequence has 0 and 1 as its first two terms, and each later term is the sum of the two terms just before it, so after initializing the first two elements, `fib[i] = fib[i - 1] + fib[i - 2]` is computed from index 2.
+
+```c
+#define SIZE 10
+
+int fib[SIZE] = { 0, 1 };       // remaining elements are initialized to 0
+int i;
+
+for (i = 2; i < SIZE; i++)
+    fib[i] = fib[i - 1] + fib[i - 2];
+for (i = 0; i < SIZE; i++)
+    printf("%d ", fib[i]);
+printf("\n");
+```
+
+```text
+0 1 1 2 3 5 8 13 21 34
+```
+
+When `i` is 2, `fib[2] = fib[1] + fib[0]` = 1 + 0 = 1; when `i` is 3, `fib[3]` = 1 + 1 = 2; and in the last iteration, when `i` is 9, `fib[9]` = 21 + 13 = 34. Starting the loop at 0 would read an out-of-range element such as `fib[-1]`, so when an index expression contains `i - 1` or `i - 2`, the loop must start from the value at which that expression becomes 0 or more. Unlike the recursive `fib` of Chapter 6, this keeps values already computed in the array and reuses them, so each term is computed only once.
+
 ### 3.3 Index Out of Bounds
 
 C does **not** perform bounds checking on array accesses. Accessing an index outside the valid range (`0` to `SIZE - 1`) causes **undefined behavior**.
@@ -368,6 +435,12 @@ arr[-1] = 0;         // OUT OF BOUNDS: writes before the array → corrupts data
 *Table 6. Results of out-of-bounds access*
 
 > **Caution:** Out-of-bounds access is one of the most dangerous bugs in C. Compilers usually do not warn, and even a compiler such as clang that warns about a constant index like `arr[5]` cannot catch an out-of-bounds variable index. Always verify that your index is within `0` to `SIZE - 1`.
+
+An out-of-range constant index can be compared with the array size by the compiler, so Clang issues the following warning under `-Wall`. However, when the index is a variable, as in `for (i = 0; i <= SIZE; i++) arr[i] = 0;`, its value is unknown before execution, so the code compiles without a warning. The last iteration of this loop writes 0 to `arr[5]`, the memory right after the array, and can change another variable that was there. A tool that catches such accesses at run time (AddressSanitizer) is treated in Chapter 11.
+
+```text
+warning: array index 5 is past the end of the array (that has type 'int[5]') [-Warray-bounds]
+```
 
 ### 3.4 Copying and Comparing Arrays
 
@@ -401,6 +474,42 @@ If the loop ends without `break`, `i` becomes 5, so `i == 5` means all elements 
 
 The rule that an array name is used as a starting address, and how to pass an array to a function, are covered together with pointers in Chapter 8.
 
+### 3.5 Common Mistakes with Arrays
+
+The compiler reports many array mistakes as errors or warnings. The following code contains four mistakes.
+
+```c
+#define SIZE 3
+
+int a[SIZE], b[SIZE] = { 1, 2, 3 };
+int sum, i;
+
+a = { 4, 5, 6 };                // assigns an initializer list after declaration
+printf("%d\n", b);              // prints an array name with %d
+for (i = 0; i < SIZE; i++)
+    sum += b[i];                // sum is not initialized
+if (a == b)                     // compares arrays with ==
+    printf("same\n");
+```
+
+```text
+error: expected expression
+warning: format specifies type 'int' but the argument has type 'int *' [-Wformat]
+warning: variable 'sum' is uninitialized when used here [-Wuninitialized]
+warning: array comparison always evaluates to false [-Wtautological-compare]
+```
+
+| Mistake | Cause | Correction |
+|:-----|:-----|:-----|
+| Initializer list after declaration | A brace list can be used only for initialization in a declaration | Assign each element, or assign with a loop |
+| Printing an array name | An array name without an index is the address of the first element (`int *`) | Print `b[i]` with a loop |
+| Uninitialized accumulator | The initial value of the local variable `sum` is undetermined | Declare `int sum = 0;` |
+| Comparing arrays with `==` | It compares the starting addresses of the two arrays, so it is always false | Compare element by element as in Section 3.4 |
+
+*Table 7. Common mistakes with arrays*
+
+The error on the first line means that a brace list cannot be an expression. The `int *` of the second warning shows that the array name has turned into an address. The third mistake is especially hard to find because each run may give a different sum. As the fourth warning shows, Clang reports that comparing arrays with `==` is meaningless, but it is only a warning and the code compiles, so warnings must always be read.
+
 ---
 
 <br>
@@ -422,7 +531,7 @@ row 1 [  5   |   6   |   7   |   8  ]
 row 2 [  9   |  10   |  11   |  12  ]
 ```
 
-*Figure 2. 2D array matrix with 3 rows and 4 columns*
+*Figure 3. 2D array matrix with 3 rows and 4 columns*
 
 In memory, 2D arrays are stored in **row-major order**. That is, all elements of row 0 come first, followed by row 1.
 
@@ -431,7 +540,7 @@ Memory: [1][2][3][4][5][6][7][8][9][10][11][12]
          ← row 0 →  ← row 1 →  ←  row 2   →
 ```
 
-*Figure 3. Row-major memory layout of a 2D array*
+*Figure 4. Row-major memory layout of a 2D array*
 
 ### 4.2 2D Declaration and Access
 
@@ -525,6 +634,81 @@ int z[][2] = {1, 2, 3, 4, 5, 6, 7};   // int z[4][2] = {{1,2}, {3,4}, {5,6}, {7,
 ```
 
 Using inner braces `{{...}, {...}}` makes the row structure clear and is the preferred style.
+
+### 4.4 Using 2D Arrays: Row and Column Totals
+
+Two-dimensional arrays are used to process tabular data. The following program stores the scores of 3 students in 3 subjects in `score[student][subject]` and computes the total and average of each student (the row sums) and the average of each subject (the column sums).
+
+```c
+#define ROWS 3
+#define COLS 3
+
+int score[ROWS][COLS] = { { 90, 85, 70 }, { 60, 75, 95 }, { 80, 80, 80 } };
+int col_sum[COLS] = { 0 };
+int i, j, row_sum;
+
+for (i = 0; i < ROWS; i++) {
+    row_sum = 0;                          // restart from 0 for each row
+    for (j = 0; j < COLS; j++) {
+        row_sum += score[i][j];           // sum of row i
+        col_sum[j] += score[i][j];        // accumulate the sum of column j
+    }
+    printf("student %d: total = %d, average = %.2f\n", i, row_sum, row_sum / (double)COLS);
+}
+for (j = 0; j < COLS; j++)
+    printf("subject %d: average = %.2f\n", j, col_sum[j] / (double)ROWS);
+```
+
+```text
+student 0: total = 245, average = 81.67
+student 1: total = 230, average = 76.67
+student 2: total = 240, average = 80.00
+subject 0: average = 76.67
+subject 1: average = 80.00
+subject 2: average = 81.67
+```
+
+A row sum is complete each time one pass of the inner loop ends, so one variable (`row_sum`) suffices, and it must be reset to 0 at the start of the outer loop. A column sum is complete only after all rows have been visited, so each column needs its own slot for accumulation, and the one-dimensional array `col_sum` is used. The sum for subject 0 is 90 + 60 + 80 = 230, so its average is 230 / 3 = 76.67. Without the `(double)` cast when computing an average, the division becomes integer division and the fractional part is lost (Chapter 3, Section 6).
+
+### 4.5 Memory of a 2D Array and Position Computation
+
+Checking the row-major order of Section 4.1 with addresses gives the following. The six elements of `int m[2][3]` continue at 4-byte intervals from `m[0][0]` to `m[1][2]`, and the first element of row 1, `m[1][0]`, comes right after the last element of row 0, `m[0][2]`.
+
+```c
+int m[2][3] = { { 1, 2, 3 }, { 4, 5, 6 } };
+int i, j;
+
+for (i = 0; i < 2; i++)
+    for (j = 0; j < 3; j++)
+        printf("m[%d][%d] = %d, address %p\n", i, j, m[i][j], (void *)&m[i][j]);
+printf("%zu %zu %zu\n", sizeof(m), sizeof(m[0]), sizeof(m[0][0]));
+```
+
+```text
+m[0][0] = 1, address 0x16f65eaf0
+m[0][1] = 2, address 0x16f65eaf4
+m[0][2] = 3, address 0x16f65eaf8
+m[1][0] = 4, address 0x16f65eafc
+m[1][1] = 5, address 0x16f65eb00
+m[1][2] = 6, address 0x16f65eb04
+24 12 4
+```
+
+```text
+          ┌──────────── m[0] ─────────────┐ ┌──────────── m[1] ─────────────┐
+address end   af0        af4        af8        afc        b00        b04
+          ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+value     │    1     │    2     │    3     │    4     │    5     │    6     │
+          └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+position     [0][0]     [0][1]     [0][2]     [1][0]     [1][1]     [1][2]
+order          0          1          2          3          4          5
+```
+
+*Figure 5. Elements and addresses of the 2D array m*
+
+`sizeof(m)` is 24 bytes for 6 elements, `sizeof(m[0])` is 12 bytes for one row of type `int[3]`, and `sizeof(m[0][0])` is 4 bytes for one element. Hence the number of rows is `sizeof(m) / sizeof(m[0])` = 2, and the number of columns is `sizeof(m[0]) / sizeof(m[0][0])` = 3.
+
+In a two-dimensional array with C columns, `m[i][j]` is element number i × C + j from the start of memory. `m[1][1]` is number 1 × 3 + 1 = 4 (counting from 0), so it is at b00, 4 × 4 = 16 bytes from the starting address af0. This formula contains the number of columns C but not the number of rows. That is why the column size of a 2D array parameter, treated in Section 5.9, cannot be omitted: to compute the position of `m[i][j]`, the function must know C, while the number of rows may be received as a separate parameter.
 
 ---
 
@@ -623,7 +807,7 @@ After:  [5] [4] [3] [2] [1]
                  ↑                i=2: middle element stays
 ```
 
-*Figure 4. Swaps in reversing an array*
+*Figure 6. Swaps in reversing an array*
 
 ### 5.4 UPC Barcode Check Digit
 
@@ -690,6 +874,32 @@ else
 
 If several elements equal the key, this code finds the first position. If the key is absent or in the last position, all $n$ elements are compared, so the time complexity is $O(n)$.
 
+To find **all** elements equal to the key, keep comparing to the end instead of stopping after a match, and print the position or count each time one is found.
+
+```c
+int data[SIZE] = { 7, 3, 9, 3, 5, 1, 3, 8, 2, 9 };
+int key = 3, count = 0, i;
+
+for (i = 0; i < SIZE; i++) {
+    if (data[i] == key) {
+        printf("found at index %d\n", i);
+        count++;
+    }
+}
+printf("count = %d\n", count);
+```
+
+```text
+found at index 1
+found at index 3
+found at index 6
+count = 3
+```
+
+In this case the number of comparisons is always n, whether the key is present or not. When only the first position is needed, end the loop with `break` as soon as it is found, and if the index is n after the loop, conclude that the key is absent. When this is made into a function, the convention is to return the found index and to return -1, which cannot be a valid index, when the key is not found.
+
+> **Note:** **Binary search in a sorted array.** If an array is sorted in ascending order, **binary search** can be used, which compares with the middle element and halves the search range each time. Searching `{3, 8, 15, 21, 30, 42, 57}` for 30: the middle of the initial range 0-6 is index 3, whose 21 is less than 30, so the range shrinks to 4-6; the middle of that range is index 5, whose 42 is greater than 30, so the range shrinks to 4-4; then 30 is found at index 4. That is 3 comparisons, fewer than the 5 of sequential search. With n elements the number of comparisons drops to about log₂ n, but the method cannot be used on an unsorted array.
+
 ### 5.6 Selection Sort
 
 **Selection sort** repeatedly finds the minimum element from the unsorted portion and places it at the beginning. Arranging elements in increasing order is called **ascending order**, and in decreasing order **descending order**.
@@ -736,11 +946,13 @@ Pass 3: min_idx=3 (25), no effective swap
          [11] [12] [22] [25] [64]
 ```
 
-*Figure 5. Array state after each pass of selection sort*
+*Figure 7. Array state after each pass of selection sort*
 
 Example 7-11 in the textbook works the same way and skips the swap when `i` equals the index of the minimum.
 
 Selection sort has time complexity $O(n^2)$. It is simple to implement and understand, but not efficient for large datasets.
+
+The number of comparisons can be counted directly. With n elements, the first pass compares against the remaining n - 1, the next pass against n - 2, and so on. The total number of comparisons is therefore (n - 1) + (n - 2) + ... + 1 = n(n - 1)/2: 4 + 3 + 2 + 1 = 10 for 5 elements, 45 for 10, and 4950 for 100. The number of comparisons is the same regardless of the initial order, and there is at most one swap per pass, so at most n - 1 swaps. That the comparisons grow about a hundredfold when n grows tenfold is what $O(n^2)$ means.
 
 > **[Algorithms]** Analyzing running time with asymptotic notation such as $O(n)$ and $O(n^2)$, merge sort, which sorts in $O(n \log n)$ time and is faster than selection sort, and binary search, which finds a key in a sorted array in $O(\log n)$ time, are covered in Algorithms. The sequential search of Section 5.5 and the selection sort of this section are the simplest search and sort and serve as the starting point for that analysis and comparison.
 
@@ -811,7 +1023,7 @@ int main(void) {
 | `srand(seed)` | `<stdlib.h>` | Sets the seed for `rand()`; same seed gives same sequence |
 | `time(NULL)` | `<time.h>` | Returns current time as `time_t` (usually changes every second) |
 
-*Table 7. Functions for generating random numbers*
+*Table 8. Functions for generating random numbers*
 
 **Generating a random number in `[min, max]`:**
 
@@ -820,6 +1032,231 @@ int r = rand() % (max - min + 1) + min;
 ```
 
 > **Caution:** Without calling `srand()`, `rand()` produces, as the standard specifies, the same sequence as after calling `srand(1)`, so every run yields the **same sequence**. Always call `srand((unsigned)time(NULL))` once at the start of `main`.
+
+### 5.9 Passing Arrays as Function Arguments
+
+Code that processes an array can be made into a function and reused for many arrays. A parameter that receives an array is declared with brackets only and no size, as in `int arr[]`, and the number of elements is received as a separate parameter. When calling, only the name of the array, without an index, is passed as the argument.
+
+```c
+#define SIZE 5
+
+void print_array(const int arr[], int size)
+{
+    int i;
+
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void double_all(int arr[], int size)
+{
+    int i;
+
+    for (i = 0; i < size; i++)
+        arr[i] *= 2;
+}
+
+int sum_array(const int arr[], int size)
+{
+    int i, sum = 0;
+
+    for (i = 0; i < size; i++)
+        sum += arr[i];
+    return sum;
+}
+
+int main(void)
+{
+    int scores[SIZE] = { 3, 1, 4, 1, 5 };
+
+    print_array(scores, SIZE);
+    double_all(scores, SIZE);
+    print_array(scores, SIZE);
+    printf("sum = %d\n", sum_array(scores, SIZE));
+    printf("first three: sum = %d\n", sum_array(scores, 3));
+    return 0;
+}
+```
+
+```text
+3 1 4 1 5
+6 2 8 2 10
+sum = 28
+first three: sum = 16
+```
+
+This result shows that an array argument behaves differently from an ordinary variable. Under pass-by-value in Chapter 6, changing a parameter did not change the argument, but after `double_all(scores, SIZE)` is called, every element of `scores` has doubled. The name of an array is its starting address, so what is passed to the function is not a copy of all the elements but that address, and the function reads and changes the elements of the original array through it. A function that does not change the elements declares its parameter with `const`, as in `const int arr[]`, and assigning to an element of an array declared this way causes the compile error `read-only variable is not assignable`. Passing a value smaller than the whole array as `size` processes only the front part, so `sum_array(scores, 3)` returns 6 + 2 + 8 = 16.
+
+Inside a function, the number of elements cannot be obtained with `sizeof` of the parameter. In the following code, `sizeof(data)` in `main` is the whole array, 40 bytes, but `sizeof(arr)` inside the function is the size of one address, 8 bytes. Clang issues the warning `sizeof on array function parameter will return size of 'int *' instead of 'int[]'` for this use. This is why the number of elements is passed as a separate parameter.
+
+```c
+void show_size(int arr[])
+{
+    printf("in function: %zu\n", sizeof(arr));
+}
+
+int main(void)
+{
+    int data[10];
+
+    printf("in main: %zu\n", sizeof(data));
+    show_size(data);
+    return 0;
+}
+```
+
+```text
+in main: 40
+in function: 8
+```
+
+When a two-dimensional array is received as a parameter, the number of rows may be omitted but the number of columns must be written. As seen in Section 4.5, the compiler must know the size of one row to compute the position of `m[i][j]`. Declare it as `int total(int m[][COLS], int rows)`; omitting the column size as well, as in `int m[][]`, causes the error `array has incomplete element type 'int[]'`. Why passing an array means passing an address is treated in Chapter 8 together with pointers.
+
+### 5.10 Inserting and Deleting Elements
+
+An array has a fixed size, so inserting or removing an element in the middle requires moving the later elements one slot at a time by hand. The following code treats only the first `n` slots of an array of size `CAP` as in use and defines `insert_at`, which puts a value at position `pos`, and `delete_at`, which removes the element at position `pos`. Both functions return the new number of elements.
+
+```c
+#define CAP 8
+
+int insert_at(int arr[], int n, int pos, int value)
+{
+    int i;
+
+    if (n >= CAP || pos < 0 || pos > n)     // full, or invalid position
+        return n;
+    for (i = n; i > pos; i--)               // move back one slot, from the end
+        arr[i] = arr[i - 1];
+    arr[pos] = value;
+    return n + 1;
+}
+
+int delete_at(int arr[], int n, int pos)
+{
+    int i;
+
+    if (pos < 0 || pos >= n)
+        return n;
+    for (i = pos; i < n - 1; i++)           // move forward one slot, from the front
+        arr[i] = arr[i + 1];
+    return n - 1;
+}
+
+int main(void)
+{
+    int a[CAP] = { 10, 20, 30, 40 };
+    int n = 4;
+
+    n = insert_at(a, n, 1, 15);
+    print_array(a, n);
+    n = delete_at(a, n, 3);
+    print_array(a, n);
+    n = insert_at(a, n, 9, 99);
+    print_array(a, n);
+    return 0;
+}
+```
+
+```text
+10 15 20 30 40 (n = 5)
+10 15 20 40 (n = 4)
+10 15 20 40 (n = 4)
+```
+
+`print_array` is a function that prints n elements followed by `(n = ...)`. Following the insertion: `n` is 4 and `pos` is 1, so the loop runs with `i` = 4, 3, and 2.
+
+```text
+start            [10][20][30][40][ 0]
+i = 4: a[4]=a[3] [10][20][30][40][40]
+i = 3: a[3]=a[2] [10][20][30][30][40]
+i = 2: a[2]=a[1] [10][20][20][30][40]
+a[1] = 15        [10][15][20][30][40]
+```
+
+*Figure 8. Array states when inserting 15 at position 1*
+
+The direction of the moves matters. If insertion moved from the front, `a[2] = a[1]` would run first and overwrite the 30 in `a[2]` before it was saved, so the moves go from the end, never overwriting a value not yet moved. Deletion, in contrast, must fill the removed slot with the following values, so it moves from the front. The third call has `pos` 9, greater than `n`, so it changes nothing. Inserting or removing one element may require moving up to n elements, so data with frequent insertions and deletions in the middle uses other data structures, such as the linked list of Chapter 11.
+
+### 5.11 Matrix Addition and Transposition
+
+Matrix addition adds elements at the same positions, and **transposition** swaps rows and columns, producing `t[j][i] = x[i][j]`. Both operations are written as functions that take two-dimensional arrays as parameters.
+
+```c
+#define N 3
+
+void add_matrix(int x[][N], int y[][N], int z[][N])
+{
+    int i, j;
+
+    for (i = 0; i < N; i++)
+        for (j = 0; j < N; j++)
+            z[i][j] = x[i][j] + y[i][j];
+}
+
+void transpose(int x[][N], int t[][N])
+{
+    int i, j;
+
+    for (i = 0; i < N; i++)
+        for (j = 0; j < N; j++)
+            t[j][i] = x[i][j];
+}
+
+void print_matrix(int m[][N])
+{
+    int i, j;
+
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++)
+            printf("%4d", m[i][j]);
+        printf("\n");
+    }
+}
+
+int main(void)
+{
+    int x[N][N] = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int y[N][N] = { { 10, 20, 30 }, { 40, 50, 60 }, { 70, 80, 90 } };
+    int z[N][N], t[N][N];
+
+    add_matrix(x, y, z);
+    print_matrix(z);
+    transpose(x, t);
+    print_matrix(t);
+    return 0;
+}
+```
+
+```text
+  11  22  33
+  44  55  66
+  77  88  99
+   1   4   7
+   2   5   8
+   3   6   9
+```
+
+The arrays `z` and `t` that receive the results are also passed as parameters, and since the starting addresses of the arrays are passed, the functions fill the arrays of `main`. In the transpose, the 2 of `x[0][1]` goes to `t[1][0]` and the 4 of `x[1][0]` to `t[0][1]`, so row 0 of the result is the original column 0: 1, 4, 7. The diagonal elements `x[i][i]` stay in place. Writing the transpose back into `x` itself would overwrite elements not yet read, so the result is stored in a separate array.
+
+---
+
+<br>
+
+## Concept Applications
+
+**True/False Check:**
+
+| Statement | Judgment and Reason |
+|:-----|:-----|
+| In `int a[5] = {1, 2};`, `a[4]` holds a garbage value. | **F.** When initial values run short, the remaining elements are initialized to 0, so `a[4]` is 0. |
+| For `int a[] = {1, 2, 3};`, `sizeof(a) / sizeof(a[0])` is 3. | **T.** With the size omitted, the number of initial values sets the size, and dividing the total size by the size of one element gives the element count. |
+| If an index falls outside the array, the compiler always reports an error. | **F.** C does not check bounds at run time, and out-of-range access is undefined behavior. A warning may appear only for constant indices. |
+| Two arrays of the same size can be copied with `b = a;`. | **F.** An array name cannot be assigned, so the elements are copied one by one with a loop. |
+| A two-dimensional array is stored in contiguous memory in row-major order. | **T.** All elements of row 0 are placed first, followed by those of row 1. |
+| `int m[][3] = {1, 2, 3, 4};` creates an array of 2 rows and 3 columns. | **T.** Filling 4 values 3 per row needs 2 rows, and `m[1][1]` and `m[1][2]` become 0. |
+| When an array is passed to a function, its elements are copied, so changes inside the function do not affect the original array. | **F.** The starting address of the array is passed, so the function changes the elements of the original array. |
+| Selection sort swaps the minimum of the unsorted part with the first position of that part in each pass. | **T.** n elements are sorted in ascending order in n - 1 passes. |
 
 ---
 
@@ -852,6 +1289,16 @@ int r = rand() % (max - min + 1) + min;
 | Selection sort | The minimum of the unsorted portion is repeatedly found and moved to the front, and the time complexity is $O(n^2)$. |
 | Frequency counting | Counting uses the array index as the category, as in `freq[value]++`. |
 | Random numbers | After calling `srand((unsigned)time(NULL))` once, `rand() % range + min` produces a random number in the desired range. |
+| Computing from earlier elements | A loop that uses earlier elements, as in `fib[i] = fib[i - 1] + fib[i - 2]`, starts where the index expressions become 0 or more. |
+| Row and column totals | Row sums use one variable reset in each outer iteration, and column sums accumulate in an array with a slot for each column. |
+| Finding all positions | Keep comparing to the end after a match, printing positions or counting, and a function that finds the first position returns -1 when absent. |
+| Array parameters | They take `int arr[]` together with the element count; since the starting address is passed, the function can change the original array, which `const` prevents. |
+| 2D array parameters | The column size cannot be omitted, so they are declared as `int m[][COLS]`. |
+| Element addresses | The address of `a[i]` is the starting address plus i × the element size, and neighboring addresses differ by the element size. |
+| Position in a 2D array | With C columns, `m[i][j]` is element number i × C + j, so a function must know the number of columns. |
+| Inserting and deleting | Insertion moves elements one slot from the end, and deletion from the front. |
+| Matrix addition and transposition | Addition adds elements at the same positions, and the transpose `t[j][i] = x[i][j]` is built in a separate array. |
+| Binary search | In a sorted array, it compares with the middle element and halves the range, taking about log₂ n comparisons. |
 
 ---
 
@@ -901,5 +1348,38 @@ int r = rand() % (max - min + 1) + min;
    <summary>Answer</summary>
 
    It is false. An array name written without an index means the starting address of the array, so `x == y` compares the starting addresses of two different arrays rather than their contents, and the two addresses can never be equal. To check whether the contents are equal, compare the elements one by one as in Section 3.4.
+
+   </details>
+
+6. **Array parameters:** Write the elements of `a` after running the following code, and explain why `n` does not change while `a` does.
+
+   ```c
+   void f(int x, int arr[]) { x = 0; arr[0] = 0; }
+   int n = 5, a[3] = { 5, 6, 7 };
+   f(n, a);
+   ```
+
+   <details>
+   <summary>Answer</summary>
+
+   `a` becomes `{0, 6, 7}`, and `n` stays 5. `x` is a local variable holding a copy of the value of `n`, so `x = 0` does not affect `n`. In contrast, `arr` receives the starting address of the array `a`, so `arr[0] = 0` changes the first element of the original array.
+
+   </details>
+
+7. **Column totals:** For `int m[2][3] = { {1, 2, 3}, {4, 5, 6} };`, write the sum of each column and the sum of each row.
+
+   <details>
+   <summary>Answer</summary>
+
+   The column sums are 1 + 4 = 5, 2 + 5 = 7, and 3 + 6 = 9, and the row sums are 1 + 2 + 3 = 6 and 4 + 5 + 6 = 15. Both kinds of sums add up to the same total of 21.
+
+   </details>
+
+8. **Starting index of a loop:** For `int d[6] = { 2, 5, 9, 14, 20, 27 };`, write a loop that prints every difference `d[i] - d[i - 1]` between neighboring elements, and give the output.
+
+   <details>
+   <summary>Answer</summary>
+
+   `for (i = 1; i < 6; i++) printf("%d ", d[i] - d[i - 1]);`. Since `i - 1` must be 0 or more, the loop starts at 1, and the output is `3 4 5 6 7`. Starting at 0 would read `d[-1]`, an out-of-range access.
 
    </details>

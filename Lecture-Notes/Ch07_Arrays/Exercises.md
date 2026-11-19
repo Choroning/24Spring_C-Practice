@@ -2,11 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1-3 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 **Common Requirement:** In every problem, specify the array size with a macro constant.
 
@@ -19,6 +19,12 @@
 - [Exercise 1: Computing the Check Digit of a UPC Barcode](#exercise-1-computing-the-check-digit-of-a-upc-barcode)
 - [Exercise 2: Selection Sort Variant](#exercise-2-selection-sort-variant)
 - [Exercise 3: Computing Frequency and Relative Frequency](#exercise-3-computing-frequency-and-relative-frequency)
+- [Exercise 4: Judging Array Declarations](#exercise-4-judging-array-declarations)
+- [Exercise 5: Output of Accumulating a 2D Array](#exercise-5-output-of-accumulating-a-2d-array)
+- [Exercise 6: Statements About Array Parameters](#exercise-6-statements-about-array-parameters)
+- [Exercise 7: Functions That Fill and Sum a Real Array](#exercise-7-functions-that-fill-and-sum-a-real-array)
+- [Exercise 8: Seat Reservation](#exercise-8-seat-reservation)
+- [Exercise 9: Rotating an Array to the Left](#exercise-9-rotating-an-array-to-the-left)
 
 ---
 
@@ -198,3 +204,150 @@ Program ended with exit code: 0
 ```
 
 **[Solution](Solutions.md#exercise-3-computing-frequency-and-relative-frequency)**
+
+---
+
+<br>
+
+## Exercise 4: Judging Array Declarations
+
+**Textbook Problem:** Chapter 7 exercise 2
+
+**Problem:** Assuming all six of the following declarations are inside a function, select every declaration that is wrong on a compiler that follows ANSI C (for example, Visual Studio). Also, if any declaration gives a different result on a compiler that supports C99 or later, explain why.
+
+- ① `int arr[10];`
+- ② `int arr[0];`
+- ③ `double arr[];`
+- ④ `int arr[MAX];` after `#define MAX 10`
+- ⑤ `int arr[max];` after `const int max = 10;`
+- ⑥ `int arr[size];` after `int size = 10;`
+
+**[Solution](Solutions.md#exercise-4-judging-array-declarations)**
+
+---
+
+<br>
+
+## Exercise 5: Output of Accumulating a 2D Array
+
+**Textbook Problem:** A variation of Chapter 7 exercise 12
+
+**Problem:** Write the output of the following program.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    int x[4][3] = { { 2, 4, 6 }, { 1, 3 }, { 5 } };
+    int i, j;
+
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 3; j++)
+            x[3][j] += x[i][j];
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 3; j++)
+            printf("%2d", x[i][j]);
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+**[Solution](Solutions.md#exercise-5-output-of-accumulating-a-2d-array)**
+
+---
+
+<br>
+
+## Exercise 6: Statements About Array Parameters
+
+**Textbook Problem:** Chapter 7 exercise 6
+
+**Problem:** Select every wrong statement among the following about passing arrays as function arguments.
+
+- ① When a one-dimensional array is declared as a function parameter, its size must be specified.
+- ② To call a function with an array parameter, pass the name of the array as the argument.
+- ③ To call a function with an array parameter, pass the value of the first element of the array as the argument.
+- ④ If the function needs the number of elements, receive it as a separate parameter.
+- ⑤ Inside the function, elements of the array can be accessed with indices.
+- ⑥ The element type of the array passed as an argument must equal the element type of the parameter.
+- ⑦ Inside the function, applying `sizeof` to the parameter gives the number of elements.
+
+**[Solution](Solutions.md#exercise-6-statements-about-array-parameters)**
+
+---
+
+<br>
+
+## Exercise 7: Functions That Fill and Sum a Real Array
+
+**Textbook Problem:** Chapter 7 programming assignments 6 and 7
+
+**Problem:** Define the following two functions and write a program that tests them with a `double` array of 5 elements.
+
+- `void fill_array(double arr[], int size, double value)`: fills every element of the array with `value`.
+- `double sum_array(const double arr[], int size)`: returns the sum of the elements.
+
+The program first fills the array with 1.5 and prints the sum, then reads 5 real numbers into the same array and prints the sum.
+
+**Sample Run:**
+
+```text
+sum after fill = 7.50
+five real numbers? 12.3 4.34 54.45 0.125 0.0002
+sum = 71.215200
+```
+
+**[Solution](Solutions.md#exercise-7-functions-that-fill-and-sum-a-real-array)**
+
+---
+
+<br>
+
+## Exercise 8: Seat Reservation
+
+**Textbook Problem:** Chapter 7 programming assignment 10
+
+**Problem:** Write a reservation program for a train with 10 seats. Store the state of the seats as 0 (free) and 1 (reserved) in an integer array of 10 elements, and print free seats as `O` and reserved seats as `X`.
+
+- Each time the number of seats to reserve is entered, assign free seats starting from the lowest number and print the assigned seat numbers (starting from 1).
+- If more seats are requested than remain, report the number of remaining seats and read the input again.
+- When all seats are reserved, print the final state and end. Entering a number of 0 or less also ends the program.
+
+**Sample Run:**
+
+```text
+seats: [OOOOOOOOOO]
+how many? 3
+reserved: 1 2 3
+seats: [XXXOOOOOOO]
+how many? 4
+reserved: 4 5 6 7
+seats: [XXXXXXXOOO]
+how many? 5
+only 3 seats left
+seats: [XXXXXXXOOO]
+how many? 3
+reserved: 8 9 10
+seats: [XXXXXXXXXX]
+```
+
+**[Solution](Solutions.md#exercise-8-seat-reservation)**
+
+---
+
+<br>
+
+## Exercise 9: Rotating an Array to the Left
+
+**Problem:** Write a function `void rotate_left(int arr[], int size, int k)` that rotates the elements of an integer array k places to the left. Rotating one place to the left moves every element to the position whose index is one smaller, and the first element goes to the end. The function must work correctly even when k is at least the number of elements. Print the result of rotating `{1, 2, 3, 4, 5, 6, 7}` by 3 places, and then the result of rotating that result by 11 places.
+
+**Sample Run:**
+
+```text
+4 5 6 7 1 2 3
+1 2 3 4 5 6 7
+```
+
+**[Solution](Solutions.md#exercise-9-rotating-an-array-to-the-left)**
