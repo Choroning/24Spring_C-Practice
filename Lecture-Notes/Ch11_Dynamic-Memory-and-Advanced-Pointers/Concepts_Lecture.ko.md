@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-19
 
 > **학습 목표:**
 > 1. 프로그램의 메모리 영역과 세 가지 저장 기간을 구분하고 지역 변수의 주소를 반환하면 안 되는 이유를 설명할 수 있다
@@ -446,13 +446,7 @@ Process 160: 2 leaks for 144 total leaked bytes.
 
 각각 40, 80, 120바이트의 블록이 누수되었지만 앞의 두 번만 보고되었다(크기는 할당 단위로 올림되어 48, 96으로 표시). `leaks`는 메모리에서 포인터처럼 보이는 값을 찾아 도달할 수 있는 블록을 사용 중으로 판단하므로[17], 지역 변수의 흔적이 남아 있으면 누수를 놓칠 수 있다.
 
-- macOS의 Apple clang에서는 ASan의 누수 검사를 사용할 수 없다. Clang 문서는 macOS에서 `ASAN_OPTIONS=detect_leaks=1`로 켤 수 있다고 설명하지만[10], Apple clang에서는 이 옵션을 주면 `detect_leaks is not supported on this platform.`이 출력된다. Linux에서는 ASan이 기본으로 누수도 검사한다[10].
-- 1.3절의 스택 주소 반환은 macOS에서 기본 설정의 ASan으로는 보고되지 않고, `ASAN_OPTIONS=detect_stack_use_after_return=1`을 지정하면 `stack-use-after-return`으로 보고된다. Linux에서는 이 검사가 기본으로 켜져 있다[10].
-- `leaks`는 ASan으로 빌드한 프로그램에 대해 보고를 끝내지 못하므로, 누수 검사는 새니타이저 없이 빌드하여 수행한다.
-
 새니타이저와 `leaks`는 그 실행에서 지나간 경로의 오류만 찾으므로, 오류가 보고되지 않았다는 것이 오류가 없다는 증명은 아니다.
-
-> **참고:** **Visual Studio.** `/fsanitize=address`로 AddressSanitizer를 켤 수 있으며, 프로젝트 속성의 **C/C++ > 일반 > AddressSanitizer 사용**에서도 설정한다. 디버그 구성에서는 호환되지 않는 `/ZI`, `/RTC1`, `/INCREMENTAL`을 꺼야 할 수 있다[11]. 누수는 `_CRTDBG_MAP_ALLOC`을 정의하고 `<stdlib.h>`, `<crtdbg.h>`를 이 순서로 포함한 뒤 `_CrtDumpMemoryLeaks()`를 호출하면 디버그 빌드의 출력 창에 보고된다[18].
 
 ---
 

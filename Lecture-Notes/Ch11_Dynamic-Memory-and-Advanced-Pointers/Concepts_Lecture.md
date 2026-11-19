@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 
 > **Learning Objectives:**
 > 1. Distinguish the memory segments of a program and the three storage durations, and explain why the address of a local variable must not be returned
@@ -446,13 +446,7 @@ Process 160: 2 leaks for 144 total leaked bytes.
 
 Blocks of 40, 80, and 120 bytes were leaked, but only the first two were reported (sizes are rounded up to the allocation unit and shown as 48 and 96). `leaks` searches memory for values that look like pointers and treats reachable blocks as in use [17], so a leftover value of a local variable can hide a leak.
 
-- ASan's leak checking cannot be used with Apple clang on macOS. The Clang documentation says it can be enabled on macOS with `ASAN_OPTIONS=detect_leaks=1` [10], but with Apple clang this option prints `detect_leaks is not supported on this platform.` On Linux, ASan checks leaks by default [10].
-- On macOS the returned stack address of Section 1.3 is not reported by ASan in its default configuration, and with `ASAN_OPTIONS=detect_stack_use_after_return=1` it is reported as `stack-use-after-return`. On Linux this check is enabled by default [10].
-- `leaks` cannot finish its report for a program built with ASan, so leak checking is done on a build without sanitizers.
-
 Sanitizers and `leaks` find only errors on paths taken in that run, so the absence of a report does not prove the absence of errors.
-
-> **Note:** **Visual Studio.** AddressSanitizer can be enabled with `/fsanitize=address` or in the project properties under **C/C++ > General > Enable AddressSanitizer**. A Debug configuration may need the incompatible `/ZI`, `/RTC1`, and `/INCREMENTAL` turned off [11]. Leaks are reported in the Output window of a debug build by defining `_CRTDBG_MAP_ALLOC`, including `<stdlib.h>` and then `<crtdbg.h>`, and calling `_CrtDumpMemoryLeaks()` [18].
 
 ---
 

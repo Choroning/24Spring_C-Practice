@@ -112,7 +112,7 @@ int x = 10;  // inline comment after code
 
 > **Caution:** Block comments **cannot be nested**. `/* outer /* inner */ still inside? */` causes a compile error because `*/` closes the comment at the first match.
 
-Editors such as Visual Studio provide syntax coloring, which shows keywords, comments, and string constants in different colors. According to the textbook, Visual Studio by default shows keywords (`int`, `void`, `return`) in blue, strings in purple, and comments in green, and the colors can be changed under [Tools] → [Options] → [Environment] → [Fonts and Colors]. Code that has become a comment against the intent, as in the line-continuation problem below, is shown in the comment color, so the habit of watching the editor's colors helps.
+Editors such as Visual Studio provide syntax coloring, which shows keywords, comments, and string constants in different colors. Code that has become a comment against the intent, as in the line-continuation problem below, is shown in the comment color, so the habit of watching the editor's colors helps.
 
 The extent of a comment is decided by the rules by which the compiler reads the source, so it can differ from how the code looks. In the following code, the `\` at the end of the `//` comment is a line-continuation mark that joins that line with the next one, so the comment extends to `total += 5;` on the next line, which is not executed. Conversely, `/* ... */` inside a string constant is not a comment but characters to be printed.
 

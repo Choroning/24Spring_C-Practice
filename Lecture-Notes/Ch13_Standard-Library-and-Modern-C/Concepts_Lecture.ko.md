@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-19
 
 > **학습 목표:**
 > 1. 표준 헤더를 용도별로 구분하고 호스트 환경과 프리스탠딩 환경의 차이를 설명할 수 있다
@@ -1027,21 +1027,13 @@ nibble = nibble + 1uwb;                 // 0으로 순환한다
 | C23 모드 옵션 | `-std=c23` (14부터) | `-std=c23` (18부터) | `/std:clatest` |
 | `nullptr` | 13 | 17 | 미지원 |
 | `constexpr` 객체 | 13 | 19 | 미지원 |
-| `auto` 타입 추론 | 13 | 18 | 미지원 |
-| `typeof`, `typeof_unqual` | 13 | 16 | VS 2022 17.9 |
-| 새 키워드 철자 (`bool` 등) | 13 | 17 | 일부 (`static_assert`, `thread_local`) |
-| `[[...]]` 속성 | 10 | 9 (`noreturn`은 15) | VS 2022 17.7 |
 | `#embed` | 15 | 19 | 미지원 |
-| `{}` 빈 초기화 | 13 | 17 | VS 2022 17.9 |
 | `_BitInt` | 14 (일부 아키텍처) | 15 | 미지원 |
 | 고정 기반 타입 열거형 | 13 | 20 | 미지원 |
-| 2진 리터럴, 자릿수 구분자 | 4.3, 12 | 9, 13 | VS 2015 |
-| `#elifdef`, `#elifndef` | 12 | 13 | VS 2022 17.10 |
-| `<stdckdint.h>` | 14 | 18 | Microsoft 표에 항목 없음 |
 
 *표 15. C23 주요 기능의 컴파일러별 지원 시작 버전*
 
-`<stdckdint.h>`의 MSVC 칸은 미지원을 뜻하지 않는다. Microsoft의 표는 C 표준 라이브러리 기능을 C11까지만 나열하므로 이 헤더의 지원 여부를 알려 주지 않는다[8]. Apple clang의 버전 번호는 LLVM Clang과 다르므로 직접 컴파일하여 확인하는 것이 확실하다. GCC와 clang의 `-std=gnu17`처럼 `gnu`가 붙은 모드는 표준에 GNU 확장을 더한 것이며, 표준 모드는 `-std=c17`처럼 지정한다[24], [28]. Visual Studio의 프로젝트 속성에서는 **구성 속성 > C/C++ > 언어 > C 언어 표준**에서 선택하고 명령행은 `/std:c11`, `/std:c17`, `/std:clatest`를 쓴다[21]. `/std:clatest`는 C23 전용 모드가 아니라 구현된 최신 기능을 모두 켜는 옵션이다[21]. Visual Studio는 `/std`를 지정하지 않으면 C89에 Microsoft 확장을 더한 모드로 컴파일한다[21].
+Apple clang의 버전 번호는 LLVM Clang과 다르므로 직접 컴파일하여 확인하는 것이 확실하다. GCC와 clang의 `-std=gnu17`처럼 `gnu`가 붙은 모드는 표준에 GNU 확장을 더한 것이며, 표준 모드는 `-std=c17`처럼 지정한다[24], [28]. Visual Studio의 명령행 옵션은 `/std:c11`, `/std:c17`, `/std:clatest`이며[21], `/std:clatest`는 C23 전용 모드가 아니라 구현된 최신 기능을 모두 켜는 옵션이다[21]. Visual Studio는 `/std`를 지정하지 않으면 C89에 Microsoft 확장을 더한 모드로 컴파일한다[21].
 
 표준의 선택은 코드를 빌드할 컴파일러의 범위에 달려 있다. 임베디드나 오래된 컴파일러까지 지원하면 C99 또는 C11로, Windows의 Visual Studio까지 함께 빌드하면 C11이나 C17로 맞추고 VLA를 쓰지 않는다. 최신 GCC(15 이상)와 Clang(20 이상)만 쓰는 새 프로젝트는 표 15의 C23 기능을 쓸 수 있다(GCC의 `_BitInt`는 일부 아키텍처로 제한된다). 코드 안에서 기능의 사용 여부를 판단할 때는 `__STDC_VERSION__`, `__STDC_NO_VLA__` 같은 매크로와 `__has_include` 연산자처럼 표준이 정한 수단을 쓴다. 다만 `__STDC_VERSION__`이 `202311L`이어도 C23의 모든 기능이 구현되었다는 보장은 없으므로, 구현이 끝나지 않은 기능은 문서와 시험 컴파일로 확인한다.
 

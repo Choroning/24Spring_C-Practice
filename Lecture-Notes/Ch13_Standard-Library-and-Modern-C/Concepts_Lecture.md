@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 
 > **Learning Objectives:**
 > 1. Classify the standard headers by purpose and explain the difference between hosted and freestanding environments
@@ -1027,21 +1027,13 @@ The following are the first versions listed in each project's official documenta
 | C23 mode option | `-std=c23` (from 14) | `-std=c23` (from 18) | `/std:clatest` |
 | `nullptr` | 13 | 17 | not supported |
 | `constexpr` objects | 13 | 19 | not supported |
-| `auto` type inference | 13 | 18 | not supported |
-| `typeof`, `typeof_unqual` | 13 | 16 | VS 2022 17.9 |
-| New keyword spellings (`bool`, etc.) | 13 | 17 | partial (`static_assert`, `thread_local`) |
-| `[[...]]` attributes | 10 | 9 (`noreturn` from 15) | VS 2022 17.7 |
 | `#embed` | 15 | 19 | not supported |
-| `{}` empty initialization | 13 | 17 | VS 2022 17.9 |
 | `_BitInt` | 14 (some architectures) | 15 | not supported |
 | Enumerations with fixed underlying type | 13 | 20 | not supported |
-| Binary literals, digit separators | 4.3, 12 | 9, 13 | VS 2015 |
-| `#elifdef`, `#elifndef` | 12 | 13 | VS 2022 17.10 |
-| `<stdckdint.h>` | 14 | 18 | no entry in Microsoft's table |
 
 *Table 15. First compiler versions supporting major C23 features*
 
-The MSVC cell for `<stdckdint.h>` does not mean the header is unsupported; Microsoft's table lists C standard library features only through C11, so it says nothing about this header [8]. Apple clang's version numbers differ from LLVM Clang's, so compiling directly is the reliable check. In GCC and clang, modes with `gnu`, such as `-std=gnu17`, add GNU extensions to the standard, and a standard mode is requested with `-std=c17` and similar options [24], [28]. In Visual Studio, select it under **Configuration Properties > C/C++ > Language > C Language Standard** in the project properties, and the command-line options are `/std:c11`, `/std:c17`, and `/std:clatest` [21]. `/std:clatest` is not a C23-only mode but enables all currently implemented newest features [21]. Without `/std`, Visual Studio compiles in a mode of C89 with Microsoft extensions [21].
+Apple clang's version numbers differ from LLVM Clang's, so compiling directly is the reliable check. In GCC and clang, modes with `gnu`, such as `-std=gnu17`, add GNU extensions to the standard, and a standard mode is requested with `-std=c17` and similar options [24], [28]. The Visual Studio command-line options are `/std:c11`, `/std:c17`, and `/std:clatest` [21], and `/std:clatest` is not a C23-only mode but enables all currently implemented newest features [21]. Without `/std`, Visual Studio compiles in a mode of C89 with Microsoft extensions [21].
 
 The choice of standard depends on the range of compilers that must build the code. To support embedded or old compilers, fix C99 or C11; if Visual Studio on Windows is also a target, use C11 or C17 and avoid VLAs. A new project using only recent GCC (15 or later) and Clang (20 or later) can use the C23 features in Table 15 (GCC's `_BitInt` is limited to some architectures). When deciding in code whether a feature is available, use the means the standard defines, such as the macros `__STDC_VERSION__` and `__STDC_NO_VLA__` and the operator `__has_include`. However, even when `__STDC_VERSION__` is `202311L`, there is no guarantee that every C23 feature is implemented, so a feature whose implementation is unfinished must be confirmed from documentation and by test compilation.
 

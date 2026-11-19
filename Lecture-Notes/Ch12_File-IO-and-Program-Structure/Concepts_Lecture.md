@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-19
 
 > **Learning Objectives:**
 > 1. Write a program with `int main(int argc, char *argv[])` that receives, checks, and converts command-line arguments and reports its result through the exit status
@@ -199,9 +199,7 @@ On Windows, the Microsoft C startup code receives the whole command line and spl
 
 The Windows C run-time library does not expand wildcards by default, and when expansion is needed, `setargv.obj` is linked as in `cl example.c /link setargv.obj` [6]. The `<`, `>`, and `|` on a command line are also processed by the shell, so they do not appear in `argv` (Section 2.2).
 
-**Visual Studio.** On the project's Property Pages, write the arguments in the **Command Arguments** box under `[Configuration Properties]` → `[Debugging]`. Redirections such as `< file` or `> file` can also be written in this box. The program's working directory is set by the **Working Directory** entry on the same page, and if it is left blank, the working directory is the project directory [7].
-
-**Xcode.** Click the scheme name in the toolbar to edit the scheme, and add the arguments on the Arguments tab of the Run action. Xcode passes these arguments directly to the launched process [8]. The runtime environment is configured on the Options tab of the same action [8]. If the program opens files by relative path, specify the working directory there with **Use custom working directory**.
+**IDEs.** In an IDE, the arguments and the working directory are written in the run settings. Visual Studio has Command Arguments and Working Directory entries in the debugging settings of the project properties, and a blank working directory means the project directory [7]; Xcode sets both in the Run action of the scheme [8].
 
 > **Caution:** A relative path passed to a program is resolved against the **working directory**, not the location of the source file. In a terminal this is the current directory, and in an IDE it is the setting above. This is the first item to check when a program run from an IDE cannot find a file.
 
@@ -1054,7 +1052,7 @@ DEPS = $(OBJS:.o=.d)
 |:-----|:-----|
 | `main(int argc, char *argv[])` | `argc` is the number of strings, `argv` points to an array of string pointers, and `argv[argc]` is a null pointer. |
 | `argv[0]` | Represents the program name but is not guaranteed to be a path, and `argc` can be 0. |
-| Passing arguments | In a terminal they follow the name; in Visual Studio they go in Command Arguments of the Debugging properties and in Xcode on the Arguments tab of the scheme. |
+| Passing arguments | In a terminal they follow the name; in Visual Studio they go in Command Arguments of the Debugging properties and in Xcode in the Run action of the scheme. |
 | Quotes and wildcards | The shell processes them first, so the program sees no quotes and receives only the expanded file names. |
 | `strtol` | Run `errno = 0` first and check `end` and `ERANGE` to judge whether the conversion succeeded. |
 | Option processing | Handled by a loop that advances an index or by POSIX `getopt`, and `--` marks the end of the options. |

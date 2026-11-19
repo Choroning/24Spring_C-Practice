@@ -544,20 +544,7 @@ An **integrated development environment (IDE)** is a development tool that bundl
 
 The steps for making a C program in Visual Studio are: create an empty project, add a source file (`first.c`), write the code, build ([Build] → [Build Solution]), and run ([Debug] → [Start Without Debugging]). Even if "C++ File" is chosen when adding a new item, the file is compiled as C if its name ends in `.c`. The Solution Explorer window shows the list of projects in the solution and the source and header files in each project.
 
-The reason Visual Studio has a project created first, instead of starting with source code, is that the project decides which source files are compiled and linked with which options. The build result appears in the output window, and if there are compile errors, the error list window shows the file name, line number, and error code. The following table lists the main features and shortcut keys of Visual Studio as summarized by the textbook.
-
-| Feature | Menu Item | Shortcut |
-|:-----|:-----|:-----|
-| Create a new project | [File] → [New] → [Project] | Ctrl+Shift+N |
-| Add a new item | Select the project, then [Project] → [Add New Item] | Ctrl+Shift+A |
-| Add an existing item | Select the project, then [Project] → [Add Existing Item] | Shift+Alt+A |
-| Build | [Build] → [Build Solution] | F7 |
-| Run | [Debug] → [Start Without Debugging] | Ctrl+F5 |
-| Open a solution or project | [File] → [Open] → [Project/Solution] | Ctrl+Shift+O |
-| Remove a source file from the project | Select the file, right-click → [Remove] | Del |
-| Rename a source file | Select the file, right-click → [Rename] | F2 |
-
-*Table 11. Main features and shortcut keys of Visual Studio*
+The reason Visual Studio has a project created first, instead of starting with source code, is that the project decides which source files are compiled and linked with which options. The build result appears in the output window, and if there are compile errors, the error list window shows the file name, line number, and error code. Frequently used commands such as Build Solution (F7) and Start Without Debugging (Ctrl+F5) have shortcut keys.
 
 > **Definition:** A **console program** is a program that takes input from the keyboard and prints text to the console (the command prompt or terminal). A Windows desktop application that uses mouse input and graphical output needs a platform library such as the Windows API, but a console program can be written with standard C and the standard library alone.
 
