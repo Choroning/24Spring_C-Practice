@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -26,16 +26,27 @@
   - [1.5 Pointer Usage](#15-pointer-usage)
   - [1.6 `const` Pointer](#16-const-pointer)
   - [1.7 Precautions When Using Pointers](#17-precautions-when-using-pointers)
+  - [1.8 Step-by-Step Trace of Pointer Expressions](#18-step-by-step-trace-of-pointer-expressions)
+  - [1.9 Memory Picture of a Pointer Variable](#19-memory-picture-of-a-pointer-variable)
 - [2. Arrays and Pointers](#2-arrays-and-pointers)
   - [2.1 Pointer Arithmetic](#21-pointer-arithmetic)
   - [2.2 Pointer as Array](#22-pointer-as-array)
   - [2.3 Array as Pointer](#23-array-as-pointer)
   - [2.4 Array vs Pointer Comparison](#24-array-vs-pointer-comparison)
+  - [2.5 Arrays of Pointers and Double Pointers](#25-arrays-of-pointers-and-double-pointers)
+  - [2.6 Differences Among `arr`, `&arr[0]`, and `&arr`](#26-differences-among-arr-arr0-and-arr)
+  - [2.7 Pointer Arithmetic by Element Type](#27-pointer-arithmetic-by-element-type)
+  - [2.8 Various Pointer Declarations](#28-various-pointer-declarations)
+  - [2.9 Traversing an Array with a Pointer](#29-traversing-an-array-with-a-pointer)
 - [3. Functions and Pointers](#3-functions-and-pointers)
   - [3.1 Pass by Value vs Pass by Reference](#31-pass-by-value-vs-pass-by-reference)
   - [3.2 Modifying a Variable Through a Pointer](#32-modifying-a-variable-through-a-pointer)
   - [3.3 Returning Multiple Values](#33-returning-multiple-values)
   - [3.4 Passing Arrays to Functions](#34-passing-arrays-to-functions)
+  - [3.5 Functions That Return Addresses](#35-functions-that-return-addresses)
+  - [3.6 Memory Trace of a `swap` Call](#36-memory-trace-of-a-swap-call)
+  - [3.7 Common Mistakes with Pointers](#37-common-mistakes-with-pointers)
+- [Concept Applications](#concept-applications)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -271,6 +282,81 @@ double d = 3.14;
 int *pi = &d;   // warning: incompatible pointer type
 ```
 
+Third, do not dereference an uninitialized pointer. A local pointer declared only as `int *p;` contains a garbage address, so `*p = 5;` writes a value into unknown memory. Such a pointer is often called a **wild pointer**; with luck the program terminates abnormally at once, and without luck it silently corrupts the value of another variable. For the same reason, avoid putting an address value in directly, as in `int *p = (int *)0x1000;`. In a typical operating system, the locations of memory a program may use are decided by the operating system at each run, so there is no guarantee that an absolute address written in the source code points to a valid variable. Put only the address of a variable obtained with `&`, or `NULL`, into a pointer.
+
+### 1.8 Step-by-Step Trace of Pointer Expressions
+
+Code that handles pointers is traced by distinguishing statements that change "the value of the pointer itself (an address)" from statements that change "the value of the variable the pointer points to." The following code is executed one statement at a time while printing the variables.
+
+```c
+int a = 10, b = 20;
+int *p = &a, *q = &b;
+
+*p = *q + 5;
+printf("1: a = %d, b = %d, *p = %d, *q = %d\n", a, b, *p, *q);
+p = q;
+printf("2: a = %d, b = %d, *p = %d, *q = %d\n", a, b, *p, *q);
+*p = 1;
+printf("3: a = %d, b = %d, *p = %d, *q = %d\n", a, b, *p, *q);
+(*q)++;
+printf("4: a = %d, b = %d, *p = %d, *q = %d\n", a, b, *p, *q);
+printf("p == q is %d\n", p == q);
+```
+
+```text
+1: a = 25, b = 20, *p = 25, *q = 20
+2: a = 25, b = 20, *p = 20, *q = 20
+3: a = 25, b = 1, *p = 1, *q = 1
+4: a = 25, b = 2, *p = 2, *q = 2
+p == q is 1
+```
+
+| Statement | What Changes | Variable `p` Points To | `a` | `b` |
+|:-----|:-----|:-----|-----:|-----:|
+| Initial state | Nothing | `a` | 10 | 20 |
+| `*p = *q + 5;` | The value of `a`, which `p` points to | `a` | 25 | 20 |
+| `p = q;` | The value (address) of the pointer `p` | `b` | 25 | 20 |
+| `*p = 1;` | The value of `b`, which `p` points to | `b` | 25 | 1 |
+| `(*q)++;` | The value of `b`, which `q` points to | `b` | 25 | 2 |
+
+*Table 4. What changes when pointer expressions execute*
+
+`p = q;` does not copy the value of `b` into `a`; it only makes `p` point to `b`, so `a` remains 25. From then on, `p` and `q` hold the same address, so `p == q` is true, and both `*p` and `*q` mean `b`. The parentheses in `(*q)++` are needed because postfix `++` has higher precedence than `*`; writing `*q++` would mean `*(q++)`, which increments the pointer `q` rather than `b`.
+
+### 1.9 Memory Picture of a Pointer Variable
+
+A pointer is also a variable that occupies a place in memory, so a pointer has "its own address" and "the value it stores (the address of another variable)" separately. The following code prints the addresses, values, and sizes of an `int` variable `a` and a pointer `p` that stores its address.
+
+```c
+int a = 10;
+int *p = &a;
+
+printf("&a = %p, a = %d\n", (void *)&a, a);
+printf("&p = %p, p = %p, *p = %d\n", (void *)&p, (void *)p, *p);
+printf("sizeof(a) = %zu, sizeof(p) = %zu\n", sizeof(a), sizeof(p));
+```
+
+```text
+&a = 0x16f4feb18, a = 10
+&p = 0x16f4feb10, p = 0x16f4feb18, *p = 10
+sizeof(a) = 4, sizeof(p) = 8
+```
+
+```text
+        address        contents
+      ┌──────────────┬────────────────────┐
+p     │ 0x16f4feb10  │ 0x16f4feb18 ───────┼──┐   value of p = address of a (8 bytes)
+      ├──────────────┼────────────────────┤  │
+a     │ 0x16f4feb18  │ 10                 │◄─┘   *p is this cell (4 bytes)
+      └──────────────┴────────────────────┘
+```
+
+*Figure 3. Memory layout of the pointer p and the variable a*
+
+In the output, the value of `p` equals `&a`, so `p` points to `a`. `&p` is a different address, the place where the pointer `p` itself sits. `*p` is the value 10 read by going to the address stored in `p`. `a` is 4 bytes, and `p` is 8 bytes, holding one 64-bit address. The actual address values change at each run, but the relationship that the value of `p` equals `&a` does not. The textbook's examples were built as 32-bit programs, so addresses print as 8 hexadecimal digits (4 bytes), but building for 64 bits makes pointers 8 bytes, so the output grows longer, as in this example.
+
+`&` and `*` are operations in opposite directions: `&a` goes from a variable to an address, and `*p` from an address to a variable. Therefore `*&a` equals `a`, and if `p` points to a valid variable, `&*p` equals `p`. This relationship lets a complex expression be unwound one step at a time. For example, for the `p` above, `*p + 1` is `a + 1`, that is 11, `&a == p` is true, and `*&p` is `p` itself.
+
 ---
 
 <br>
@@ -297,7 +383,7 @@ p     p+1    p+2    p+3    p+4
         (+4B)   (+4B)   (+4B)   (+4B)
 ```
 
-*Figure 3. Addresses of int array elements reached by pointer arithmetic*
+*Figure 4. Addresses of int array elements reached by pointer arithmetic*
 
 | Pointer Type | `p + 1` Advances By |
 |:-------------|:--------------------|
@@ -305,7 +391,7 @@ p     p+1    p+2    p+3    p+4
 | `double *` | 8 bytes (`sizeof(double)`) |
 | `char *` | 1 byte (`sizeof(char)`) |
 
-*Table 4. How far `p + 1` moves for each pointer type*
+*Table 5. How far `p + 1` moves for each pointer type*
 
 **Supported operations:**
 
@@ -317,7 +403,7 @@ p     p+1    p+2    p+3    p+4
 | `p--` | Move to previous element |
 | `p1 - p2` | Number of elements between two pointers (not bytes) |
 
-*Table 5. Operations allowed on pointers*
+*Table 6. Operations allowed on pointers*
 
 ```c
 int arr[5] = {10, 20, 30, 40, 50};
@@ -354,7 +440,7 @@ printf("%d\n", *(p + 4));   // 50  (same as p[4])
 | `p[i]` | `*(p + i)` | Access i-th element from p |
 | `&p[i]` | `p + i` | Address of i-th element from p |
 
-*Table 6. Correspondence between subscript notation and pointer notation*
+*Table 7. Correspondence between subscript notation and pointer notation*
 
 ### 2.3 Array as Pointer
 
@@ -378,7 +464,7 @@ printf("%d\n", *(arr + 2));   // 30  (same as arr[2])
 | `arr[i]` | `*(arr + i)` |
 | `&arr[i]` | `arr + i` |
 
-*Table 7. Equivalences between array notation and pointer notation*
+*Table 8. Equivalences between array notation and pointer notation*
 
 > **Caution:** The array name is a **constant**, so it cannot be modified. You **cannot** do the following.
 > ```c
@@ -396,7 +482,7 @@ printf("%d\n", *(arr + 2));   // 30  (same as arr[2])
 | `++` operator | Not allowed (`arr++` is error) | Allowed (`p++` moves to next element) |
 | Identity | `arr` is the array itself | `p` is an independent variable |
 
-*Table 8. Comparison of an array and a pointer (with a 4-byte `int`)*
+*Table 9. Comparison of an array and a pointer (with a 4-byte `int`)*
 
 ```c
 int arr[5] = {1, 2, 3, 4, 5};
@@ -411,6 +497,151 @@ p++;        // OK: p now points to arr[1]
 
 > **Key Point:** Although `arr` and `p` can be used interchangeably in many expressions (like `arr[i]` and `p[i]`), they are fundamentally different: an array name is a fixed starting address, like a pointer dedicated to one array, while `p` is a variable that can hold a different address at run time.
 
+### 2.5 Arrays of Pointers and Double Pointers
+
+A pointer is also a variable, so an array whose elements are pointers can be made, and so can a pointer that stores the address of a pointer. An **array of pointers** `int *list[3]` is an array of 3 elements of type `int*`, and a **double pointer** `int **pp` is a pointer that stores the address of an `int*` variable.
+
+```c
+int x = 1, y = 2, z = 3;
+int *list[3] = { &x, &y, &z };      // array of pointers
+int *p = &x;
+int **pp = &p;                      // double pointer
+int i;
+
+for (i = 0; i < 3; i++)
+    *list[i] *= 10;                 // multiply each pointed-to variable by 10
+printf("x = %d, y = %d, z = %d\n", x, y, z);
+
+**pp = 99;                          // pp → p → x
+printf("x = %d, *p = %d, **pp = %d\n", x, *p, **pp);
+*pp = &y;                           // make p point to y
+printf("*p = %d\n", *p);
+printf("sizeof list = %zu, sizeof pp = %zu\n", sizeof(list), sizeof(pp));
+```
+
+```text
+x = 10, y = 20, z = 30
+x = 99, *p = 99, **pp = 99
+*p = 20
+sizeof list = 24, sizeof pp = 8
+```
+
+`*list[i]` binds `[]` before `*`, so it is `*(list[i])`, the variable that the `i`th element points to. Arrays of pointers are used to process several separate variables with one loop, and the arrays of string pointers in Chapter 9 are a typical example. `**pp` dereferences `pp` once to get `p` and again to reach `x`, so `**pp = 99` changes `x`. `*pp = &y` changes `p` itself, which `pp` points to, so a double pointer is used as a parameter when a function must change a pointer variable of its caller. On a 64-bit platform a pointer is 8 bytes, so the size of `list` is 3 × 8 = 24 bytes. The uses of arrays of pointers and double pointers, and the difference from pointers to arrays, are treated in detail in Chapter 11.
+
+### 2.6 Differences Among `arr`, `&arr[0]`, and `&arr`
+
+The array name `arr`, the address of the first element `&arr[0]`, and the address of the whole array `&arr` print the same address value, but their types differ, and therefore so does the amount they move when 1 is added.
+
+```c
+int arr[5] = { 1, 2, 3, 4, 5 };
+
+printf("arr     = %p, arr + 1     = %p\n", (void *)arr, (void *)(arr + 1));
+printf("&arr[0] = %p, &arr[0] + 1 = %p\n", (void *)&arr[0], (void *)(&arr[0] + 1));
+printf("&arr    = %p, &arr + 1    = %p\n", (void *)&arr, (void *)(&arr + 1));
+printf("sizeof arr = %zu, sizeof &arr[0] = %zu, sizeof *&arr = %zu\n",
+       sizeof arr, sizeof &arr[0], sizeof *&arr);
+```
+
+```text
+arr     = 0x16f0eeaf0, arr + 1     = 0x16f0eeaf4
+&arr[0] = 0x16f0eeaf0, &arr[0] + 1 = 0x16f0eeaf4
+&arr    = 0x16f0eeaf0, &arr + 1    = 0x16f0eeb04
+sizeof arr = 20, sizeof &arr[0] = 8, sizeof *&arr = 20
+```
+
+| Expression | Type | What It Points To | Movement of `+ 1` |
+|:-----|:-----|:-----|-----:|
+| `arr` (in most expressions) | `int *` | The first element `arr[0]` | 4 bytes |
+| `&arr[0]` | `int *` | The first element `arr[0]` | 4 bytes |
+| `&arr` | `int (*)[5]` | The whole array of 5 elements | 20 bytes |
+
+*Table 10. Comparison of the array name and two kinds of addresses*
+
+When `arr` is used in an expression, it turns into an `int *` pointing to the first element, so it equals `&arr[0]`, and adding 1 points 4 bytes later, the size of one `int`, at `arr[1]`. `&arr` is an address that points to the whole array as one object, so adding 1 moves 20 bytes later, the size of one array, that is, to the position right after the end of the array: 0xaf0 + 0x14 (20) = 0xb04. There are exceptions where an array name does not turn into an address: `sizeof arr` is the size of the whole array, 20, and the `&` of `&arr` also applies to the whole array. A pointer to an array, such as `int (*)[5]`, is the type actually used when a 2D array is passed to a function, and it is treated in detail in Chapter 11.
+
+### 2.7 Pointer Arithmetic by Element Type
+
+The rule of Section 2.1, that `p + 1` moves by the size of the pointed-to type, is checked with four types. The number of bytes moved is the difference of the two addresses converted to `char *`; since `char` is 1 byte, the difference of `char *` values is a number of bytes.
+
+```c
+char c[4];
+short s[4];
+int i[4];
+double d[4];
+char *pc = c;
+short *ps = s;
+int *pi = i;
+double *pd = d;
+
+printf("char:   %p -> %p (+%td)\n", (void *)pc, (void *)(pc + 1), (char *)(pc + 1) - (char *)pc);
+printf("short:  %p -> %p (+%td)\n", (void *)ps, (void *)(ps + 1), (char *)(ps + 1) - (char *)ps);
+printf("int:    %p -> %p (+%td)\n", (void *)pi, (void *)(pi + 1), (char *)(pi + 1) - (char *)pi);
+printf("double: %p -> %p (+%td)\n", (void *)pd, (void *)(pd + 1), (char *)(pd + 1) - (char *)pd);
+printf("pi + 3 - pi = %td\n", (pi + 3) - pi);
+```
+
+```text
+char:   0x16b1b6ac8 -> 0x16b1b6ac9 (+1)
+short:  0x16b1b6b00 -> 0x16b1b6b02 (+2)
+int:    0x16b1b6af0 -> 0x16b1b6af4 (+4)
+double: 0x16b1b6ad0 -> 0x16b1b6ad8 (+8)
+pi + 3 - pi = 3
+```
+
+The same `+ 1` moves 1 byte for `char *`, 2 bytes for `short *`, 4 bytes for `int *`, and 8 bytes for `double *`. In general, for a pointer p of type T, the address of `p + n` is p + n × `sizeof(T)`. Conversely, the difference of two pointers of the same type is the number of bytes divided by the element size, that is, a number of elements, so `(pi + 3) - pi` is 3, not 12 bytes. `%td` is the format specifier for `ptrdiff_t`, the integer type that holds pointer differences. Because the type of the pointer decides the amount of movement, pointing to an `int` variable with a `short *`, as in Section 1.7, changes even the number of bytes read when it is dereferenced.
+
+> **Note:** **Byte order.** Converting the address of `int n = 0x11223344;` to `unsigned char *` and printing its four bytes in order gives `44 33 22 11` in this environment. This arrangement, in which the least significant byte is placed at the lowest address, is called little endian, and some CPUs use the opposite order, big endian. Precautions for code that depends on byte order are treated in Chapter 13.
+
+### 2.8 Various Pointer Declarations
+
+Pointers can be declared to point to many kinds of targets: elements, arrays, pointers, and functions. The textbook explains that while first learning, one need not use all of these features; it is enough to be able to read the meaning of a declaration. A declaration is read starting from the variable name, reading the `[]` and `()` on the right first and the `*` on the left later, but reading inside parentheses first when they are present.
+
+| Declaration | How to Read It | Meaning |
+|:-----|:-----|:-----|
+| `int *p;` | p is a pointer, to an `int` | A pointer to an `int` variable |
+| `int *arr[3];` | arr is an array of 3 elements, each an `int` pointer | An array of pointers (Section 2.5) |
+| `int (*pa)[3];` | pa is a pointer, to an array of 3 `int` | A pointer to an array (the type of `&arr` in Section 2.6) |
+| `int **pp;` | pp is a pointer, to an `int` pointer | A double pointer (Section 2.5) |
+| `int (*fp)(int);` | fp is a pointer, to a function taking an `int` and returning an `int` | A function pointer |
+
+*Table 11. Various pointer declarations and how to read them*
+
+`int *arr[3]` and `int (*pa)[3]` differ completely in meaning by one pair of parentheses. In the first, `[]` binds before `*`, so it is an array; in the second, the parentheses make `*` bind first, so it is a pointer. Checking with `sizeof` in a 64-bit environment, `arr` is 24 bytes for 3 pointers, and `pa` is 8 bytes for one pointer. The uses of pointers to arrays and function pointers are treated in Chapter 11.
+
+### 2.9 Traversing an Array with a Pointer
+
+An array can also be processed by moving a pointer one slot at a time instead of using indices. The following code increments `p`, which points to the first element, until it reaches the end of the array `end` (= `arr + 5`), computing the sum.
+
+```c
+int arr[5] = { 3, 1, 4, 1, 5 };
+int *p, *end = arr + 5, sum = 0;
+
+for (p = arr; p < end; p++) {
+    sum += *p;
+    printf("p - arr = %td, *p = %d, sum = %d\n", p - arr, *p, sum);
+}
+printf("p == end: %d\n", p == end);
+
+p = arr;
+printf("%d ", *p++);
+printf("%d ", *p++);
+printf("%d\n", *p);
+```
+
+```text
+p - arr = 0, *p = 3, sum = 3
+p - arr = 1, *p = 1, sum = 4
+p - arr = 2, *p = 4, sum = 8
+p - arr = 3, *p = 1, sum = 9
+p - arr = 4, *p = 5, sum = 14
+p == end: 1
+3 1 4
+```
+
+`p - arr` equals the index of the element currently pointed to, so this loop does the same job as `for (i = 0; i < 5; i++) sum += arr[i];`. `end` points to the position after the last element `arr[4]`. C allows creating and comparing a pointer to the position just past an array, but not dereferencing that position. That is why the condition is `p < end`, not `p <= end`, and after the loop `p` equals `end`, but `*p` is not read.
+
+The `*p++` in the last three lines is an idiom often seen in code that handles strings and arrays. Postfix `++` binds first, so it is `*(p++)`, meaning "use the value at the current position and move the pointer to the next." Hence the first two outputs are the 3 of `arr[0]` and the 1 of `arr[1]`, after which `p` points to `arr[2]` and prints 4.
+
 ---
 
 <br>
@@ -424,7 +655,7 @@ p++;        // OK: p now points to arr[1]
 | Pass by value | Function receives a **copy** of the argument | No |
 | Pass by reference | Function receives the **address** via a pointer | Yes |
 
-*Table 9. Pass by value and pass by reference*
+*Table 12. Pass by value and pass by reference*
 
 In pass by value, a function parameter is a local variable created when the function is called and initialized with the value of the argument. In pass by reference, the parameter is declared as a pointer to the argument, and the address of the variable to pass is given when the function is called.
 
@@ -466,7 +697,7 @@ Pass by Value              Pass by Reference
    a unchanged                 a changed!
 ```
 
-*Figure 4. Comparison of pass by value and pass by reference*
+*Figure 5. Comparison of pass by value and pass by reference*
 
 > **Note:** Strictly speaking, C passes every argument by value; pass by reference is implemented by passing a pointer (address) by value. The textbook calls this method call by reference.
 
@@ -501,7 +732,7 @@ Before addTen_wrong:      Inside addTen_wrong:      After addTen_wrong:
         x=85
 ```
 
-*Figure 5. Behavior of addTen_wrong called by value*
+*Figure 6. Behavior of addTen_wrong called by value*
 
 **Correct: pass by reference (works)**
 
@@ -530,7 +761,7 @@ Before addTen:            Inside addTen:            After addTen:
        *p=85
 ```
 
-*Figure 6. Behavior of addTen called by reference*
+*Figure 7. Behavior of addTen called by reference*
 
 > **Note:** **Classic exercise.** Swapping two values is the most well-known application of this pattern, and it cannot be implemented with pass by value. It requires two pointer parameters so the function can modify both caller variables.
 
@@ -584,7 +815,7 @@ Parameters fall into three kinds according to their role inside the function, an
 | Output parameter | Its value is not used in the function but is changed before the function returns. | `void get_sum_product(int x, int y, int *sum, int *product);` | Pass by reference |
 | Input/output parameter | Its value is both used in the function and changed before the function returns. | `void swap(int *px, int *py);` | Pass by reference |
 
-*Table 10. Argument passing method by parameter role*
+*Table 13. Argument passing method by parameter role*
 
 A function that returns its results through output parameters is written in the following order. (1) In the prototype, declare each output parameter as a pointer to the variable that will store the result. (2) When calling the function, prepare the variables that will receive the results and pass their addresses. (3) In the function definition, store the results where the pointer parameters point.
 
@@ -666,6 +897,143 @@ int main() {
 
 Passing an array as a function argument can be summarized as follows. (1) In the prototype, declare the parameter as an array without a size (`int arr[]`) or as a pointer to the element type (`int *arr`). (2) If the function needs the array size, receive the size as a parameter too. (3) If the array is an input parameter, add `const`. (4) When calling the function, pass the array name as the argument. (5) In the function definition, use the pointer parameter like an array.
 
+In a parameter declaration, `int arr[]`, `int arr[10]`, and `int *arr` are all treated as the same type, `int *`. Therefore the prototype `void f(int arr[]);` and the prototype `void f(int *arr);` written together in one file declare the same function without conflict, and the size 10 written in `int arr[10]` is ignored. However, under `-Wall`, when a declaration with a written size such as `int arr[10]` is followed by an array-notation declaration with a different size such as `int arr[]`, Clang issues the warning `argument 'arr' of type 'int[]' with mismatched bound`, even though the types are the same. The only difference is that the array notation reveals the intent that "an array comes through this parameter" while the pointer notation reveals the actual type, so one notation is used consistently within a program. It is also because the parameter `arr` is a pointer variable, not an array, that `arr++` is allowed inside the function.
+
+### 3.5 Functions That Return Addresses
+
+A function can also return a pointer. In that case it must be checked that the returned address remains valid after the function ends. A local variable is destroyed when the function returns, so if its address is returned, the caller receives a pointer to a variable that no longer exists. Such a pointer is called a **dangling pointer**, and dereferencing it is undefined behavior.
+
+```c
+int *bad(void)
+{
+    int local = 42;
+
+    return &local;              // local is destroyed when the function ends
+}
+```
+
+```text
+warning: address of stack memory associated with local variable 'local' returned [-Wreturn-stack-address]
+```
+
+In contrast, the address of an element of an array passed in by the caller remains valid after the function ends. The following function returns the address of the largest element of an array, and the caller can change that element directly through the address.
+
+```c
+int *largest(int arr[], int size)
+{
+    int *best = &arr[0];
+    int i;
+
+    for (i = 1; i < size; i++)
+        if (arr[i] > *best)
+            best = &arr[i];
+    return best;
+}
+
+int main(void)
+{
+    int data[5] = { 4, 9, 2, 9, 7 };
+    int *m = largest(data, 5);
+
+    *m = 0;
+    printf("%d %d %d %d %d, index %d\n", data[0], data[1], data[2], data[3], data[4], (int)(m - data));
+    return 0;
+}
+```
+
+```text
+4 0 2 9 7, index 1
+```
+
+The maximum 9 appears twice, but since the comparison is `>`, the address of the earlier `data[1]` is returned, and `*m = 0` changes that element to 0. The difference `m - data` of two pointers into the same array is the number of elements between the two positions, so it gives the index 1 (Section 2.1). In summary, the addresses a function may return are the addresses of arrays or variables received as arguments, addresses of global variables, and addresses of dynamically allocated memory, learned in Chapter 11; the address of a local variable of the function is not returned.
+
+### 3.6 Memory Trace of a `swap` Call
+
+Pass-by-address of Section 3.1 is checked with addresses. `swap` receives the addresses of two `int` variables and exchanges `*x` and `*y`.
+
+```c
+void swap(int *x, int *y)
+{
+    int t;
+
+    printf("in swap: x = %p, y = %p, *x = %d, *y = %d\n", (void *)x, (void *)y, *x, *y);
+    t = *x;
+    *x = *y;
+    *y = t;
+}
+
+int main(void)
+{
+    int a = 3, b = 7;
+
+    printf("in main: &a = %p, &b = %p\n", (void *)&a, (void *)&b);
+    swap(&a, &b);
+    printf("a = %d, b = %d\n", a, b);
+    return 0;
+}
+```
+
+```text
+in main: &a = 0x16d982b08, &b = 0x16d982b04
+in swap: x = 0x16d982b08, y = 0x16d982b04, *x = 3, *y = 7
+a = 7, b = 3
+```
+
+```text
+area of main                         area of swap
+┌─────────────────────────┐         ┌──────────────────────────┐
+│ a  @...b08 : 3 → 7      │◄────────┤ x : 0x...b08             │
+│ b  @...b04 : 7 → 3      │◄────────┤ y : 0x...b04             │
+└─────────────────────────┘         │ t : 3                    │
+                                    └──────────────────────────┘
+```
+
+*Figure 8. Variables of main and swap during the call to swap*
+
+The parameters `x` and `y` of `swap` receive copies of `&a` and `&b` of `main`, so the printed addresses are the same. The parameters themselves are still copies passed by value, but because their values are addresses, `*x` reaches `a` of `main`. Following the three statements in order, `t = *x` makes `t` 3, `*x = *y` makes `a` 7, and `*y = t` makes `b` 3. When `swap` ends, `x`, `y`, and `t` disappear, but the values written to `a` and `b` remain. If values were passed instead, as in `swap(a, b)`, 3 and 7 would be used as addresses, and the compiler reports that `int` cannot be converted to `int *`.
+
+### 3.7 Common Mistakes with Pointers
+
+Pointer mistakes appear as warnings at compile time and as abnormal termination at run time. The following code contains three mistakes that produce warnings.
+
+```c
+int a = 5, *p, *q = &a;
+
+*p = 3;                 // dereferences p without initializing it
+if (q == 5)             // compares a pointer with an integer
+    printf("five\n");
+printf("%d\n", q);      // prints a pointer with %d
+```
+
+```text
+warning: comparison between pointer and integer ('int *' and 'int') [-Wpointer-integer-compare]
+warning: format specifies type 'int' but the argument has type 'int *' [-Wformat]
+warning: variable 'p' is uninitialized when used here [-Wuninitialized]
+```
+
+All three warnings come from a missing or misplaced `*`. If `q == 5` and `printf("%d", q)` meant the value `q` points to, they must be written `*q == 5` and `printf("%d", *q)`. `*p = 3` is the wild pointer of Section 1.7. Omitting `*` in an assignment, as in `q = 7;`, is not a warning but the error `incompatible integer to pointer conversion`.
+
+Dereferencing a null pointer shows up at run time without a compile warning. A program that executed `int *p = NULL; *p = 1;` terminated abnormally on arm64 macOS with a segmentation fault (SIGSEGV), and the exit status reported to the shell was 139. Such errors are found by placing an `if (p != NULL)` check before the dereferencing line, or by inspecting the pointer's value with a debugger just before it is used.
+
+---
+
+<br>
+
+## Concept Applications
+
+**True/False Check:**
+
+| Statement | Judgment and Reason |
+|:-----|:-----|
+| `int *p, q;` declares two pointers. | **F.** The `*` attaches only to `p`, so `q` is an `int` variable. |
+| When `double` is 8 bytes, `d + 1` for `double *d` increases the address by 8. | **T.** Pointer arithmetic moves in units of the size of the pointed-to type. |
+| The size of a pointer depends on the data type it points to. | **F.** On typical platforms every pointer has the same size, 8 bytes on 64-bit. |
+| An array name can be incremented, as in `arr++`. | **F.** An array name is an unchangeable starting address, so it cannot be incremented; only pointer variables can. |
+| With `const int *p`, the value `p` points to cannot be changed, but `p` itself can. | **T.** To fix the pointer itself, declare it as `int *const p`. |
+| The address of a function's local variable can be used safely right after it is returned. | **F.** A local variable is destroyed when the function returns, so the returned address is a dangling pointer. |
+| `*p++` increments the value `p` points to by 1. | **F.** Postfix `++` binds first, giving `*(p++)`, so the pointer is incremented. To increment the value, write `(*p)++`. |
+| The difference of two pointers into the same array is the number of bytes between the two addresses. | **F.** The difference of pointers is not a number of bytes but the number of elements between the two positions. |
+
 ---
 
 <br>
@@ -693,6 +1061,16 @@ Passing an array as a function argument can be summarized as follows. (1) In the
 | Multiple return values | The caller passes the addresses of the variables that receive results, and the function writes the values via `*`. |
 | Parameter roles | Input parameters are passed by value, while output and input/output parameters are passed by address. |
 | Array to function | An array decays to a pointer, so `sizeof(arr)` in the function is the pointer size and the size must be passed separately. |
+| Wild pointers | An uninitialized pointer or a hand-picked absolute address is not guaranteed to point to a valid variable, so it is not dereferenced. |
+| Tracing pointer expressions | `p = q` changes what the pointer points to, `*p = ...` changes the value of the pointed-to variable, and `(*q)++` differs from `*q++`. |
+| Arrays of pointers and double pointers | `int *list[3]` is an array whose elements are pointers, and `int **pp` stores the address of a pointer so that `*pp` can change the pointer itself. |
+| Returning addresses | Returning the address of a local variable creates a dangling pointer, while addresses of array elements received as arguments or of global variables may be returned. |
+| Memory of a pointer variable | A pointer has its own address (`&p`) apart from the stored address (`p`) and is 8 bytes on 64-bit. |
+| `arr`, `&arr[0]`, `&arr` | Their values are equal, but `arr` and `&arr[0]` are `int *` and `&arr` is `int (*)[5]`, so `+ 1` moves 4 bytes and 20 bytes respectively. |
+| Pointer arithmetic by type | `p + n` moves n × `sizeof(T)` bytes, and the difference of two pointers is a number of elements. |
+| Reading pointer declarations | Start from the name, read the `[]` and `()` on the right first and the `*` on the left later, and read inside parentheses first. |
+| Common pointer mistakes | A missing `*` and an uninitialized pointer appear as warnings, and dereferencing a null pointer as abnormal termination at run time. |
+| Traversing with a pointer | Traverse with `for (p = arr; p < arr + n; p++)`; a pointer just past the array may be compared but not dereferenced. |
 
 ---
 
@@ -742,5 +1120,32 @@ Passing an array as a function argument can be summarized as follows. (1) In the
    <summary>Answer</summary>
 
    `h = 7384 / 3600 = 2`, `m = (7384 % 3600) / 60 = 184 / 60 = 3`, and `s = 7384 % 60 = 4`. That is, 7384 seconds is 2 hours, 3 minutes, and 4 seconds.
+
+   </details>
+
+6. **Pointer trace:** Write the values of `a`, `b`, `*p`, and `*q` after executing `int a = 3, b = 7; int *p = &a, *q = &b; *q = *p * 2; q = p; *q += 1;`.
+
+   <details>
+   <summary>Answer</summary>
+
+   `*q = *p * 2` makes `b` 6. `q = p` makes `q` point to `a`, and `*q += 1` makes `a` 4. Therefore `a` is 4, `b` is 6, and `*p` and `*q` both point to `a`, so they are 4.
+
+   </details>
+
+7. **Double pointer:** For `int x = 5, y = 8; int *p = &x; int **pp = &p;`, write the values of `x`, `y`, and `*p` after executing `**pp = **pp + 1; *pp = &y; **pp = 0;` in order.
+
+   <details>
+   <summary>Answer</summary>
+
+   The first statement goes through `pp → p → x` and makes `x` 6. The second statement makes `p` point to `y`, and the third goes through `pp → p → y` and makes `y` 0. Therefore `x` is 6, `y` is 0, and `*p` is 0, the value of `y`.
+
+   </details>
+
+8. **Dangling pointer:** Explain why the following function is wrong, and correct it to do the same job. `int *make_ten(void) { int n = 10; return &n; }`
+
+   <details>
+   <summary>Answer</summary>
+
+   `n` is a local variable, so it is destroyed when the function returns, and the returned address becomes a dangling pointer. If the purpose is to give back one value, return the value, as in `int make_ten(void) { return 10; }`; if the result must be placed in a variable of the caller, use an output parameter, as in `void make_ten(int *out) { *out = 10; }`.
 
    </details>

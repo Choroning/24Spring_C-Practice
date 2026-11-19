@@ -2,9 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 8
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1 and 2 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -14,6 +16,12 @@
 
 - [Exercise 1: 2D Plane Coordinate Calculator](#exercise-1-2d-plane-coordinate-calculator)
 - [Exercise 2: Lotto Program](#exercise-2-lotto-program)
+- [Exercise 3: Declaring and Initializing Pointers](#exercise-3-declaring-and-initializing-pointers)
+- [Exercise 4: Results of Pointer Arithmetic](#exercise-4-results-of-pointer-arithmetic)
+- [Exercise 5: `const` Pointers and Compile Errors](#exercise-5-const-pointers-and-compile-errors)
+- [Exercise 6: Output of Increment and Dereference](#exercise-6-output-of-increment-and-dereference)
+- [Exercise 7: A Function That Computes a Sum and an Average](#exercise-7-a-function-that-computes-a-sum-and-an-average)
+- [Exercise 8: Minimum, Maximum, and Reversing an Array with Pointers](#exercise-8-minimum-maximum-and-reversing-an-array-with-pointers)
 
 ---
 
@@ -208,3 +216,134 @@ Program ended with exit code: 0
 ```
 
 **[Solution](Solutions.md#exercise-2-lotto-program)**
+
+---
+
+<br>
+
+## Exercise 3: Declaring and Initializing Pointers
+
+**Textbook Problem:** Chapter 8 exercise 3
+
+**Problem:** Given `int a, arr[10]; double y;`, select every wrong pointer declaration and initialization below and explain why.
+
+- ① `char *pc = NULL;`
+- ② `char *pch = 0;`
+- ③ `int *pi = 0x12345678;`
+- ④ `int *px = &a;`
+- ⑤ `int *parr = arr;`
+- ⑥ `double *pd = y;`
+- ⑦ `short *ps = &a;`
+
+**[Solution](Solutions.md#exercise-3-declaring-and-initializing-pointers)**
+
+---
+
+<br>
+
+## Exercise 4: Results of Pointer Arithmetic
+
+**Textbook Problem:** Chapter 8 exercise 5
+
+**Problem:** Assume `int arr[4] = { 2, 4, 6, 8 }; int *ptr = arr;`, that `int` is 4 bytes, and that the address stored in `ptr` is `0x100`. Write the value of each expression.
+
+- ① `*ptr`
+- ② `ptr + 2`
+- ③ `*(ptr + 2)`
+- ④ `ptr[3]`
+- ⑤ `(*ptr) + 1`
+- ⑥ `*(ptr + 1)`
+
+**[Solution](Solutions.md#exercise-4-results-of-pointer-arithmetic)**
+
+---
+
+<br>
+
+## Exercise 5: `const` Pointers and Compile Errors
+
+**Textbook Problem:** Chapter 8 exercise 6
+
+**Problem:** Given `int x[5] = { 2, 4, 6, 8, 10 }, y[5]; const int *ptr = x;`, select every statement below that causes a compile error.
+
+- ① `*ptr = 0;`
+- ② `ptr = 0;`
+- ③ `ptr = y;`
+- ④ `++ptr;`
+- ⑤ `(*ptr)++;`
+- ⑥ `ptr[1] = 3;`
+
+**[Solution](Solutions.md#exercise-5-const-pointers-and-compile-errors)**
+
+---
+
+<br>
+
+## Exercise 6: Output of Increment and Dereference
+
+**Textbook Problem:** Chapter 8 exercise 12
+
+**Problem:** Write the two lines printed by the following program.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    int arr[5] = { 1, 2, 3, 4, 5 };
+    int *p = arr;
+    int i;
+
+    for (i = 0; i < 5; i++) {
+        printf("%d ", ++(*p));
+        p++;
+    }
+    printf("\n");
+    for (i = 0; i < 5; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
+```
+
+**[Solution](Solutions.md#exercise-6-output-of-increment-and-dereference)**
+
+---
+
+<br>
+
+## Exercise 7: A Function That Computes a Sum and an Average
+
+**Textbook Problem:** A variation of Chapter 8 exercise 13
+
+**Problem:** Write a function `int get_sum_average(const int arr[], int size, double *average)` that returns the sum of an `int` array and gives back the average through an output parameter. If `average` is `NULL`, the average is not stored. Print the sum and average of the scores `{98, 99, 78, 85, 91}`, and obtain only the sum of the first 3 by passing `NULL`.
+
+**Sample Run:**
+
+```text
+sum: 451
+average: 90.20
+sum only: 275
+```
+
+**[Solution](Solutions.md#exercise-7-a-function-that-computes-a-sum-and-an-average)**
+
+---
+
+<br>
+
+## Exercise 8: Minimum, Maximum, and Reversing an Array with Pointers
+
+**Problem:** Write the following two functions and test them with the array `{23, 45, 62, 12, 99, 83}`.
+
+- `void get_min_max(const int *arr, int size, int *min, int *max)`: gives back the minimum and maximum through two output parameters.
+- `void reverse(int *arr, int size)`: without indices, swaps elements while moving two pointers at the two ends toward the middle.
+
+**Sample Run:**
+
+```text
+min = 12, max = 99
+83 99 12 62 45 23
+```
+
+**[Solution](Solutions.md#exercise-8-minimum-maximum-and-reversing-an-array-with-pointers)**

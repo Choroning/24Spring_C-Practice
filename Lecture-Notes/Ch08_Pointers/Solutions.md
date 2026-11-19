@@ -2,9 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 8
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1 and 2 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -14,6 +16,12 @@
 
 - [Exercise 1: 2D Plane Coordinate Calculator](#exercise-1-2d-plane-coordinate-calculator)
 - [Exercise 2: Lotto Program](#exercise-2-lotto-program)
+- [Exercise 3: Declaring and Initializing Pointers](#exercise-3-declaring-and-initializing-pointers)
+- [Exercise 4: Results of Pointer Arithmetic](#exercise-4-results-of-pointer-arithmetic)
+- [Exercise 5: `const` Pointers and Compile Errors](#exercise-5-const-pointers-and-compile-errors)
+- [Exercise 6: Output of Increment and Dereference](#exercise-6-output-of-increment-and-dereference)
+- [Exercise 7: A Function That Computes a Sum and an Average](#exercise-7-a-function-that-computes-a-sum-and-an-average)
+- [Exercise 8: Minimum, Maximum, and Reversing an Array with Pointers](#exercise-8-minimum-maximum-and-reversing-an-array-with-pointers)
 
 ---
 
@@ -252,3 +260,209 @@ void selectionSort(int p[], int size)
 Each set has no duplicates and is sorted in ascending order. The prompt says `로또 번호` instead of the sample run's `복권 번호`, and because two spaces are printed after each number, each line ends with trailing spaces.
 
 > **Note:** When 6 numbers are drawn independently, the probability that none is duplicated is $\frac{45 \times 44 \times 43 \times 42 \times 41 \times 40}{45^6} \approx 0.706$. So about 29% of the attempts are redrawn because of duplicates on average, and getting one set takes about 1.42 draws on average. Also, `rand() % 45` has a bias toward slightly more frequent small numbers when `RAND_MAX + 1` is not a multiple of 45, but the bias is negligible for the purpose of this program.
+
+---
+
+<br>
+
+## Exercise 3: Declaring and Initializing Pointers
+
+**Textbook Problem:** Chapter 8 exercise 3
+
+**Problem:** Select the wrong ones among seven pointer declarations and initializations and explain why. The choices are in [Exercise 3](Exercises.md#exercise-3-declaring-and-initializing-pointers).
+
+### Solution
+
+**Answer:** ③, ⑥, ⑦
+
+**Explanation:** A pointer is given only the address of a variable of the same type or a null pointer ([Chapter 8, Section 1.7](Concepts_Lecture.md#17-precautions-when-using-pointers)). ① and ② initialize null pointers, and since the integer constant 0 becomes a null pointer, both are correct. ④ is the address of an `int` variable and ⑤ is the array name, the address of its first element, so both are correct. For the three wrong declarations, Clang reports the following.
+
+```text
+error: incompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion]
+error: initializing 'double *' with an expression of incompatible type 'double'; take the address with &
+warning: incompatible pointer types initializing 'short *' with an expression of type 'int *' [-Wincompatible-pointer-types]
+```
+
+③ tries to store a nonzero integer as an absolute address, and ⑥ tries to store the `double` value itself without `&`. ⑦ points to an `int` variable with a `short*`, so dereferencing it would interpret only 2 bytes of the 4-byte variable as a `short`.
+
+---
+
+<br>
+
+## Exercise 4: Results of Pointer Arithmetic
+
+**Textbook Problem:** Chapter 8 exercise 5
+
+**Problem:** Compute the values of six expressions formed with a pointer to the `int` array `{2, 4, 6, 8}` at address `0x100`. The expressions are in [Exercise 4](Exercises.md#exercise-4-results-of-pointer-arithmetic).
+
+### Solution
+
+**Answer:** ① 2, ② `0x108`, ③ 6, ④ 8, ⑤ 3, ⑥ 4
+
+**Explanation:** `ptr + n` is the address n elements away, that is, `n * sizeof(int)` bytes away, not n bytes ([Chapter 8, Section 2.1](Concepts_Lecture.md#21-pointer-arithmetic)). Therefore ② `ptr + 2` is 0x100 + 2 × 4 = 0x108, and ③ `*(ptr + 2)` is the element at that address, `arr[2]` = 6. ④ `ptr[3]` is the same as `*(ptr + 3)`, so it is `arr[3]` = 8. ⑤ obtains `*ptr` first because of the parentheses and adds 1 to that 2, giving 3, and the array does not change. ⑥ is `arr[1]` = 4.
+
+---
+
+<br>
+
+## Exercise 5: `const` Pointers and Compile Errors
+
+**Textbook Problem:** Chapter 8 exercise 6
+
+**Problem:** Select every statement among six statements about `const int *ptr = x;` that causes a compile error. The choices are in [Exercise 5](Exercises.md#exercise-5-const-pointers-and-compile-errors).
+
+### Solution
+
+**Answer:** ①, ⑤, ⑥
+
+**Explanation:** `const int *ptr` is a pointer that can only read the `int` it points to, while the pointer itself can be changed ([Chapter 8, Section 1.6](Concepts_Lecture.md#16-const-pointer)). Therefore ① `*ptr = 0`, ⑤ `(*ptr)++`, and ⑥ `ptr[1] = 3`, which change the pointed-to value, are all the error `read-only variable is not assignable` in Clang. ② makes `ptr` a null pointer, ③ makes it point to another array `y`, and ④ makes it point to the next element; these change the pointer itself and are allowed. To fix the pointer itself, write `const` after `*`, as in `int *const ptr = x;`.
+
+---
+
+<br>
+
+## Exercise 6: Output of Increment and Dereference
+
+**Textbook Problem:** Chapter 8 exercise 12
+
+**Problem:** Write the output of a loop that prints `++(*p)` through a pointer to an array and moves with `p++`, followed by a loop that prints the array. The code is in [Exercise 6](Exercises.md#exercise-6-output-of-increment-and-dereference).
+
+### Solution
+
+**Approach:** `++(*p)` first obtains `*p` inside the parentheses, the element `p` points to, then increments that element by 1 and yields the incremented value. The `p++` on the next line moves the pointer to the next element.
+
+| Iteration | Element `p` Points To | Result of `++(*p)` | Array After the Iteration |
+|:-----|:-----|-----:|:-----|
+| 0 | `arr[0]` | 2 | `{2, 2, 3, 4, 5}` |
+| 1 | `arr[1]` | 3 | `{2, 3, 3, 4, 5}` |
+| 2 | `arr[2]` | 4 | `{2, 3, 4, 4, 5}` |
+| 3 | `arr[3]` | 5 | `{2, 3, 4, 5, 5}` |
+| 4 | `arr[4]` | 6 | `{2, 3, 4, 5, 6}` |
+
+**Output:**
+
+```text
+2 3 4 5 6
+2 3 4 5 6
+```
+
+Each element was incremented once, so the array in the second line is the same as the first line. Writing it in one expression, as in `++*p++`, binds the postfix `++` first, giving `++(*(p++))`; it produces the same result but is hard to read.
+
+---
+
+<br>
+
+## Exercise 7: A Function That Computes a Sum and an Average
+
+**Textbook Problem:** A variation of Chapter 8 exercise 13
+
+**Problem:** Write `get_sum_average`, which gives back the sum as the return value and the average through an output parameter, and make it skip storing the average when `NULL` is passed. The sample run is in [Exercise 7](Exercises.md#exercise-7-a-function-that-computes-a-sum-and-an-average).
+
+### Solution
+
+**Approach:** There are two results, so one is the return value, and the other is written to `*average` through the address of the caller's variable ([Chapter 8, Section 3.3](Concepts_Lecture.md#33-returning-multiple-values)). For calls that do not need the output parameter, it is checked against `NULL` before dereferencing.
+
+```c
+#include <stdio.h>
+
+int get_sum_average(const int arr[], int size, double *average)
+{
+    int sum, i;
+
+    for (i = 0, sum = 0; i < size; i++)
+        sum += arr[i];
+    if (average != NULL)
+        *average = (double)sum / size;
+    return sum;
+}
+
+int main(void)
+{
+    int scores[5] = { 98, 99, 78, 85, 91 };
+    double ave;
+
+    printf("sum: %d\n", get_sum_average(scores, 5, &ave));
+    printf("average: %.2f\n", ave);
+    printf("sum only: %d\n", get_sum_average(scores, 3, NULL));
+    return 0;
+}
+```
+
+- `(double)sum / size` converts `sum` to a real number before dividing, so it is not integer division. 451 / 5 = 90.2.
+- `ave` holds a value only after the first `printf` call finishes, so the average is printed separately in the next statement. Writing `get_sum_average(scores, 5, &ave)` and `ave` together among the arguments of one `printf` could read the value before it is stored, because the evaluation order of arguments is not specified.
+- The third call passes `NULL`, so it does not store an average and returns only the sum of the first 3, 98 + 99 + 78 = 275.
+
+**Output:**
+
+```text
+sum: 451
+average: 90.20
+sum only: 275
+```
+
+---
+
+<br>
+
+## Exercise 8: Minimum, Maximum, and Reversing an Array with Pointers
+
+**Problem:** Write `get_min_max`, which gives back the minimum and maximum through output parameters, and `reverse`, which reverses an array with two pointers at its two ends. The sample run is in [Exercise 8](Exercises.md#exercise-8-minimum-maximum-and-reversing-an-array-with-pointers).
+
+### Solution
+
+**Approach:** `get_min_max` gives back both results through output parameters. `reverse` keeps `left`, pointing to the first element, and `right`, pointing to the last, and while `left` is before `right`, it swaps the two elements and moves the pointers toward each other.
+
+```c
+#include <stdio.h>
+
+void get_min_max(const int *arr, int size, int *min, int *max)
+{
+    int i;
+
+    *min = *max = arr[0];
+    for (i = 1; i < size; i++) {
+        if (arr[i] < *min)
+            *min = arr[i];
+        if (arr[i] > *max)
+            *max = arr[i];
+    }
+}
+
+void reverse(int *arr, int size)
+{
+    int *left = arr, *right = arr + size - 1, t;
+
+    while (left < right) {
+        t = *left;
+        *left = *right;
+        *right = t;
+        left++;
+        right--;
+    }
+}
+
+int main(void)
+{
+    int data[6] = { 23, 45, 62, 12, 99, 83 };
+    int lo, hi, i;
+
+    get_min_max(data, 6, &lo, &hi);
+    printf("min = %d, max = %d\n", lo, hi);
+    reverse(data, 6);
+    for (i = 0; i < 6; i++)
+        printf("%d ", data[i]);
+    printf("\n");
+    return 0;
+}
+```
+
+- `*min = *max = arr[0];` starts both results at the first element with a chained assignment. Starting from 0 or an arbitrary value, as cautioned in Chapter 7, Section 5.1, gives a wrong result when every element is larger or smaller than that value.
+- `arr + size - 1` is the address of the last element `arr[5]`. Two pointers into the same array can be compared with `<`, so when `left < right` becomes false, the middle has been reached.
+- With 6 elements, the three pairs (`arr[0]`, `arr[5]`), (`arr[1]`, `arr[4]`), and (`arr[2]`, `arr[3]`) are swapped, after which `left` is `arr + 3` and `right` is `arr + 2`, and the loop stops. With an odd number of elements, the two pointers meet at the middle element, which stays in place.
+
+**Output:**
+
+```text
+min = 12, max = 99
+83 99 12 62 45 23
+```
