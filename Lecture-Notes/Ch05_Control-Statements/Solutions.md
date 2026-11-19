@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -238,7 +238,7 @@ int main()
 - **Discriminant:** `(b * b) - (4 * a * c)` is computed in integers and stored in the `double` variable `cal`. Because it consists of integer multiplication and subtraction, the value is exact, so the comparison `cal == 0` also works exactly.
 - **Roots:** In `(-b + sqrt(cal)) / (2 * a)`, `sqrt()` returns a `double`, so the numerator is floating-point and the division is floating-point division. For a double root, `sqrt(0)` is 0, so `ans1` equals $-\frac{b}{2a}$.
 - **Handling a = 0:** The problem assumes $a \neq 0$, but the code first checks with `if (a)` whether a is 0 and, if so, prints an error message saying that the equation is not quadratic.
-- **Output:** `%g` chooses the shorter of `%f` and `%e` within 6 significant digits and removes trailing zeros, so 1 is printed as `1` and 2/3 as `0.666667`.
+- **Output:** `%g` uses 6 significant digits, chooses the `%e` style when the exponent is less than -4 or at least 6 and the `%f` style otherwise, and removes trailing zeros, so 1 is printed as `1` and 2/3 as `0.666667`.
 
 **Code:** [Lab_Q3.c](../../Coursework/Lab05_Control-Statements/Lab_Q3.c)
 
