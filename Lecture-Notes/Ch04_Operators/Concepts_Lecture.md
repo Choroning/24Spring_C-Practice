@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -31,6 +31,7 @@
   - [3.2 Standalone vs In Expressions](#32-standalone-vs-in-expressions)
   - [3.3 Restrictions](#33-restrictions)
   - [3.4 Detailed Trace Example](#34-detailed-trace-example)
+  - [3.5 Several Increments in One Expression](#35-several-increments-in-one-expression)
 - [4. Relational Operators](#4-relational-operators)
   - [4.1 Comparison Operators](#41-comparison-operators)
   - [4.2 Result Type](#42-result-type)
@@ -40,13 +41,16 @@
   - [5.2 Truth Tables](#52-truth-tables)
   - [5.3 Short-Circuit Evaluation](#53-short-circuit-evaluation)
   - [5.4 Truthiness in C](#54-truthiness-in-c)
+  - [5.5 Precedence of Logical Operators and De Morgan's Laws](#55-precedence-of-logical-operators-and-de-morgans-laws)
 - [6. Bitwise Operators](#6-bitwise-operators)
   - [6.1 Bitwise AND, OR, XOR, NOT](#61-bitwise-and-or-xor-not)
   - [6.2 Shift Operators](#62-shift-operators)
   - [6.3 Practical Example: RGB Color](#63-practical-example-rgb-color)
+  - [6.4 Bit Masks and Shifts of Signed Values](#64-bit-masks-and-shifts-of-signed-values)
 - [7. Assignment Operators](#7-assignment-operators)
   - [7.1 Simple and Compound Assignment](#71-simple-and-compound-assignment)
   - [7.2 Chained Assignment](#72-chained-assignment)
+  - [7.3 Value of an Assignment Expression and Precedence of Compound Assignment](#73-value-of-an-assignment-expression-and-precedence-of-compound-assignment)
 - [8. Conditional Operator](#8-conditional-operator)
   - [8.1 Ternary Operator](#81-ternary-operator)
   - [8.2 Equivalent if/else](#82-equivalent-ifelse)
@@ -54,10 +58,12 @@
   - [9.1 Implicit Promotion](#91-implicit-promotion)
   - [9.2 Cast Operator](#92-cast-operator)
   - [9.3 sizeof of Expression Result](#93-sizeof-of-expression-result)
+  - [9.4 The Comma Operator](#94-the-comma-operator)
 - [10. Operator Precedence and Associativity](#10-operator-precedence-and-associativity)
   - [10.1 Precedence Table](#101-precedence-table)
   - [10.2 Associativity](#102-associativity)
   - [10.3 Use Parentheses When in Doubt](#103-use-parentheses-when-in-doubt)
+  - [10.4 Step-by-Step Evaluation of a Complex Expression](#104-step-by-step-evaluation-of-a-complex-expression)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
 
@@ -306,6 +312,22 @@ The printed value and the variable values after each line are as follows.
 
 *Table 6. Step-by-step trace of the increment operator example*
 
+### 3.5 Several Increments in One Expression
+
+Increment and decrement operators have a **side effect**: they change a variable while computing a value. The C standard mostly leaves unspecified the order in which the operands of an operator are evaluated, so if one expression changes the same variable twice or more, or changes it once while reading its value elsewhere, the result is not determined.
+
+```c
+int i = 1, n;
+
+n = i++ + i++;      // changes i twice in one expression
+```
+
+```text
+warning: multiple unsequenced modifications to 'i' [-Wunsequenced]
+```
+
+With this code, the compiler does not violate the standard whichever of the two `i++` it evaluates first or whenever it applies the two increments. In fact this case is undefined behavior, so the values of `n` and `i` may differ with the compiler and the optimization options, and whatever values appear carry no meaning. Reading and changing the same variable in function arguments, as in `printf("%d %d", i, i++)`, has the same problem. The remedy is to separate the increments into their own statements and state the intent explicitly, as in `n = i + (i + 1); i += 2;`. The exact rules of evaluation order and sequence points are treated in Chapter 13.
+
 ---
 
 <br>
@@ -356,6 +378,8 @@ if (x = 5)  { ... }  // ⚠ Assignment: sets x to 5, then checks if 5 is non-zer
 ```
 
 > **Caution:** `if (x = 5)` compiles without error, but it assigns 5 to x and always evaluates to true (since 5 is non-zero). This is one of the most common bugs in C. gcc and clang warn about it with the `-Wall` option, but not every compiler warns with its default settings.
+
+Misusing a relational operator sometimes causes a compile error, but more dangerous is the case where it is interpreted as another operator and compiles. `x =< 5` is a compile error because there is no operator `=<`, but `x =! 5` is interpreted as `x = !5`, an expression that assigns 0 to `x`. When `x` is 3, executing `if (x =! 5)` makes the condition false and changes `x` to 0. In the two-character operators `<=`, `>=`, `==`, and `!=`, the equals sign always comes second, and `= =`, with a space between the two characters, is also an error. Conversely, `!= 0` can be omitted, so `if (x != 0)` and `if (x)` mean the same thing.
 
 ---
 
@@ -471,6 +495,31 @@ printf("%d\n", !-3);   // 0  (negative non-zero is also true, so !(-3) = 0)
 ```
 
 > **Key Point:** The result of `!`, `&&`, and `||` is always `0` or `1` (type `int`), even though the input can be any integer value.
+
+### 5.5 Precedence of Logical Operators and De Morgan's Laws
+
+Among the three logical operators, `!` has the highest precedence, `&&` the next, and `||` the lowest. `!` is a unary operator, so it binds even before the relational operators, whereas `&&` and `||` bind after the relational operators. Hence `a > 0 && b > 0` is computed as `(a > 0) && (b > 0)` without parentheses, but `!x > 3` is computed as `(!x) > 3`, not `!(x > 3)`.
+
+```c
+int x = 1, a = 1, b = 0, c = 0;
+
+printf("%d %d\n", !x > 3, !(x > 3));
+printf("%d %d\n", a || b && c, (a || b) && c);
+printf("%d %d\n", !(a && b), !a || !b);
+printf("%d %d\n", !!5, !!0);
+```
+
+```text
+0 1
+1 0
+1 1
+1 0
+```
+
+- In the first line, `!x > 3` compares `!1`, that is 0, with 3, so it is 0, and `!(x > 3)` is 1, the negation of the false `1 > 3`. Clang issues the warning `logical not is only applied to the left hand side of this comparison` for this expression.
+- In the second line, `a || b && c` binds `&&` first, giving `a || (b && c)` = `1 || 0` = 1, while `(a || b) && c` is `1 && 0` = 0. The two expressions differ, so when `&&` and `||` are mixed, the intent is stated with parentheses.
+- The third line is an instance of **De Morgan's laws**. `!(a && b)` and `!a || !b` have the same value for all a and b, and likewise `!(a || b)` and `!a && !b` are equal. To negate a whole condition, negate each condition and swap `&&` and `||`. For example, "the score is not between 0 and 100 inclusive," `!(score >= 0 && score <= 100)`, can be written as `score < 0 || score > 100`.
+- The `!!` in the fourth line turns a nonzero value into 1 and 0 into 0, normalizing any integer to the truth values 1 and 0.
 
 ---
 
@@ -593,6 +642,44 @@ blue  = (rgb >> 16) & 0xFF   = 0xA7  (shift right 16, then mask)
 
 > **Key Point:** The mask `0xFF` (binary `1111 1111`) isolates exactly 8 bits. `& 0xFF` zeroes out all bits except the lowest 8. Shifting first moves the desired channel into the low 8 bits, and masking then extracts it.
 
+### 6.4 Bit Masks and Shifts of Signed Values
+
+A **bit mask** is a value made to select particular bits for manipulation. A mask with only bit n set is made with `1u << n`, and depending on the operator, that bit is turned on, turned off, flipped, or tested. AND makes the positions where the mask is 0 into 0, OR makes the positions where the mask is 1 into 1, and XOR inverts the positions where the mask is 1.
+
+| Task | Expression | Principle |
+|:-----|:-----|:-----|
+| Set bit n | `x \| (1u << n)` | OR with 1 gives 1, OR with 0 keeps the original |
+| Clear bit n | `x & ~(1u << n)` | AND with a mask whose only 0 is bit n |
+| Flip bit n | `x ^ (1u << n)` | XOR with 1 inverts, XOR with 0 keeps the original |
+| Test bit n | `(x >> n) & 1` | Move bit n to the bottom, then keep only the least significant bit |
+| Extract the low 4 bits | `x & 0x0F` | AND with a mask whose low 4 bits are 1 |
+
+*Table 16. Bit manipulation with bit masks*
+
+```c
+unsigned char x = 0x5A;     /* 0101 1010 */
+
+printf("set bit 0:    %02X\n", x | (1u << 0));
+printf("clear bit 1:  %02X\n", x & ~(1u << 1));
+printf("toggle bit 7: %02X\n", x ^ (1u << 7));
+printf("test bit 3:   %d\n", (x >> 3) & 1);
+printf("test bit 2:   %d\n", (x >> 2) & 1);
+printf("low nibble:   %X\n", x & 0x0F);
+```
+
+```text
+set bit 0:    5B
+clear bit 1:  58
+toggle bit 7: DA
+test bit 3:   1
+test bit 2:   0
+low nibble:   A
+```
+
+`0x5A` is `0101 1010`. Setting bit 0 gives `0101 1011` = `0x5B`, clearing bit 1 gives `0101 1000` = `0x58`, and flipping bit 7 gives `1101 1010` = `0xDA`. Bit 3 is 1 and bit 2 is 0, and the low 4 bits are `1010` = `0xA`. Bits are numbered from 0 at the least significant bit, and using an unsigned constant such as `1u` in a mask avoids problems caused by the sign bit when handling bit 31.
+
+The right shift of a signed negative value is implementation-defined by the C standard. Most compilers perform an **arithmetic shift**, which fills the vacated upper bits with the sign bit, so in this environment `-15 >> 2` is -4. This is -15 / 4 = -3.75 rounded down toward negative infinity, which differs from the result -3 of the integer division `-15 / 4`, which truncates toward zero. Therefore, for negative values a right shift cannot replace division by a power of 2. Also, shifting by a negative number of bits or by at least the bit width of the operand (`x << 32` for a 32-bit `int`) is undefined behavior.
+
 ---
 
 <br>
@@ -617,7 +704,7 @@ The **simple assignment** operator `=` stores a value in a variable. **Compound 
 | `<<=` | `x = x << n` | `x <<= 4` |
 | `>>=` | `x = x >> n` | `x >>= 8` |
 
-*Table 16. Simple and compound assignment operators*
+*Table 17. Simple and compound assignment operators*
 
 ```c
 int score = 80;
@@ -644,6 +731,27 @@ int x, y;
 x = y = 10 + 5;
 // y = 15, then x = 15
 ```
+
+### 7.3 Value of an Assignment Expression and Precedence of Compound Assignment
+
+An assignment is also an expression, so it has a value. **The value of an assignment expression is the value stored in the left-hand variable.** The chained assignment of Section 7.2 works because the value 0 of `c = 0` is assigned again to `b`.
+
+```c
+int a, b;
+
+printf("%d\n", a = 7);
+b = (a = 2) * 3;
+printf("%d %d\n", a, b);
+```
+
+```text
+7
+2 6
+```
+
+The argument `a = 7` of `printf` stores 7 in `a` and passes the value 7 as the argument. In the second statement, `a = 2` inside the parentheses runs first, and its value 2 multiplied by 3 gives 6, which is stored in `b`. The assignment operator has very low precedence, so writing `b = a = 2 * 3` gives `b = (a = (2 * 3))`, making both `a` and `b` equal to 6. This is why the parentheses are needed.
+
+Compound assignment operators also have the same precedence as the assignment operator, so apart from the comma operator (Section 9.4) they are computed last. Therefore `x *= y + 1` is not `x = x * y + 1` but `x = x * (y + 1)`. If `x` is 3 and `y` is 4, the result of `x *= y + 1` is 3 × 5 = 15. It suffices to remember that the whole right-hand expression is computed first and then combined with the left-hand variable.
 
 ---
 
@@ -766,6 +874,24 @@ printf("%zu\n", sizeof(c + 1.0));  // 8 (char + double → double)
 
 > **Key Point:** Even adding two `char` values produces an `int` result because of integer promotion.
 
+### 9.4 The Comma Operator
+
+The **comma operator** `,` evaluates two expressions in order from the left and takes the value of the right-hand expression as the value of the whole expression. The value of the left-hand expression is discarded, so an expression with a side effect, such as an assignment or an increment, is placed on the left. The comma operator has the lowest precedence of all operators.
+
+```c
+int a, b, c;
+
+a = (b = 3, b + 4);     // assign 3 to b, then assign the value 7 of b + 4 to a
+c = 5, 6;               // interpreted as (c = 5), 6
+printf("%d %d %d\n", a, b, c);
+```
+
+```text
+7 3 5
+```
+
+The first statement executes `b = 3` inside the parentheses first and assigns to `a` the value 7 of `b + 4`, which is the value of the whole parenthesized expression. In the second statement, the comma operator has lower precedence than assignment, so it becomes `(c = 5), 6`; `c` is 5, and the 6 on the right is discarded. Clang issues the warning `expression result unused` for this 6. The comma operator is mainly used where several expressions must be written in one place, as in `for (i = 0, j = 10; ...)` of Chapter 5. The commas in a function call `f(a, b)` and in a declaration `int a, b;` are separators between arguments and declarators, not the comma operator.
+
 ---
 
 <br>
@@ -794,7 +920,7 @@ When an expression has multiple operators, **precedence** determines which opera
 | 14 | `=` `+=` `-=` `*=` `/=` `%=` etc. | Assignment |
 | 15 (lowest) | `,` | Comma |
 
-*Table 17. Operator precedence*
+*Table 18. Operator precedence*
 
 ```c
 int x = 2 + 3 * 4;      // 3*4 first → 2 + 12 = 14 (not 20)
@@ -811,7 +937,7 @@ When operators have the **same precedence**, **associativity** determines the ev
 | Left-to-right | Postfix operators and most binary operators: `+`, `-`, `*`, `/`, `%`, `<`, `>`, `==`, `&&`, `,`, etc. | `a - b - c` = `(a - b) - c` |
 | Right-to-left | Unary operators of precedence 2, assignment, ternary | `a = b = c` = `a = (b = c)` |
 
-*Table 18. Associativity of operators*
+*Table 19. Associativity of operators*
 
 ```c
 int result = 10 - 3 - 2;
@@ -835,6 +961,29 @@ if ((a & b) == 0) { ... } // ✅ Correct and readable
 ```
 
 > **Caution:** Bitwise operators (`&`, `|`, `^`) have **lower precedence** than relational operators (`==`, `!=`). This is a common source of bugs. Always parenthesize bitwise expressions in comparisons.
+
+### 10.4 Step-by-Step Evaluation of a Complex Expression
+
+Applying precedence and associativity fixes a single order of computation even for an expression without parentheses. With `int x = 3, y = 4;`, the following assignment statement is computed.
+
+```c
+z = x + y * 2 > 10 && !(x == y) ? x << 1 : y % 3;
+```
+
+| Step | Operation Applied | Result |
+|:-----|:-----|:-----|
+| 1 | Parentheses `(x == y)` | `3 == 4` → 0 |
+| 2 | Unary `!` | `!0` → 1 |
+| 3 | Multiplication `y * 2` | 8 |
+| 4 | Addition `x + 8` | 11 |
+| 5 | Relational `11 > 10` | 1 |
+| 6 | Logical AND `1 && 1` | 1 |
+| 7 | Conditional operator `1 ? x << 1 : y % 3` | True, so only `x << 1` is computed, giving 6 |
+| 8 | Assignment `z = 6` | `z` is 6 |
+
+*Table 20. Step-by-step evaluation of a complex expression*
+
+Running it actually prints `z = 6`. In step 7 the conditional operator does not compute `y % 3` because the condition is true. Like `&&` and `||`, the conditional operator evaluates only the operands it needs. The order in the table is the order in which the operators bind; computations that do not depend on each other, such as steps 1 and 3, give the same result whichever the compiler does first. Such an expression is useful as an exercise in precedence, but in real code it is easier to read when it is split up with names for intermediate results and parentheses, as in `cond = (x + y * 2 > 10) && (x != y);`.
 
 ---
 
@@ -870,6 +1019,14 @@ if ((a & b) == 0) { ... } // ✅ Correct and readable
 | Precedence | Operators bind in the order postfix, unary, multiplicative, additive, shift, relational, bitwise, logical, conditional, assignment, and comma. |
 | Associativity | Most binary operators associate left to right, while unary, assignment, and ternary operators associate right to left. |
 | Parentheses | Parentheses should be used when in doubt, especially when bitwise and comparison operators appear together. |
+| Side effects and evaluation order | Changing the same variable twice or more in one expression, or reading it while changing it, is undefined behavior, so increments are written as separate statements. |
+| Misused relational operators | `=<` is an error, but `=!` compiles as assignment and negation, and `!= 0` may be omitted. |
+| Precedence of logical operators | `!` is highest, followed by `&&` and `||`, and `!x > 3` is computed as `(!x) > 3`. |
+| De Morgan's laws | `!(a && b)` equals `!a || !b`, and `!(a || b)` equals `!a && !b`. |
+| Bit masks | ORing `1u << n` sets a bit, ANDing its inverse clears it, XORing flips it, and `(x >> n) & 1` tests it. |
+| Shifts of signed values | Right-shifting a negative value is implementation-defined, and shifting by at least the bit width is undefined behavior. |
+| Value of an assignment expression | The value of an assignment is the stored value, and `x *= y + 1` is `x = x * (y + 1)`. |
+| Comma operator | It evaluates from the left, takes the right-hand value as the result, and has the lowest precedence. |
 
 ---
 
@@ -919,5 +1076,32 @@ if ((a & b) == 0) { ... } // ✅ Correct and readable
    <summary>Answer</summary>
 
    `a & b == 0` is 0 and `(a & b) == 0` is 1. Because `==` has higher precedence than `&`, the first expression is computed as `a & (b == 0)`, that is, `5 & 0` = 0. The second expression first computes `5 & 2` (binary `101 & 010`) = 0 and then compares it with 0, giving 1.
+
+   </details>
+
+6. **De Morgan's laws:** Write `!(age >= 8 && age < 65)` without `!`. Also compute the values of the original and rewritten expressions when `age` is 70.
+
+   <details>
+   <summary>Answer</summary>
+
+   Negating each condition and changing `&&` to `||` gives `age < 8 || age >= 65`. When `age` is 70, the original expression is `!(1 && 0)` = `!0` = 1, and the rewritten expression is also `0 || 1` = 1.
+
+   </details>
+
+7. **Bit masks:** For `unsigned char f = 0x2C;` (`0010 1100`), write in hexadecimal or as 0 or 1 (a) the value with bit 0 set, (b) the value with bit 3 cleared, and (c) the result of testing bit 5.
+
+   <details>
+   <summary>Answer</summary>
+
+   (a) `f | (1u << 0)` = `0010 1101` = `0x2D`. (b) `f & ~(1u << 3)` erases the 1 in bit 3, giving `0010 0100` = `0x24`. (c) `(f >> 5) & 1` is 1 because bit 5 is 1.
+
+   </details>
+
+8. **Assignment and comma:** Write the values of `a` and `b` after executing `int a, b; a = (b = 5, b * 2); b += a -= 3;`.
+
+   <details>
+   <summary>Answer</summary>
+
+   After the first statement, `b` is 5 and `a` is 10. The second statement is `b += (a -= 3)` because assignment operators associate from right to left. `a -= 3` makes `a` 7, and that value 7 is added to `b`, making `b` 12. Therefore `a` is 7 and `b` is 12.
 
    </details>
