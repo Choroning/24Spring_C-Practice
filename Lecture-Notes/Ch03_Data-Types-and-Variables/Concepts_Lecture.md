@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -33,6 +33,7 @@
   - [4.1 Literal Constants](#41-literal-constants)
   - [4.2 `#define` Macro Constants](#42-define-macro-constants)
   - [4.3 `const` Variables](#43-const-variables)
+  - [4.4 Macro Constants of the Standard Library](#44-macro-constants-of-the-standard-library)
 - [5. Format Specifiers](#5-format-specifiers)
   - [5.1 Common Specifiers](#51-common-specifiers)
   - [5.2 Width and Alignment](#52-width-and-alignment)
@@ -40,6 +41,7 @@
 - [6. Type Conversion](#6-type-conversion)
   - [6.1 Implicit Conversion](#61-implicit-conversion)
   - [6.2 Explicit Conversion (Casting)](#62-explicit-conversion-casting)
+  - [6.3 Common Mistakes in Type Conversion](#63-common-mistakes-in-type-conversion)
 - [7. `sizeof` Operator](#7-sizeof-operator)
 - [Summary](#summary)
 - [Self-Check Questions](#self-check-questions)
@@ -401,6 +403,19 @@ Unsigned integer types use the most significant bit to store value as well. In o
 
 Printing the two variables with `printf("%08x", ...)` (`%08x` prints in hexadecimal in a width of 8 characters, filling empty positions with 0) gives `fffffff9` for `a` and `0000fff9` for `b`. A `short` value is converted to a 4-byte `int` when printed, and `a` is sign-extended in the process, so only the low 2 bytes `fff9` of the two values should be compared.
 
+In two's complement, addition simply adds the bits without regard to sign and discards any carry beyond the fixed number of bits. Computing 5 + (-3) in 8 bits gives the following.
+
+```text
+    5 =   0000 0101  (0x05)
+   -3 =   1111 1101  (0xfd)   inverting 3 = 0000 0011 gives 1111 1100, adding 1 gives 1111 1101
+  sum = 1 0000 0010           the carry 1 into the 9th bit is discarded
+    →     0000 0010 = 2  (0x02)
+```
+
+*Figure 4. 5 + (-3) computed in 8-bit two's complement*
+
+The result 2 equals 5 - 3, so subtraction can be handled with an adder circuit alone, without a subtraction circuit. On the other hand, when the sum of two positive numbers exceeds the representable range, the sign bit becomes 1 and the result is interpreted as negative. For `signed char x = 100, y = 50;`, `x + y` is computed as an `int` and is 150, but when it is stored in a `signed char` variable, the bit pattern of 150, `1001 0110`, is interpreted as a signed value and becomes 150 - 256 = -106. Running this in the present environment also printed `-106`. The result of converting an out-of-range value to a signed integer type is implementation-defined by the C standard, so even though most compilers behave this way, portable code does not rely on such stores.
+
 ### 2.3 Floating-Point Representation (IEEE 754)
 
 Floating-point numbers are stored as: **sign bit + exponent + mantissa**.
@@ -462,6 +477,10 @@ float rate = 0.2;     // ⚠ 0.2 is double → converted to float (possible prec
 int weight = 50.5;    // ⚠ 50.5 is double → truncated to 50 (data loss)
 ```
 
+The position of variable declarations also depends on the standard. ANSI C (C89/C90) requires declarations to be written at the beginning of a block, that is, right after `{` and before any other statement. From C99 on, a declaration may appear anywhere in a block, so a variable can be declared close to where it is first used. The textbook's examples follow the ANSI C rule and declare all variables at the start of the function.
+
+When several variables are declared in one statement, an initial value attaches to each variable separately. `int a, b = 0;` initializes only `b` to 0 and leaves `a` uninitialized. To start both variables at 0, write `int a = 0, b = 0;`. By contrast, a global variable declared outside any function is initialized to 0 even without an initial value (Chapter 6).
+
 ### 3.2 Identifiers and Naming Rules
 
 An **identifier** is a name created and used by the programmer, such as a variable name or a function name.
@@ -516,6 +535,19 @@ A **constant** is an element whose value does not change in a program. Constants
 
 > **Key Point:** `'x'` is a **character** literal (type `int`, value 120). `"x"` is a **string** literal (type `char[2]`, stores `'x'` + `'\0'`). They are different.
 
+The type of a literal constant can be changed with a suffix. Appending `U` to an integer constant makes it `unsigned`, `L` makes it `long`, and `LL` makes it `long long`; appending `f` to a floating-point constant makes it `float`, and `L` makes it `long double`. A floating-point constant can be written with a decimal point, as in `56.78`, or with an exponent, as in `5.678e1` (5.678 × 10¹). The following is the result of checking the size of each literal with `sizeof` on arm64 macOS.
+
+```c
+printf("10 %zu, 10L %zu, 10LL %zu, 1.5f %zu, 1.5 %zu, 1.5L %zu\n",
+       sizeof(10), sizeof(10L), sizeof(10LL), sizeof(1.5f), sizeof(1.5), sizeof(1.5L));
+```
+
+```text
+10 4, 10L 8, 10LL 8, 1.5f 4, 1.5 8, 1.5L 8
+```
+
+An integer constant without a suffix has type `int` by default, and a floating-point constant with a decimal point has type `double`. The size of `10L` equals the size of `long`, so it is 4 bytes on 64-bit Windows, and `1.5L` being 8 bytes like `1.5` in this environment is also because the size of `long double` differs between platforms (Section 7).
+
 ### 4.2 `#define` Macro Constants
 
 `#define` creates a **macro constant**, one kind of **symbolic constant**. A `#define` statement is a preprocessor statement, and the preprocessor replaces every occurrence of the name with the specified value before compilation.
@@ -546,6 +578,19 @@ printf("HOURLY_WAGE\n");      // prints "HOURLY_WAGE": strings are NOT replaced
 printf("%d\n", HOURLY_WAGE);  // prints 8350: identifier IS replaced
 ```
 
+Putting `=` in the definition of a macro constant is another common mistake. The preprocessor substitutes the entire text after the name as it is, so if `#define WRONG_PI = 3.14159` is defined and `WRONG_PI * r * r` is written, the preprocessed result becomes `= 3.14159 * r * r`. The compiler reports errors based on the substituted result, so the error appears on the line that uses the macro while the cause lies in the definition.
+
+```text
+macro2.c:7:20: error: expected expression
+    7 |     printf("%f\n", WRONG_PI * r * r);
+      |                    ^
+macro2.c:2:18: note: expanded from macro 'WRONG_PI'
+    2 | #define WRONG_PI = 3.14159
+      |                  ^
+```
+
+Clang also points to the location of the macro definition with the `expanded from macro` note. To see the preprocessed result directly, run only the preprocessor with `cc -E` (Chapter 1, Section 3.2). With the correctly defined `#define PI 3.14159`, `return PI * r * r;` becomes `return 3.14159 * r * r;` after preprocessing.
+
 ### 4.3 `const` Variables
 
 `const` declares a variable whose value **cannot be changed** after initialization. Changing the value of a `const` variable causes a compile error.
@@ -574,6 +619,53 @@ BUF_SIZE = 128;  // ❌ compile error
 
 Symbolic constants make a program easier to modify, because only the one definition needs to change when the value changes, and easier to understand, because a meaningful name appears instead of a bare number.
 
+### 4.4 Macro Constants of the Standard Library
+
+The standard C library provides the ranges and characteristics of the data types as macro constants. The ranges of the integer types are defined in `<limits.h>` and the characteristics of the floating-point types in `<float.h>`, so writing values that may differ between platforms with these constants instead of literal numbers improves portability. The following is the output of the main constants on arm64 macOS.
+
+```c
+#include <stdio.h>
+#include <limits.h>
+#include <float.h>
+
+int main(void)
+{
+    printf("CHAR_BIT = %d\n", CHAR_BIT);
+    printf("SCHAR_MIN = %d, SCHAR_MAX = %d, UCHAR_MAX = %d\n", SCHAR_MIN, SCHAR_MAX, UCHAR_MAX);
+    printf("INT_MIN = %d, INT_MAX = %d\n", INT_MIN, INT_MAX);
+    printf("UINT_MAX = %u\n", UINT_MAX);
+    printf("LLONG_MAX = %lld\n", LLONG_MAX);
+    printf("FLT_DIG = %d, DBL_DIG = %d\n", FLT_DIG, DBL_DIG);
+    printf("FLT_MAX = %e, DBL_MAX = %e\n", FLT_MAX, DBL_MAX);
+    printf("FLT_EPSILON = %e, DBL_EPSILON = %e\n", FLT_EPSILON, DBL_EPSILON);
+    return 0;
+}
+```
+
+```text
+CHAR_BIT = 8
+SCHAR_MIN = -128, SCHAR_MAX = 127, UCHAR_MAX = 255
+INT_MIN = -2147483648, INT_MAX = 2147483647
+UINT_MAX = 4294967295
+LLONG_MAX = 9223372036854775807
+FLT_DIG = 6, DBL_DIG = 15
+FLT_MAX = 3.402823e+38, DBL_MAX = 1.797693e+308
+FLT_EPSILON = 1.192093e-07, DBL_EPSILON = 2.220446e-16
+```
+
+| Constant | Header | Meaning |
+|:-----|:-----|:-----|
+| `CHAR_BIT` | `<limits.h>` | Number of bits in a byte |
+| `INT_MIN`, `INT_MAX` | `<limits.h>` | Minimum and maximum of `int` |
+| `UINT_MAX` | `<limits.h>` | Maximum of `unsigned int` |
+| `FLT_DIG`, `DBL_DIG` | `<float.h>` | Number of decimal significant digits preserved without rounding error |
+| `FLT_MAX`, `DBL_MAX` | `<float.h>` | Largest representable finite value |
+| `FLT_EPSILON`, `DBL_EPSILON` | `<float.h>` | Difference between 1.0 and the next larger representable number |
+
+*Table 12. Main macro constants for the ranges and characteristics of data types*
+
+`INT_MAX` is 2³¹ - 1 = 2147483647 and `INT_MIN` is -2³¹, which shows that `int` is a 32-bit two's complement type. `FLT_DIG` being 6 and `DBL_DIG` being 15 is a guarantee that decimal numbers of up to 6 and 15 digits, respectively, keep their significant digits when stored and printed again; it expresses conservatively the same property as the precision of about 7 digits given for `float` in Section 1.2. `DBL_EPSILON` is 2⁻⁵², the smallest difference that `double` can distinguish near 1. It can serve as the reference when choosing the size of the tolerance in the tolerance comparison of Section 1.2.
+
 ---
 
 <br>
@@ -598,7 +690,7 @@ Format specifiers control how `printf` and `scanf` interpret data.
 | `%o` | `int` (octal) | `52` |
 | `%%` | literal `%` | `%` |
 
-*Table 12. Common format specifiers*
+*Table 13. Common format specifiers*
 
 ### 5.2 Width and Alignment
 
@@ -612,7 +704,7 @@ Format specifiers control how `printf` and `scanf` interpret data.
 | `%.15f` | 15 decimal places | `3.141592653589793` |
 | `%08x` | hex, zero-padded, width 8 | `0000002a` |
 
-*Table 13. Specifying width, alignment, and precision*
+*Table 14. Specifying width, alignment, and precision*
 
 (`?` = space)
 
@@ -656,7 +748,7 @@ graph LR
     d --> ld["long double"]
 ```
 
-*Figure 4. Order in which types are promoted in arithmetic*
+*Figure 5. Order in which types are promoted in arithmetic*
 
 This order is a simplification that omits `long long` and the `unsigned` types. Also, `char` and `short` are first promoted to `int` even when both operands have the same type (integer promotion). In an assignment, the value on the right is converted to the type of the variable on the left, so assigning a value of a larger type to a variable of a smaller type can lose data, and the compiler warns about it.
 
@@ -683,6 +775,38 @@ result = (double)a / b;  // double / int = double → 3.5
 ```
 
 > **Key Point:** In `a / b`, both are `int`, so integer division happens **first** (result: 3), then 3 is assigned as 3.0 to `double`. Cast **at least one** operand to get floating-point division.
+
+### 6.3 Common Mistakes in Type Conversion
+
+Type conversions are often performed by the compiler automatically, so their results are easy to misjudge. The following code shows four frequently confused cases.
+
+```c
+int i1 = 3.99, i2 = -3.99;
+unsigned int u = 1;
+int n = -1;
+char c = 'A';
+
+printf("%d %d\n", i1, i2);
+printf("%d\n", c + 1);
+printf("%d\n", n < u);
+printf("%u\n", (unsigned int)n);
+printf("%.1f\n", 7 / 2 * 2.0);
+printf("%.1f\n", 7 / 2.0 * 2);
+```
+
+```text
+3 -3
+66
+0
+4294967295
+6.0
+7.0
+```
+
+- **Conversion from floating point to integer truncates rather than rounds.** It discards the fractional part and cuts toward zero, so 3.99 becomes 3, and -3.99 becomes -3, not -4. If rounding is needed, for positive values add 0.5 before converting, as in `(int)(x + 0.5)`. Clang issues the warning `implicit conversion from 'double' to 'int' changes value from 3.99 to 3` for this initialization.
+- **`char` is promoted to `int` in operations.** `c + 1` is the `int` value 66, the code 65 of `'A'` plus 1; to see it as a character, print it with `%c` or store it in a `char` variable.
+- **When a signed integer is compared with an unsigned integer, the signed one is converted to unsigned.** In `n < u`, -1 is converted to `unsigned int` and becomes 4294967295 (2³² - 1), so `-1 < 1`, which is mathematically true, becomes false (0). Clang issues the warning `comparison of integers of different signs` when `-Wextra` is given. The fourth output is the actual value of -1 converted to `unsigned int`.
+- **Conversion happens for each operation.** `7 / 2 * 2.0` is evaluated from the left, so `7 / 2` first becomes the integer division result 3, and then 3 × 2.0 = 6.0. In contrast, `7 / 2.0 * 2` is a floating-point division 3.5 from the first operation and gives 7.0. Note that the conversion is decided by the types of the two operands of each operator, not by the expression as a whole.
 
 ---
 
@@ -718,6 +842,24 @@ printf("%d\n", sizeof("x"));   // 2  ('x' + '\0')
 
 As seen in Section 4.1, a character literal like `'x'` has type `int` (4 bytes) in C, not `char` (1 byte). This is a C-specific quirk; in C++, `sizeof('x')` is 1.
 
+The sizes of the data types differ between platforms, so the actual sizes are checked with `sizeof`. The following is the output of the sizes of the basic types on a platform consisting of a 64-bit ARM CPU and macOS.
+
+```c
+printf("char %zu, short %zu, int %zu, long %zu, long long %zu\n",
+       sizeof(char), sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
+printf("float %zu, double %zu, long double %zu\n",
+       sizeof(float), sizeof(double), sizeof(long double));
+```
+
+```text
+char 1, short 2, int 4, long 8, long long 8
+float 4, double 8, long double 8
+```
+
+> **Definition:** A **platform** is the combination of the hardware (mainly the CPU) and the operating system on which a program runs. The textbook introduces 32-bit Windows as the Win32 platform and 64-bit Windows as the Win64 platform, and even the same C code can have different data type sizes on different platforms.
+
+In this environment, `long` is 8 bytes, unlike the 4 bytes of 64-bit Windows. `long double` is also 8 bytes here, the same as `double`. The C standard guarantees only that `char` is 1 byte, the minimum range of each integer type (at least 16 bits for `short` and `int`, 32 bits for `long`, and 64 bits for `long long`), and that the ranges of `short`, `int`, `long`, and `long long` do not decrease in this order, so when an integer of a specific size is needed, a fixed-width integer type such as `int32_t`, treated in Chapter 13, is used.
+
 ---
 
 <br>
@@ -744,6 +886,12 @@ As seen in Section 4.1, a character literal like `'x'` has type `int` (4 bytes) 
 | Format Specifiers | Use `%d`, `%f`, `%c`, `%x`, `%e`, and others, and set the width with `%Nd`, `%-Nd`, and `%0Nd`. |
 | Type Conversion | There is implicit conversion (promotion) and explicit conversion (casting) with `(type)`. |
 | `sizeof` | It returns the byte size as `size_t`, and in C `'x'` is `int` (4B) and `"x"` is `char[2]` (2B). |
+| Two's complement addition | Adding bit by bit and discarding the overflowing carry gives the correct result regardless of sign, and a sum beyond the range changes the sign bit and is interpreted as negative. |
+| Position of declarations | ANSI C allows declarations only at the beginning of a block and C99 anywhere in a block, and `int a, b = 0;` initializes only `b`. |
+| Literal suffixes | `U`, `L`, `LL`, and `f` set the type of a literal; without a suffix, an integer is `int` and a floating-point constant is `double`. |
+| Standard macro constants | `INT_MAX` and others in `<limits.h>` and `DBL_EPSILON` and others in `<float.h>` give the ranges and characteristics of the types. |
+| Pitfalls of type conversion | Floating point to integer truncates toward zero, comparing signed and unsigned values converts to unsigned, and conversion is decided per operator. |
+| Platform | The combination of hardware and operating system; values that vary by platform, such as the sizes of `long` and `long double`, are checked with `sizeof`. |
 
 ---
 
@@ -793,5 +941,32 @@ As seen in Section 4.1, a character literal like `'x'` has type `int` (4 bytes) 
    <summary>Answer</summary>
 
    They are 4, 3, and 4. In C, the character literal `'A'` has type `int`, so it is 4 bytes. The string literal `"AB"` is a `char[3]` storing `'A'`, `'B'`, and the terminating `'\0'`, so it is 3 bytes. `1.5f` is a `float` literal, so it is 4 bytes.
+
+   </details>
+
+6. **Two's complement addition:** Write in bits the process of computing -7 + 4 in 8-bit two's complement, and give the result in decimal.
+
+   <details>
+   <summary>Answer</summary>
+
+   7 is `0000 0111`, so inverting gives `1111 1000`, and adding 1 makes -7 `1111 1001` (0xf9). 4 is `0000 0100`. Adding gives `1111 1101` with no carry. The most significant bit is 1, so the value is negative; inverting and adding 1 gives `0000 0011` = 3, so the result is -3.
+
+   </details>
+
+7. **Type conversion:** Write the value of each expression. (a) `(int)-2.7` (b) `5 / 2 * 2.0` (c) `5 / 2.0 * 2` (d) `-2 < 3u`
+
+   <details>
+   <summary>Answer</summary>
+
+   (a) Truncation toward zero gives -2. (b) `5 / 2` becomes the integer division result 2, and then 2 × 2.0 = 4.0. (c) `5 / 2.0` is 2.5, so 2.5 × 2 = 5.0. (d) -2 is converted to `unsigned int` and becomes 2³² - 2 = 4294967294, so the comparison is false (0) (when `unsigned int` is 32 bits).
+
+   </details>
+
+8. **Macro constants:** If `SIZE` is defined with `#define SIZE 10;` and `int total = SIZE * 2;` is written, what is the preprocessed result, and what problem arises?
+
+   <details>
+   <summary>Answer</summary>
+
+   The preprocessor substitutes `10;` for `SIZE`, giving `int total = 10; * 2;`. Up to `int total = 10;` becomes one statement, and the remaining `* 2;` is parsed as an expression applying the dereference operator `*` to the integer 2, so Clang reports the error `indirection requires pointer operand`. A macro definition does not end with a semicolon.
 
    </details>
