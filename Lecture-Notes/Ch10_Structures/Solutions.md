@@ -2,9 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 10
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1 and 2 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -14,6 +16,12 @@
 
 - [Exercise 1: Student Structure](#exercise-1-student-structure)
 - [Exercise 2: Rectangle Structure](#exercise-2-rectangle-structure)
+- [Exercise 3: Correcting a Structure Definition](#exercise-3-correcting-a-structure-definition)
+- [Exercise 4: Errors in Code That Uses Structure Variables](#exercise-4-errors-in-code-that-uses-structure-variables)
+- [Exercise 5: Statements About Bit Fields, Unions, and Enumerations](#exercise-5-statements-about-bit-fields-unions-and-enumerations)
+- [Exercise 6: A Login Information Structure](#exercise-6-a-login-information-structure)
+- [Exercise 7: Checking Holidays](#exercise-7-checking-holidays)
+- [Exercise 8: Printing Students at or Above the Average](#exercise-8-printing-students-at-or-above-the-average)
 
 ---
 
@@ -311,3 +319,277 @@ y 좌표가 반대로 입력되어 서로 교환합니다.
 > **Note:** **Differences from the requirements.** The requirements say not to change the prototype `int isRectangle(Rect r);`, but this code changes it to `int isRectangle(Rect* r);` so that it can swap coordinates and normalize the original, and it also prints messages inside the check function. To keep the prototype, `isRectangle()` should only return `r.leftUp.x != r.rightDown.x && r.leftUp.y != r.rightDown.y` for the `r` received by value, and `computeArea()` should multiply the absolute values of the width and height. Then the area is the same whichever coordinate system is used for input, and the first run gives the same result as the sample run without the message.
 
 > **Caution:** If a non-numeric value is entered, `scanf` fails and leaves the character in the input buffer, so every iteration fails again on the same character and the program falls into an infinite loop. It is necessary to check that `scanf` returns 2 and, on failure, discard the remaining input up to the end of the line. Also, the product of the width and height is computed as `int`, so very large coordinates can cause an overflow.
+
+---
+
+<br>
+
+## Exercise 3: Correcting a Structure Definition
+
+**Textbook Problem:** Chapter 10 exercise 2
+
+**Problem:** Correct the parts of the `employee` structure definition, which contains a member `gender` for storing one character, that cause compile errors. The code is in [Exercise 3](Exercises.md#exercise-3-correcting-a-structure-definition).
+
+### Solution
+
+**Answer:** Two places are corrected. The member `gender` has no data type, so it is written as `char gender;`, and since a structure definition is a declaration, a semicolon is attached after the closing brace, ending it with `};`.
+
+```c
+struct employee {
+    char name[20];
+    char gender;            // a member needs a data type
+    int salary;
+    char department[20];
+};                          // a structure definition ends with a semicolon
+```
+
+**Explanation:** Compiling the original code with Clang gives two errors. The first points to the member written as a name without a type, and the second to the missing semicolon after the structure definition ([Chapter 10, Section 1.2](Concepts_Lecture.md#12-structure-definition)).
+
+```text
+error: type name requires a specifier or qualifier
+error: expected ';' after struct
+```
+
+When the semicolon is missing, the compiler tries to read up to the `int main(void)` on the following line as part of this structure definition, so the error is sometimes reported at the next declaration rather than at the end of the definition.
+
+---
+
+<br>
+
+## Exercise 4: Errors in Code That Uses Structure Variables
+
+**Textbook Problem:** Chapter 10 exercise 5
+
+**Problem:** Select every statement among six statements using the `contact` structure variables `c1` and `c2` that causes a compile error. The code is in [Exercise 4](Exercises.md#exercise-4-errors-in-code-that-uses-structure-variables).
+
+### Solution
+
+**Answer:** ②, ④, ⑤
+
+**Explanation:** Clang reports the following errors for the three statements in order.
+
+```text
+error: array type 'char[20]' is not assignable
+error: expected expression
+error: invalid operands to binary expression ('struct contact' and 'struct contact')
+```
+
+- ② `name` is a `char` array, so a string cannot be assigned to it with `=`. Copy it with `strcpy(c2.name, "Lee");` ([Chapter 10, Section 1.6](Concepts_Lecture.md#16-structure-assignment)).
+- ④ A brace-enclosed initializer list can be used only in a declaration, so it cannot be assigned to `c2`, which is already declared. Assign the members one at a time, or assign another structure variable holding the same values.
+- ⑤ `==` cannot be used on structures, so they are compared member by member ([Chapter 10, Section 1.7](Concepts_Lecture.md#17-structure-comparison)).
+- ① is a whole-structure assignment that copies everything, including the array members, so it is correct, and ③ is an assignment to an `int` member, so it is correct. ⑥ is the correct way to compare string members with `strcmp`.
+
+---
+
+<br>
+
+## Exercise 5: Statements About Bit Fields, Unions, and Enumerations
+
+**Textbook Problem:** Chapter 10 exercises 6 and 8
+
+**Problem:** Select every wrong statement among eight statements about bit fields, unions, and enumerations. The choices are in [Exercise 5](Exercises.md#exercise-5-statements-about-bit-fields-unions-and-enumerations).
+
+### Solution
+
+**Answer:** ③, ④, ⑦
+
+**Explanation:** ③ The members of a union share the same memory, so the size of a union is usually the size of its largest member, possibly a little larger because of alignment, and never the sum of the member sizes ([Chapter 10, Section 3.2](Concepts_Lecture.md#32-union)). ④ A bit field is a feature that reduces memory by packing several small-range members into one integer. The date bit field of Chapter 10, Section 2.6 took 4 bytes, less than the 12 bytes of the same members as three `unsigned int` values. ⑦ An enumeration constant is an integer constant, so it cannot be given a floating-point value ([Chapter 10, Section 3.1](Concepts_Lecture.md#31-enum)). The rest are correct. For example, in `enum color { RED, GREEN = 5, BLUE };`, `RED`, which has no specified value, is 0, and `BLUE` is 6, one more than the preceding `GREEN`.
+
+---
+
+<br>
+
+## Exercise 6: A Login Information Structure
+
+**Textbook Problem:** Chapter 10 programming assignments 1 and 2
+
+**Problem:** Define a `login_info` structure that stores an ID and a password, and write `normalize`, which converts both members to lowercase, and `print_login`, which prints the password masked with `*`. The sample run is in [Exercise 6](Exercises.md#exercise-6-a-login-information-structure).
+
+### Solution
+
+**Approach:** Both members are declared as `char[21]`, adding room for the null character to the maximum of 20 characters. `normalize`, which changes the structure, takes a structure pointer, and `print_login`, which only reads it, takes a `const` structure pointer. The lowercase conversion is made a separate function that processes one string and is reused for both members.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+struct login_info {
+    char id[21];
+    char password[21];
+};
+
+void to_lower_str(char *s)
+{
+    for (; *s != '\0'; s++)
+        *s = (char)tolower((unsigned char)*s);
+}
+
+void normalize(struct login_info *info)
+{
+    to_lower_str(info->id);
+    to_lower_str(info->password);
+}
+
+void print_login(const struct login_info *info)
+{
+    size_t i, n = strlen(info->password);
+
+    printf("ID: %s\nPW: ", info->id);
+    for (i = 0; i < n; i++)
+        putchar('*');
+    putchar('\n');
+}
+
+int main(void)
+{
+    struct login_info user;
+
+    printf("ID? ");
+    scanf("%20s", user.id);
+    printf("Password? ");
+    scanf("%20s", user.password);
+    normalize(&user);
+    print_login(&user);
+    printf("stored: %s / %s\n", user.id, user.password);
+    return 0;
+}
+```
+
+- The width 20 in `scanf("%20s", user.id)` reads at most 20 characters so that the 21-byte array is not exceeded. The array name is the starting address, so `&` is not attached.
+- `info->id` is the same as `(*info).id`, and `to_lower_str` changes the characters of that array directly, so `user` in `main` changes.
+- `print_login` obtains the length of the password with `strlen` and prints that many `*`, without printing the password itself. `putchar` is a function that prints one character.
+
+**Output:**
+
+```text
+ID? Anonymous
+Password? IDontKnow
+ID: anonymous
+PW: *********
+stored: anonymous / idontknow
+```
+
+`IDontKnow` has 9 characters, so 9 `*` are printed.
+
+---
+
+<br>
+
+## Exercise 7: Checking Holidays
+
+**Textbook Problem:** Chapter 10 programming assignment 4
+
+**Problem:** Define a `date` structure and `same_date`, which compares two dates, and find an entered date in an array of holidays and print the result. The sample run is in [Exercise 7](Exercises.md#exercise-7-checking-holidays).
+
+### Solution
+
+**Approach:** Structures cannot be compared with `==`, so `same_date` compares all three members. The entered date is found by sequential search, comparing it with each element of the holiday array in turn.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+struct date {
+    int year, month, day;
+};
+
+int same_date(struct date a, struct date b)
+{
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+}
+
+int main(void)
+{
+    struct date holidays[] = {
+        { 2024, 1, 1 }, { 2024, 3, 1 }, { 2024, 5, 5 }, { 2024, 6, 6 },
+        { 2024, 8, 15 }, { 2024, 10, 3 }, { 2024, 10, 9 }, { 2024, 12, 25 }
+    };
+    int n = sizeof(holidays) / sizeof(holidays[0]);
+    struct date d;
+    int i, found;
+
+    while (1) {
+        printf("date? ");
+        if (scanf("%d %d %d", &d.year, &d.month, &d.day) != 3)
+            break;
+        if (d.year == 0 && d.month == 0 && d.day == 0)
+            break;
+        found = 0;
+        for (i = 0; i < n; i++) {
+            if (same_date(d, holidays[i])) {
+                found = 1;
+                break;
+            }
+        }
+        printf("%d/%d/%d is %sa holiday\n", d.year, d.month, d.day, found ? "" : "not ");
+    }
+    return 0;
+}
+```
+
+- `same_date` returns the value 1 or 0 of the relational expressions and `&&` directly. It is a small structure, so receiving it by value costs little to copy.
+- The array size is omitted and set by the initial values, and the element count 8 is obtained with `sizeof(holidays) / sizeof(holidays[0])`, so `n` need not be edited when holidays are added.
+- If `scanf` fails to read three values, the loop ends, so non-numeric input does not cause an infinite loop (Chapter 5, Section 3.8).
+- `found ? "" : "not "` chooses the string to print with the conditional operator, so `not ` appears only when the date was not found.
+
+**Output:**
+
+```text
+date? 2024 8 15
+2024/8/15 is a holiday
+date? 2024 5 2
+2024/5/2 is not a holiday
+date? 0 0 0
+```
+
+---
+
+<br>
+
+## Exercise 8: Printing Students at or Above the Average
+
+**Problem:** Compute the average of a structure array holding the names and scores of five students, and print the students at or above the average. The data and sample run are in [Exercise 8](Exercises.md#exercise-8-printing-students-at-or-above-the-average).
+
+### Solution
+
+**Approach:** Comparison requires knowing the average, so the array is scanned twice. The first loop computes the sum to calculate the average, and the second compares each student's score with the average.
+
+```c
+#include <stdio.h>
+
+struct student {
+    char name[20];
+    int score;
+};
+
+int main(void)
+{
+    struct student s[5] = {
+        { "Kim", 82 }, { "Lee", 67 }, { "Park", 91 }, { "Choi", 74 }, { "Jung", 88 }
+    };
+    int i, n = 5, sum = 0;
+    double avg;
+
+    for (i = 0; i < n; i++)
+        sum += s[i].score;
+    avg = (double)sum / n;
+    printf("average = %.1f\n", avg);
+    for (i = 0; i < n; i++)
+        if (s[i].score >= avg)
+            printf("%s %d\n", s[i].name, s[i].score);
+    return 0;
+}
+```
+
+The sum is 82 + 67 + 91 + 74 + 88 = 402, and the average is 402 / 5 = 80.4. In `s[i].score >= avg`, the `int` score is converted to `double` for the comparison, so with an average of 80.4, the scores 82, 91, and 88 satisfy the condition. Computing the average as an `int` would give 80 and change the comparison threshold, so it is cast with `(double)`. `s[i].name` selects the element with `[]` and then the member with `.`.
+
+**Output:**
+
+```text
+average = 80.4
+Kim 82
+Park 91
+Jung 88
+```

@@ -2,9 +2,11 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 10
 
-**Problem Source:** Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
+**Problem Source:** Exercises 1 and 2 are from Prof. Younghee Im, Computer Language Ⅰ (DCCS101-04)
 
 ---
 
@@ -14,6 +16,12 @@
 
 - [Exercise 1: Student Structure](#exercise-1-student-structure)
 - [Exercise 2: Rectangle Structure](#exercise-2-rectangle-structure)
+- [Exercise 3: Correcting a Structure Definition](#exercise-3-correcting-a-structure-definition)
+- [Exercise 4: Errors in Code That Uses Structure Variables](#exercise-4-errors-in-code-that-uses-structure-variables)
+- [Exercise 5: Statements About Bit Fields, Unions, and Enumerations](#exercise-5-statements-about-bit-fields-unions-and-enumerations)
+- [Exercise 6: A Login Information Structure](#exercise-6-a-login-information-structure)
+- [Exercise 7: Checking Holidays](#exercise-7-checking-holidays)
+- [Exercise 8: Printing Students at or Above the Average](#exercise-8-printing-students-at-or-above-the-average)
 
 ---
 
@@ -191,3 +199,148 @@ Program ended with exit code: 0
 ```
 
 **[Solution](Solutions.md#exercise-2-rectangle-structure)**
+
+---
+
+<br>
+
+## Exercise 3: Correcting a Structure Definition
+
+**Textbook Problem:** Chapter 10 exercise 2
+
+**Problem:** Find and correct every part of the following structure definition that causes a compile error. `gender` is a member that stores one character, such as `'M'` or `'F'`.
+
+```c
+struct employee {
+    char name[20];
+    gender;
+    int salary;
+    char department[20];
+}
+```
+
+**[Solution](Solutions.md#exercise-3-correcting-a-structure-definition)**
+
+---
+
+<br>
+
+## Exercise 4: Errors in Code That Uses Structure Variables
+
+**Textbook Problem:** Chapter 10 exercise 5
+
+**Problem:** For the `contact` structure and the variables `c1` and `c2` defined below, select every statement among ① through ⑥ that causes a compile error, and explain why.
+
+```c
+struct contact {
+    char name[20];
+    char number[20];
+    int ringtone;
+};
+
+struct contact c1 = { "Park", "010-1234-5678", 1 };
+struct contact c2;
+```
+
+- ① `c2 = c1;`
+- ② `c2.name = "Lee";`
+- ③ `c2.ringtone = 3;`
+- ④ `c2 = { "Lee", "010-1111-2222" };`
+- ⑤ `if (c1 == c2) printf("same contact");`
+- ⑥ `if (strcmp(c1.name, c2.name) == 0) printf("same contact");`
+
+**[Solution](Solutions.md#exercise-4-errors-in-code-that-uses-structure-variables)**
+
+---
+
+<br>
+
+## Exercise 5: Statements About Bit Fields, Unions, and Enumerations
+
+**Textbook Problem:** Chapter 10 exercises 6 and 8
+
+**Problem:** Select every wrong statement below.
+
+- ① All members of a union start at the same address.
+- ② A bit field allocates structure members in units of bits.
+- ③ The size of a union is greater than or equal to the sum of the sizes of all its members.
+- ④ Using a bit field takes more memory than keeping the same members as ordinary integer types.
+- ⑤ Storing a value in one member of a union changes the values of the other members that use the same memory.
+- ⑥ An enumeration is treated as an integer type, and enumeration constants can be used in the `case` labels of a `switch`.
+- ⑦ An enumeration constant can be defined as a floating-point constant.
+- ⑧ If no values are specified for the enumeration constants, values increasing by 1 from 0 are attached in order.
+
+**[Solution](Solutions.md#exercise-5-statements-about-bit-fields-unions-and-enumerations)**
+
+---
+
+<br>
+
+## Exercise 6: A Login Information Structure
+
+**Textbook Problem:** Chapter 10 programming assignments 1 and 2
+
+**Problem:** Define a `login_info` structure that stores an ID and a password of up to 20 characters each. After reading the ID and password, each as one word without spaces, write a function `normalize` that takes a structure pointer and converts both members to lowercase, and a function `print_login` that prints the ID as it is and the password as `*` repeated as many times as its length. On the last line, print the two stored values, now in lowercase, for confirmation.
+
+**Sample Run:**
+
+```text
+ID? Anonymous
+Password? IDontKnow
+ID: anonymous
+PW: *********
+stored: anonymous / idontknow
+```
+
+**[Solution](Solutions.md#exercise-6-a-login-information-structure)**
+
+---
+
+<br>
+
+## Exercise 7: Checking Holidays
+
+**Textbook Problem:** Chapter 10 programming assignment 4
+
+**Problem:** Define a `date` structure with year, month, and day members, and a function `same_date` that returns 1 if two `date` values are the same date and 0 otherwise. Initialize a `date` array with the 8 fixed-date solar-calendar public holidays of 2024 in Korea (January 1, March 1, May 5, June 6, August 15, October 3, October 9, and December 25), then check whether an entered date is among them and print the result. Entering `0 0 0` ends the program.
+
+**Sample Run:**
+
+```text
+date? 2024 8 15
+2024/8/15 is a holiday
+date? 2024 5 2
+2024/5/2 is not a holiday
+date? 0 0 0
+```
+
+**[Solution](Solutions.md#exercise-7-checking-holidays)**
+
+---
+
+<br>
+
+## Exercise 8: Printing Students at or Above the Average
+
+**Problem:** Initialize an array of `student` structures, whose members are a name and a score, with the following five students, print the average score to one decimal place, and then print the names and scores of the students at or above the average in array order.
+
+| Name | Score |
+|:-----|-----:|
+| Kim | 82 |
+| Lee | 67 |
+| Park | 91 |
+| Choi | 74 |
+| Jung | 88 |
+
+*Table 1. Student data for Exercise 8*
+
+**Sample Run:**
+
+```text
+average = 80.4
+Kim 82
+Park 91
+Jung 88
+```
+
+**[Solution](Solutions.md#exercise-8-printing-students-at-or-above-the-average)**

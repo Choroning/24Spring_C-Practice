@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-19
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -25,15 +25,28 @@
   - [1.5 멤버 접근](#15-멤버-접근)
   - [1.6 구조체 대입](#16-구조체-대입)
   - [1.7 구조체 비교](#17-구조체-비교)
+  - [1.8 `offsetof`로 확인하는 구조체의 배치](#18-offsetof로-확인하는-구조체의-배치)
+  - [1.9 일부 멤버만 초기화한 구조체](#19-일부-멤버만-초기화한-구조체)
 - [2. 구조체 활용](#2-구조체-활용)
   - [2.1 구조체 배열](#21-구조체-배열)
   - [2.2 구조체 포인터](#22-구조체-포인터)
   - [2.3 함수에 구조체 전달](#23-함수에-구조체-전달)
   - [2.4 중첩 구조체](#24-중첩-구조체)
+  - [2.5 구조체를 반환하는 함수](#25-구조체를-반환하는-함수)
+  - [2.6 비트 필드](#26-비트-필드)
+  - [2.7 구조체 배열과 구조체 포인터의 연산](#27-구조체-배열과-구조체-포인터의-연산)
+  - [2.8 구조체 멤버의 입력](#28-구조체-멤버의-입력)
+  - [2.9 중첩 구조체와 공용체의 메모리 배치](#29-중첩-구조체와-공용체의-메모리-배치)
 - [3. 관련 데이터 타입](#3-관련-데이터-타입)
   - [3.1 `enum`](#31-enum)
   - [3.2 `union`](#32-union)
   - [3.3 `typedef`](#33-typedef)
+  - [3.4 `typedef`의 여러 가지 용도](#34-typedef의-여러-가지-용도)
+  - [3.5 열거체와 `switch`로 방향 처리하기](#35-열거체와-switch로-방향-처리하기)
+  - [3.6 구조체와 관련 타입의 흔한 실수](#36-구조체와-관련-타입의-흔한-실수)
+  - [3.7 종합 예: 성적 처리 프로그램](#37-종합-예-성적-처리-프로그램)
+  - [3.8 열거 상수의 이름 출력과 값의 검사](#38-열거-상수의-이름-출력과-값의-검사)
+- [개념 적용](#개념-적용)
 - [요약](#요약)
 - [점검 문제](#점검-문제)
 
@@ -292,6 +305,85 @@ if (strcmp(c1.title, c2.title) == 0 &&
 
 > **주의:** C에서 구조체를 `==`로 비교하면 컴파일 오류가 발생한다. 반드시 각 멤버를 **개별적으로** 비교해야 한다. 문자열(char 배열) 멤버는 `strcmp`를 사용하고, `==`로 비교하면 안 된다. 패딩 바이트와 문자열의 널 문자 뒤 바이트의 값은 정해져 있지 않으므로, 구조체 전체를 `memcmp`로 비교하는 방법도 믿을 수 없다.
 
+### 1.8 `offsetof`로 확인하는 구조체의 배치
+
+1.2절의 패딩은 `<stddef.h>`의 매크로 `offsetof(구조체 타입, 멤버)`로 직접 확인할 수 있다. `offsetof`는 구조체의 시작에서 그 멤버까지 몇 바이트 떨어져 있는지를 알려 준다. 다음 두 구조체는 같은 멤버 `char` 두 개와 `int` 하나를 순서만 바꾸어 담는다.
+
+```c
+#include <stdio.h>
+#include <stddef.h>
+
+struct A {
+    char c;
+    int n;
+    char d;
+};
+
+struct B {
+    int n;
+    char c;
+    char d;
+};
+
+int main(void)
+{
+    printf("A: size %zu, c %zu, n %zu, d %zu\n", sizeof(struct A),
+           offsetof(struct A, c), offsetof(struct A, n), offsetof(struct A, d));
+    printf("B: size %zu, n %zu, c %zu, d %zu\n", sizeof(struct B),
+           offsetof(struct B, n), offsetof(struct B, c), offsetof(struct B, d));
+    return 0;
+}
+```
+
+```text
+A: size 12, c 0, n 4, d 8
+B: size 8, n 0, c 4, d 5
+```
+
+```text
+struct A (12바이트)
+         0     1     2     3     4     5     6     7     8     9    10    11   ← 오프셋
+      ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+      │  c  │ /// │ /// │ /// │  n  │  n  │  n  │  n  │  d  │ /// │ /// │ /// │
+      └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+struct B (8바이트)
+         0     1     2     3     4     5     6     7   ← 오프셋
+      ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+      │  n  │  n  │  n  │  n  │  c  │  d  │ /// │ /// │
+      └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+```
+
+*그림 4. struct A와 struct B의 멤버 오프셋과 패딩(///)*
+
+이 환경에서 4바이트 `int`는 주소가 4의 배수인 자리에 놓여야 한다. `struct A`는 오프셋 0의 `c` 뒤에 `n`이 4의 배수인 오프셋 4에 오도록 3바이트를 채우고, 오프셋 8의 `d` 뒤에도 3바이트를 채운다. 끝에 채우는 패딩은 `struct A`의 배열을 만들었을 때 다음 원소의 `n`도 4의 배수 자리에 오게 하기 위한 것이므로, 구조체의 크기는 가장 큰 정렬 단위(여기서는 4)의 배수가 된다. 멤버의 합은 1 + 4 + 1 = 6바이트이지만 `struct A`는 12바이트이다. `struct B`처럼 큰 멤버를 앞에 두고 작은 멤버를 모으면 `c`와 `d`가 오프셋 4, 5에 붙어 놓이고 끝에 2바이트만 채우므로 8바이트로 줄어든다. 정렬 규칙은 플랫폼이 정하므로, 구조체의 크기는 숫자를 더해 짐작하지 않고 `sizeof`로 구한다.
+
+### 1.9 일부 멤버만 초기화한 구조체
+
+배열과 마찬가지로 구조체의 초기화 리스트에 초기값이 모자라면 나머지 멤버는 0으로 초기화된다. 문자 배열 멤버는 모든 원소가 널 문자가 되어 빈 문자열이 된다. 따라서 `{ 0 }`은 멤버가 몇 개이든 구조체 전체를 0으로 시작하게 하는 관용구이다.
+
+```c
+struct item {
+    char name[8];
+    int price;
+    int stock;
+};
+
+struct item a = { "pen", 1500 };
+struct item b = { 0 };
+
+printf("[%s] %d %d\n", a.name, a.price, a.stock);
+printf("[%s] %d %d\n", b.name, b.price, b.stock);
+```
+
+```text
+[pen] 1500 0
+[] 0 0
+```
+
+`a`는 `stock`의 초기값이 없어 0이 되고, `b`는 첫 멤버만 0으로 지정했지만 모든 멤버가 0이다. Clang에 `-Wextra`를 주면 `a`의 초기화에 `missing field 'stock' initializer` 경고를 낸다. 일부러 생략한 것이 아니라 빠뜨렸을 가능성을 알려 주는 경고이며, `{ 0 }`에는 이 경고를 내지 않는다. 반면 초기화 리스트 없이 함수 안에서 선언한 구조체 변수 `struct item c;`는 모든 멤버가 쓰레기 값이므로, 쓰기 전에 각 멤버에 값을 대입해야 한다.
+
+> **참고:** **지정 초기화.** C99부터는 `struct item c = { .price = 900, .name = "clip" };`처럼 멤버 이름을 지정하여 순서와 관계없이 초기화할 수 있다. 지정하지 않은 `stock`은 0이 된다. 멤버가 많은 구조체에서 어느 값이 어느 멤버에 들어가는지 분명해지지만, 교재의 ANSI C 문법에는 없는 기능이다.
+
 ---
 
 <br>
@@ -408,7 +500,7 @@ p->rate       // (*p).rate과 동일
 p->title   ≡  (*p).title   ≡  c1.title
 ```
 
-*그림 4. 구조체 변수 c1을 가리키는 구조체 포인터 p*
+*그림 5. 구조체 변수 c1을 가리키는 구조체 포인터 p*
 
 구조체 변수에 읽기 전용으로 접근하게 하려면 `const struct content *p = &c1;`처럼 `const` 포인터로 선언한다. 이 포인터로는 `p->price`를 읽을 수만 있고, `p->price = 0;`처럼 멤버를 변경하면 컴파일 오류가 난다.
 
@@ -487,6 +579,27 @@ void input_content(struct content *p) {
 
 구조체를 함수의 인자로 전달하는 방법을 정리하면 다음과 같다. (1) 함수의 매개변수를 구조체 포인터형으로 선언한다. (2) 구조체 변수가 입력 매개변수이면 `const`를 지정한다. (3) 함수를 호출할 때 구조체 변수의 주소를 인자로 전달한다. (4) 함수를 정의할 때 구조체 포인터와 `->`로 멤버에 접근한다.
 
+값에 의한 전달과 포인터에 의한 전달의 차이는 복사되는 바이트 수로 확인할 수 있다. 1.2절의 `struct content`를 두 방식으로 넘기는 함수가 각자 받은 매개변수의 크기를 출력하면 다음과 같다.
+
+```c
+void by_value(struct content c)
+{
+    printf("by value: %zu bytes copied\n", sizeof c);
+}
+
+void by_pointer(const struct content *p)
+{
+    printf("by pointer: %zu bytes copied\n", sizeof p);
+}
+```
+
+```text
+by value: 64 bytes copied
+by pointer: 8 bytes copied
+```
+
+`struct content`는 `title` 50바이트 뒤에 `int`를 4의 배수 자리에 맞추는 2바이트 패딩, `price` 4바이트, `rate` 8바이트가 이어져 64바이트이다. 값으로 넘기면 호출할 때마다 이 64바이트가 매개변수로 복사되고, 포인터로 넘기면 주소 8바이트만 복사된다. 구조체가 클수록, 그리고 함수를 많이 호출할수록 이 차이가 커지므로 큰 구조체는 포인터로 넘기고, 함수가 구조체를 바꾸지 않으면 `const`를 붙여 값에 의한 전달처럼 원본을 보호한다.
+
 ### 2.4 중첩 구조체
 
 구조체가 다른 구조체를 멤버로 포함할 수 있다. 멤버로 쓰이는 구조체(`date`)는 그것을 포함하는 구조체(`student`)보다 앞에 정의되어 있어야 한다.
@@ -540,9 +653,235 @@ struct student s1
 └───────────────────────────────┘
 ```
 
-*그림 5. `struct date`를 멤버로 포함하는 구조체 변수 s1*
+*그림 6. `struct date`를 멤버로 포함하는 구조체 변수 s1*
 
 `s1.birthday`는 그 자체로 `struct date`형 변수처럼 사용할 수 있다.
+
+### 2.5 구조체를 반환하는 함수
+
+배열과 달리 구조체는 대입할 수 있으므로 함수의 반환형으로도 쓸 수 있다. 함수가 구조체를 반환하면 멤버 전체가 복사되어 호출한 쪽에 전달되므로, 여러 값을 하나의 구조체로 묶어 한꺼번에 돌려줄 수 있다. 다음 코드는 두 점의 중점을 구조체로 반환하는 함수와, 점의 좌표를 포인터로 바꾸는 함수를 비교한다.
+
+```c
+struct point {
+    int x, y;
+};
+
+struct point midpoint(struct point a, struct point b)
+{
+    struct point m;
+
+    m.x = (a.x + b.x) / 2;
+    m.y = (a.y + b.y) / 2;
+    return m;                       // m의 멤버 전체가 복사되어 반환된다
+}
+
+void move(struct point *p, int dx, int dy)
+{
+    p->x += dx;                     // 호출한 쪽의 구조체를 직접 바꾼다
+    p->y += dy;
+}
+
+int main(void)
+{
+    struct point a = { 0, 0 }, b = { 10, 6 }, m;
+
+    m = midpoint(a, b);
+    printf("m = (%d, %d)\n", m.x, m.y);
+    move(&m, 1, -1);
+    printf("m = (%d, %d)\n", m.x, m.y);
+    printf("sizeof(struct point) = %zu\n", sizeof(struct point));
+    return 0;
+}
+```
+
+```text
+m = (5, 3)
+m = (6, 2)
+sizeof(struct point) = 8
+```
+
+`midpoint`는 지역 변수 `m`을 반환하지만, 반환되는 것은 `m`의 주소가 아니라 멤버의 값을 복사한 구조체이므로 8장 3.5절의 댕글링 포인터 문제가 생기지 않는다. (0 + 10) / 2 = 5, (0 + 6) / 2 = 3이므로 중점은 (5, 3)이고, `move(&m, 1, -1)`이 주소를 통해 `m`을 (6, 2)로 바꾼다. 결과를 새 값으로 만들어 돌려주는 함수는 반환형을 구조체로, 기존 구조체를 고치는 함수는 매개변수를 구조체 포인터로 쓰는 것이 자연스럽다. `struct point`는 8바이트라 복사 비용이 작지만, 문자 배열 멤버가 있는 큰 구조체는 2.3절처럼 `const` 포인터로 받는 편이 효율적이다.
+
+### 2.6 비트 필드
+
+**비트 필드(bit field)** 는 구조체 멤버가 차지할 비트 수를 직접 지정하는 문법이다. 값의 범위가 작은 멤버 여러 개를 하나의 정수 안에 비트 단위로 나누어 저장하므로 메모리를 줄일 수 있다. 멤버 이름 뒤에 콜론과 비트 수를 쓰며, 사용하는 방법은 일반 구조체와 같다.
+
+```c
+struct date_bits {
+    unsigned int day : 5;       /* 1~31: 5 bits */
+    unsigned int month : 4;     /* 1~12: 4 bits */
+    unsigned int year : 12;     /* 0~4095: 12 bits */
+};
+
+struct date_ints {
+    unsigned int day, month, year;
+};
+
+int main(void)
+{
+    struct date_bits d = { 19, 11, 2026 };
+
+    printf("%u-%u-%u\n", d.year, d.month, d.day);
+    printf("sizeof bits = %zu, sizeof ints = %zu\n", sizeof(struct date_bits), sizeof(struct date_ints));
+    d.month = 13;
+    printf("month = %u\n", d.month);
+    d.month = 17;
+    printf("month = %u\n", d.month);
+    return 0;
+}
+```
+
+```text
+2026-11-19
+sizeof bits = 4, sizeof ints = 12
+month = 13
+month = 1
+```
+
+5 + 4 + 12 = 21비트이므로 세 멤버가 `unsigned int` 하나(32비트)에 들어가 구조체의 크기는 4바이트이고, 같은 멤버를 각각 `unsigned int`로 둔 구조체는 12바이트이다. 그 대신 각 멤버가 담을 수 있는 값은 비트 수로 제한된다. 4비트 `month`는 0~15만 담으므로 13은 저장되지만 의미상 잘못된 달이고, 17(`10001`)은 하위 4비트 `0001`만 남아 1이 된다. Clang은 상수 17의 대입에 `implicit truncation from 'int' to bit-field changes value from 17 to 1` 경고를 낸다. 비트 필드의 멤버는 주소를 가질 수 없으므로 `&d.month`나 `scanf("%u", &d.month)`는 쓸 수 없으며, 비트의 배치 순서는 구현이 정한다. 하드웨어 레지스터처럼 비트 배치가 정해진 데이터를 다룰 때의 주의점은 13장에서 다룬다.
+
+### 2.7 구조체 배열과 구조체 포인터의 연산
+
+구조체 포인터에도 8장의 포인터 연산이 그대로 적용된다. `struct point *p`에 1을 더하면 `sizeof(struct point)`만큼, 즉 구조체 하나만큼 이동하므로, 구조체 배열을 포인터로 훑을 수 있다.
+
+```c
+struct point {
+    int x, y;
+};
+
+int main(void)
+{
+    struct point pts[3] = { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+    struct point *p;
+    int sum = 0;
+
+    for (p = pts; p < pts + 3; p++) {
+        sum += p->x * p->y;
+        printf("p = %p, p->x = %d, p->y = %d\n", (void *)p, p->x, p->y);
+    }
+    printf("sum = %d\n", sum);
+    p = pts;
+    printf("%d %d %d\n", (p + 1)->x, pts[1].x, (*(p + 2)).y);
+    return 0;
+}
+```
+
+```text
+p = 0x16f442af0, p->x = 1, p->y = 2
+p = 0x16f442af8, p->x = 3, p->y = 4
+p = 0x16f442b00, p->x = 5, p->y = 6
+sum = 44
+3 3 6
+```
+
+```text
+          pts[0]                pts[1]                pts[2]
+          af0        af4        af8        afc        b00        b04      ← 주소의 끝
+        ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+        │  x = 1   │  y = 2   │  x = 3   │  y = 4   │  x = 5   │  y = 6   │
+        └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+          ▲ p                   ▲ p + 1               ▲ p + 2
+```
+
+*그림 7. 구조체 배열 pts와 포인터 p의 이동*
+
+`p`의 값은 회차마다 `struct point`의 크기인 8씩 커진다. 합계는 1 × 2 + 3 × 4 + 5 × 6 = 2 + 12 + 30 = 44이다. 마지막 줄의 세 수식은 같은 원소를 다르게 쓴 것이다. `(p + 1)->x`와 `pts[1].x`는 모두 두 번째 원소의 `x`인 3이고, `(*(p + 2)).y`는 세 번째 원소의 `y`인 6이다. 일반적으로 `pts[i].멤버`, `(pts + i)->멤버`, `(*(pts + i)).멤버`는 같다. `->`의 왼쪽에는 구조체의 주소가, `.`의 왼쪽에는 구조체 자체가 와야 한다는 규칙만 지키면 어느 표기든 쓸 수 있다.
+
+`->`는 `.`, `[]`, 후위 `++`와 함께 가장 먼저 결합하는 연산자이므로, 증감 연산자와 섞으면 무엇이 증가하는지 주의해야 한다. `pts = { {1, 2}, {5, 6} }`이고 `p = pts`일 때 다음 세 수식을 차례로 실행하면 결과가 다르다.
+
+```c
+a = ++p->x;         // ++(p->x): pts[0].x가 2가 되고 a는 2
+printf("%d %d\n", a, pts[0].x);
+a = (++p)->x;       // p가 pts[1]로 이동하고 a는 5
+printf("%d %d\n", a, (int)(p - pts));
+a = p->x++;         // (p->x)++: a는 5, pts[1].x는 6이 됨
+printf("%d %d\n", a, pts[1].x);
+```
+
+```text
+2 2
+5 1
+5 6
+```
+
+첫 줄은 `->`가 전위 `++`보다 먼저 결합하므로 멤버 `x`가 증가한다. 둘째 줄은 괄호 때문에 포인터 `p`가 먼저 증가하여 다음 원소를 가리키며, `p - pts`가 1이다. 셋째 줄은 후위 `++`이므로 증가하기 전의 값 5가 `a`에 들어가고 멤버는 6이 된다. 포인터를 옮기려는 것인지 멤버를 바꾸려는 것인지에 따라 괄호를 분명히 쓴다.
+
+### 2.8 구조체 멤버의 입력
+
+구조체 멤버도 일반 변수와 같은 규칙으로 `scanf`에 넘긴다. `int` 멤버는 `&s.score`처럼 주소를 넘기고, 문자 배열 멤버는 배열 이름이 이미 주소이므로 `s.name`처럼 `&` 없이 넘긴다. 중첩 구조체의 멤버는 바깥에서부터 `.`으로 이어 쓴다. `.`이 `&`보다 먼저 결합하므로 `&s.birthday.year`는 `&(s.birthday.year)`, 즉 `year` 멤버의 주소이다.
+
+```c
+struct date {
+    int year, month, day;
+};
+
+struct student {
+    char name[20];
+    int score;
+    struct date birthday;
+};
+
+int main(void)
+{
+    struct student s;
+
+    printf("name score year month day? ");
+    if (scanf("%19s %d %d %d %d", s.name, &s.score, &s.birthday.year,
+              &s.birthday.month, &s.birthday.day) != 5)
+        return 1;
+    printf("%s (%d) born %d-%d-%d\n", s.name, s.score, s.birthday.year,
+           s.birthday.month, s.birthday.day);
+    return 0;
+}
+```
+
+```text
+name score year month day? Kim 91 2005 3 14
+Kim (91) born 2005-3-14
+```
+
+`%19s`는 `name`의 20바이트 가운데 널 문자 자리를 남기고 최대 19글자만 읽는다. `&`를 반대로 붙이면 Clang이 각각 다음과 같이 경고한다. 첫째는 `int` 멤버에 `&`를 빠뜨린 `scanf("%d", v.score)`, 둘째는 문자 배열 멤버에 `&`를 붙인 `scanf("%19s", &v.name)`에 대한 경고이다.
+
+```text
+warning: format specifies type 'int *' but the argument has type 'int' [-Wformat]
+warning: format specifies type 'char *' but the argument has type 'char (*)[20]' [-Wformat]
+```
+
+둘째 경우 `&v.name`은 8장 2.6절의 `&arr`처럼 배열 전체의 주소(`char (*)[20]`)이다. 주소의 값은 `v.name`과 같아서 우연히 동작할 수 있지만 타입이 맞지 않으므로 `&` 없이 쓴다.
+
+### 2.9 중첩 구조체와 공용체의 메모리 배치
+
+2.4절의 중첩 구조체는 안쪽 구조체 전체가 바깥 구조체의 한 멤버로 그대로 들어간다. 2.8절의 `struct student`를 `offsetof`로 재면 다음과 같다. `offsetof`의 두 번째 인수에는 `birthday.year`처럼 중첩 멤버도 쓸 수 있다.
+
+```c
+printf("student: size %zu, name %zu, score %zu, birthday %zu\n", sizeof(struct student),
+       offsetof(struct student, name), offsetof(struct student, score),
+       offsetof(struct student, birthday));
+printf("birthday.year %zu, birthday.day %zu, sizeof(struct date) %zu\n",
+       offsetof(struct student, birthday.year), offsetof(struct student, birthday.day),
+       sizeof(struct date));
+printf("value: size %zu, i %zu, d %zu, c %zu\n", sizeof(union value),
+       offsetof(union value, i), offsetof(union value, d), offsetof(union value, c));
+```
+
+```text
+student: size 36, name 0, score 20, birthday 24
+birthday.year 24, birthday.day 32, sizeof(struct date) 12
+value: size 8, i 0, d 0, c 0
+```
+
+```text
+struct student (36바이트)
+        0                   20         24         28         32         36   ← 오프셋
+      ┌───────────────────┬──────────┬──────────┬──────────┬──────────┐
+      │ name[20]          │ score    │ year     │ month    │ day      │
+      └───────────────────┴──────────┴──────────┴──────────┴──────────┘
+                                     └──────── birthday (12B) ────────┘
+```
+
+*그림 8. 중첩 구조체 struct student의 멤버 오프셋*
+
+`name`은 20바이트이고 20은 4의 배수이므로 `score`는 패딩 없이 오프셋 20에 놓인다. `birthday`는 그 뒤 오프셋 24부터 `struct date`의 12바이트를 차지하며, 그 안의 `year`, `month`, `day`는 24, 28, 32에 있다. 20 + 4 + 12 = 36이므로 이 구조체에는 패딩이 없다. 같은 방법으로 공용체 `union value { int i; double d; char c[4]; }`를 재면 세 멤버의 오프셋이 모두 0이고, 크기는 가장 큰 멤버인 `double`의 8바이트이다. 구조체는 멤버를 차례로 늘어놓고, 공용체는 모든 멤버를 같은 시작 주소에 겹쳐 놓는다는 차이가 숫자로 드러난다.
 
 ---
 
@@ -628,7 +967,7 @@ union data d;
 sizeof(union data) = 4  (가장 큰 멤버)
 ```
 
-*그림 6. 세 멤버가 같은 메모리를 공유하는 공용체 변수 d*
+*그림 9. 세 멤버가 같은 메모리를 공유하는 공용체 변수 d*
 
 공용체의 크기는 대부분 가장 큰 멤버의 크기와 같지만, 정렬 때문에 그보다 커질 수 있다. 예를 들어 `union { char s[5]; int i; }`는 가장 큰 멤버가 5바이트이지만 `int`의 정렬에 맞추어 크기가 8이다. 공용체를 초기화할 때는 `{}` 안에 첫 번째 멤버의 초기값만 지정한다(`union data d = {42};`는 `d.i`를 초기화한다). 멤버에 접근할 때는 구조체처럼 `.`를, 공용체 포인터로 접근할 때는 `->`를 사용한다.
 
@@ -689,6 +1028,245 @@ Point p1 = {10, 20};          // 간결함: typedef 사용
 
 > **핵심:** `typedef`는 새로운 데이터 타입을 만드는 것이 **아니라**, 기존 데이터 타입에 새 **이름**을 부여하는 것이다. `Point`와 `struct point`는 같은 데이터 타입이다.
 
+### 3.4 `typedef`의 여러 가지 용도
+
+`typedef`는 구조체 외의 타입에도 쓸 수 있다. 첫째, 의미를 드러내는 이름을 붙인다. `typedef unsigned char BYTE;`로 정의한 `BYTE`는 값이 아니라 바이트 단위의 데이터임을 이름으로 보여 준다. 둘째, 복잡한 타입을 짧게 쓴다. 구조체 포인터에 이름을 붙이면 `Student *` 대신 `StudentPtr`로 쓸 수 있다. 셋째, 플랫폼에 따라 달라지는 타입을 감춘다. 표준 라이브러리의 `size_t`도 `typedef`로 정의된 이름이며, 그 실제 타입은 플랫폼마다 다르다. 타입이 바뀌어야 할 때 `typedef` 한 줄만 고치면 되므로 이식성이 높아진다.
+
+```c
+typedef unsigned char BYTE;
+typedef struct student {
+    char name[20];
+    int score;
+} Student;
+typedef Student *StudentPtr;
+
+int main(void)
+{
+    BYTE b = 255;
+    Student s = { "Kim", 91 };
+    StudentPtr p = &s;
+
+    b++;
+    printf("b = %u, %s %d\n", b, p->name, p->score);
+    printf("%zu %zu\n", sizeof(BYTE), sizeof(size_t));
+    return 0;
+}
+```
+
+```text
+b = 0, Kim 91
+1 8
+```
+
+`BYTE`는 `unsigned char`의 다른 이름일 뿐이므로 255에 1을 더하면 3장의 부호 없는 정수 순환에 따라 0이 된다. 이 환경에서 `size_t`는 8바이트이다. 다만 포인터 타입에 `typedef`를 쓰면 선언에서 `*`가 보이지 않아 그 변수가 포인터라는 사실을 놓치기 쉬우므로, 구조체 이름처럼 자주 쓰고 뜻이 분명한 경우에만 쓰는 것이 좋다.
+
+### 3.5 열거체와 `switch`로 방향 처리하기
+
+열거체는 정해진 몇 가지 값 가운데 하나를 갖는 데이터를 이름으로 표현할 때 쓴다. 다음 코드는 상하좌우 방향을 `enum direction`으로 정의하고, `switch`로 방향에 따라 점의 좌표를 한 칸 옮긴다.
+
+```c
+enum direction { UP, DOWN, LEFT, RIGHT };
+
+struct point {
+    int x, y;
+};
+
+void move(struct point *p, enum direction d)
+{
+    switch (d) {
+    case UP:
+        p->y++;
+        break;
+    case DOWN:
+        p->y--;
+        break;
+    case LEFT:
+        p->x--;
+        break;
+    case RIGHT:
+        p->x++;
+        break;
+    }
+}
+
+int main(void)
+{
+    enum direction path[5] = { UP, UP, RIGHT, DOWN, RIGHT };
+    struct point pos = { 0, 0 };
+    int i;
+
+    for (i = 0; i < 5; i++) {
+        move(&pos, path[i]);
+        printf("step %d: dir = %d, pos = (%d, %d)\n", i + 1, path[i], pos.x, pos.y);
+    }
+    return 0;
+}
+```
+
+```text
+step 1: dir = 0, pos = (0, 1)
+step 2: dir = 0, pos = (0, 2)
+step 3: dir = 3, pos = (1, 2)
+step 4: dir = 1, pos = (1, 1)
+step 5: dir = 3, pos = (2, 1)
+```
+
+열거 상수는 차례로 `UP` = 0, `DOWN` = 1, `LEFT` = 2, `RIGHT` = 3이므로 `%d`로 출력하면 이 정수가 나온다. 이동 경로를 따라가면 (0, 0)에서 위로 두 번 가서 (0, 2), 오른쪽으로 (1, 2), 아래로 (1, 1), 오른쪽으로 (2, 1)에 이른다. `switch`의 `case`에 숫자 대신 열거 상수를 쓰면 코드가 무엇을 비교하는지 드러나고, 컴파일러가 빠진 경우를 찾아 준다. `LEFT`와 `RIGHT`의 `case`를 지운 `switch`를 `-Wall`로 컴파일하면 Clang은 `enumeration values 'LEFT' and 'RIGHT' not handled in switch` 경고를 낸다. 이 경고는 `default`가 있으면 나오지 않으므로, 모든 열거 값을 처리해야 하는 `switch`에서는 `default` 대신 모든 `case`를 쓰는 편이 실수를 찾기 쉽다.
+
+### 3.6 구조체와 관련 타입의 흔한 실수
+
+구조체를 처음 쓸 때 자주 나오는 오류는 `.`과 `->`의 혼동, `struct` 키워드의 누락이다. 다음 코드의 세 줄은 각각 Clang에서 오류가 된다.
+
+```c
+struct point { int x, y; };
+
+struct point pt = { 1, 2 }, *p = &pt;
+int a = p.x;            // 포인터에 .을 씀
+int b = pt->y;          // 구조체 변수에 ->를 씀
+point q;                // struct 없이 태그 이름만 씀
+```
+
+```text
+error: member reference type 'struct point *' is a pointer; did you mean to use '->'?
+error: member reference type 'struct point' is not a pointer; did you mean to use '.'?
+error: must use 'struct' tag to refer to type 'point'
+```
+
+| 실수 | 바로잡는 방법 |
+|:-----|:-----|
+| 포인터에 `.`을 씀 | `p->x` 또는 `(*p).x` |
+| 구조체 변수에 `->`를 씀 | `pt.y` |
+| `struct` 없이 태그 이름만 씀 | `struct point q;`로 쓰거나 3.3절의 `typedef`로 별칭을 정의 |
+| 구조체 정의 끝의 세미콜론 누락 | `};`로 끝냄 (1.2절) |
+| 문자 배열 멤버에 `=`로 문자열 대입 | `strcpy(s.name, "Kim");` (1.6절) |
+| 구조체를 `==`로 비교 | 멤버별로 비교 (1.7절) |
+| 공용체에서 마지막으로 쓰지 않은 멤버를 읽음 | 어느 멤버를 썼는지 별도의 변수로 기록 (3.2절) |
+
+*표 4. 구조체와 관련 타입의 흔한 실수*
+
+처음 두 오류에서 Clang은 맞는 연산자를 제안까지 해 준다. 세 번째 오류는 C에서 구조체의 태그 이름이 타입 이름과 다른 이름 공간에 있기 때문에 생긴다. `struct point`가 하나의 타입 이름이며, `point`만으로 쓰려면 `typedef struct point point;`처럼 같은 이름의 별칭을 따로 정의해야 한다.
+
+`.`과 `->`의 선택은 왼쪽에 오는 것의 타입으로 정해진다. 구조체 변수이면 `.`, 구조체 포인터이면 `->`이다. 함수의 매개변수가 구조체 포인터이면 함수 안에서는 모두 `->`를 쓰고, `main`의 구조체 변수에서는 `.`을 쓰므로, 같은 멤버라도 코드의 위치에 따라 연산자가 바뀐다. 헷갈릴 때는 왼쪽에 오는 식의 타입을 먼저 확인하고, 포인터이면 `->`, 구조체이면 `.`을 쓴다. 배열 원소 `pts[i]`는 구조체이므로 `.`을, `pts + i`는 주소이므로 `->`를 쓴다.
+
+### 3.7 종합 예: 성적 처리 프로그램
+
+이 장의 내용을 한 프로그램으로 묶는다. `typedef`로 정의한 `Student` 구조체의 배열에 세 학생의 국어, 영어, 수학 점수를 저장하고, 총점을 구하는 함수와 총점이 가장 높은 학생을 찾는 함수를 구조체 포인터로 작성한다.
+
+```c
+typedef struct {
+    char name[20];
+    int kor, eng, math;
+} Student;
+
+int total(const Student *s)
+{
+    return s->kor + s->eng + s->math;
+}
+
+const Student *find_best(const Student list[], int n)
+{
+    const Student *best = &list[0];
+    int i;
+
+    for (i = 1; i < n; i++)
+        if (total(&list[i]) > total(best))
+            best = &list[i];
+    return best;
+}
+
+int main(void)
+{
+    Student list[3] = {
+        { "Kim", 90, 80, 70 }, { "Lee", 85, 95, 90 }, { "Park", 70, 75, 100 }
+    };
+    const Student *best;
+    int i;
+
+    for (i = 0; i < 3; i++)
+        printf("%-5s total = %3d, average = %.2f\n", list[i].name,
+               total(&list[i]), total(&list[i]) / 3.0);
+    best = find_best(list, 3);
+    printf("best: %s (%d)\n", best->name, total(best));
+    return 0;
+}
+```
+
+```text
+Kim   total = 240, average = 80.00
+Lee   total = 270, average = 90.00
+Park  total = 245, average = 81.67
+best: Lee (270)
+```
+
+- **타입의 정의:** 태그 없는 구조체에 `typedef`로 `Student`라는 이름을 붙였으므로, 이후에는 `struct` 없이 `Student`만 쓴다(3.3절).
+- **`total`:** 구조체를 바꾸지 않으므로 `const Student *`로 받고 `->`로 세 멤버를 더한다. 구조체 전체를 복사하지 않고 주소 8바이트만 넘긴다.
+- **`find_best`:** 지금까지의 최고 학생을 가리키는 포인터 `best`를 첫 원소로 시작하고, 총점이 더 큰 원소를 만나면 그 원소의 주소로 바꾼다. 반환하는 주소는 호출한 쪽의 배열 원소이므로 함수가 끝나도 유효하다(8장 3.5절). 총점은 240, 270, 245이므로 `best`는 `i`가 1일 때 `&list[1]`로 바뀌고 `i`가 2일 때는 바뀌지 않는다.
+- **`main`:** `%-5s`는 이름을 5칸에 왼쪽 정렬하여 열을 맞춘다. 평균은 `3.0`으로 나누어 실수 나눗셈이 되게 하며, Park의 평균은 245 / 3 = 81.666...이 `%.2f`로 81.67이 된다.
+
+### 3.8 열거 상수의 이름 출력과 값의 검사
+
+열거 상수는 컴파일 뒤에 정수로만 남으므로, `printf`로는 `UP` 같은 이름을 출력할 수 없다. 이름이 필요하면 열거 상수의 값을 인덱스로 하는 문자열 포인터 배열(9장 7.2절)을 둔다. 목록의 끝에 `DIR_COUNT`를 두면 그 값이 앞의 상수 개수 4와 같아져서 배열의 크기와 반복의 끝으로 쓸 수 있다.
+
+```c
+enum direction { UP, DOWN, LEFT, RIGHT, DIR_COUNT };
+
+const char *names[DIR_COUNT] = { "UP", "DOWN", "LEFT", "RIGHT" };
+
+const char *dir_name(enum direction d)
+{
+    if (d < UP || d >= DIR_COUNT)       // 범위를 벗어난 값을 걸러 낸다
+        return "?";
+    return names[d];
+}
+
+int main(void)
+{
+    enum direction d;
+    enum direction bad = 7;
+
+    for (d = UP; d < DIR_COUNT; d++)
+        printf("%d %s\n", d, dir_name(d));
+    printf("%d %s\n", bad, dir_name(bad));
+    return 0;
+}
+```
+
+```text
+0 UP
+1 DOWN
+2 LEFT
+3 RIGHT
+7 ?
+```
+
+열거체 변수에는 정해진 상수가 아닌 정수도 저장된다. `enum direction bad = 7;`은 Clang에서 `-Wall -Wextra`로도 경고 없이 컴파일되었다. 열거체는 정수형으로 처리될 뿐 값의 범위를 검사하지 않으므로, 열거 상수를 배열의 인덱스로 쓰는 함수는 `dir_name`처럼 범위를 먼저 확인해야 한다. 검사가 없으면 `names[7]`은 원소가 4개인 배열의 범위를 넘는 접근이 된다. `d++`처럼 열거체 변수를 증가시켜 상수를 차례로 훑는 것은 상수가 0부터 1씩 커질 때만 맞는 방법이다.
+
+---
+
+<br>
+
+## 개념 적용
+
+**T/F 점검:**
+
+| 문장 | 판단과 근거 |
+|:-----|:-----|
+| 구조체의 크기는 항상 멤버 크기의 합과 같다. | **F.** 정렬을 위한 패딩 때문에 합보다 클 수 있다. |
+| 같은 타입의 구조체는 `=`로 대입할 수 있고, 이때 배열 멤버도 복사된다. | **T.** 구조체 대입은 모든 멤버를 그대로 복사한다. |
+| 구조체는 `==`로 비교할 수 있다. | **F.** 구조체에는 `==`를 쓸 수 없으므로 멤버별로 비교한다. |
+| 구조체 포인터 `p`에 대해 `p->x`와 `(*p).x`는 같다. | **T.** `->`는 역참조와 멤버 접근을 한 번에 하는 연산자이다. |
+| `*p.x`는 `(*p).x`와 같다. | **F.** `.`이 `*`보다 먼저 결합하여 `*(p.x)`가 되므로, 포인터 `p`에 쓰면 컴파일 오류이다. |
+| 함수가 지역 구조체 변수를 반환하면 댕글링 포인터 문제가 생긴다. | **F.** 반환되는 것은 주소가 아니라 멤버를 복사한 값이므로 안전하다. |
+| 비트 필드 멤버의 주소는 `&`로 구할 수 있다. | **F.** 비트 필드 멤버는 바이트 단위의 주소를 갖지 않으므로 `&`를 쓸 수 없다. |
+| `typedef`는 새로운 데이터 타입을 만든다. | **F.** 기존 데이터 타입에 새 이름을 붙일 뿐이다. |
+| `p->x`는 `(*p).x`의 줄임이며, `p`가 구조체 배열의 원소를 가리키면 `p + 1`은 다음 원소를 가리킨다. | **T.** 포인터 연산은 구조체 하나의 크기 단위로 이동한다. |
+| 구조체의 크기는 멤버를 선언하는 순서와 관계없다. | **F.** 정렬을 위한 패딩의 양이 순서에 따라 달라지므로 크기도 달라질 수 있다. |
+| `scanf("%s", s.name)`의 `s.name`에는 `&`를 붙여야 한다. | **F.** 문자 배열 멤버의 이름은 이미 첫 원소의 주소이다. |
+| 공용체의 모든 멤버는 오프셋이 0이다. | **T.** 모든 멤버가 같은 시작 주소를 공유한다. |
+| `enum direction d = 7;`처럼 정의되지 않은 값을 열거체 변수에 저장하면 컴파일 오류가 난다. | **F.** 열거체는 정수형으로 처리되어 값의 범위를 검사하지 않으므로 컴파일된다. |
+| `++p->x`는 포인터 `p`를 다음 원소로 옮긴다. | **F.** `->`가 먼저 결합하므로 멤버 `x`가 증가하며, 포인터를 옮기려면 `(++p)->x`로 쓴다. |
+| 큰 구조체를 값으로 넘기면 구조체 전체가 복사된다. | **T.** `struct content`는 호출마다 64바이트가 복사되고, 포인터로 넘기면 8바이트만 복사된다. |
+
 ---
 
 <br>
@@ -718,6 +1296,18 @@ Point p1 = {10, 20};          // 간결함: typedef 사용
 | `enum` | 이름이 붙은 `int` 상수의 집합이며, 기본값은 0부터 시작하여 1씩 증가한다. |
 | `union` | 모든 멤버가 같은 메모리를 공유하여 크기는 가장 큰 멤버를 담을 수 있는 크기이고, 의미 있는 값은 마지막으로 쓴 멤버뿐이다. |
 | `typedef` | 기존 데이터 타입에 별칭을 부여하며, 구조체와 함께 쓰면 `struct` 키워드를 생략할 수 있다. |
+| 구조체 반환 | 구조체는 대입할 수 있으므로 반환형으로 쓸 수 있고, 반환되는 것은 멤버의 복사본이라 지역 변수를 반환해도 안전하다. |
+| 비트 필드 | `unsigned int day : 5;`처럼 멤버의 비트 수를 지정하여 메모리를 줄이며, 범위를 넘는 값은 잘리고 멤버의 주소는 구할 수 없다. |
+| `typedef`의 용도 | 의미 있는 이름 부여, 복잡한 타입의 축약, 플랫폼에 따라 다른 타입의 은닉(`size_t`)에 쓴다. |
+| `offsetof`와 패딩 | `offsetof`로 멤버의 위치를 확인하며, 큰 멤버를 앞에 두고 작은 멤버를 모으면 패딩이 줄어든다. |
+| 구조체 포인터의 연산 | `p + 1`은 구조체 하나만큼 이동하고, `pts[i].x`, `(pts + i)->x`, `(*(pts + i)).x`는 같다. |
+| 구조체 멤버의 입력 | `int` 멤버는 `&s.score`로, 문자 배열 멤버는 `s.name`으로 넘기며, `&s.birthday.year`는 중첩 멤버의 주소이다. |
+| 열거체와 `switch` | 열거 상수를 `case`에 쓰면 의미가 드러나고, `default`가 없을 때 처리하지 않은 값을 컴파일러가 경고한다. |
+| 구조체의 흔한 실수 | 포인터에는 `->`, 변수에는 `.`을 쓰고, 태그 이름은 `struct`와 함께 쓴다. |
+| 일부 멤버의 초기화 | 초기값이 모자라면 나머지 멤버는 0이 되며, `{ 0 }`은 구조체 전체를 0으로 시작하는 관용구이다. |
+| 구조체 포인터를 받는 함수 | 읽기만 하는 함수는 `const` 구조체 포인터로 받아 복사를 피하고, 배열 원소의 주소를 반환할 수 있다. |
+| 중첩 구조체와 공용체의 배치 | 중첩 구조체는 안쪽 구조체 전체가 한 멤버로 들어가고, 공용체는 모든 멤버의 오프셋이 0이다. |
+| 열거 상수의 이름 | 이름은 열거 상수를 인덱스로 하는 문자열 배열로 출력하며, 열거체 변수는 범위를 검사하지 않으므로 인덱스로 쓰기 전에 확인한다. |
 
 ---
 
@@ -767,5 +1357,32 @@ Point p1 = {10, 20};          // 간결함: typedef 사용
    <summary>정답</summary>
 
    `f(c1)`은 복사본을 수정하므로 `c1.price`는 11000 그대로이고, `g(&c1)`은 원본을 수정하므로 11000 × 0.8 = 8800이 된다. 구조체를 수정하지 않는 함수는 복사 비용을 피하면서 변경을 막기 위해 `const struct content *p`처럼 `const` 구조체 포인터로 받는 것이 적합하다.
+
+   </details>
+
+6. **구조체 반환:** 2.5절의 `midpoint`에서 a가 (3, 9), b가 (8, 2)일 때 `midpoint(a, b)`가 반환하는 점은 무엇인가? 정수 나눗셈에 주의하라.
+
+   <details>
+   <summary>정답</summary>
+
+   x는 (3 + 8) / 2 = 11 / 2 = 5, y는 (9 + 2) / 2 = 11 / 2 = 5이므로 (5, 5)이다. 정수 나눗셈이 소수 부분 0.5를 버린다. 정확한 중점 (5.5, 5.5)가 필요하면 멤버를 `double`로 선언한다.
+
+   </details>
+
+7. **비트 필드:** `struct flags { unsigned int a : 1; unsigned int b : 3; };`에서 `f.b = 9;`를 실행하면 `f.b`의 값은 얼마인가? 또 `f.a`가 가질 수 있는 값을 모두 쓰라.
+
+   <details>
+   <summary>정답</summary>
+
+   9는 2진수 `1001`이고 3비트 멤버에는 하위 3비트 `001`만 남으므로 `f.b`는 1이다. 1비트 부호 없는 멤버 `f.a`는 0과 1만 가질 수 있다.
+
+   </details>
+
+8. **반환형의 선택:** 학생의 점수를 10점 올리는 함수와, 두 학생 중 점수가 높은 학생의 정보를 돌려주는 함수를 만들 때 각각 매개변수와 반환형을 어떻게 정하는 것이 알맞은가?
+
+   <details>
+   <summary>정답</summary>
+
+   점수를 올리는 함수는 호출한 쪽의 구조체를 바꿔야 하므로 `void raise(struct student *s)`처럼 포인터 매개변수를 쓴다. 점수가 높은 학생을 돌려주는 함수는 입력을 바꾸지 않으므로 `const struct student *` 두 개를 받아 높은 쪽의 포인터를 반환하거나, 작은 구조체라면 `struct student`를 값으로 반환할 수 있다. 큰 구조체는 복사 비용 때문에 포인터 쪽이 효율적이다.
 
    </details>

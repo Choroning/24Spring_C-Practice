@@ -2,9 +2,11 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-19
+>
+> Warming-Up C Programming, 천정아, Ch 10
 
-**문항 출처:** 임영희 교수, 컴퓨터언어Ⅰ (DCCS101-04)
+**문항 출처:** 연습 문제 1, 2는 임영희 교수, 컴퓨터언어Ⅰ (DCCS101-04)
 
 ---
 
@@ -14,6 +16,12 @@
 
 - [연습 문제 1: Student 구조체](#연습-문제-1-student-구조체)
 - [연습 문제 2: Rectangle 구조체](#연습-문제-2-rectangle-구조체)
+- [연습 문제 3: 구조체 정의의 오류 수정](#연습-문제-3-구조체-정의의-오류-수정)
+- [연습 문제 4: 구조체 변수를 사용하는 코드의 오류](#연습-문제-4-구조체-변수를-사용하는-코드의-오류)
+- [연습 문제 5: 비트 필드, 공용체, 열거체에 대한 설명](#연습-문제-5-비트-필드-공용체-열거체에-대한-설명)
+- [연습 문제 6: 로그인 정보 구조체](#연습-문제-6-로그인-정보-구조체)
+- [연습 문제 7: 공휴일 검사](#연습-문제-7-공휴일-검사)
+- [연습 문제 8: 평균 이상인 학생 출력](#연습-문제-8-평균-이상인-학생-출력)
 
 ---
 
@@ -311,3 +319,277 @@ y 좌표가 반대로 입력되어 서로 교환합니다.
 > **참고:** **요구사항과의 차이.** 요구사항은 `int isRectangle(Rect r);`의 원형을 바꾸지 말라고 했지만, 이 코드는 좌표를 교환하여 원본을 정규화하려고 `int isRectangle(Rect* r);`로 바꾸었고, 검사 함수 안에서 안내문도 출력한다. 원형을 지키려면 `isRectangle()`은 값으로 받은 `r`에 대해 `r.leftUp.x != r.rightDown.x && r.leftUp.y != r.rightDown.y`만 반환하고, `computeArea()`에서 너비와 높이의 절댓값을 곱하면 된다. 이렇게 하면 어느 좌표계로 입력해도 면적이 같고, 첫 번째 실행에서 안내문 없이 실행 예시와 같은 결과가 나온다.
 
 > **주의:** 숫자가 아닌 값을 입력하면 `scanf`가 실패하고 입력 버퍼에 그 문자가 남으므로, 반복할 때마다 같은 문자에서 다시 실패하여 무한 반복에 빠진다. `scanf`의 반환값이 2인지 확인하고, 실패하면 남은 입력을 줄 끝까지 버리는 처리가 필요하다. 또한 너비와 높이의 곱은 `int`로 계산하므로 좌표가 매우 크면 오버플로가 일어날 수 있다.
+
+---
+
+<br>
+
+## 연습 문제 3: 구조체 정의의 오류 수정
+
+**교재 문항:** 10장 연습 문제 2번
+
+**문제:** 문자 하나를 저장할 멤버 `gender`가 들어 있는 `employee` 구조체 정의에서 컴파일 오류가 나는 부분을 고쳐라. 코드는 [연습 문제 3](Exercises.ko.md#연습-문제-3-구조체-정의의-오류-수정)에 있다.
+
+### 풀이
+
+**정답:** 두 곳을 고친다. 멤버 `gender`에 데이터 타입이 없으므로 `char gender;`로 쓰고, 구조체 정의는 선언문이므로 닫는 중괄호 뒤에 세미콜론을 붙여 `};`로 끝낸다.
+
+```c
+struct employee {
+    char name[20];
+    char gender;            // 멤버에는 데이터 타입이 필요하다
+    int salary;
+    char department[20];
+};                          // 구조체 정의는 세미콜론으로 끝난다
+```
+
+**해설:** 원래 코드를 Clang으로 컴파일하면 두 오류가 난다. 첫째 오류는 타입 없이 이름만 쓴 멤버를, 둘째 오류는 구조체 정의 뒤의 세미콜론 누락을 가리킨다([10장 1.2절](Concepts_Lecture.ko.md#12-구조체-정의)).
+
+```text
+error: type name requires a specifier or qualifier
+error: expected ';' after struct
+```
+
+세미콜론이 빠지면 컴파일러는 다음 줄의 `int main(void)`까지를 이 구조체 정의의 일부로 읽으려 하므로, 오류가 정의의 끝이 아닌 다음 선언에서 보고되기도 한다.
+
+---
+
+<br>
+
+## 연습 문제 4: 구조체 변수를 사용하는 코드의 오류
+
+**교재 문항:** 10장 연습 문제 5번
+
+**문제:** `contact` 구조체 변수 `c1`, `c2`를 사용하는 여섯 문장 가운데 컴파일 오류가 나는 것을 모두 고르라. 코드는 [연습 문제 4](Exercises.ko.md#연습-문제-4-구조체-변수를-사용하는-코드의-오류)에 있다.
+
+### 풀이
+
+**정답:** ②, ④, ⑤
+
+**해설:** Clang은 세 문장에 차례로 다음 오류를 낸다.
+
+```text
+error: array type 'char[20]' is not assignable
+error: expected expression
+error: invalid operands to binary expression ('struct contact' and 'struct contact')
+```
+
+- ② `name`은 `char` 배열이므로 `=`로 문자열을 대입할 수 없다. `strcpy(c2.name, "Lee");`로 복사한다([10장 1.6절](Concepts_Lecture.ko.md#16-구조체-대입)).
+- ④ 중괄호 초기화 리스트는 선언할 때만 쓸 수 있으므로, 이미 선언된 `c2`에 대입할 수 없다. 멤버를 하나씩 대입하거나, 같은 값을 가진 다른 구조체 변수를 대입한다.
+- ⑤ 구조체에는 `==`를 쓸 수 없으므로 멤버별로 비교한다([10장 1.7절](Concepts_Lecture.ko.md#17-구조체-비교)).
+- ①은 구조체 전체 대입이므로 배열 멤버까지 모두 복사되어 올바르고, ③은 `int` 멤버에 대한 대입이므로 올바르다. ⑥은 문자열 멤버를 `strcmp`로 비교하는 올바른 방법이다.
+
+---
+
+<br>
+
+## 연습 문제 5: 비트 필드, 공용체, 열거체에 대한 설명
+
+**교재 문항:** 10장 연습 문제 6번, 8번
+
+**문제:** 비트 필드, 공용체, 열거체에 대한 여덟 가지 설명 가운데 잘못된 것을 모두 고르라. 보기는 [연습 문제 5](Exercises.ko.md#연습-문제-5-비트-필드-공용체-열거체에-대한-설명)에 있다.
+
+### 풀이
+
+**정답:** ③, ④, ⑦
+
+**해설:** ③ 공용체의 멤버들은 같은 메모리를 나누어 쓰므로 공용체의 크기는 대개 가장 큰 멤버의 크기이고, 정렬 때문에 그보다 조금 커질 수 있을 뿐 멤버 크기의 합이 되지 않는다([10장 3.2절](Concepts_Lecture.ko.md#32-union)). ④ 비트 필드는 작은 범위의 멤버 여러 개를 한 정수 안에 모아 메모리를 줄이는 기능이다. 10장 2.6절의 날짜 비트 필드는 4바이트로, 같은 멤버를 `unsigned int` 세 개로 둔 12바이트보다 작았다. ⑦ 열거 상수는 정수형 상수이므로 실수를 값으로 줄 수 없다([10장 3.1절](Concepts_Lecture.ko.md#31-enum)). 나머지는 올바른 설명이다. 예를 들어 `enum color { RED, GREEN = 5, BLUE };`에서 값을 지정하지 않은 `RED`는 0이고, `BLUE`는 바로 앞의 `GREEN`보다 1 큰 6이다.
+
+---
+
+<br>
+
+## 연습 문제 6: 로그인 정보 구조체
+
+**교재 문항:** 10장 프로그래밍 과제 1번, 2번
+
+**문제:** 아이디와 패스워드를 저장하는 `login_info` 구조체를 정의하고, 두 멤버를 소문자로 바꾸는 `normalize`와 패스워드를 `*`로 가려 출력하는 `print_login`을 작성하라. 실행 예시는 [연습 문제 6](Exercises.ko.md#연습-문제-6-로그인-정보-구조체)에 있다.
+
+### 풀이
+
+**접근 방법:** 최대 20글자에 널 문자 자리를 더해 두 멤버를 `char[21]`로 선언한다. 구조체를 바꾸는 `normalize`는 구조체 포인터로, 읽기만 하는 `print_login`은 `const` 구조체 포인터로 받는다. 소문자 변환은 문자열 하나를 처리하는 함수로 따로 만들어 두 멤버에 다시 쓴다.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+struct login_info {
+    char id[21];
+    char password[21];
+};
+
+void to_lower_str(char *s)
+{
+    for (; *s != '\0'; s++)
+        *s = (char)tolower((unsigned char)*s);
+}
+
+void normalize(struct login_info *info)
+{
+    to_lower_str(info->id);
+    to_lower_str(info->password);
+}
+
+void print_login(const struct login_info *info)
+{
+    size_t i, n = strlen(info->password);
+
+    printf("ID: %s\nPW: ", info->id);
+    for (i = 0; i < n; i++)
+        putchar('*');
+    putchar('\n');
+}
+
+int main(void)
+{
+    struct login_info user;
+
+    printf("ID? ");
+    scanf("%20s", user.id);
+    printf("Password? ");
+    scanf("%20s", user.password);
+    normalize(&user);
+    print_login(&user);
+    printf("stored: %s / %s\n", user.id, user.password);
+    return 0;
+}
+```
+
+- `scanf("%20s", user.id)`의 폭 20은 최대 20글자만 읽게 하여 21바이트 배열을 넘지 않게 한다. 배열 이름은 시작 주소이므로 `&`를 붙이지 않는다.
+- `info->id`는 `(*info).id`와 같으며, `to_lower_str`가 그 배열의 문자를 직접 바꾸므로 `main`의 `user`가 바뀐다.
+- `print_login`은 패스워드의 길이를 `strlen`으로 구해 그만큼 `*`를 출력하고, 패스워드 자체는 출력하지 않는다. `putchar`는 문자 하나를 출력하는 함수이다.
+
+**실행 결과:**
+
+```text
+ID? Anonymous
+Password? IDontKnow
+ID: anonymous
+PW: *********
+stored: anonymous / idontknow
+```
+
+`IDontKnow`는 9글자이므로 `*`가 9개 출력된다.
+
+---
+
+<br>
+
+## 연습 문제 7: 공휴일 검사
+
+**교재 문항:** 10장 프로그래밍 과제 4번
+
+**문제:** `date` 구조체와 두 날짜를 비교하는 `same_date`를 정의하고, 공휴일 배열에서 입력한 날짜를 찾아 결과를 출력하라. 실행 예시는 [연습 문제 7](Exercises.ko.md#연습-문제-7-공휴일-검사)에 있다.
+
+### 풀이
+
+**접근 방법:** 구조체는 `==`로 비교할 수 없으므로 `same_date`가 세 멤버를 모두 비교한다. 입력한 날짜를 공휴일 배열의 원소와 차례로 비교하는 순차 탐색으로 찾는다.
+
+```c
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+struct date {
+    int year, month, day;
+};
+
+int same_date(struct date a, struct date b)
+{
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+}
+
+int main(void)
+{
+    struct date holidays[] = {
+        { 2024, 1, 1 }, { 2024, 3, 1 }, { 2024, 5, 5 }, { 2024, 6, 6 },
+        { 2024, 8, 15 }, { 2024, 10, 3 }, { 2024, 10, 9 }, { 2024, 12, 25 }
+    };
+    int n = sizeof(holidays) / sizeof(holidays[0]);
+    struct date d;
+    int i, found;
+
+    while (1) {
+        printf("date? ");
+        if (scanf("%d %d %d", &d.year, &d.month, &d.day) != 3)
+            break;
+        if (d.year == 0 && d.month == 0 && d.day == 0)
+            break;
+        found = 0;
+        for (i = 0; i < n; i++) {
+            if (same_date(d, holidays[i])) {
+                found = 1;
+                break;
+            }
+        }
+        printf("%d/%d/%d is %sa holiday\n", d.year, d.month, d.day, found ? "" : "not ");
+    }
+    return 0;
+}
+```
+
+- `same_date`는 관계식과 `&&`의 값 1 또는 0을 그대로 반환한다. 작은 구조체이므로 값으로 받아도 복사 비용이 작다.
+- 배열의 크기를 생략하고 초기값으로 정한 뒤 `sizeof(holidays) / sizeof(holidays[0])`로 원소의 개수 8을 구하므로, 공휴일을 추가해도 `n`을 고칠 필요가 없다.
+- `scanf`가 세 값을 읽지 못하면 반복을 끝내므로, 숫자가 아닌 입력으로 무한 반복에 빠지지 않는다(5장 3.8절).
+- `found ? "" : "not "`은 조건 연산자로 출력할 문자열을 고르며, 찾지 못한 경우에만 `not `이 들어간다.
+
+**실행 결과:**
+
+```text
+date? 2024 8 15
+2024/8/15 is a holiday
+date? 2024 5 2
+2024/5/2 is not a holiday
+date? 0 0 0
+```
+
+---
+
+<br>
+
+## 연습 문제 8: 평균 이상인 학생 출력
+
+**문제:** 다섯 학생의 이름과 점수를 담은 구조체 배열에서 평균을 구하고, 평균 이상인 학생을 출력하라. 데이터와 실행 예시는 [연습 문제 8](Exercises.ko.md#연습-문제-8-평균-이상인-학생-출력)에 있다.
+
+### 풀이
+
+**접근 방법:** 평균을 알아야 비교할 수 있으므로 배열을 두 번 훑는다. 첫 번째 반복에서 합계를 구해 평균을 계산하고, 두 번째 반복에서 각 학생의 점수를 평균과 비교한다.
+
+```c
+#include <stdio.h>
+
+struct student {
+    char name[20];
+    int score;
+};
+
+int main(void)
+{
+    struct student s[5] = {
+        { "Kim", 82 }, { "Lee", 67 }, { "Park", 91 }, { "Choi", 74 }, { "Jung", 88 }
+    };
+    int i, n = 5, sum = 0;
+    double avg;
+
+    for (i = 0; i < n; i++)
+        sum += s[i].score;
+    avg = (double)sum / n;
+    printf("average = %.1f\n", avg);
+    for (i = 0; i < n; i++)
+        if (s[i].score >= avg)
+            printf("%s %d\n", s[i].name, s[i].score);
+    return 0;
+}
+```
+
+합계는 82 + 67 + 91 + 74 + 88 = 402이고 평균은 402 / 5 = 80.4이다. `s[i].score >= avg`에서 `int` 점수는 `double`로 변환되어 비교되므로, 평균이 80.4일 때 82, 91, 88이 조건을 만족한다. 평균을 `int`로 구하면 80이 되어 비교 기준이 달라지므로 `(double)`로 형 변환한다. `s[i].name`은 `[]`로 원소를 고른 뒤 `.`로 멤버를 고르는 순서이다.
+
+**실행 결과:**
+
+```text
+average = 80.4
+Kim 82
+Park 91
+Jung 88
+```
