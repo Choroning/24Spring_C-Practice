@@ -2,12 +2,10 @@
 
 [Repository Guide](../../../README.md) | [English](Assignment.md) | [한국어](Assignment.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-24
 
 This is the ninth assignment of section 3 of Computer Language and Training Ⅰ. It consists of three problems on arrays and two-dimensional arrays. Problem 3 is a free item in which students set and solve a problem of their own related to two-dimensional arrays.
 
-- **Deadline:** 2024-05-27 (Mon) 14:00, before the class starts. After the deadline the assignment is hidden automatically.
-- **Submission:** Write the answers in the assignment template (.hwp) distributed by the course and submit it only in the assignment area of Blackboard.
 - **Contents:** For a coding problem, an analysis of the code must be written together with the code.
 - **Sample Runs:** The line `Program ended with exit code: 0` at the end of a sample run is not output of the program but a termination message that the Xcode console appends.
 

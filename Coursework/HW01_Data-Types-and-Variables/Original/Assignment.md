@@ -2,12 +2,10 @@
 
 [Repository Guide](../../../README.md) | [English](Assignment.md) | [한국어](Assignment.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-24
 
 This is the first assignment of section 3 of Computer Language and Training Ⅰ. It consists of three written questions on concepts and four coding problems.
 
-- **Deadline:** 2024-03-18 (Mon) 14:00, before the class starts.
-- **Submission:** Write the answers in the assignment template (.hwp) distributed by the course and submit it only in the assignment area of Blackboard.
 - **Contents:** A coding problem must include the code, an analysis of the code, and a screenshot of the output.
 - **Sample Runs:** The line `Program ended with exit code: 0` at the end of a sample run is not output of the program but a termination message that the Xcode console appends.
 

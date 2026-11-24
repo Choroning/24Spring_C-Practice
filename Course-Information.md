@@ -2,7 +2,7 @@
 
 [Repository Guide](README.md) | [English](Course-Information.md) | [한국어](Course-Information.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-24
 
 ## Table of Contents
 
@@ -70,7 +70,7 @@
 - **Attendance:** Attendance is checked (the course is not exempt from attendance checks).
 - **Exam Supervision:** Exams are not held unsupervised.
 - **Linked Course:** The syllabus links this course to DCCS101 Computer Language Ⅰ.
-- **Course Management:** Course announcements, course materials, and assignment submissions go through Blackboard.
+- **Course Management:** Course announcements and course materials are provided through Blackboard.
 - **Class Description:** Solving problems with a computer requires the process called programming, and the most basic of these programs can be said to be C. The course teaches students to know and understand the basic concepts of C precisely, and improves their C programming skills through practice with a variety of examples so that they can use it extensively in practice.
 - **Study Objectives:**
   1. Understand programming.
@@ -110,8 +110,8 @@
 - Sections 04 and 05 of Computer Language Ⅰ, the department's sections, are graded together on a relative scale.
 - A student who misses either the midterm or the final exam receives an F, and so does a student who is absent for one third or more of all class days.
 - The assignments are programming assignments and solutions to the chapter exercises. The weeks in which the assignments were given are listed in [5. Weekly Plan and Progress](#5-weekly-plan-and-progress).
-- **Lab Assignments:** Students solve the lab problems of Chapters 4-10 in C code and submit it. The problems are in the exercises (`Exercises`) of each unit, and the solution code is in the [`Coursework` index](Coursework/README.md).
-- **Theory Homework:** Students solve the chapter exercises of the textbook and write the answers in the theory homework submission template (.hwp) distributed by the course, and Theory Homework 1-6 were submitted.
+- **Lab Assignments:** Students solve the lab problems of Chapters 4-10 in C code. The problems are in the exercises (`Exercises`) of each unit, and the solution code is in the [`Coursework` index](Coursework/README.md).
+- **Theory Homework:** Students solve the chapter exercises of the textbook, and six theory homework assignments (Theory Homework 1-6) were given.
 
 ### Computer Language and Training Ⅰ (DCCS103-03)
 
@@ -130,7 +130,7 @@
 - Students must submit four PL Help Center consultation certificates, two each during the midterm and final exam periods, and each missing submission deducts 2 points.
 - A student with poor class conduct receives one warning, and if the conduct does not improve afterwards, points are deducted or no grade is given depending on the situation.
 - The syllabus states that the grading criteria or the points of each criterion may change because of COVID-19. Exams are in person in principle, may be replaced by remote exams or assignments depending on the situation, and the exam period is extended to two weeks for in-person exams.
-- **Assignment Submission:** Students write their answers in the assignment submission template (.hwp) distributed by the course and submit them only on Blackboard. Coding problems must include the code, a code analysis, and a screenshot of the execution result, and the template must have a photo that identifies the student. The deadline is before class (2 p.m.) on the following Monday, and after the deadline the system automatically hides the assignment.
+- **Assignment Contents:** Coding problems must include the code, a code analysis, and a screenshot of the execution result.
 - **Exam Format:** The midterm and final exams are lab exams in which students write code on a computer. Students enter at least 10 minutes before the exam starts, create a folder named `A_StudentID_Name_Section` or `B_StudentID_Name_Section`, submit the answers on a USB drive, and leave the exam paper on the desk without turning off the computer. A student who does not hand in the exam paper receives an F. An answer that does not run receives 0 points, and even for problems with partial credit, the relevant part must run to earn points.
 - **Exam Schedule:** The midterm exam was held at 2 p.m. on 2024-04-22 (Mon) in the classroom and covered the material up to week 7, and the final exam was held at 2 p.m. on 2024-06-17 (Mon) in Nongshim Hall Room 209.
 
@@ -194,7 +194,7 @@
 
 - The planned topics follow the weekly content of the syllabus. The syllabus planned Professionalism as the core competency for weeks 1-3 and Professionalism and Problem Solving for weeks 4-7 and 9-15.
 - The lecture decks are the chapter slides of the textbook, Warming-Up C Programming (2nd edition). Chapter 2 started in week 1 and continued in week 2, Chapter 4 was covered in weeks 3-4, and Chapter 6 in weeks 6-7. The part of Chapter 9 from string pointers on was covered in week 14, and the part of Chapter 10 from enumerations on in week 15.
-- The chapter lab problems were given nine times in all: Chapter 4 (week 4), Chapter 5 selection statements (week 5), Chapter 5 loops (week 6), Chapter 6 (week 7), Chapter 7 (week 10), Chapter 8 Lab 1 (week 11), Chapter 8 Lab 2 (week 12), Chapter 9 (week 13), and Chapter 10 (week 15). Theory homework (solving the textbook exercises) was submitted once each in weeks 3, 4, 6, 12, 13, and 15.
+- The chapter lab problems were given nine times in all: Chapter 4 (week 4), Chapter 5 selection statements (week 5), Chapter 5 loops (week 6), Chapter 6 (week 7), Chapter 7 (week 10), Chapter 8 Lab 1 (week 11), Chapter 8 Lab 2 (week 12), Chapter 9 (week 13), and Chapter 10 (week 15). Theory homework (solving the textbook exercises) was given once each in weeks 3, 4, 6, 12, 13, and 15.
 - There was no class in week 9. In week 10, Monday (5/6) was a substitute holiday, so the week was given as a recorded lecture and an in-person class on Tuesday, and videos on multidimensional arrays, searching and sorting arrays, and the Chapter 7 lab were provided. Week 12 consisted of no class and Zoom classes, and the 5/20 class was provided as a makeup video.
 - Unlike the progress in the syllabus (arrays in week 9, strings in week 10, pointers in week 11, function calling methods in week 12, structures in weeks 13-14, and applications of functions in week 15), the actual classes followed the textbook chapter order, covering arrays in week 10, pointers in weeks 11-12, strings in weeks 13-14, and structures in weeks 14-15.
 - The midterm exam was held in week 8 and the final exam in week 16, and the lectures ended in week 15.
@@ -224,7 +224,7 @@
 
 - The planned topics follow the weekly content of the syllabus, and the chapter numbers are those of the textbook, 문제풀이 중심의 C언어 연습. The syllabus planned Problem Solving as the core competency for weeks 2-13 and Professionalism for weeks 14-15, and states that the progress may be adjusted depending on circumstances.
 - Section 03 met on Mondays at 2 p.m. Week 6 (4/8) was given as an online lecture, and week 10 (5/6) as an online lecture because of a substitute holiday, and recorded lecture videos for the week 5, 6, 7, and 10 decks were provided on Blackboard.
-- Assignments 1-10 were given once each in weeks 2-6 and 9-13 and were due before class (2 p.m.) on the following Monday.
+- Assignments 1-10 were given once each in weeks 2-6 and 9-13.
 - Unlike the syllabus, the actual progress covered functions and arrays in week 10, pointers in week 11, multidimensional arrays and pointers in week 12, strings (textbook Ch 8) in week 13, and string pointers in week 14, and week 15 explained only the theory of structures.
 - The midterm exam was held in week 8 and the final exam in week 16, and the lectures ended in week 15.
 - The weekly decks are summarized in the lab notes (`Concepts_Lab`) of the unit on the same topic. The decks correspond to the lab notes as follows.
@@ -257,7 +257,7 @@
 | Lecture Slides (Computer Language and Training Ⅰ) | Weekly lecture slides provided by the instructor, Visual Studio Community 2022 installation and usage guides, and additional lecture materials |
 | Assignments (Computer Language and Training Ⅰ) | Assignment 1-10 problems set by the instructor |
 | Lecture Videos | Videos of Computer Language Ⅰ on multidimensional arrays (week 10), searching and sorting arrays and the Chapter 7 lab (week 10), the 5/20 makeup class (week 12), and two Zoom classes (week 12), and the recorded lectures of Computer Language and Training Ⅰ for weeks 5, 6, 7, and 10 |
-| Other | Answers to the odd-numbered exercises of Warming-Up C Programming (for students), the theory homework submission template of Computer Language Ⅰ, and the assignment submission template and exam answer submission guide of Computer Language and Training Ⅰ |
+| Other | Answers to the odd-numbered exercises of Warming-Up C Programming (for students) and the exam answer submission guide of Computer Language and Training Ⅰ |
 
 - The syllabus of Computer Language Ⅰ states that the main textbook would be announced after the semester begins, and the course used Warming-Up C Programming (2nd edition) as the textbook. The short source line `Warming-Up C Programming, 천정아, Ch N` in the header of the notes refers to this textbook.
 - The syllabus of Computer Language and Training Ⅰ designates 문제풀이 중심의 C언어 연습 (김용일 and 강문설, 교우사) as the main textbook.
