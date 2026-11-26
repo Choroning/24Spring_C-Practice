@@ -124,13 +124,13 @@ printf("%d\n", max + 1); // -2,147,483,648  (wraps around!)
 ```
 
 ```text
-          Overflow
-    ┌───── INT_MAX + 1 ────────────┐
-    │                              ▼
-... ─2 ─1  0  1  2 ... INT_MAX  INT_MIN ...
-                         ▲                │
-                         └── INT_MIN - 1 ─┘
-                              Underflow
+                          Overflow
+                       ┌ INT_MAX + 1 ┐
+                       │             ▼
+... -2 -1  0  1  2 ... INT_MAX  INT_MIN ...
+                       ▲             │
+                       └ INT_MIN - 1 ┘
+                          Underflow
 ```
 
 *Figure 2. Wraparound of `int` values on overflow and underflow*

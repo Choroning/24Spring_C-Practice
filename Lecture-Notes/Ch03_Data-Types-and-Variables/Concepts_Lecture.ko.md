@@ -124,13 +124,13 @@ printf("%d\n", max + 1); // -2,147,483,648  (wraps around!)
 ```
 
 ```text
-          Overflow
-    ┌───── INT_MAX + 1 ────────────┐
-    │                              ▼
-... ─2 ─1  0  1  2 ... INT_MAX  INT_MIN ...
-                         ▲                │
-                         └── INT_MIN - 1 ─┘
-                              Underflow
+                          Overflow
+                       ┌ INT_MAX + 1 ┐
+                       │             ▼
+... -2 -1  0  1  2 ... INT_MAX  INT_MIN ...
+                       ▲             │
+                       └ INT_MIN - 1 ┘
+                          Underflow
 ```
 
 *그림 2. `int`의 오버플로와 언더플로에 따른 값의 순환*
