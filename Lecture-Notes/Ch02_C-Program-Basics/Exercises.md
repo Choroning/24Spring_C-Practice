@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -213,18 +213,18 @@ pi = 3.14
 
 **Textbook Problem:** Chapter 2 exercise 10
 
-**Problem:** The following program reads a character and prints it. Write the code that goes in blanks ①, ②, and ③ of the source code.
+**Problem:** The following program reads a character and prints it. Write the code that goes in blanks (1), (2), and (3) of the source code.
 
 ```c
 // test.c
 #define _CRT_SECURE_NO_WARNINGS     // needed to use scanf in Visual Studio 2022
-#include ① ____________
+#include (1) ____________
 
 int main(void)
 {
     char ch;
-    scanf("%c", ② ________);
-    printf("ch = ③____\n", ch);
+    scanf("%c", (2) ________);
+    printf("ch = (3)____\n", ch);
 }
 ```
 
@@ -263,7 +263,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 10진수 정수? 10
 10진수 10은 16진수 a에 해당합니다.
 ```
@@ -282,7 +282,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 연? 2022
 월? 10
 일? 1
@@ -303,7 +303,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 시? 1
 분? 1
 초? 1
@@ -324,7 +324,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 달러? 50.25
 $50.25는 50250원입니다.
 ```
@@ -343,7 +343,7 @@ $50.25는 50250원입니다.
 
 **Sample Run:**
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? M
 M 사이즈를 선택했습니다.
 ```
@@ -362,7 +362,7 @@ M 사이즈를 선택했습니다.
 
 **Sample Run:**
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 12.340000 + 0.500000 = 12.840000
 12.340000 - 0.500000 = 11.840000
@@ -404,7 +404,7 @@ pi = 3.141593e+00
 
 **Sample Run:**
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 0x12
  8진수: 022

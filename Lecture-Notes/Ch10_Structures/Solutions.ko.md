@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -43,15 +43,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab10_Structures/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C10Q1.c
- * @brief   Q1. Student 구조체
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. The Student Structure
+ * @author  Cheolwon Park
  * @date    2024-06-13
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #pragma warning(disable:4996)
@@ -141,7 +141,7 @@ void sort_student_arr(struct student p[], int size) {
 
 **실행 결과:** `#pragma warning(disable:4996)`과 `#pragma warning(disable:6031)`은 Visual Studio의 경고 C4996(`scanf` 같은 보안 위험 함수 사용)과 C6031(반환값 무시)을 끄는 MSVC 전용 지시문이다. `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c`로 컴파일하면 이 두 `#pragma`를 알 수 없다는 경고가 나오지만 실행에는 영향이 없다. 실행 예시의 값을 입력한 결과는 다음과 같다.
 
-```text
+```text wide-ok
 A반 학생 수를 입력하세요: 5
 
 이름을 입력하세요: 김ㅇㅇ
@@ -200,15 +200,15 @@ A반 학생 수를 입력하세요: 5
 
 **코드:** [Lab_Q2.c](../../Coursework/Lab10_Structures/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C10Q2.c
- * @brief   Q2. Rectangle 구조체
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. The Rectangle Structure
+ * @author  Cheolwon Park
  * @date    2024-06-14
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -250,7 +250,7 @@ int main()
 }
 
 int isRectangle(Rect* r) {
-    // 좌상단과 우하단 좌표가 올바르게 입력되었는지 확인
+    // Check that the upper-left and lower-right coordinates were entered correctly
     if ((r->leftUp.x < r->rightDown.x) && (r->leftUp.y > r->rightDown.y))
         return 1;
     else if ((r->leftUp.x > r->rightDown.x) && (r->leftUp.y > r->rightDown.y)) {
@@ -291,7 +291,7 @@ int computeArea(const Rect* p) {
 
 **실행 결과:** 두 실행 예시의 값을 입력한 결과는 다음과 같다.
 
-```text
+```text wide-ok
 사각형의 좌표를 입력하세요.
 좌상단 좌표: 1 3
 우하단 좌표: 7 10
@@ -299,7 +299,7 @@ y 좌표가 반대로 입력되어 서로 교환합니다.
 사각형의 면적 = 42
 ```
 
-```text
+```text wide-ok
 사각형의 좌표를 입력하세요.
 좌상단 좌표: -2 5
 우하단 좌표: 7 5
@@ -337,10 +337,10 @@ y 좌표가 반대로 입력되어 서로 교환합니다.
 ```c
 struct employee {
     char name[20];
-    char gender;            // 멤버에는 데이터 타입이 필요하다
+    char gender;            // a member needs a data type
     int salary;
     char department[20];
-};                          // 구조체 정의는 세미콜론으로 끝난다
+};                          // a structure definition ends with a semicolon
 ```
 
 **해설:** 원래 코드를 Clang으로 컴파일하면 두 오류가 난다. 첫째 오류는 타입 없이 이름만 쓴 멤버를, 둘째 오류는 구조체 정의 뒤의 세미콜론 누락을 가리킨다([10장 1.2절](Concepts_Lecture.ko.md#12-구조체-정의)).

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -61,15 +61,15 @@ Simplifying the formula gives $\frac{V}{\pi h^2} = \frac{3a^2 + h^2}{6h}$, so $S
 
 **Code:** [Lab_Q1.c](../../Coursework/Lab04_Operators/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C04Q1.c
- * @brief   Q1. 헬멧의 체적과 표면적 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Volume and Surface Area of a Helmet
+ * @author  Cheolwon Park
  * @date    2024-03-26
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ * 	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -96,14 +96,14 @@ int main()
 
 **Output:** Because of the `" \n"` at the end of the format strings, the code leaves one trailing space at the end of each line. The last line of the sample runs, `Program ended with exit code: 0`, is not program output but the exit message added by the Xcode console.
 
-```text
+```text wide-ok
 헬멧의 높이: 1
 base 반지름 입력: 1
 헬멧의 체적: 2.094395 
 헬멧의 표면적: 6.283185 
 ```
 
-```text
+```text wide-ok
 헬멧의 높이: 12
 base 반지름 입력: 20
 헬멧의 체적: 8444.601043 
@@ -114,7 +114,7 @@ base 반지름 입력: 20
 
 > **Caution:** If the height is 0, `volume / (PI * height * height)` divides 0 by 0, so the surface area is printed as `nan` (Not a Number). Floating-point division by zero does not stop the program but yields infinity or `nan`. Also, `3 * base_radius * base_radius` is computed in `int`, so it exceeds the range of `int` when a is greater than 26754.
 
-```text
+```text wide-ok
 헬멧의 높이: 0
 base 반지름 입력: 5
 헬멧의 체적: 0.000000 
@@ -142,15 +142,15 @@ base 반지름 입력: 5
 
 **Code:** [Lab_Q2.c](../../Coursework/Lab04_Operators/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C04Q2.c
- * @brief   Q2. 시간 - 초 환산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Converting Time to Seconds
+ * @author  Cheolwon Park
  * @date    2024-03-27
  *  
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ * 	    other than Visual Studio.
  */
 
 #define SEC_PER_HOUR 3600
@@ -184,7 +184,7 @@ int main()
 
 **Output:** The code prints an extra `"\n"` before the separator, so a blank line appears above it, and the separator has 33 `-` characters instead of the 35 in the sample runs. Each result line ends with one trailing space.
 
-```text
+```text wide-ok
 시간을 차례로 입력하세요(시,분,초): 2 10 47
 2시간 10분 47초는 총 7847초입니다. 
 
@@ -193,7 +193,7 @@ int main()
 3989초는 1시간 6분 29초입니다. 
 ```
 
-```text
+```text wide-ok
 시간을 차례로 입력하세요(시,분,초): 7 1 55
 7시간 1분 55초는 총 25315초입니다. 
 
@@ -204,7 +204,7 @@ int main()
 
 > **Note:** For a negative number of seconds, C99 integer division truncates toward zero and the sign of the remainder follows the dividend, so the hours, minutes, and seconds are all printed as negative numbers. The problem assumes an input of 0 or greater.
 
-```text
+```text wide-ok
 시간을 차례로 입력하세요(시,분,초): 0 0 0
 0시간 0분 0초는 총 0초입니다. 
 
@@ -230,15 +230,15 @@ int main()
 
 **Code:** [Lab_Q3.c](../../Coursework/Lab04_Operators/Lab_Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C04Q3.c
- * @brief   Q3. 4바이트 RGB값을 16진수 RGB값으로 변환
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Converting a 4-Byte RGB Value to a Hexadecimal RGB Value
+ * @author  Cheolwon Park
  * @date    2024-03-27
  *  
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ * 	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -257,7 +257,7 @@ int main()
 
 	RGB = red | green << 8 | blue << 16;
 
-	/* 위와 동일한 과정
+	/* Same process as above
 	RGB |= blue << 16;
 	RGB |= green << 8;
 	RGB |= red; */
@@ -268,14 +268,14 @@ int main()
 
 **Output:** The input prompts read `(0~255)` instead of `(0-255)`, the code prints no blank line before `RGB =`, and it prints no newline after the last line.
 
-```text
+```text wide-ok
 Red 값 입력(0~255): 255
 Green 값 입력(0~255): 0
 Blue 값 입력(0~255): 130
 RGB = 0X8200FF
 ```
 
-```text
+```text wide-ok
 Red 값 입력(0~255): 67
 Green 값 입력(0~255): 200
 Blue 값 입력(0~255): 13
@@ -284,14 +284,14 @@ RGB = 0X0DC843
 
 > **Caution:** **Boundary inputs.** The `#` flag adds no prefix when the value is 0, so if all three values are 0, the output is `00000000` rather than `0X000000`. Also, there is no range check, so a value greater than 255 spills into the bits of the neighboring channel. Entering 256 for Red sets bit 8 and gives `0X000100`, the same as Green being 1.
 
-```text
+```text wide-ok
 Red 값 입력(0~255): 0
 Green 값 입력(0~255): 0
 Blue 값 입력(0~255): 0
 RGB = 00000000
 ```
 
-```text
+```text wide-ok
 Red 값 입력(0~255): 256
 Green 값 입력(0~255): 0
 Blue 값 입력(0~255): 0
@@ -318,15 +318,15 @@ RGB = 0X000100
 
 **Code:** [Lab_Q4.c](../../Coursework/Lab04_Operators/Lab_Q4.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C04Q4.c
- * @brief   Q4. 16진수 RGB값을 4바이트 RGB값으로 변환
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Converting a Hexadecimal RGB Value to a 4-Byte RGB Value
+ * @author  Cheolwon Park
  * @date    2024-03-27
  *  
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- * 	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ * 	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -340,16 +340,16 @@ int main()
 	scanf_s(" %x", &RGB);
 
 	red = (RGB & 0xFF);
-    // AND 연산을 이용하여 0~7번째 비트(하위 8비트) 추출
-    // 예: 00000000 00000000 11111111 => 0x0000FF => 255
+    // Extract bits 0-7 (the low 8 bits) using the AND operation
+    // Example: 00000000 00000000 11111111 => 0x0000FF => 255
 
     green = ((RGB >> 8) & 0xFF);
-    // RGB를 오른쪽으로 8비트 시프트한 뒤
-    // AND 연산으로 0~7번째 비트(녹색 정보) 추출
+    // Shift RGB right by 8 bits, then
+    // extract bits 0-7 (green) with the AND operation
 
     blue = (RGB >> 16);
-    // RGB를 오른쪽으로 16비트 시프트하여
-    // 하위 8비트(파란색 정보)만 남김
+    // Shift RGB right by 16 bits so that
+    // only the low 8 bits (blue) remain
 
 	printf("\nRed    = %#04x (%d) \n", red, red);
 	printf("Green  = %#04x (%d) \n", green, green);
@@ -359,7 +359,7 @@ int main()
 
 **Output:** The output format differs from the sample runs as follows. Because the conversion specifier is a lowercase `x`, the output is lowercase, as in `0x03` instead of `0X03`, and the number of spaces after `Red`, `Green`, and `Blue`, the space before the parenthesis, and the trailing space also differ from the sample runs. In the second run, where Green is 0, the `#` flag adds no prefix to 0, so `0000` is printed instead of `0x00`. The input prompt reads `RGB 값을 입력`.
 
-```text
+```text wide-ok
 RGB 값을 입력(16진수 6자리): A73803
 
 Red    = 0x03 (3) 
@@ -367,7 +367,7 @@ Green  = 0x38 (56)
 Blue   = 0xa7 (167) 
 ```
 
-```text
+```text wide-ok
 RGB 값을 입력(16진수 6자리): FF00DD
 
 Red    = 0xdd (221) 
@@ -377,7 +377,7 @@ Blue   = 0xff (255)
 
 > **Note:** `%x` in `scanf` expects an `unsigned int *`, so declaring `RGB` as `unsigned int` would be precise. Also, because Blue is not masked, entering 7 or more digits mixes the upper bits into Blue. Entering `1A73803` makes Blue `0x1a7` (423), whereas masking with `(RGB >> 16) & 0xFF` would keep only the low 8 bits even in this case.
 
-```text
+```text wide-ok
 RGB 값을 입력(16진수 6자리): 1A73803
 
 Red    = 0x03 (3) 
@@ -723,7 +723,7 @@ z = f2
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -747,7 +747,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 질량(g)? 33
 부피(세제곱센티미터)? 400
 밀도: 0.082500
@@ -755,7 +755,7 @@ int main(void)
 
 > **Caution:** Entering 0 for the volume divides by 0. In an environment that uses IEEE 754 floating-point numbers, floating-point division by 0 does not stop the program but produces infinity, so `inf` is printed. The volume of a real object is greater than 0, so checking the input requires the `if` statement of Chapter 5.
 
-```text
+```text wide-ok
 질량(g)? 33
 부피(세제곱센티미터)? 0
 밀도: inf
@@ -781,7 +781,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -804,7 +804,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 월 사용량(kWh)? 375
 전기 요금: 71250원
 ```
@@ -829,7 +829,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -854,7 +854,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 기본 요금? 2500
 월 사용량(kWh)? 375
 전기 요금: 73750원
@@ -882,7 +882,7 @@ The same behavior can also be written by choosing the string to print with the c
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -903,19 +903,19 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 몇 월? 15
 잘못된 값입니다.
 ```
 
 The boundary values 12 and 0 are judged valid and invalid, respectively.
 
-```text
+```text wide-ok
 몇 월? 12
 올바른 값입니다.
 ```
 
-```text
+```text wide-ok
 몇 월? 0
 잘못된 값입니다.
 ```
@@ -941,7 +941,7 @@ The boundary values 12 and 0 are judged valid and invalid, respectively.
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -962,12 +962,12 @@ int main(void)
 
 **Output:** For a Fahrenheit temperature with a fractional part, 98.6, the input value is printed as it is.
 
-```text
+```text wide-ok
 화씨온도? 72
 72 F = 22.22 C
 ```
 
-```text
+```text wide-ok
 화씨온도? 98.6
 98.6 F = 37.00 C
 ```
@@ -992,7 +992,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1016,7 +1016,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 질량(kg)? 5.5
 속력(m/s)? 4
 운동에너지: 44.00 J
@@ -1042,7 +1042,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1067,7 +1067,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 용매(g)? 200
 용질(g)? 24
 농도: 10.71 %
@@ -1075,7 +1075,7 @@ int main(void)
 
 > **Caution:** Entering 0 for both the solvent and the solute divides 0.0 by 0, so in an IEEE 754 environment the result is `nan` (Not a Number). The mass of the solution is assumed to be greater than 0.
 
-```text
+```text wide-ok
 용매(g)? 0
 용질(g)? 0
 농도: nan %
@@ -1116,7 +1116,7 @@ This assignment is the same computation as the second part of Exercise 2, which 
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1143,7 +1143,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 제품의 가격? 12000
 할인율(%)? 25
 할인가: 9000원 (3000원 할인)
@@ -1151,7 +1151,7 @@ int main(void)
 
 > **Note:** When the discount amount has a fraction of a won, the `(int)` cast discards it. A 15% discount on 9999 won gives a discount amount of 1499 won, not 1499.85 won, and a discounted price of 8500 won. To round instead, add 0.5 before discarding the fractional part, as in `(int)((double)price * rate / 100 + 0.5)`.
 
-```text
+```text wide-ok
 제품의 가격? 9999
 할인율(%)? 15
 할인가: 8500원 (1499원 할인)
@@ -1180,7 +1180,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1203,7 +1203,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 16진수로 데이터를 입력하세요: 0xa1b2c3d4
 byte 0 : d4
 byte 1 : c3
@@ -1213,7 +1213,7 @@ byte 3 : a1
 
 > **Note:** If the input is shorter than 8 digits, the upper bytes are 0. Entering `1f` prints `00` for bytes 1-3. Shifts and masks operate on the bit positions of the value, so the result does not depend on the order in which the bytes are stored in memory (endianness).
 
-```text
+```text wide-ok
 16진수로 데이터를 입력하세요: 1f
 byte 0 : 1f
 byte 1 : 00
@@ -1243,7 +1243,7 @@ byte 3 : 00
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1273,7 +1273,7 @@ int main(void)
 
 **Output:** The 256 entered for red is stored as 0.
 
-```text
+```text wide-ok
 red? 256
 green? 128
 blue? 255
@@ -1282,7 +1282,7 @@ RGB 색상: FF8000
 
 Entering 300 for red and 511 for blue leaves their lower 8 bits, `0x2C` and `0xFF`, respectively.
 
-```text
+```text wide-ok
 red? 300
 green? 0
 blue? 511

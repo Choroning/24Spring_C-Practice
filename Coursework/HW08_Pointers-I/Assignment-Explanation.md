@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Write a function that swaps two of the caller's variables through pointer parameters
@@ -45,7 +45,7 @@ Referring to the sample run, write a program that swaps the data stored in two v
 
 **Sample Run:**
 
-```text
+```text wide-ok
 초기상태: a = 3, b = 5
 맞바꾸기: a = 5, b = 3
 
@@ -61,11 +61,11 @@ Program ended with exit code: 0
 
 **Code:** [Solution/Q1.c](Solution/Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C08Q1.c
- * @brief   Q1. 맞바꾸기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Swapping
+ * @author  Cheolwon Park
  * @date    2024-05-18
  */
 
@@ -91,7 +91,7 @@ int main()
 
 The output is as follows.
 
-```text
+```text wide-ok
 초기상태: a = 3, b = 5
 맞바꾸기: a = 5, b = 3
 ```
@@ -144,8 +144,8 @@ The element-wise results are -2 + 4 = 2, 4 + 3 = 7, 6 + (-5) = 1, and -32 + 6 = 
 ```c
 /**
  * @file    A10303-1_C08Q2.c
- * @brief   Q2. 배열 연산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Array Operations
+ * @author  Cheolwon Park
  * @date    2024-05-18
  */
 
@@ -203,7 +203,7 @@ Write a program that reads three integers from the user into three variables and
 
 **Sample Run:**
 
-```text
+```text wide-ok
 정수 3개 입력: 9 -2 5
 정렬 전: x = 9, y = -2, z = 5
 정렬 후: x = -2, y = 5, z = 9
@@ -231,11 +231,11 @@ For the input `9 -2 5`, `x`, `y`, and `z` start as 9, -2, and 5, and the values 
 
 **Code:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    Q3.c
- * @brief   Q3. 세 수 정렬
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Sorting Three Numbers
+ * @author  Cheolwon Park
  * @date    2026-10-19
  */
 
@@ -275,7 +275,7 @@ int main()
 
 Entering the values of the sample run gives the following output.
 
-```text
+```text wide-ok
 정수 3개 입력: 9 -2 5
 정렬 전: x = 9, y = -2, z = 5
 정렬 후: x = -2, y = 5, z = 9
@@ -283,7 +283,7 @@ Entering the values of the sample run gives the following output.
 
 Entering 1, 2, and 3 in all six orders always gives `x = 1, y = 2, z = 3`, and `5 5 1`, which contains equal values, gives `x = 1, y = 5, z = 5`. The program always makes three comparisons regardless of the input, and the input with the most swaps is the descending `3 2 1`, which swaps in all three steps.
 
-```text
+```text wide-ok
 정수 3개 입력: 3 2 1
 정렬 전: x = 3, y = 2, z = 1
 정렬 후: x = 1, y = 2, z = 3

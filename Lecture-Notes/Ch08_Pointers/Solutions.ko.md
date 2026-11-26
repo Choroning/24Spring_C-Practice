@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -41,15 +41,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab08_Pointers/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C08Q1.c
- * @brief   Q1. 2차원 평면 좌표 계산기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. 2D Plane Coordinate Calculator
+ * @author  Cheolwon Park
  * @date    2024-05-14
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -110,7 +110,7 @@ void move_point(int *x, int *y, int move)
 
 **실행 결과:** `scanf_s`는 Visual Studio(MSVC)가 제공하는 함수로, C11 표준에서 선택 사항인 부록 K(Annex K)에 속하여 gcc와 clang의 표준 라이브러리에는 선언되어 있지 않다. 이 코드의 `scanf_s`는 정수(`%d`)만 읽으므로 `scanf`와 같게 동작하며, gcc나 clang에서는 `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c -lm`처럼 매크로를 정의하여 컴파일한다. 이때 `main()`의 지역 변수 `distance`를 사용하지 않는다는 경고가 하나 나온다. 실행 예시의 값을 입력한 결과는 다음과 같으며, 입력한 값도 터미널 화면처럼 함께 보인다.
 
-```text
+```text wide-ok
 p1 좌표 입력(x1, y1 좌표값 입력): 1 1
 p2 좌표 입력(x2, y2 좌표값 입력): 3 7
 p1 = (1, 1)
@@ -121,7 +121,7 @@ p2 = (3, 7)
 p2를 x축과 y축으로 각각 -1만큼 이동 = (2, 6)
 ```
 
-```text
+```text wide-ok
 p1 좌표 입력(x1, y1 좌표값 입력): -2 4
 p2 좌표 입력(x2, y2 좌표값 입력): 3 -5
 p1 = (-2, 4)
@@ -158,15 +158,15 @@ p2를 x축과 y축으로 각각 3만큼 이동 = (6, -2)
 
 **코드:** [Lab_Q2.c](../../Coursework/Lab08_Pointers/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C08Q2.c
- * @brief   Q2. 로또 프로그램
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Lotto Program
+ * @author  Cheolwon Park
  * @date    2024-05-14
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -246,7 +246,7 @@ void selectionSort(int p[], int size)
 
 **실행 결과:** 연습 문제 1과 같이 `-Dscanf_s=scanf`를 주어 `gcc -std=c99 -Wall`로 컴파일한다. 번호는 `srand(time(NULL))`로 정한 시드에 따라 실행할 때마다 달라진다. 5세트를 생성한 실행 결과의 한 예는 다음과 같다.
 
-```text
+```text wide-ok
 몇 세트의 로또 번호를 생성할까요? 5
  4  21  28  31  35  45  
  9  15  17  24  25  45  

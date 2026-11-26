@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -373,7 +373,7 @@ void printMenu() { ... }       // empty parentheses: also valid in definitions
 
 In C, arguments are passed **by value**. A parameter is a local variable that is created when the function is called and initialized with a **copy** of the argument, and it is destroyed when the function returns. Therefore changes to the parameter do **not** affect the original variable.
 
-```c
+```c wide-ok
 void tryToChange(int x) {
     x = 100;   // modifies the LOCAL copy only
     printf("Inside function: x = %d\n", x);   // 100
@@ -387,7 +387,7 @@ int main() {
 }
 ```
 
-```text
+```text wide-ok
 Output:
 Inside function: x = 100
 After function call: num = 5
@@ -418,7 +418,7 @@ printLine();                            // no return value to capture
 
 **Calling a function from another function:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int isLeapYear(int year) {
@@ -834,7 +834,7 @@ This is why global variables are usually declared after `#include` and before al
 
 When a local variable and a global variable share the same name, the **local variable takes precedence** within its scope. This is called **shadowing**.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int x = 100;   // global
@@ -859,7 +859,7 @@ int main() {
 }
 ```
 
-```text
+```text wide-ok
 Output:
 Before demo(): x = 100
 Inside demo(): x = 50

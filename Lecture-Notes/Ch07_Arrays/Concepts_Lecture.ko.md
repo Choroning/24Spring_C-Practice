@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -105,9 +105,9 @@ for (int i = 0; i < 5; i++) {
 ```text
 scores
 ┌──────┬──────┬──────┬──────┬──────┐
-│  90  │  85  │  70  │  95  │  60  │   ← 원소 (값)
+│  90  │  85  │  70  │  95  │  60  │   ← elements (values)
 └──────┴──────┴──────┴──────┴──────┘
-   [0]    [1]    [2]    [3]    [4]      ← 인덱스 (0부터 시작)
+   [0]    [1]    [2]    [3]    [4]      ← index (starts from 0)
 ```
 
 *그림 1. 배열 scores의 원소와 인덱스*
@@ -128,22 +128,22 @@ scores
 **문법:**
 
 ```c
-자료형 배열이름[크기];
+type array_name[SIZE];
 ```
 
-- `자료형`: 각 원소의 데이터 타입이다(`int`, `double`, `char` 등).
-- `배열이름`: 배열의 식별자이다.
-- `크기`: **0보다 큰 정수 상수**여야 하며, 컴파일 시간에 결정된다.
+- `type`: 각 원소의 데이터 타입이다(`int`, `double`, `char` 등).
+- `array_name`: 배열의 식별자이다.
+- `SIZE`: **0보다 큰 정수 상수**여야 하며, 컴파일 시간에 결정된다.
 
-원소가 N개인 `자료형`의 배열을 선언하면 `자료형`의 변수 N개가 메모리에 연속으로 할당된다.
+원소가 N개인 `type`의 배열을 선언하면 `type`의 변수 N개가 메모리에 연속으로 할당된다.
 
 ```c
-int a[5];           // OK: 정수 리터럴
+int a[5];           // OK: integer literal
 #define N 10
-int b[N];           // OK: 매크로 상수 (#define)
+int b[N];           // OK: macro constant (#define)
 
 const int size = 5;
-int c[size];        // 표준 C에서 불가: const 변수는 컴파일 타임 상수가 아님
+int c[size];        // NOT OK in standard C: const variable is NOT a compile-time constant
 ```
 
 **크기(`SIZE`)에 대한 규칙:**
@@ -165,7 +165,7 @@ int c[size];        // 표준 C에서 불가: const 변수는 컴파일 타임 �
 
 `sizeof` 연산자는 피연산자가 차지하는 전체 **바이트 수**를 반환한다. 아래 주석의 수치는 `int`가 4바이트인 환경을 가정한다.
 
-```c
+```c wide-ok
 int arr[5];
 
 printf("전체 바이트: %lu\n", sizeof(arr));         // 20 (5 * 4)
@@ -210,11 +210,11 @@ int main(void) {
 #define SIZE 5
 int arr[SIZE];
 
-// OK: SIZE는 매크로 상수, 전처리 단계에서 치환됨
+// OK: SIZE is a macro constant, replaced at preprocessing
 int len1 = sizeof(arr) / sizeof(arr[0]);  // 5
 
-// 런타임에서도 OK:
-int len2 = sizeof(arr) / sizeof(arr[0]);  // 5 (sizeof는 컴파일 타임에 평가)
+// Also OK at runtime:
+int len2 = sizeof(arr) / sizeof(arr[0]);  // 5 (sizeof is evaluated at compile time)
 ```
 
 두 식은 같은 값을 계산한다. 매크로 상수 대신 `sizeof`로 구한 원소 개수를 변수(`len1`, `len2`)에 저장해 두고 반복문의 조건 등에 쓸 수도 있으며, `sizeof`는 VLA가 아니면 컴파일 시간에 계산되므로 실행 비용이 없다.
@@ -246,11 +246,11 @@ a = 0x16b256af0, sizeof(a) = 20
 이웃한 원소의 주소는 `int`의 크기인 4씩 커진다. 16진수로 `...af0`, `...af4`, `...af8`, `...afc` 다음은 `...b00`이며, 0xafc + 4 = 0xb00이다. 이를 메모리 그림으로 나타내면 다음과 같다.
 
 ```text
-            0x...af0  0x...af4  0x...af8  0x...afc  0x...b00   ← 주소
+address     0x...af0  0x...af4  0x...af8  0x...afc  0x...b00
           ┌─────────┬─────────┬─────────┬─────────┬─────────┐
 a         │   10    │   20    │   30    │   40    │   50    │
           └─────────┴─────────┴─────────┴─────────┴─────────┘
-              [0]       [1]       [2]       [3]       [4]      ← 인덱스
+index         [0]       [1]       [2]       [3]       [4]
 ```
 
 *그림 2. 배열 a의 원소와 주소*
@@ -268,21 +268,21 @@ a         │   10    │   20    │   30    │   40    │   50    │
 선언 시 중괄호 안에 값을 나열하여 초기화한다. 나열한 초기값은 0번째 원소부터 차례로 대입된다:
 
 ```c
-int a[5] = {1, 2, 3, 4, 5};   // 5개 원소 모두 초기화
+int a[5] = {1, 2, 3, 4, 5};   // all 5 elements initialized
 ```
 
 **부분 초기화**에서는 초기값이 없는 나머지 원소가 자동으로 **0**으로 설정된다:
 
 ```c
 int b[5] = {1, 2, 3};          // b = {1, 2, 3, 0, 0}
-int c[5] = {0};                // c = {0, 0, 0, 0, 0}  (모두 0)
+int c[5] = {0};                // c = {0, 0, 0, 0, 0}  (all zeros)
 ```
 
 **오류 사례:**
 
 ```c
-int d[3] = {1, 2, 3, 4};       // 컴파일 오류: 초기화 값이 너무 많음
-int e[3] = {};                  // 컴파일 오류: 빈 초기화 리스트
+int d[3] = {1, 2, 3, 4};       // Compile error: too many initializers
+int e[3] = {};                  // Compile error: empty initializer list
 ```
 
 두 경우 모두 C17까지의 표준을 어기는 코드이지만 컴파일러의 반응은 다르다. 초기값이 너무 많으면 gcc와 clang은 `excess elements in array initializer` 경고를 내고 남는 값을 버린다. 빈 중괄호 `{}`는 C17까지 문법에 맞지 않지만 gcc와 clang은 확장으로 받아들이고 `-pedantic`에서만 경고하며, C23부터는 모든 원소를 0으로 초기화하는 표준 문법이 되었다.
@@ -302,7 +302,7 @@ int e[3] = {};                  // 컴파일 오류: 빈 초기화 리스트
 초기화 리스트를 제공하면 **크기를 생략**할 수 있으며, 컴파일러가 값의 개수로 크기를 추론한다:
 
 ```c
-int z[] = {-1, 0, 1};   // 크기 = 3 (3개 값에서 추론)
+int z[] = {-1, 0, 1};   // size is 3 (inferred from 3 values)
 ```
 
 `sizeof`로 크기를 계산할 수 있다:
@@ -319,7 +319,7 @@ int len = sizeof(z) / sizeof(z[0]);  // 3
 
 ```c
 int arr[5];
-printf("%d\n", arr[0]);  // 쓰레기 값! 정의되지 않은 동작
+printf("%d\n", arr[0]);  // garbage! Undefined behavior
 ```
 
 > **주의:** 배열을 읽기 전에 반드시 초기화하라. 초기화되지 않은 지역 배열에는 예측 불가능한 값이 들어 있다. 특정 값이 없을 때는 `= {0}`으로 0 초기화하라.
@@ -339,14 +339,14 @@ printf("%d\n", arr[0]);  // 쓰레기 값! 정의되지 않은 동작
 ```c
 int arr[5] = {10, 20, 30, 40, 50};
 
-// 읽기
+// Read
 int x = arr[0];        // x = 10
 int y = arr[2 + 1];    // y = arr[3] = 40
 
-// 쓰기
+// Write
 arr[4] = 99;           // arr = {10, 20, 30, 40, 99}
 
-// 변수를 인덱스로 사용
+// Index with variable
 int i = 2;
 arr[i] = 77;           // arr = {10, 20, 77, 40, 99}
 arr[i - 1] = 88;       // arr = {10, 88, 77, 40, 99}
@@ -360,7 +360,7 @@ arr[i - 1] = 88;       // arr = {10, 88, 77, 40, 99}
 
 **입력:**
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE];
 
@@ -372,7 +372,7 @@ for (int i = 0; i < SIZE; i++) {
 
 **출력:**
 
-```c
+```c wide-ok
 printf("배열 내용:\n");
 for (int i = 0; i < SIZE; i++) {
     printf("%d ", arr[i]);
@@ -382,7 +382,7 @@ printf("\n");
 
 **합계:**
 
-```c
+```c wide-ok
 int sum = 0;
 for (int i = 0; i < SIZE; i++) {
     sum += arr[i];
@@ -397,7 +397,7 @@ printf("합계: %d\n", sum);
 ```c
 #define SIZE 10
 
-int fib[SIZE] = { 0, 1 };       // 나머지 원소는 0으로 초기화
+int fib[SIZE] = { 0, 1 };       // remaining elements are initialized to 0
 int i;
 
 for (i = 2; i < SIZE; i++)
@@ -421,9 +421,9 @@ C는 배열 접근 시 범위 검사를 **하지 않는다**. 유효 범위(`0` 
 #define SIZE 5
 int arr[SIZE] = {1, 2, 3, 4, 5};
 
-int val = arr[5];    // 범위 초과: 배열 뒤의 메모리에서 쓰레기 값을 읽음
-arr[5] = 99;         // 범위 초과: 배열 뒤의 메모리에 쓰기 → 데이터 손상
-arr[-1] = 0;         // 범위 초과: 배열 앞의 메모리에 쓰기 → 데이터 손상
+int val = arr[5];    // OUT OF BOUNDS: reads garbage from memory after the array
+arr[5] = 99;         // OUT OF BOUNDS: writes to memory after the array → corrupts data
+arr[-1] = 0;         // OUT OF BOUNDS: writes before the array → corrupts data
 ```
 
 | 동작 | 결과 |
@@ -450,19 +450,19 @@ warning: array index 5 is past the end of the array (that has type 'int[5]') [-W
 int x[5] = {10, 20, 30, 40, 50};
 int y[5] = {0};
 
-// y = x;              // 컴파일 오류: 배열 전체를 대입할 수 없음
+// y = x;              // compile error: cannot assign a whole array
 for (int i = 0; i < 5; i++) {
-    y[i] = x[i];       // 원소끼리 하나씩 복사
+    y[i] = x[i];       // copy element by element
 }
 ```
 
 `x == y`는 컴파일되지만 두 배열의 내용이 아니라 시작 주소를 비교한다. 서로 다른 두 배열의 시작 주소는 같을 수 없으므로 이 식은 내용과 관계없이 언제나 거짓이며, gcc와 clang은 `-Wall`에서 이를 경고한다. 내용을 비교하려면 원소끼리 비교해야 한다.
 
-```c
+```c wide-ok
 int i;
 for (i = 0; i < 5; i++) {
     if (x[i] != y[i]) {
-        break;         // 다른 원소가 있으면 더 비교할 필요가 없음
+        break;         // no need to compare further once a difference is found
     }
 }
 if (i == 5) {
@@ -484,11 +484,11 @@ if (i == 5) {
 int a[SIZE], b[SIZE] = { 1, 2, 3 };
 int sum, i;
 
-a = { 4, 5, 6 };                // 선언 뒤에 초기화 리스트를 대입
-printf("%d\n", b);              // 배열 이름을 %d로 출력
+a = { 4, 5, 6 };                // assigns an initializer list after declaration
+printf("%d\n", b);              // prints an array name with %d
 for (i = 0; i < SIZE; i++)
-    sum += b[i];                // sum을 초기화하지 않음
-if (a == b)                     // 배열을 ==로 비교
+    sum += b[i];                // sum is not initialized
+if (a == b)                     // compares arrays with ==
     printf("same\n");
 ```
 
@@ -525,10 +525,10 @@ warning: array comparison always evaluates to false [-Wtautological-compare]
 ```text
 matrix[3][4]
 
-        열 0    열 1    열 2    열 3
-행 0 [  1   |   2   |   3   |   4  ]
-행 1 [  5   |   6   |   7   |   8  ]
-행 2 [  9   |  10   |  11   |  12  ]
+        col 0   col 1   col 2   col 3
+row 0 [  1   |   2   |   3   |   4  ]
+row 1 [  5   |   6   |   7   |   8  ]
+row 2 [  9   |  10   |  11   |  12  ]
 ```
 
 *그림 3. 3행 4열 2차원 배열 matrix*
@@ -536,8 +536,8 @@ matrix[3][4]
 메모리에서 2차원 배열은 **행 우선 순서(row-major order)** 로 저장된다. 즉 행 0의 모든 원소가 먼저 놓이고, 그다음에 행 1이 놓이는 순서이다.
 
 ```text
-메모리: [1][2][3][4][5][6][7][8][9][10][11][12]
-         ← 행 0 →   ← 행 1 →   ←   행 2    →
+Memory: [1][2][3][4][5][6][7][8][9][10][11][12]
+         ← row 0 →  ← row 1 →  ←  row 2   →
 ```
 
 *그림 4. 2차원 배열의 행 우선 메모리 배치*
@@ -582,7 +582,7 @@ for (int i = 0; i < ROWS; i++) {
 
 **`sizeof`와 2차원 배열 (`int`가 4바이트인 환경 기준):**
 
-```c
+```c wide-ok
 int m[3][4];
 printf("전체 바이트  : %lu\n", sizeof(m));                    // 48 (3*4*4)
 printf("한 행 바이트 : %lu\n", sizeof(m[0]));                  // 16 (4*4)
@@ -605,7 +605,7 @@ int m[2][3] = {
 **일렬 초기화 (내부 중괄호 없이):**
 
 ```c
-int m[2][3] = {1, 2, 3, 4, 5, 6};   // 위와 동일
+int m[2][3] = {1, 2, 3, 4, 5, 6};   // same as above
 ```
 
 일렬로 나열한 값은 원소가 메모리에 할당된 순서, 즉 `m[0][0]`부터 차례로 대입된다. gcc는 `-Wall`에서 내부 중괄호가 없다는 경고(`missing braces around initializer`)를 낸다.
@@ -614,15 +614,15 @@ int m[2][3] = {1, 2, 3, 4, 5, 6};   // 위와 동일
 
 ```c
 int m[2][3] = {
-    {1, 2},       // 행 0 = {1, 2, 0}
-    {4}           // 행 1 = {4, 0, 0}
+    {1, 2},       // row 0 = {1, 2, 0}
+    {4}           // row 1 = {4, 0, 0}
 };
 ```
 
 **모두 0으로 초기화:**
 
 ```c
-int m[3][4] = {0};    // 12개 원소 모두 0
+int m[3][4] = {0};    // all 12 elements are 0
 ```
 
 **행 크기 생략:** 초기화 리스트가 있으면 행 크기는 생략할 수 있지만, 열 크기는 생략할 수 없다. 열 크기가 없으면 컴파일러가 한 행의 크기를 알 수 없기 때문이다.
@@ -630,7 +630,7 @@ int m[3][4] = {0};    // 12개 원소 모두 0
 ```c
 int w[][3] = {{1, 2}, {3}, {4, 5}};   // int w[3][3] = {{1,2,0}, {3,0,0}, {4,5,0}}
 int z[][2] = {1, 2, 3, 4, 5, 6, 7};   // int z[4][2] = {{1,2}, {3,4}, {5,6}, {7,0}}
-// int v[2][] = {{1, 2}, {3, 4}};    // 컴파일 오류: 열 크기는 생략할 수 없음
+// int v[2][] = {{1, 2}, {3, 4}};    // compile error: the column size cannot be omitted
 ```
 
 내부 중괄호 `{{...}, {...}}`를 사용하면 행 구조가 명확해지므로 이 방식이 권장되는 스타일이다.
@@ -648,10 +648,10 @@ int col_sum[COLS] = { 0 };
 int i, j, row_sum;
 
 for (i = 0; i < ROWS; i++) {
-    row_sum = 0;                          // 행마다 0에서 다시 시작
+    row_sum = 0;                          // restart from 0 for each row
     for (j = 0; j < COLS; j++) {
-        row_sum += score[i][j];           // i행의 합
-        col_sum[j] += score[i][j];        // j열의 합을 누적
+        row_sum += score[i][j];           // sum of row i
+        col_sum[j] += score[i][j];        // accumulate the sum of column j
     }
     printf("student %d: total = %d, average = %.2f\n", i, row_sum, row_sum / (double)COLS);
 }
@@ -696,12 +696,12 @@ m[1][2] = 6, address 0x16f65eb04
 
 ```text
           ┌──────────── m[0] ─────────────┐ ┌──────────── m[1] ─────────────┐
-              af0        af4        af8        afc        b00        b04      ← 주소의 끝
+address end   af0        af4        af8        afc        b00        b04
           ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
-          │    1     │    2     │    3     │    4     │    5     │    6     │   ← 값
+value     │    1     │    2     │    3     │    4     │    5     │    6     │
           └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
-             [0][0]     [0][1]     [0][2]     [1][0]     [1][1]     [1][2]     ← 위치
-               0          1          2          3          4          5        ← 순번
+position     [0][0]     [0][1]     [0][2]     [1][0]     [1][1]     [1][2]
+order          0          1          2          3          4          5
 ```
 
 *그림 5. 2차원 배열 m의 원소와 주소*
@@ -720,7 +720,7 @@ m[1][2] = 6, address 0x16f65eb04
 
 배열을 순회하면서 현재까지의 최댓값과 최솟값을 추적한다.
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE] = {34, 12, 78, 56, 23};
 
@@ -746,7 +746,7 @@ printf("최솟값: %d\n", min);  // 12
 
 **평균:**
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE] = {90, 85, 70, 95, 60};
 
@@ -764,10 +764,10 @@ $$\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}$$
 
 제곱근은 `<math.h>`의 `sqrt`로 계산한다:
 
-```c
+```c wide-ok
 #include <math.h>
 
-// ... (avg는 위에서 계산한 값)
+// ... (avg computed as above)
 
 double variance = 0.0;
 for (int i = 0; i < SIZE; i++) {
@@ -799,12 +799,12 @@ for (int i = 0; i < SIZE / 2; i++) {
 ```
 
 ```text
-이전: [1] [2] [3] [4] [5]
-       ↕               ↕       i=0과 i=4 교환
-이후: [5] [2] [3] [4] [1]
-           ↕       ↕           i=1과 i=3 교환
-이후: [5] [4] [3] [2] [1]
-               ↑                i=2: 중앙 원소는 그대로
+Before: [1] [2] [3] [4] [5]
+         ↕               ↕       swap i=0 and i=4
+After:  [5] [2] [3] [4] [1]
+             ↕       ↕           swap i=1 and i=3
+After:  [5] [4] [3] [2] [1]
+                 ↑                i=2: middle element stays
 ```
 
 *그림 6. 배열 뒤집기의 교환 과정*
@@ -819,7 +819,7 @@ for (int i = 0; i < SIZE / 2; i++) {
 
 예를 들어 앞 11자리가 0 3 6 0 0 0 2 9 1 4 5이면 홀수 위치의 합은 0 + 6 + 0 + 2 + 1 + 5 = 14이고 3을 곱하면 42, 짝수 위치의 합은 3 + 0 + 0 + 9 + 4 = 16이므로 총합은 58이다. 검증 숫자는 (10 - 8) % 10 = 2이다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define SIZE 12
 
@@ -834,9 +834,9 @@ int main(void) {
     int sum = 0;
     for (int i = 0; i < SIZE - 1; i++) {
         if (i % 2 == 0) {
-            sum += upc[i] * 3;   // 홀수 위치 (1번째, 3번째, ...)
+            sum += upc[i] * 3;   // odd positions (1st, 3rd, ...)
         } else {
-            sum += upc[i];       // 짝수 위치 (2번째, 4번째, ...)
+            sum += upc[i];       // even positions (2nd, 4th, ...)
         }
     }
     upc[SIZE - 1] = (10 - sum % 10) % 10;
@@ -853,15 +853,15 @@ int main(void) {
 
 **탐색(search)** 은 주어진 데이터 집합에서 조건을 만족하는 데이터를 찾는 것이고, **정렬(sort)** 은 데이터 항목을 지정된 순서로 나열하는 것이다. 배열에서 **탐색 키(key)** 와 같은 값을 가진 원소를 찾는 가장 단순한 방법은 **순차 탐색(sequential search)** 으로, 0번째 원소부터 차례로 키와 비교한다.
 
-```c
+```c wide-ok
 #define SIZE 8
 int data[SIZE] = {23, 45, 12, 67, 34, 89, 21, 56};
 int key = 34;
-int index = -1;          // 찾지 못하면 -1
+int index = -1;          // -1 if not found
 
 for (int i = 0; i < SIZE; i++) {
     if (data[i] == key) {
-        index = i;       // 찾은 위치를 기록하고 탐색을 끝냄
+        index = i;       // record the position and stop searching
         break;
     }
 }
@@ -921,7 +921,7 @@ for (int i = 0; i < SIZE - 1; i++) {
             min_idx = j;
         }
     }
-    // arr[i]와 arr[min_idx] 교환
+    // Swap arr[i] and arr[min_idx]
     int temp = arr[i];
     arr[i] = arr[min_idx];
     arr[min_idx] = temp;
@@ -931,19 +931,19 @@ for (int i = 0; i < SIZE - 1; i++) {
 **단계별 추적:**
 
 ```text
-초기: [64] [25] [12] [22] [11]
+Initial: [64] [25] [12] [22] [11]
 
-패스 0: min_idx=4 (11), arr[0]↔arr[4] 교환
-        [11] [25] [12] [22] [64]
+Pass 0: min_idx=4 (11), swap arr[0]↔arr[4]
+         [11] [25] [12] [22] [64]
 
-패스 1: min_idx=2 (12), arr[1]↔arr[2] 교환
-        [11] [12] [25] [22] [64]
+Pass 1: min_idx=2 (12), swap arr[1]↔arr[2]
+         [11] [12] [25] [22] [64]
 
-패스 2: min_idx=3 (22), arr[2]↔arr[3] 교환
-        [11] [12] [22] [25] [64]
+Pass 2: min_idx=3 (22), swap arr[2]↔arr[3]
+         [11] [12] [22] [25] [64]
 
-패스 3: min_idx=3 (25), 실질적 교환 없음
-        [11] [12] [22] [25] [64]
+Pass 3: min_idx=3 (25), no effective swap
+         [11] [12] [22] [25] [64]
 ```
 
 *그림 7. 선택 정렬의 패스별 배열 상태*
@@ -960,16 +960,16 @@ for (int i = 0; i < SIZE - 1; i++) {
 
 **배열 인덱스**를 범주로 사용하여 각 범주에 해당하는 값의 개수를 센다.
 
-```c
+```c wide-ok
 #define DATA_SIZE 20
-#define RANGE 10      // 0..9의 값을 세기
+#define RANGE 10      // count values 0..9
 
 int data[DATA_SIZE] = {3, 7, 2, 3, 8, 5, 1, 3, 7, 2,
                        9, 0, 5, 3, 7, 1, 8, 2, 6, 4};
 int freq[RANGE] = {0};
 
 for (int i = 0; i < DATA_SIZE; i++) {
-    freq[data[i]]++;    // data[i]가 범주 인덱스
+    freq[data[i]]++;    // data[i] is the category index
 }
 
 printf("값     빈도수\n");
@@ -1004,11 +1004,11 @@ for (int i = 0; i < SIZE; i++) {
 #include <time.h>
 
 int main(void) {
-    srand((unsigned)time(NULL));   // 현재 시간으로 시드 설정
+    srand((unsigned)time(NULL));   // seed with current time
 
-    // [150, 199] 범위의 난수 10개 생성
+    // Generate 10 random numbers in range [150, 199]
     for (int i = 0; i < 10; i++) {
-        int r = rand() % 50 + 150;  // rand() % 범위 + 최솟값
+        int r = rand() % 50 + 150;  // rand() % range + min
         printf("%d ", r);
     }
     printf("\n");
@@ -1124,9 +1124,9 @@ int insert_at(int arr[], int n, int pos, int value)
 {
     int i;
 
-    if (n >= CAP || pos < 0 || pos > n)     // 꽉 찼거나 잘못된 위치
+    if (n >= CAP || pos < 0 || pos > n)     // full, or invalid position
         return n;
-    for (i = n; i > pos; i--)               // 뒤에서부터 한 칸씩 뒤로
+    for (i = n; i > pos; i--)               // move back one slot, from the end
         arr[i] = arr[i - 1];
     arr[pos] = value;
     return n + 1;
@@ -1138,7 +1138,7 @@ int delete_at(int arr[], int n, int pos)
 
     if (pos < 0 || pos >= n)
         return n;
-    for (i = pos; i < n - 1; i++)           // 앞에서부터 한 칸씩 앞으로
+    for (i = pos; i < n - 1; i++)           // move forward one slot, from the front
         arr[i] = arr[i + 1];
     return n - 1;
 }
@@ -1167,7 +1167,7 @@ int main(void)
 `print_array`는 원소 n개와 `(n = ...)`을 출력하는 함수이다. 삽입 과정을 따라가면 다음과 같다. `n`이 4이고 `pos`가 1이므로 반복은 `i` = 4, 3, 2에서 실행된다.
 
 ```text
-                 [10][20][30][40][ 0]   ← 처음
+start            [10][20][30][40][ 0]
 i = 4: a[4]=a[3] [10][20][30][40][40]
 i = 3: a[3]=a[2] [10][20][30][30][40]
 i = 2: a[2]=a[1] [10][20][20][30][40]

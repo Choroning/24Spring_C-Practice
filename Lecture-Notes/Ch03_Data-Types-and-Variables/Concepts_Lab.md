@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
@@ -228,7 +228,7 @@ chA: B, 66
 
 `%d`, `%o`, and `%x` interpret the input as decimal, octal, and hexadecimal, respectively, and store it in an integer variable.
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -247,7 +247,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 Enter the 3 data(10/8/16 진수): 11 20 a
 vA: 11, 13, b 
 vB: 16, 20, 0x10 

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -165,7 +165,7 @@ int c[size];        // NOT OK in standard C: const variable is NOT a compile-tim
 
 The `sizeof` operator returns the total number of **bytes** occupied by its operand. The values in the comments below assume an environment where `int` is 4 bytes.
 
-```c
+```c wide-ok
 int arr[5];
 
 printf("Total bytes : %lu\n", sizeof(arr));        // 20 (5 * 4)
@@ -360,7 +360,7 @@ The `for` loop is the standard pattern for processing arrays:
 
 **Input:**
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE];
 
@@ -372,7 +372,7 @@ for (int i = 0; i < SIZE; i++) {
 
 **Output:**
 
-```c
+```c wide-ok
 printf("Array contents:\n");
 for (int i = 0; i < SIZE; i++) {
     printf("%d ", arr[i]);
@@ -382,7 +382,7 @@ printf("\n");
 
 **Sum:**
 
-```c
+```c wide-ok
 int sum = 0;
 for (int i = 0; i < SIZE; i++) {
     sum += arr[i];
@@ -458,7 +458,7 @@ for (int i = 0; i < 5; i++) {
 
 `x == y` compiles, but it compares the starting addresses of the two arrays, not their contents. The starting addresses of two different arrays can never be equal, so this expression is always false regardless of the contents, and gcc and clang warn about it with `-Wall`. To compare the contents, compare the elements one by one.
 
-```c
+```c wide-ok
 int i;
 for (i = 0; i < 5; i++) {
     if (x[i] != y[i]) {
@@ -582,7 +582,7 @@ Increasing the row index in the outer loop and the column index in the inner loo
 
 **`sizeof` with 2D arrays (assuming a 4-byte `int`):**
 
-```c
+```c wide-ok
 int m[3][4];
 printf("Total bytes: %lu\n", sizeof(m));                   // 48 (3*4*4)
 printf("One row bytes: %lu\n", sizeof(m[0]));               // 16 (4*4)
@@ -720,7 +720,7 @@ In a two-dimensional array with C columns, `m[i][j]` is element number i × C + 
 
 Scan through the array, keeping track of the current maximum and minimum.
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE] = {34, 12, 78, 56, 23};
 
@@ -746,7 +746,7 @@ printf("Min: %d\n", min);  // 12
 
 **Average:**
 
-```c
+```c wide-ok
 #define SIZE 5
 int arr[SIZE] = {90, 85, 70, 95, 60};
 
@@ -764,7 +764,7 @@ $$\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}$$
 
 The square root is computed with `sqrt` from `<math.h>`:
 
-```c
+```c wide-ok
 #include <math.h>
 
 // ... (avg computed as above)
@@ -819,7 +819,7 @@ A **UPC barcode** has 12 digits. The 12th digit (check digit) is computed from t
 
 For example, if the first 11 digits are 0 3 6 0 0 0 2 9 1 4 5, the sum at odd positions is 0 + 6 + 0 + 2 + 1 + 5 = 14, which times 3 is 42, and the sum at even positions is 3 + 0 + 0 + 9 + 4 = 16, so the total is 58. The check digit is (10 - 8) % 10 = 2.
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define SIZE 12
 
@@ -853,7 +853,7 @@ Using an array and a loop replaces 11 separate variables and makes the code scal
 
 **Searching** is finding data that satisfies a condition in a given data set, and **sorting** is arranging data items in a specified order. The simplest way to find an element whose value equals the **search key** in an array is **sequential search**, which compares the elements with the key in turn, starting from element 0.
 
-```c
+```c wide-ok
 #define SIZE 8
 int data[SIZE] = {23, 45, 12, 67, 34, 89, 21, 56};
 int key = 34;
@@ -960,7 +960,7 @@ The number of comparisons can be counted directly. With n elements, the first pa
 
 Use the **array index** as a category to count how many values fall into each category.
 
-```c
+```c wide-ok
 #define DATA_SIZE 20
 #define RANGE 10      // count values 0..9
 

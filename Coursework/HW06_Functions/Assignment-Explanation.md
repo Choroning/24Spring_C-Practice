@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Write a function that computes the sum from 0 to the input, including a negative input
@@ -111,8 +111,8 @@ The same value can be computed without a loop using the formula for the sum of a
 ```c
 /**
  * @file    A10303-1_C06Q1.c
- * @brief   Q1. 합 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Computing a Sum
+ * @author  Cheolwon Park
  * @date    2024-05-01
  */
 
@@ -211,8 +211,8 @@ Each input overwrites the same variable `val`, so the 10 values need not all be 
 ```c
 /**
  * @file    A10303-1_C06Q2.c
- * @brief   Q2. 조건에 따라 합 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Conditional Sum
+ * @author  Cheolwon Park
  * @date    2024-05-01
  */
 

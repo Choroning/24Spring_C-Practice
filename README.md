@@ -65,7 +65,7 @@ Two general studies courses on the fundamentals of computer programming in C. Co
 ```plaintext
 24Spring_C-Practice
 ├── Lecture-Notes               Lecture notes, lab notes, exercises, solutions, and example code by chapter
-├── Coursework                  Computer Language and Training Ⅰ assignments and C lab code by chapter
+├── Coursework                  Computer Language and Training I assignments and C lab code by chapter
 ├── images                      Figures in the exercises and assignments
 ├── Course-Information.ko.md    Course operations
 ├── Course-Information.md

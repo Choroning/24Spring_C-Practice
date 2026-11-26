@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 음수를 포함한 입력에 대해 0부터 입력값까지의 합을 구하는 함수를 작성할 수 있다
@@ -43,11 +43,11 @@
 ```text
 Coursework/HW06_Functions/
 ├── Original/
-│   ├── Assignment.ko.md    # 과제 안내문 (한국어)
-│   └── Assignment.md       # 과제 안내문 (영어)
+│   ├── Assignment.ko.md    # assignment handout (Korean)
+│   └── Assignment.md       # assignment handout (English)
 └── Solution/
-    ├── Q1.c    # 문제 1: getSum()으로 0부터 입력값까지의 합 구하기
-    └── Q2.c    # 문제 2: getSign()으로 양수만 골라 합 구하기
+    ├── Q1.c    # Problem 1: sum from 0 to the input with getSum()
+    └── Q2.c    # Problem 2: sum of only the positive values with getSign()
 ```
 
 *그림 1. HW6 과제의 디렉토리 구성*
@@ -111,8 +111,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C06Q1.c
- * @brief   Q1. 합 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Computing a Sum
+ * @author  Cheolwon Park
  * @date    2024-05-01
  */
 
@@ -211,8 +211,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C06Q2.c
- * @brief   Q2. 조건에 따라 합 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Conditional Sum
+ * @author  Cheolwon Park
  * @date    2024-05-01
  */
 

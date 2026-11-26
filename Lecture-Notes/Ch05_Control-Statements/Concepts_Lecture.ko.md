@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -119,8 +119,8 @@ a - 3 is zero
 **문법:**
 
 ```c
-if (조건) {
-    // 조건이 참(0이 아닌 값)일 때 실행
+if (condition) {
+    // executed when condition is true (non-zero)
 }
 ```
 
@@ -135,7 +135,7 @@ flowchart TD
 
 *그림 2. if문의 실행 흐름*
 
-```c
+```c wide-ok
 int score = 85;
 
 if (score >= 60) {
@@ -151,7 +151,7 @@ C에서 0이 아닌 모든 값은 **참(true)** 이고, 0은 **거짓(false)** �
 
 **복합문(compound statement, 블록)** 은 중괄호 `{}`로 여러 문장을 묶는 것이다.
 
-```c
+```c wide-ok
 if (score >= 90) {
     printf("등급: A\n");
     printf("우수합니다!\n");
@@ -160,10 +160,10 @@ if (score >= 90) {
 
 중괄호가 없으면 **첫 번째 문장만** `if`에 속한다.
 
-```c
+```c wide-ok
 if (score >= 90)
-    printf("등급: A\n");      // if에 속함
-    printf("우수합니다!\n");    // 항상 실행됨! (if와 무관)
+    printf("등급: A\n");      // belongs to if
+    printf("우수합니다!\n");    // ALWAYS executes (not part of if!)
 ```
 
 > **주의:** 단일 문장이라도 항상 중괄호 `{}`를 사용하는 것이 좋다. 나중에 코드를 추가할 때 버그를 방지하고, 의도를 명확히 한다.
@@ -171,12 +171,12 @@ if (score >= 90)
 중괄호의 위치는 두 가지 방식이 널리 쓰인다. 여는 중괄호 `{`를 제어문의 `)` 바로 뒤에 두면 소스 코드의 줄 수가 줄고, `{`를 다음 줄에 따로 두면 여는 중괄호와 닫는 중괄호의 열이 맞아 블록의 범위가 눈에 잘 띈다. 어느 방식이든 블록 안의 문장은 한 단계 들여 쓰고, 한 프로그램 안에서는 한 가지 방식을 일관되게 쓴다.
 
 ```c
-if (num < 0) {      // 여는 중괄호를 같은 줄에 둔다
+if (num < 0) {      // opening brace on the same line
     num = -num;
 }
 
 if (num < 0)
-{                   // 여는 중괄호를 다음 줄에 둔다
+{                   // opening brace on the next line
     num = -num;
 }
 ```
@@ -190,10 +190,10 @@ if (num < 0)
 **문법:**
 
 ```c
-if (조건) {
-    // 참일 때 실행
+if (condition) {
+    // executed when true
 } else {
-    // 거짓일 때 실행
+    // executed when false
 }
 ```
 
@@ -209,7 +209,7 @@ flowchart TD
 
 *그림 3. if-else문의 실행 흐름*
 
-```c
+```c wide-ok
 int num = 7;
 
 if (num % 2 == 0) {
@@ -221,15 +221,15 @@ if (num % 2 == 0) {
 
 **`if-else` vs 별개의 `if` 두 개:**
 
-```c
-// if-else: 정확히 하나의 분기만 실행 (상호 배타적)
+```c wide-ok
+// if-else: exactly one branch executes (mutually exclusive)
 if (x > 0) {
     printf("양수\n");
 } else {
     printf("양수 아님\n");
 }
 
-// 별개의 if 두 개: 각 조건이 독립적으로 검사됨
+// Two separate ifs: both conditions are checked independently
 if (x > 0) {
     printf("양수\n");
 }
@@ -241,13 +241,13 @@ if (x % 2 == 0) {
 값 하나를 고르는 `if-else`는 조건 연산자로 바꿔 쓸 수 있다. 다음 두 코드는 정수 `num`의 절댓값을 `abs_val`에 저장하는 같은 동작을 한다. `num`이 -12이면 두 코드 모두 `abs_val`에 12를 저장한다.
 
 ```c
-// if-else로 작성
+// written with if-else
 if (num < 0)
     abs_val = -num;
 else
     abs_val = num;
 
-// 조건 연산자로 작성
+// written with the conditional operator
 abs_val = (num < 0) ? -num : num;
 ```
 
@@ -260,20 +260,20 @@ abs_val = (num < 0) ? -num : num;
 **문법:**
 
 ```c
-if (조건1) {
-    // 블록 1
-} else if (조건2) {
-    // 블록 2
-} else if (조건3) {
-    // 블록 3
+if (condition1) {
+    // block 1
+} else if (condition2) {
+    // block 2
+} else if (condition3) {
+    // block 3
 } else {
-    // 기본 블록 (선택 사항)
+    // default block (optional)
 }
 ```
 
 마지막 `else`는 **선택 사항**이지만, 예외 상황을 처리하기 위해 권장된다.
 
-```c
+```c wide-ok
 int score;
 printf("점수 입력: ");
 scanf("%d", &score);
@@ -297,7 +297,7 @@ if (score >= 90) {
 
 `if` 또는 `else` 블록 안에 또 다른 `if`문을 넣는 것이다.
 
-```c
+```c wide-ok
 int x, y;
 scanf("%d %d", &x, &y);
 
@@ -354,7 +354,7 @@ if (a > 0) {
 `else` 블록 안에 다른 문장 없이 `if`문 하나만 있으면 그 `else`와 `if`를 붙여 `else if`로 쓸 수 있다. 즉 `else if`는 별도의 키워드가 아니라 `else` 다음에 `if`문이 온 형태이다. 다음 두 코드는 8세 미만은 무료, 65세 이상은 5000원, 그 밖에는 10000원인 입장료를 같은 방식으로 계산한다.
 
 ```c
-// else 블록 안의 중첩 if
+// nested if inside the else block
 if (age < 8)
     fee = 0;
 else {
@@ -364,7 +364,7 @@ else {
         fee = 10000;
 }
 
-// 같은 판단을 else if로 작성
+// the same decision written with else if
 if (age < 8)
     fee = 0;
 else if (age >= 65)
@@ -377,17 +377,17 @@ else
 
 조건이 **상호 배타적이지 않을 때**는 별개의 `if`문을 사용한다. 각 조건이 독립적으로 평가된다.
 
-```c
+```c wide-ok
 int temp = 35;
 
 if (temp > 30) {
-    printf("더움\n");       // 출력됨
+    printf("더움\n");       // prints
 }
 if (temp > 20) {
-    printf("따뜻함\n");     // 역시 출력됨
+    printf("따뜻함\n");     // also prints
 }
 if (temp > 10) {
-    printf("온화함\n");     // 역시 출력됨
+    printf("온화함\n");     // also prints
 }
 ```
 
@@ -406,7 +406,7 @@ else if (age >= 65)
 else
     fee = 10000;
 
-if (resident == 1 && fee > 0)   // 나이 판단과 독립된 조건
+if (resident == 1 && fee > 0)   // condition independent of the age decision
     fee -= 1000;
 
 printf("fee = %d\n", fee);
@@ -428,20 +428,20 @@ printf("fee = %d\n", fee);
 **문법:**
 
 ```c
-switch (식) {
-case 값1:
-    // 문장
+switch (expression) {
+case value1:
+    // statements
     break;
-case 값2:
-    // 문장
+case value2:
+    // statements
     break;
 // ...
 default:
-    // 일치하는 case가 없을 때 실행
+    // executed if no case matches
 }
 ```
 
-```c
+```c wide-ok
 char unit;
 printf("온도 단위 (C/F): ");
 scanf(" %c", &unit);
@@ -478,16 +478,16 @@ default:
 int n = 1;
 switch (n) {
 case 1:
-    printf("one\n");      // 출력됨
-    // break 없음!
+    printf("one\n");      // prints
+    // no break!
 case 2:
-    printf("two\n");      // 역시 출력됨! (폴스루)
+    printf("two\n");      // also prints! (fall-through)
     break;
 case 3:
     printf("three\n");
     break;
 }
-// 출력: one
+// Output: one
 //       two
 ```
 
@@ -567,7 +567,7 @@ invalid
 ```c
 switch (op) {
 case 1:
-    int sum = a + b;    // 레이블 다음에 선언이 온다
+    int sum = a + b;    // a declaration follows the label
     printf("%d\n", sum);
     break;
 }
@@ -582,7 +582,7 @@ warning: label followed by a declaration is a C23 extension [-Wc23-extensions]
 ```c
 switch (op) {
 case 1: {
-    int sum = a + b;    // 블록 안의 선언
+    int sum = a + b;    // declaration inside a block
     printf("%d\n", sum);
     break;
 }
@@ -687,8 +687,8 @@ invalid input
 **문법:**
 
 ```c
-for (초기화; 조건; 증감) {
-    // 반복 본체
+for (initialization; condition; update) {
+    // loop body
 }
 ```
 
@@ -711,11 +711,11 @@ flowchart TD
 4. **증감:** 매 반복 후에 실행되고, 다시 2단계로 돌아간다.
 
 ```c
-// 1부터 5까지 출력
+// Print 1 to 5
 for (int i = 1; i <= 5; i++) {
     printf("%d ", i);
 }
-// 출력: 1 2 3 4 5
+// Output: 1 2 3 4 5
 ```
 
 반복이 진행되는 모습은 루프 제어 변수 `i`와 누적 변수 `sum`의 값을 회차마다 출력하면 확인할 수 있다.
@@ -743,18 +743,18 @@ after loop: i = 6
 
 **자주 쓰는 패턴:**
 
-```c
-// 역순 카운트
+```c wide-ok
+// Count down
 for (int i = 10; i >= 1; i--) {
     printf("%d ", i);
 }
 
-// 2씩 증가
+// Step by 2
 for (int i = 0; i <= 10; i += 2) {
     printf("%d ", i);
 }
 
-// 1~100 합계
+// Sum from 1 to 100
 int sum = 0;
 for (int i = 1; i <= 100; i++) {
     sum += i;
@@ -766,13 +766,13 @@ printf("합계: %d\n", sum);  // 5050
 
 ```c
 int i = 0;
-for ( ; i < 5; ) {      // 초기화와 증감 생략
+for ( ; i < 5; ) {      // init and update omitted
     printf("%d ", i);
     i++;
 }
 
-for (;;) {               // 무한 반복 (모든 요소 생략)
-    // break로 탈출
+for (;;) {               // infinite loop (all parts omitted)
+    // use break to exit
 }
 ```
 
@@ -787,8 +787,8 @@ for (;;) {               // 무한 반복 (모든 요소 생략)
 **문법:**
 
 ```c
-while (조건) {
-    // 반복 본체
+while (condition) {
+    // loop body
 }
 ```
 
@@ -805,8 +805,8 @@ flowchart TD
 
 조건은 매 반복 **전에** 검사된다. 처음부터 거짓이면 본체가 한 번도 실행되지 않는다.
 
-```c
-// 감시값(sentinel) 제어 반복: -1이면 종료
+```c wide-ok
+// Sentinel-controlled loop: -1 to stop
 int num, sum = 0, count = 0;
 
 printf("정수 입력 (종료: -1): ");
@@ -828,7 +828,7 @@ if (count > 0) {
 
 **`break`를 이용한 무한 반복:**
 
-```c
+```c wide-ok
 while (1) {
     int n;
     printf("양수를 입력하세요: ");
@@ -849,8 +849,8 @@ while (1) {
 
 ```c
 do {
-    // 반복 본체
-} while (조건);  // <-- 세미콜론 필수!
+    // loop body
+} while (condition);  // <-- semicolon required!
 ```
 
 **실행 흐름:**
@@ -864,7 +864,7 @@ flowchart TD
 
 *그림 6. do-while문의 실행 흐름*
 
-```c
+```c wide-ok
 int choice;
 do {
     printf("1. 실행  2. 종료\n");
@@ -882,15 +882,15 @@ printf("종료합니다!\n");
 **최소 한 번 실행 보장:**
 
 ```c
-// do-while: x > 10이어도 본체가 한 번은 실행됨
+// do-while: body always runs at least once
 int x = 100;
 do {
-    printf("x = %d\n", x);  // 한 번 출력됨
+    printf("x = %d\n", x);  // prints once even though x > 10
 } while (x < 10);
 
-// while: x > 10이면 본체가 실행되지 않음
+// while: body may never run
 while (x < 10) {
-    printf("x = %d\n", x);  // 출력되지 않음
+    printf("x = %d\n", x);  // never prints
 }
 ```
 
@@ -902,8 +902,8 @@ while (x < 10) {
 
 ```c
 int n = 4;
-for (int i = 1; i <= n; i++) {        // 행
-    for (int j = 1; j <= i; j++) {    // 열
+for (int i = 1; i <= n; i++) {        // rows
+    for (int j = 1; j <= i; j++) {    // columns
         printf("*");
     }
     printf("\n");
@@ -925,10 +925,10 @@ for (int i = 1; i <= n; i++) {        // 행
 ```c
 int n = 4;
 for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n - i; j++) {   // 앞쪽 공백
+    for (int j = 1; j <= n - i; j++) {   // leading spaces
         printf(" ");
     }
-    for (int j = 1; j <= i; j++) {       // 별
+    for (int j = 1; j <= i; j++) {       // stars
         printf("*");
     }
     printf("\n");
@@ -956,7 +956,7 @@ for (int i = 1; i <= 9; i++) {
 
 **부호 교대 합계 (`1-2+3-4+...+9-10`):**
 
-```c
+```c wide-ok
 int sum = 0;
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 1) {
@@ -983,14 +983,14 @@ printf("결과: %d\n", sum);  // -5
 `for` 반복문은 언제나 `while` 반복문으로 바꿀 수 있고 그 반대도 가능하므로, 의도를 가장 명확히 전달하는 형태를 선택한다.
 
 ```c
-// 동치인 반복문:
+// Equivalent loops:
 
-// for 버전
+// for version
 for (int i = 0; i < 5; i++) {
     printf("%d ", i);
 }
 
-// while 버전
+// while version
 int i = 0;
 while (i < 5) {
     printf("%d ", i);
@@ -1009,7 +1009,7 @@ while (i < 5) {
 ```c
 for (int i = 0; i < 3; i++)
     printf("%d ", i);
-printf("%d\n", i);      // i는 이미 유효 범위 밖
+printf("%d\n", i);      // i is already out of scope
 ```
 
 ```text
@@ -1056,7 +1056,7 @@ end: i = 6, j = 4
 ```c
 int i;
 
-for (i = 0; i < 5; i++);    // 반복 본체는 널 문장
+for (i = 0; i < 5; i++);    // the loop body is a null statement
     printf("i = %d\n", i);
 ```
 
@@ -1167,11 +1167,11 @@ x == 1.0 is 0
 
 `break`는 **가장 안쪽의 반복문** 또는 `switch`문을 즉시 탈출한다.
 
-```c
+```c wide-ok
 for (int i = 1; i <= 100; i++) {
     if (i * i > 50) {
         printf("i^2 > 50인 첫 번째 i: %d\n", i);
-        break;  // for 반복문 탈출
+        break;  // exits the for loop
     }
 }
 ```
@@ -1182,12 +1182,12 @@ for (int i = 1; i <= 100; i++) {
 for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
         if (j == 1) {
-            break;  // 내부 반복문만 탈출
+            break;  // exits inner loop only
         }
         printf("(%d,%d) ", i, j);
     }
 }
-// 출력: (0,0) (1,0) (2,0)
+// Output: (0,0) (1,0) (2,0)
 ```
 
 바깥쪽 반복의 `i`가 0, 1, 2일 때마다 안쪽 반복은 `j`가 0인 회차만 출력하고, `j`가 1이 되면 `break`로 안쪽 반복만 끝낸다. 바깥쪽 반복은 영향을 받지 않으므로 `i`가 바뀔 때마다 안쪽 반복이 다시 처음부터 시작된다. 바깥쪽 반복까지 한 번에 끝내는 방법은 4.5절에서 다룬다.
@@ -1197,14 +1197,14 @@ for (int i = 0; i < 3; i++) {
 `continue`는 **현재 반복의 나머지 부분을 건너뛰고** 다음 반복으로 넘어간다 (`while`/`do-while`에서는 조건 검사로, `for`에서는 증감 단계로 이동).
 
 ```c
-// 홀수만 출력
+// Print odd numbers only
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 0) {
-        continue;  // 짝수 건너뜀
+        continue;  // skip even numbers
     }
     printf("%d ", i);
 }
-// 출력: 1 3 5 7 9
+// Output: 1 3 5 7 9
 ```
 
 `for` 반복문에서 `continue`는 조건이 아니라 **증감식**(`i++`)으로 이동하고, `while` 반복문에서는 **조건 검사**로 바로 이동한다. 따라서 `while`에서는 `continue` 전에 반복 변수가 갱신되는지 확인하지 않으면 무한 반복에 빠질 수 있다.
@@ -1213,11 +1213,11 @@ for (int i = 1; i <= 10; i++) {
 
 `goto`는 레이블이 붙은 문장으로 무조건 이동한다. 코드를 추적하기 어렵게 만들므로(스파게티 코드) **일반적으로 사용을 피한다**.
 
-```c
+```c wide-ok
 for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
         if (i + j == 15) {
-            goto found;  // 두 반복문 모두 탈출
+            goto found;  // break out of both loops
         }
     }
 }
@@ -1235,10 +1235,10 @@ printf("완료\n");
 int find_first_negative(int arr[], int size) {
     for (int i = 0; i < size; i++) {
         if (arr[i] < 0) {
-            return arr[i];  // 함수 즉시 종료
+            return arr[i];  // exits function immediately
         }
     }
-    return 0;  // 음수 없음
+    return 0;  // no negative found
 }
 ```
 
@@ -1262,8 +1262,8 @@ while (running) {
         printf("bye\n");
         break;
     case 0:
-        running = 0;        // 반복을 끝내도록 표시
-        break;              // switch만 빠져나감
+        running = 0;        // mark the loop to end
+        break;              // leaves only the switch
     default:
         printf("invalid\n");
         break;
@@ -1294,11 +1294,11 @@ for (i = 1; i <= 9; i++) {
     for (j = 1; j <= 9; j++) {
         if (i * j == 12 && i + j == 7) {
             found = 1;
-            break;          // 안쪽 반복을 끝냄
+            break;          // ends the inner loop
         }
     }
     if (found)
-        break;              // 바깥쪽 반복을 끝냄
+        break;              // ends the outer loop
 }
 if (found)
     printf("flag: i = %d, j = %d\n", i, j);
@@ -1306,7 +1306,7 @@ if (found)
 for (i = 1; i <= 9; i++)
     for (j = 1; j <= 9; j++)
         if (i * j == 12 && i + j == 7)
-            goto done;      // 두 반복을 한 번에 빠져나감
+            goto done;      // leaves both loops at once
 done:
     printf("goto: i = %d, j = %d\n", i, j);
 ```
@@ -1328,9 +1328,9 @@ goto: i = 3, j = 4
 
 **카운터**는 무언가가 몇 번 발생했는지 추적한다. **누적기**는 누적 합계를 추적한다.
 
-```c
-int sum = 0;    // 누적기
-int count = 0;  // 카운터
+```c wide-ok
+int sum = 0;    // accumulator
+int count = 0;  // counter
 int num;
 
 printf("정수를 입력하세요 (0이면 종료):\n");
@@ -1356,7 +1356,7 @@ if (count > 0) {
 
 최댓값과 최솟값을 **첫 번째 입력값**으로 초기화한 후, 새 값이 들어올 때마다 갱신한다.
 
-```c
+```c wide-ok
 int num, max, min, count = 0;
 
 while (1) {
@@ -1367,7 +1367,7 @@ while (1) {
     }
 
     if (count == 0) {
-        max = min = num;  // 첫 번째 값으로 둘 다 초기화
+        max = min = num;  // first value initializes both
     } else {
         if (num > max) max = num;
         if (num < min) min = num;
@@ -1395,7 +1395,7 @@ printf("Max: %d\n", max);
 
 `do-while`을 사용하여 유효한 입력을 받을 때까지 반복한다.
 
-```c
+```c wide-ok
 int score;
 do {
     printf("점수 입력 (0-100): ");
@@ -1412,7 +1412,7 @@ printf("유효한 점수: %d\n", score);
 
 `while(1)`, `switch`, `do-while`을 조합하여 대화형 메뉴를 구현한다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main() {
@@ -1425,7 +1425,7 @@ int main() {
         printf("3. 종료\n");
         printf("========================\n");
 
-        // do-while로 입력 검증
+        // Input validation with do-while
         do {
             printf("선택: ");
             scanf(" %c", &menu);
@@ -1463,9 +1463,9 @@ int main() {
 int n, d, is_prime;
 
 for (n = 2; n <= 30; n++) {
-    is_prime = 1;                 // 소수라고 가정하고 시작
+    is_prime = 1;                 // start by assuming n is prime
     for (d = 2; d * d <= n; d++) {
-        if (n % d == 0) {         // 약수를 찾으면 소수가 아님
+        if (n % d == 0) {         // a divisor means n is not prime
             is_prime = 0;
             break;
         }
@@ -1490,10 +1490,10 @@ printf("\n");
 int n = 4096, sum = 0, rev = 0, d;
 
 while (n > 0) {
-    d = n % 10;               // 일의 자리 숫자
+    d = n % 10;               // units digit
     sum += d;
-    rev = rev * 10 + d;       // 지금까지의 수 뒤에 d를 붙임
-    n /= 10;                  // 일의 자리를 떼어 냄
+    rev = rev * 10 + d;       // append d to the number so far
+    n /= 10;                  // remove the units digit
     printf("d = %d, n = %d, sum = %d, rev = %d\n", d, n, sum, rev);
 }
 ```

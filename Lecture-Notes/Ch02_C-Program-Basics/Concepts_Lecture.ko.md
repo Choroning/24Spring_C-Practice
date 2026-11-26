@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -48,12 +48,12 @@
 
 ```c
 // first.c
-#include <stdio.h>    // 입출력 라이브러리 헤더
+#include <stdio.h>    // I/O library header
 
-int main(void)        // 진입점 함수
+int main(void)        // entry point function
 {
-    printf("First C Program\n");  // 콘솔 출력
-    return 0;         // OS에 종료 코드 반환
+    printf("First C Program\n");  // console output
+    return 0;         // exit code to OS
 }
 ```
 
@@ -94,20 +94,20 @@ graph TD
 `//` 줄 주석은 C99에서 추가된 기능이며, 지금은 대부분의 C 컴파일러에서 사용할 수 있다. 블록 주석은 코드 중간에도 넣을 수 있다.
 
 ```c
-/* 이것은 블록 주석이다.
-   여러 줄에 걸칠 수 있다. */
+/* This is a block comment.
+   It can span multiple lines. */
 
-// 이것은 줄 주석이다.
+// This is a line comment.
 
-int x = 10;  // 코드 뒤에 붙이는 인라인 주석
+int x = 10;  // inline comment after code
 ```
 
 **코드 주석 처리(comment out)** 는 이미 작성한 코드를 삭제하지 않고 임시로 컴파일하지 않게 만드는 것이다.
 
 ```c
-/* printf("이 줄은 비활성화됨.\n"); */
+/* printf("This line is disabled.\n"); */
 
-// printf("이 줄도 비활성화됨.\n");
+// printf("This line is also disabled.\n");
 ```
 
 > **주의:** 블록 주석은 **중첩할 수 없다**. `/* 외부 /* 내부 */ 아직 안쪽? */`는 컴파일 에러를 일으킨다. `*/`가 첫 번째 매칭에서 주석을 닫기 때문이다.
@@ -159,14 +159,14 @@ C 프로그램은 `main` 함수 하나, 또는 `main` 함수와 여러 함수로
 *표 4. `main` 함수의 규칙*
 
 ```c
-int main(void)    // ✅ 표준 형태
+int main(void)    // [O] standard form
 {
     return 0;
 }
 ```
 
 ```c
-int main()        // ✅ 유효 (빈 매개변수 목록)
+int main()        // [O] also valid (empty parameter list)
 {
     return 0;
 }
@@ -215,7 +215,7 @@ ld: symbol(s) not found for architecture arm64
 int main(void)
 {
     printf("Hello\n");
-    return 0;   // OS에 알림: 프로그램이 정상적으로 완료됨
+    return 0;   // tell the OS: program finished successfully
 }
 ```
 
@@ -255,7 +255,7 @@ $ echo $?
 **콘솔 프로그램**은 콘솔(명령 프롬프트)에서 실행되는 프로그램으로, 키보드로부터 입력을 받아서 처리한 다음 결과를 콘솔에 텍스트로 출력한다. C에는 입출력 키워드가 내장되어 있지 않다. 대신 C 프로그램마다 공통으로 필요한 입력과 출력 기능을 **입출력 라이브러리**가 제공하며, 프로그램은 **헤더 파일**에 선언된 **라이브러리 함수**를 통해 입출력을 수행한다.
 
 ```c
-#include <stdio.h>   // stdio = standard input/output (표준 입출력)
+#include <stdio.h>   // stdio = standard input/output
 ```
 
 | 용어 | 의미 |
@@ -287,7 +287,7 @@ flowchart LR
 **기본 문법:**
 
 ```c
-printf("형식 문자열", 값1, 값2, ...);
+printf("format string", value1, value2, ...);
 ```
 
 **형식 문자열**은 `" "` 안에 쓰며, 다음 요소를 포함할 수 있다.
@@ -311,7 +311,7 @@ printf("형식 문자열", 값1, 값2, ...);
 
 `%F`와 `%E`는 각각 `%f`, `%e`와 같지만 무한대(`INF`)나 지수 기호(`E`) 같은 문자를 대문자로 출력한다. 형식 문자열에 형식 지정자가 여러 개 있으면 형식 지정자와 출력할 값이 순서대로 대응하며, 형식 지정자와 값의 개수가 일치해야 한다.
 
-```c
+```c wide-ok
 int age = 20;
 double height = 175.5;
 
@@ -353,11 +353,11 @@ int num = 123;
 double pi = 3.14159;
 
 printf("[%d]\n", num);       // [123]
-printf("[%6d]\n", num);      // [   123]   (6칸, 오른쪽 정렬)
-printf("[%-6d]\n", num);     // [123   ]   (6칸, 왼쪽 정렬)
-printf("[%f]\n", pi);        // [3.141590] (소수점 이하 6자리)
+printf("[%6d]\n", num);      // [   123]   (width 6, right-aligned)
+printf("[%-6d]\n", num);     // [123   ]   (width 6, left-aligned)
+printf("[%f]\n", pi);        // [3.141590] (6 decimal places)
 printf("[%.2f]\n", pi);      // [3.14]
-printf("[%8.2f]\n", pi);     // [    3.14] (폭 8, 소수점 이하 2자리)
+printf("[%8.2f]\n", pi);     // [    3.14] (width 8, 2 decimal places)
 ```
 
 0으로 채우기(`%06d`) 같은 나머지 형식은 3장의 5.2절에서 다룬다.
@@ -400,15 +400,15 @@ printf("[%10s] [%-10s]\n", "abc", "abc");
 ```c
 printf("Hello");
 printf("World\n");
-// 출력: HelloWorld   (공백이나 줄바꿈 없이 이어서 출력)
+// Output: HelloWorld   (no space, no line break between them)
 ```
 
-```c
+```c wide-ok
 printf("1번 줄\n");
 printf("2번 줄\n");
-// 출력:
-// 1번 줄
-// 2번 줄
+// Output:
+// Line 1
+// Line 2
 ```
 
 여러 `printf` 호출은 이전 출력의 마지막 커서 위치부터 이어서 출력한다. 즉 `printf`는 현재 커서 위치에 텍스트를 덧붙인다.
@@ -421,8 +421,8 @@ printf("2번 줄\n");
 double d = 3.14;
 int n = 7;
 
-printf("%d\n", d);      // double을 %d로 출력
-printf("%f\n", n);      // int를 %f로 출력
+printf("%d\n", d);      // double printed with %d
+printf("%f\n", n);      // int printed with %f
 ```
 
 ```text
@@ -441,15 +441,15 @@ warning: format specifies type 'double' but the argument has type 'int' [-Wforma
 **기본 문법:**
 
 ```c
-scanf("형식 문자열", &변수1, &변수2, ...);
+scanf("format string", &variable1, &variable2, ...);
 ```
 
 `&`(**주소 연산자**)는 각 변수 앞에 반드시 붙여야 한다. `scanf`는 입력값을 저장할 **메모리 주소**가 필요하다.
 
-```c
+```c wide-ok
 int num;
 printf("숫자를 입력하세요: ");
-scanf("%d", &num);            // 키보드에서 정수를 읽음
+scanf("%d", &num);            // read an integer from keyboard
 printf("입력한 값: %d\n", num);
 ```
 
@@ -457,7 +457,7 @@ printf("입력한 값: %d\n", num);
 
 ```c
 int a, b;
-scanf("%d %d", &a, &b);  // 사용자 입력: 10 20
+scanf("%d %d", &a, &b);  // user types: 10 20
 // a = 10, b = 20
 ```
 
@@ -465,7 +465,7 @@ scanf("%d %d", &a, &b);  // 사용자 입력: 10 20
 
 ```c
 int day, month, year;
-scanf("%d/%d/%d", &day, &month, &year);  // 사용자 입력: 16/03/2026
+scanf("%d/%d/%d", &day, &month, &year);  // user types: 16/03/2026
 // day = 16, month = 3, year = 2026
 ```
 
@@ -496,9 +496,9 @@ printf("r = %d, age = %d, height = %.1f, weight = %.1f\n", r, age, height, weigh
 형식 문자열에 일반 문자를 넣으면 입력에서 같은 문자를 요구한다. `scanf("%d/%d/%d", &y, &m, &d)`로 날짜를 읽으면 다음과 같다.
 
 ```text
-입력 2024/3/4   → r = 3: 2024-3-4
-입력 2024 3 4   → r = 1: 2024-0-0
-입력 2024/ 3/4  → r = 3: 2024-3-4
+input 2024/3/4   → r = 3: 2024-3-4
+input 2024 3 4   → r = 1: 2024-0-0
+input 2024/ 3/4  → r = 3: 2024-3-4
 ```
 
 둘째 입력은 2024 다음에 `/`가 아니라 빈칸이 와서 첫 변환 뒤에 멈추고, 셋째 입력은 `/` 다음의 빈칸을 `%d`가 건너뛰므로 세 값을 모두 읽는다. `y`, `m`, `d`는 0으로 초기화한 변수이다.
@@ -540,8 +540,8 @@ warning: format specifies type 'int *' but the argument has type 'int' [-Wformat
 **선언**은 컴파일러에게 변수의 타입과 이름을 알려 주는 것이다.
 
 ```c
-int count;       // 정수형 변수 선언
-double price;    // 실수형 변수 선언
+int count;       // declare an integer variable
+double price;    // declare a floating-point variable
 ```
 
 변수의 이름은 영문자와 숫자, 밑줄 기호(`_`)로 만들며, 첫 글자는 반드시 영문자나 밑줄 기호여야 한다(3장의 3.2절). **대입**은 변수에 값을 저장하는 것이다. 변수 이름 다음에 `=`을 쓰고 값을 적으며, 변수의 데이터 타입과 같은 형식의 값을 대입해야 한다.
@@ -560,7 +560,7 @@ double price = 19.99;
 
 **`printf`와 `scanf`에서 변수 사용:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -569,11 +569,11 @@ int main(void)
     double unit_price;
 
     printf("수량과 단가를 입력하세요: ");
-    scanf("%d %lf", &quantity, &unit_price);   // 입력
+    scanf("%d %lf", &quantity, &unit_price);   // input
 
     double total = quantity * unit_price;
 
-    printf("수량: %d\n", quantity);              // 출력
+    printf("수량: %d\n", quantity);              // output
     printf("단가: %.2f\n", unit_price);
     printf("합계: %.2f\n", total);
 
@@ -598,9 +598,9 @@ warning: variable 'x' is uninitialized when used here [-Wuninitialized]
 선언과 대입의 관계는 메모리 그림으로 정리할 수 있다. `int x;`를 실행하면 `int`형 하나를 담을 공간이 메모리에 할당되고 `x`라는 이름이 붙는다. 이 시점의 내용은 정해지지 않았다. `x = 10;`은 그 공간에 10을 저장하고, `x = x + 5;`는 오른쪽에서 현재 값 10을 읽어 5를 더한 15를 같은 공간에 다시 저장한다.
 
 ```text
-int x;          x: [ ???? ]   할당만 되고 값은 정해지지 않음
-x = 10;         x: [  10  ]   10을 저장
-x = x + 5;      x: [  15  ]   현재 값 10을 읽어 15를 저장
+int x;          x: [ ???? ]   allocated, value not determined
+x = 10;         x: [  10  ]   stores 10
+x = x + 5;      x: [  15  ]   reads current value 10, stores 15
 ```
 
 *그림 4. 선언과 대입에 따라 바뀌는 변수의 내용*
@@ -665,9 +665,9 @@ d: 0x16f5a2af8, 8 bytes
 ```
 
 ```text
-          0x...af8 ─ 0x...aff   0x...b04 ─ 0x...b07   0x...b0b   ← 주소
+address   0x...af8 ─ 0x...aff   0x...b04 ─ 0x...b07   0x...b0b
         ┌─────────────────────┬─────────────────────┬──────────┐
-        │ d = 3.5 (8B)        │ n = 100 (4B)        │ c = 'A'  │
+        │ d = 3.5 (8 bytes)   │ n = 100 (4 bytes)   │ c = 'A'  │
         └─────────────────────┴─────────────────────┴──────────┘
 ```
 
@@ -724,9 +724,9 @@ seconds? 4000
 double d;
 int n = 1;
 
-scanf("%f", &d);            // double에 %f
-printf("%d %d\n", n);       // 형식 지정자보다 인수가 적음
-printf("%d\n", &n);         // 값 대신 주소를 출력
+scanf("%f", &d);            // %f for a double
+printf("%d %d\n", n);       // fewer arguments than format specifiers
+printf("%d\n", &n);         // prints an address instead of a value
 ```
 
 ```text
@@ -770,11 +770,11 @@ C 프로그램은 **문장(statement)** 으로 구성된다. 문장은 C 프로�
 ```c
 int main(void)
 {
-    int a, b, sum;            // 선언문
-    scanf("%d %d", &a, &b);  // 입력문
-    sum = a + b;              // 대입문
-    printf("%d\n", sum);      // 출력문
-    return 0;                 // 반환문
+    int a, b, sum;            // declaration statements
+    scanf("%d %d", &a, &b);  // input statement
+    sum = a + b;              // assignment statement
+    printf("%d\n", sum);      // output statement
+    return 0;                 // return statement
 }
 ```
 

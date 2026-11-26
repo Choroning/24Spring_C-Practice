@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -42,15 +42,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab07_Arrays/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C07Q1.c
- * @brief   Q1. UPC 바코드의 Check Digit 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Computing the Check Digit of a UPC Barcode
+ * @author  Cheolwon Park
  * @date    2024-05-11
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -85,7 +85,7 @@ int main()
 
 **실행 결과:** 실행 예시의 숫자를 입력하면 검증 숫자 2가 나온다. 다만 출력 형식은 실행 예시와 두 군데 다르다. 입력값을 출력하는 반복문이 `"입력된 숫자: %d"`를 통째로 반복하므로 `입력된 숫자: `가 숫자마다 11번 출력되고, 마지막 줄은 `The check digit is: 2`처럼 `is` 뒤에 콜론이 붙는다. 실행 예시와 같게 하려면 `printf("입력된 숫자: ");`를 반복문 앞으로 옮기고 반복문 안에서는 `printf("%d", dig[i]);`만 실행하면 된다.
 
-```text
+```text wide-ok
 Please enter the first eleven UPC digits, separated by white space: 
 0 3 6 0 0 0 2 9 1 4 5
 입력된 숫자: 0입력된 숫자: 3입력된 숫자: 6입력된 숫자: 0입력된 숫자: 0입력된 숫자: 0입력된 숫자: 2입력된 숫자: 9입력된 숫자: 1입력된 숫자: 4입력된 숫자: 5
@@ -115,11 +115,11 @@ The check digit is: 2
 
 **코드:** [Lab_Q2.c](../../Coursework/Lab07_Arrays/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C07Q2.c
- * @brief   Q2. 선택 정렬 변형
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Selection Sort Variant
+ * @author  Cheolwon Park
  * @date    2024-05-11
  */
 
@@ -163,7 +163,7 @@ int main() {
 
 **실행 결과:** 세 번째 패스(`i` = 2)가 끝나면 배열이 오름차순 `17 28 31 46 52`로 정렬되고, 남은 패스에서는 교환이 일어나지 않는다. 각 줄 끝에는 `print_array()`가 출력한 공백이 하나 남는다.
 
-```text
+```text wide-ok
 i = 4회 반복 후 배열 : 46 31 28 17 52 
 i = 3회 반복 후 배열 : 17 31 28 46 52 
 i = 2회 반복 후 배열 : 17 28 31 46 52 
@@ -192,11 +192,11 @@ i = 0회 반복 후 배열 : 17 28 31 46 52
 
 **코드:** [Lab_Q3.c](../../Coursework/Lab07_Arrays/Lab_Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C07Q3.c
- * @brief   Q3. 빈도와 상대 빈도 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Frequency and Relative Frequency
+ * @author  Cheolwon Park
  * @date    2024-05-11
  */
 
@@ -214,7 +214,7 @@ int main()
     for (i = 0; i < 40; i++) {
         data[i] = rand() % 50 + 150;
 
-        switch ((data[i] - 150) / 10) {    // data[i] 값에 해당하는 구간의 인덱스
+        switch ((data[i] - 150) / 10) {    // index of the interval that data[i] falls into
         case 0:
             frequency[0] += 1;
             break;
@@ -259,7 +259,7 @@ int main()
 
 **실행 결과:** 난수를 쓰므로 실행할 때마다 값이 달라진다. 아래는 실행 한 번의 결과이며, 다섯 빈도수의 합은 40, 상대 빈도수의 합은 1.000이다. 실행 예시와 비교하면 첫 줄이 `배열 출력:`이고, 원소 사이를 공백 한 칸으로 구분하며, 표 앞에 빈 줄이 세 개 있고, 표 머리글이 `구간 범위`인 점이 다르다.
 
-```text
+```text wide-ok
 배열 출력:
 153 198 185 184 169 153 179 189 159 158 
 186 180 169 191 158 180 191 187 159 157 

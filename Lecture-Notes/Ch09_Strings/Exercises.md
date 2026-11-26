@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -63,7 +63,7 @@
 
 **Example Code:** Complete it by adding the function declarations and definitions.
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define SIZE 64
 
@@ -111,7 +111,7 @@ int main()
 
 **Sample Run:**
 
-```text
+```text wide-ok
 문자열(str1) 입력: c is fun!!
 
 str1의 길이: 10

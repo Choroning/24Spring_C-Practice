@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -62,35 +62,35 @@ Exercises 1-3 practice conditional (selection) statements, and Exercises 4 and 5
 
 **Sample Runs:**
 
-```text
+```text wide-ok
 점의 좌표 (x,y)? 0 0
 (0,0)은 원점에 위치합니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 점의 좌표 (x,y)? -2 0
 (-2,0)은 x축 위에 위치합니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 점의 좌표 (x,y)? 0 10
 (0,10)은 y축 위에 위치합니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 점의 좌표 (x,y)? 3 7
 (3,7)은 1사분면 위에 위치합니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 점의 좌표 (x,y)? 8 -2
 (8,-2)은 4사분면 위에 위치합니다.
 
@@ -123,21 +123,21 @@ $$\text{Fahrenheit} = \frac{9}{5} \times \text{Celsius} + 32$$
 
 **Sample Runs:**
 
-```text
+```text wide-ok
 온도? 32C
 32 C == 89.60 F
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 온도? 100 f
 100 F == 37.78 C
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 온도? -28 g
 입력 오류! 온도의 단위는 C(또는 c)와 F(또는 f)만 가능합니다.
 
@@ -168,21 +168,21 @@ Program ended with exit code: 0
 
 **Sample Runs:**
 
-```text
+```text wide-ok
 이차 방정식의 상관계수 a, b, c 입력: 3 -1 -2
 입력하신 이차 방정식은 두 근 x1 = 1, x2 = -0.666667 을 갖습니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 이차 방정식의 상관계수 a, b, c 입력: 9 -12 4
 입력하신 이차 방정식은 중근 x = 0.666667 을 갖습니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 이차 방정식의 상관계수 a, b, c 입력: 1 1 1
 입력하신 이차 방정식은 허근을 갖습니다.
 
@@ -210,7 +210,7 @@ Program ended with exit code: 0
 
 **Sample Run:**
 
-```text
+```text wide-ok
 정수 입력(종료: -1): 10
 정수 입력(종료: -1): 27
 정수 입력(종료: -1): 61
@@ -231,17 +231,17 @@ Program ended with exit code: 0
 
 ## Exercise 5: Triangle Printing Menu
 
-**Problem:** Implement the following menu with nested `for` statements and a `switch` statement, and write a program that prints the triangle chosen by the user with `*` characters. Complete the program by filling in the `[빈칸]` (blank) parts of the example code below.
+**Problem:** Implement the following menu with nested `for` statements and a `switch` statement, and write a program that prints the triangle chosen by the user with `*` characters. Complete the program by filling in the `[blank]` parts of the example code below.
 
 **Example Code:**
 
-```c
+```c wide-ok
 #include <stdio.h>
-#include <windows.h>    // system 함수 사용을 위한 헤더
+#include <windows.h>    // header for using the system function
 
 int main() {
     int size, i, j;
-    char menu;          // 메뉴 데이터형은 변경할 수 없습니다.
+    char menu;          // The type of menu cannot be changed.
 
     while (1) {
         printf("------------------------\n");
@@ -253,35 +253,35 @@ int main() {
         printf("------------------------\n");
 
         do {
-            [빈칸]
-            // 메뉴를 입력받는다.
-            // 유효한 입력인지 검사하고, 유효한 입력이면 반복을 종료한다.
-            // 유효한 입력이 아니면 오류 메시지를 출력하고 다시 입력받는다.
+            [blank]
+            // Read the menu choice.
+            // Check whether the input is valid; if so, end the loop.
+            // If not valid, print an error message and read again.
         } while (1);
 
-        if ( [빈칸] ) {
+        if ( [blank] ) {
             printf("프로그램을 종료합니다.\n");
-            [빈칸]
+            [blank]
         }
 
         printf("=> 삼각형 크기(line 수) 입력: ");
         scanf("%d", &size);
 
         switch (menu) {
-        case '1': [빈칸]     // 왼쪽 정렬 삼각형 출력코드
-        case '2': [빈칸]     // 오른쪽 정렬 삼각형 출력코드
-        case '3': [빈칸]     // 왼쪽 정렬 역삼각형 출력코드
-        case '4': [빈칸]     // 오른쪽 정렬 역삼각형 출력코드
+        case '1': [blank]     // code to print a left-aligned triangle
+        case '2': [blank]     // code to print a right-aligned triangle
+        case '3': [blank]     // code to print a left-aligned inverted triangle
+        case '4': [blank]     // code to print a right-aligned inverted triangle
         }
-        system("pause");    // 화면 상태 유지
-        system("cls");      // 화면 지우기
+        system("pause");    // keep the screen open
+        system("cls");      // clear the screen
     }
 }
 ```
 
 **Sample Runs:**
 
-```text
+```text wide-ok
 ------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -304,7 +304,7 @@ int main() {
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 ------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -326,7 +326,7 @@ Program ended with exit code: 0
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 ------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -386,8 +386,8 @@ Program ended with exit code: 0
 
 **Problem:** In the following code, rewrite the statement `max = x > y ? x : y;`, which uses the conditional operator, with an `if` statement.
 
-```c
-#define _CRT_SECURE_NO_WARNINGS     // Visual Studio 2022에서 scanf 사용 시 필요
+```c wide-ok
+#define _CRT_SECURE_NO_WARNINGS     // needed to use scanf in Visual Studio 2022
 #include <stdio.h>
 int main(void)
 {
@@ -433,8 +433,8 @@ int main(void)
 
 **Problem:** Rewrite the whole `switch` statement in the following code with `if-else`.
 
-```c
-#define _CRT_SECURE_NO_WARNINGS     // Visual Studio 2022에서 scanf 사용 시 필요
+```c wide-ok
+#define _CRT_SECURE_NO_WARNINGS     // needed to use scanf in Visual Studio 2022
 #include <stdio.h>
 int main(void)
 {
@@ -443,15 +443,15 @@ int main(void)
     printf("몇 월? ");
     scanf("%d", &month);
     switch (month) {
-    case 7:                         // 7~8월 극성수기 요금
+    case 7:                         // highest peak-season rate for July-August
     case 8:
         fee = 70000;
         break;
-    case 6:                         // 6월, 9월 성수기 요금
+    case 6:                         // peak-season rate for June and September
     case 9:
         fee = 55000;
         break;
-    default:                        // 나머지 정상 요금
+    default:                        // regular rate for the other months
         fee = 40000;
         break;
     }
@@ -493,7 +493,7 @@ int main(void)
 
 **Problem:** In the following code, rewrite the loop written with a `for` statement (the `for (i = 1; i <= 10; i++) { ... }` part) with a `while` statement.
 
-```c
+```c wide-ok
 #include <stdio.h>
 int main(void)
 {
@@ -667,7 +667,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 점수? 91
 학점: A
 ```
@@ -686,7 +686,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 등수? 10
 전체 인원수? 80
 학점: B
@@ -706,7 +706,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 점의 좌표 (x, y)? 10 -10
 4사분면에 있습니다.
 ```
@@ -729,7 +729,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 연도? 2020
 2020년은 윤년입니다.
 ```
@@ -748,7 +748,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 온도? 27 C
 27.00 C == 80.60 F
 ```
@@ -776,7 +776,7 @@ For example, if the monthly usage is 350 kWh, the basic charge is 5,000 won and 
 
 **Sample Run:**
 
-```text
+```text wide-ok
 월 사용량 (kWh)? 350
 전기 요금 합계:  45000원
   - 기본요금:     5000원
@@ -797,7 +797,7 @@ For example, if the monthly usage is 350 kWh, the basic charge is 5,000 won and 
 
 **Sample Run:**
 
-```text
+```text wide-ok
 비트 연산식? 0xabcdef12 & 0xF0F0F0F0
 ABCDEF12 & F0F0F0F0 = A0C0E010
 ```
@@ -837,7 +837,7 @@ h i j k l m n o p q r s t u v w x y z { | } ~
 
 **Sample Run:**
 
-```text
+```text wide-ok
 양의 정수? 11
 배수의 개수? 20
 11 22 33 44 55 66 77 88 99 110 121 132 143 154 165 176 187 198 209 220
@@ -857,7 +857,7 @@ h i j k l m n o p q r s t u v w x y z { | } ~
 
 **Sample Run:**
 
-```text
+```text wide-ok
 월 사용량 (kWh)? 350
 전기 요금 합계:  45000원
   - 기본요금:     5000원
@@ -883,7 +883,7 @@ h i j k l m n o p q r s t u v w x y z { | } ~
 
 **Sample Run:**
 
-```text
+```text wide-ok
 양의 정수? 12
 12는 소수가 아닙니다.
 ```
@@ -902,7 +902,7 @@ h i j k l m n o p q r s t u v w x y z { | } ~
 
 **Sample Run:**
 
-```text
+```text wide-ok
 양의 정수? 100
   2  3  5  7 11 13 17 19 23 29
  31 37 41 43 47 53 59 61 67 71

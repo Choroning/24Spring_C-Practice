@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2
 
@@ -46,7 +46,7 @@
 
 `printf` 함수는 큰따옴표(`" "`) 사이에 있는 내용을 콘솔 화면에 그대로 출력한다. `\n`은 줄바꿈을 나타내는 이스케이프 시퀀스이므로 화면에 글자로 나타나지 않고 다음 출력이 새 줄에서 시작되게 한다([2장 2.2절](Concepts_Lecture.ko.md#22-printf)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -59,7 +59,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 2022년 3월 1학기 C언어 강의
 3 + 3 = 6
 2 + 6 = 5 
@@ -136,7 +136,7 @@ int sum;
 ```
 
 ```text
- 변수 이름        메모리 주소의 예      저장된 값
+ Variable name    Example address       Stored value
 ┌──────────┐    ┌──────────┐       ┌──────────┐
 │  val_1   │ ─▶ │ 0xdefdd0 │ ─────▶│ garbage  │
 ├──────────┤    ├──────────┤       ├──────────┤
@@ -300,7 +300,7 @@ printf("%.2f - %.2f = %.2f\n", ave, sum, ave - sum);
 
 **풀이:** `char` 변수는 문자를 그 문자의 코드인 정수로 저장한다. 따라서 같은 변수를 `%c`로 출력하면 문자가, `%d`로 출력하면 코드 값이 나온다([3장 1.3절](../Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md#13-문자형)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -313,7 +313,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 A의 ASCII값은 65입니다!
 ```
 

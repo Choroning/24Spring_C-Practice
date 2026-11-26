@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -72,7 +72,7 @@ array[9] = 100;     // tenth element: the last index is 9
 
 The following program stores four real numbers in an array and computes their average.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -92,7 +92,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 평균 : 2.5 
 ```
 
@@ -151,7 +151,7 @@ The elements of an array can be handled one by one, but that is inefficient for 
 
 **Solution:** Indices start at 0 and months at 1, so the element at index `i` is the number of days of month `i + 1`. `%2d` fits the month into two columns so that the lines of January and December align.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -166,7 +166,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
  1월은 31일
  2월은 28일
  3월은 31일
@@ -187,7 +187,7 @@ int main(void)
 
 **Solution:** `scanf` must receive the address of the place to store into, so the address of the element, `&val[i]`, is used. The first loop reads all the input, and the second prints each element while accumulating the sum.
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -211,7 +211,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 1번째 data input: 1
 2번째 data input: 2
 3번째 data input: 4
@@ -409,7 +409,7 @@ The solution code of the following problems is the example files in this unit fo
 
 **Code:** [Example_LinearSearch.c](Example_LinearSearch.c)
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -465,14 +465,14 @@ int main() // works even if the number of elements in the array changes
 }
 ```
 
-```text
+```text wide-ok
 arr = 23 45 -34 23 -124 22 2 
 >> input value: 23
 인덱스 0에 23값이 위치함! 
 인덱스 3에 23값이 위치함! 
 ```
 
-```text
+```text wide-ok
 arr = 23 45 -34 23 -124 22 2 
 >> input value: 7
 배열에 7값이 없습니다! 

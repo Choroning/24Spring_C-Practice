@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2, 3
 
@@ -172,8 +172,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C03Q1.c
- * @brief   Q1. 변수 연습 (1)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Variable Practice (1)
+ * @author  Cheolwon Park
  * @date    2024-03-13
  */
 
@@ -213,7 +213,7 @@ Write a program that initializes the variable `val` to an arbitrary integer betw
 
 **Sample Run:**
 
-```text
+```text wide-ok
 val 98의 ASCII에 해당하는 문자: b
 
 Program ended with exit code: 0
@@ -227,11 +227,11 @@ Program ended with exit code: 0
 
 **Code:** [Solution/Q2.c](Solution/Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C03Q2.c
- * @brief   Q2. 변수 연습 (2)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Variable Practice (2)
+ * @author  Cheolwon Park
  * @date    2024-03-13
  */
 
@@ -248,7 +248,7 @@ int main()
 
 **Actual Output:**
 
-```text
+```text wide-ok
 val 65의 ASCII에 해당하는 문자: A
 ```
 
@@ -305,8 +305,8 @@ The three format specifiers are written back to back without spaces in a single 
 ```c
 /**
  * @file    A10303-1_C03Q3.c
- * @brief   Q3. 변수 연습 (3)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Variable Practice (3)
+ * @author  Cheolwon Park
  * @date    2024-03-13
  */
 
@@ -373,8 +373,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C03Q4.c
- * @brief   Q4. 변수 연습 (4)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Variable Practice (4)
+ * @author  Cheolwon Park
  * @date    2024-03-13
  */
 

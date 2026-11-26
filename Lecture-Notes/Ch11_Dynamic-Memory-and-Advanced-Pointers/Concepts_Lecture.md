@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-26
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Distinguish the memory segments of a program and the three storage durations, and explain why the address of a local variable must not be returned
@@ -289,8 +289,8 @@ extended in place (address kept)         moved elsewhere (address changed)
 ptr ─► ┌────┬────┬────┬────┐          ptr ─► ┌────┬────┐ (freed)
        │ 10 │ 20 │ ?  │ ?  │                 └────┴────┘
        └────┴────┴────┴────┘          new ─► ┌────┬────┬────┬────┐
-                                              │ 10 │ 20 │ ?  │ ?  │
-                                              └────┴────┴────┴────┘
+                                             │ 10 │ 20 │ ?  │ ?  │
+                                             └────┴────┴────┴────┘
 ```
 
 *Figure 4. `realloc` extending a block in place and moving it*

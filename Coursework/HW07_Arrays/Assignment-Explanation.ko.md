@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 입력받은 실수를 배열에 저장하여 평균과 표준편차를 계산할 수 있다
@@ -54,13 +54,13 @@
 ```text
 Coursework/HW07_Arrays/
 ├── Original/
-│   ├── Assignment.ko.md    # 과제 안내문 (한국어)
-│   └── Assignment.md       # 과제 안내문 (영어)
+│   ├── Assignment.ko.md    # assignment handout (Korean)
+│   └── Assignment.md       # assignment handout (English)
 └── Solution/
-    ├── Q1.c    # 문제 1: 실수 10개의 평균과 표준편차
-    ├── Q2.c    # 문제 2: 정수 7개 중 최댓값과 최솟값
-    ├── Q3.c    # 문제 3: 실수 배열의 원소를 역순으로 복사
-    └── Q4.c    # 문제 4: 정수 배열에서 입력한 값의 위치와 개수
+    ├── Q1.c    # Problem 1: average and standard deviation of 10 real numbers
+    ├── Q2.c    # Problem 2: maximum and minimum of 7 integers
+    ├── Q3.c    # Problem 3: copy a real-number array in reverse order
+    └── Q4.c    # Problem 4: positions and count of an entered value in an integer array
 ```
 
 *그림 1. HW7 과제의 디렉토리 구성*
@@ -97,7 +97,7 @@ $$\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(x_i - \mu)^2}, \quad \mu = \frac{1}{N
 
 **실행 예시:**
 
-```text
+```text wide-ok
 >> Input data (1): 1.4
 >> Input data (2): 2.3
 >> Input data (3): 4.5
@@ -130,11 +130,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q1.c](Solution/Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q1.c
- * @brief   Q1. 평균과 표준편차 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Mean and Standard Deviation
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -168,7 +168,7 @@ int main()
 
 **실행 결과:** 실행 예시의 값을 입력하면 평균 6.76, 표준편차 16.03이 나온다. 실행 예시와 달리 입력과 `배열의 내용:` 사이에 빈 줄이 없고, 값 사이를 공백 한 칸으로 구분하므로 줄 끝에 공백이 하나 남는다. 마지막 줄 뒤에는 줄바꿈이 없다.
 
-```text
+```text wide-ok
 >> Input data (1): 1.4
 >> Input data (2): 2.3
 >> Input data (3): 4.5
@@ -202,7 +202,7 @@ int main()
 
 **실행 예시:**
 
-```text
+```text wide-ok
 >> Input data (1): 97
 >> Input data (2): 40
 >> Input data (3): -35
@@ -227,11 +227,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q2.c](Solution/Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q2.c
- * @brief   Q2. 배열에서 대소 비교
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Comparing Magnitudes in an Array
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -260,7 +260,7 @@ int main()
 
 **실행 결과:** 실행 예시의 값을 입력하면 가장 큰 값 100과 가장 작은 값 -49가 출력된다. 다만 둘째 결과 줄은 코드의 문자열대로 `가장 작은 값 : -49`처럼 콜론 앞에 공백이 있어 실행 예시와 한 칸 다르다.
 
-```text
+```text wide-ok
 >> Input data (1): 97
 >> Input data (2): 40
 >> Input data (3): -35
@@ -297,7 +297,7 @@ int main()
 
 **실행 예시:**
 
-```text
+```text wide-ok
 배열(원본): 1.2  3.1  4.3  4.5  6.7  2.3  8.7  9.5  2.3  5.8
 배열(역순): 5.8  2.3  9.5  8.7  2.3  6.7  4.5  4.3  3.1  1.2
 
@@ -314,11 +314,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q3.c
- * @brief   Q3. 배열 원소 뒤집기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Reversing Array Elements
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -346,7 +346,7 @@ int main()
 
 **실행 결과:** 원본 배열과 역순 배열이 출력된다. 첫 `printf`가 `\n`으로 시작하므로 출력 맨 앞에 빈 줄이 하나 있고, 값마다 뒤에 공백 두 칸을 출력하므로 줄 끝에 공백 두 칸이 남는다.
 
-```text
+```text wide-ok
 
 배열(원본): 1.2  3.1  4.3  4.5  6.7  2.3  8.7  9.5  2.3  5.8  
 배열(역순): 5.8  2.3  9.5  8.7  2.3  6.7  4.5  4.3  3.1  1.2  
@@ -376,7 +376,7 @@ int main()
 
 **실행 예시:**
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 3
 -> 인덱스: 1 3 6
@@ -385,7 +385,7 @@ int main()
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 4
 -> 찾는 값이 배열에 없습니다.
@@ -407,11 +407,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q4.c](Solution/Q4.c)
 
-```c
+```c wide-ok
 /**
  * @file    Q4.c
- * @brief   Q4. 배열에서 값 찾기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Finding a Value in an Array
+ * @author  Cheolwon Park
  * @date    2026-10-19
  */
 
@@ -449,14 +449,14 @@ int main()
 
 **실행 결과:** 3은 인덱스 1, 3, 6에 있으므로 개수는 3이고, 4는 배열에 없다.
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 3
 -> 인덱스: 1 3 6
 -> 개수: 3
 ```
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 4
 -> 찾는 값이 배열에 없습니다.

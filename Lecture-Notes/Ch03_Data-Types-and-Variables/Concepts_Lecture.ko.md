@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -96,8 +96,8 @@ C 표준은 `sizeof(short)` ≤ `sizeof(int)` ≤ `sizeof(long)`을 보장한다
 정수형은 부호 있는 정수형과 부호 없는 정수형으로 구분된다. 생략하면 `signed`(음수 가능)이므로, 부호 없는 정수형에는 `unsigned`를 써 준다. `unsigned`를 붙이면 음수 범위를 제거하고 양수 범위를 약 두 배로 확장한다. 아래 코드의 주석에서 2B는 약 21억(2 billion)을 뜻한다.
 
 ```c
-int a = -10;              // signed (기본) → 범위: -2B ~ +2B
-unsigned int b = 100;     // unsigned → 범위: 0 ~ 4,294,967,295
+int a = -10;              // signed (default) → range: -2B ~ +2B
+unsigned int b = 100;     // unsigned → range: 0 ~ 4,294,967,295
 ```
 
 | Signed 타입 | Unsigned 타입 | 크기 | Unsigned 범위 |
@@ -120,26 +120,26 @@ unsigned int b = 100;     // unsigned → 범위: 0 ~ 4,294,967,295
 #include <limits.h>
 
 int max = INT_MAX;       // 2,147,483,647
-printf("%d\n", max + 1); // -2,147,483,648  (순환!)
+printf("%d\n", max + 1); // -2,147,483,648  (wraps around!)
 ```
 
 ```text
-          오버플로
-    ┌─── INT_MAX + 1 ───┐
-    │                    ▼
+          Overflow
+    ┌───── INT_MAX + 1 ────────────┐
+    │                              ▼
 ... ─2 ─1  0  1  2 ... INT_MAX  INT_MIN ...
                          ▲                │
                          └── INT_MIN - 1 ─┘
-                              언더플로
+                              Underflow
 ```
 
 *그림 2. `int`의 오버플로와 언더플로에 따른 값의 순환*
 
 ```c
-char n = 128;             // char 범위: -128~127 → 오버플로!
-printf("%d\n", n);        // -128  (순환)
+char n = 128;             // char range: -128~127 → overflow!
+printf("%d\n", n);        // -128  (wraps around)
 
-unsigned char red = 300;  // unsigned char 범위: 0~255 → 오버플로!
+unsigned char red = 300;  // unsigned char range: 0~255 → overflow!
 printf("%d\n", red);      // 44   (300 - 256 = 44)
 ```
 
@@ -176,8 +176,8 @@ unsigned char red = 300;
 범위의 왼쪽 값은 0이 아닌 정규화된 수 가운데 절댓값이 가장 작은 값이고, 오른쪽 값은 절댓값이 가장 큰 값이다. `long double`의 크기는 컴파일러에 따라 다르며, Visual C++에서는 `double`과 같은 8바이트이다.
 
 ```c
-float pi_f = 3.14f;       // 'f' 접미사로 float 리터럴 명시
-double pi_d = 3.14159265; // 소수 리터럴은 기본적으로 double
+float pi_f = 3.14f;       // 'f' suffix for float literal
+double pi_d = 3.14159265; // decimal literals default to double
 ```
 
 > **주의:** `unsigned`는 실수형에 **적용할 수 없다**. `unsigned float`과 `unsigned double`은 잘못된 문법이다.
@@ -190,8 +190,8 @@ double pi_d = 3.14159265; // 소수 리터럴은 기본적으로 double
 float  f = 123456789.123456789f;
 double d = 123456789.123456789;
 
-printf("float:  %.15f\n", f);  // 123456792.000000000000000 (약 7자리 이후 틀림)
-printf("double: %.15f\n", d);  // 123456789.123456791043282 (약 15자리 이후 틀림)
+printf("float:  %.15f\n", f);  // 123456792.000000000000000 (wrong after ~7 digits)
+printf("double: %.15f\n", d);  // 123456789.123456791043282 (wrong after ~15 digits)
 ```
 
 `float`는 유효숫자 약 7자리, `double`은 약 15자리이다. 같은 값 9.876543210987654를 `float`와 `double` 변수에 저장하여 `%.15f`로 출력하면 `float`는 `9.876543045043945`로 소수점 이하 6자리까지만 맞고, `double`은 `9.876543210987654`로 모두 맞는다. 대부분의 계산에서는 `double`을 사용한다.
@@ -202,15 +202,15 @@ printf("double: %.15f\n", d);  // 123456789.123456791043282 (약 15자리 이후
 
 ```c
 double x = 0.1 + 0.2;
-printf("%.20f\n", x);  // 0.30000000000000004441  (정확히 0.3이 아님!)
+printf("%.20f\n", x);  // 0.30000000000000004441  (not exactly 0.3!)
 
-if (x == 0.3) { ... }  // ❌ false가 될 수 있다!
+if (x == 0.3) { ... }  // [X] may be false!
 ```
 
 > **주의:** 실수끼리 `==`로 비교하지 않고, 허용 오차(tolerance)를 사용한다.
 > ```c
 > #include <math.h>
-> if (fabs(x - 0.3) < 1e-9) { /* 충분히 가까움 */ }
+> if (fabs(x - 0.3) < 1e-9) { /* close enough */ }
 > ```
 
 #### 실수형 오버플로와 언더플로
@@ -221,10 +221,10 @@ if (x == 0.3) { ... }  // ❌ false가 될 수 있다!
 ```c
 #include <float.h>
 
-float num = 3.40282e38f;    // FLT_MAX 근처 → 정상
-num = 3.40282e40f;          // 오버플로 → inf
-num = 1.17549e-42f;         // 비정규화(정밀도 감소)
-num = 1.17549e-46f;         // 언더플로 → 0.0
+float num = 3.40282e38f;    // near FLT_MAX → OK
+num = 3.40282e40f;          // overflow → inf
+num = 1.17549e-42f;         // denormalized (reduced precision)
+num = 1.17549e-46f;         // underflow → 0.0
 ```
 
 `float`로 표현할 수 있는 가장 작은 비정규화 수는 약 $1.4 \times 10^{-45}$이므로 `1.17549e-46f`는 0이 된다. `1.17549e-42f`는 `%e`로 출력하면 `1.175689e-42`로 유효숫자가 줄어든 것을 볼 수 있다. 범위를 벗어나는 리터럴(`3.40282e40f`, `1.17549e-46f`)에는 컴파일러가 경고를 낸다.
@@ -234,9 +234,9 @@ num = 1.17549e-46f;         // 언더플로 → 0.0
 각 문자에는 대응하는 **문자 코드**가 있으며, ASCII 코드, EBCDIC 코드, 한글 완성형 코드 등이 쓰인다. `char`는 대개 **ASCII** 인코딩을 사용하여 단일 문자를 저장한다 (1바이트). 내부적으로는 문자의 정수 코드를 저장하므로, `char`형 변수에 `'A'`를 저장하면 실제로는 ASCII 코드 65(`0x41`)가 저장된다.
 
 ```c
-char letter = 'A';       // 내부적으로 65를 저장
-printf("%c\n", letter);   // A  (문자로 출력)
-printf("%d\n", letter);   // 65 (정수로 출력)
+char letter = 'A';       // stores 65 internally
+printf("%c\n", letter);   // A  (as character)
+printf("%d\n", letter);   // 65 (as integer)
 ```
 
 | 문자 | ASCII | 설명 |
@@ -281,7 +281,7 @@ ASCII에서 영문 대문자와 소문자의 코드 차이는 항상 32이다 (`
 *표 5. 주요 이스케이프 시퀀스*
 
 ```c
-printf("Hello\tWorld\n");    // Hello	World (탭 + 줄바꿈)
+printf("Hello\tWorld\n");   // Hello	World (tab + newline)
 printf("She said \"Hi\"\n"); // She said "Hi"
 printf("Path: C:\\Users\n"); // Path: C:\Users
 ```
@@ -320,7 +320,7 @@ char newline = '\xa';  // '\xa' == '\n' == ASCII 10
 ```text
 27 ÷ 2 = 13 … 1   ↑
 13 ÷ 2 =  6 … 1   │
- 6 ÷ 2 =  3 … 0   │  나머지를 아래에서 위로 읽는다
+ 6 ÷ 2 =  3 … 0   │  read the remainders from bottom to top
  3 ÷ 2 =  1 … 1   │
  1 ÷ 2 =  0 … 1   │
 27₁₀ = 11011₂
@@ -353,10 +353,10 @@ char newline = '\xa';  // '\xa' == '\n' == ASCII 10
 C에서 리터럴 접두사로 진법을 지정한다.
 
 ```c
-int dec = 27;      // 10진수
-int bin = 0b11011; // 2진수 (C23부터 표준, 이전에는 컴파일러 확장)
-int oct = 033;     // 8진수 (접두사 0)
-int hex = 0x1B;    // 16진수 (접두사 0x)
+int dec = 27;      // decimal
+int bin = 0b11011; // binary (standard since C23, compiler extension before)
+int oct = 033;     // octal (prefix 0)
+int hex = 0x1B;    // hexadecimal (prefix 0x)
 ```
 
 ### 2.2 정수의 2진 표현 (2의 보수)
@@ -368,9 +368,9 @@ int hex = 0x1B;    // 16진수 (접두사 0x)
 **-n을 구하는 법:** n을 2진수로 쓰고, 모든 비트를 반전(0은 1로, 1은 0으로)한 뒤, 그 결과에 1을 더한다.
 
 ```text
-+7 (8비트):    0 0 0 0 0 1 1 1
-비트 반전:      1 1 1 1 1 0 0 0
-1을 더함:       1 1 1 1 1 0 0 1  → -7
++7 in 8-bit:  0 0 0 0 0 1 1 1
+flip all bits: 1 1 1 1 1 0 0 0
+add 1:         1 1 1 1 1 0 0 1  → -7
 ```
 
 음수를 표현하는 방식에는 2의 보수 외에도 최상위 비트를 부호로만 쓰는 **부호화 절대치(sign-magnitude)** 와 모든 비트를 반전한 것을 음수로 쓰는 **1의 보수(one's complement)** 가 있다. 3비트로 비교하면 다음과 같다.
@@ -407,8 +407,8 @@ int hex = 0x1B;    // 16진수 (접두사 0x)
 
 ```text
     5 =   0000 0101  (0x05)
-   -3 =   1111 1101  (0xfd)   3 = 0000 0011을 반전하면 1111 1100, 1을 더하면 1111 1101
-        1 0000 0010           합, 9번째 비트의 올림 1을 버림
+   -3 =   1111 1101  (0xfd)   inverting 3 = 0000 0011 gives 1111 1100, adding 1 gives 1111 1101
+  sum = 1 0000 0010           the carry 1 into the 9th bit is discarded
     →     0000 0010 = 2  (0x02)
 ```
 
@@ -421,7 +421,7 @@ int hex = 0x1B;    // 16진수 (접두사 0x)
 실수는 **부호 비트 + 지수 + 가수**로 저장된다.
 
 ```text
-값 = (-1)^부호 × 1.가수 × 2^(지수 - 바이어스)
+Value = (-1)^sign × 1.mantissa × 2^(exponent - bias)
 ```
 
 | 타입 | 부호 | 지수 | 가수 | 총 비트 | 바이어스 |
@@ -440,8 +440,8 @@ int hex = 0x1B;    // 16진수 (접두사 0x)
 
 ```text
 23.625 = 10111.101₂ = 1.0111101₂ × 2⁴
-부호 | 지수 (131)  | 가수 (23비트)
-  0  | 1000 0011  | 0111 1010 0000 0000 0000 000
+sign | exponent (131) | mantissa (23 bits)
+  0  | 1000 0011      | 0111 1010 0000 0000 0000 000
 = 0100 0001 1011 1101 0000 0000 0000 0000₂ = 0x41BD0000
 ```
 
@@ -460,12 +460,12 @@ int hex = 0x1B;    // 16진수 (접두사 0x)
 **선언**은 컴파일러에게 변수의 데이터 타입과 이름을 알려주는 것이다. 같은 타입의 변수를 여러 개 선언하려면 콤마(`,`) 다음에 변수 이름을 나열한다. **초기화**는 변수가 메모리에 할당될 때 초기값을 지정하는 것이고, **대입**은 이미 만들어진 변수에 값을 저장하는 것이다.
 
 ```c
-int x;                // 선언: 값은 쓰레기 값(미정의)
-int y = 10;           // 선언 + 초기화
-x = 5;                // 대입
+int x;                // declaration: value is garbage (undefined)
+int y = 10;           // declaration + initialization
+x = 5;                // assignment
 
-int a, b, c;          // 복수 선언
-int m = 1, n = 2;    // 복수 선언 + 초기화
+int a, b, c;          // multiple declarations
+int m = 1, n = 2;    // multiple with initialization
 ```
 
 > **주의:** 초기화되지 않은 지역 변수에는 **쓰레기 값**(이전에 메모리에 있던 임의의 값)이 들어 있다. 이를 사용하면 **정의되지 않은 동작**이 발생하며, 컴파일러가 경고를 출력한다(Visual Studio는 컴파일 에러로 처리하기도 한다). 함수 밖에 선언한 전역 변수는 자동으로 0으로 초기화된다.
@@ -473,8 +473,8 @@ int m = 1, n = 2;    // 복수 선언 + 초기화
 초기값의 타입이 변수의 타입과 다르면 컴파일러가 변수의 타입에 맞춰 값을 자동 변환하여 초기화하지만 경고가 발생할 수 있다.
 
 ```c
-float rate = 0.2;     // ⚠ 0.2는 double → float으로 변환 (정밀도 손실 가능)
-int weight = 50.5;    // ⚠ 50.5는 double → int로 절삭 (데이터 손실)
+float rate = 0.2;     // ⚠ 0.2 is double → converted to float (possible precision loss)
+int weight = 50.5;    // ⚠ 50.5 is double → truncated to 50 (data loss)
 ```
 
 변수 선언문의 위치도 표준에 따라 다르다. ANSI C(C89/C90)는 선언문을 블록의 시작 부분, 즉 `{` 바로 다음에 다른 문장보다 먼저 쓰도록 제한한다. C99부터는 블록 안의 어디에서나 선언할 수 있으므로 변수를 처음 쓰는 곳 가까이에서 선언할 수 있다. 교재의 예제는 ANSI C의 규칙에 맞춰 함수의 앞부분에서 모든 변수를 선언한다.
@@ -500,10 +500,10 @@ int weight = 50.5;    // ⚠ 50.5는 double → int로 절삭 (데이터 손실)
 **이름 관례:**
 
 ```c
-int usage2019;       // 숫자 사용 가능 (첫 글자만 아니면)
-double _amount;      // _ 시작 가능
-double tax_rate;     // snake_case: 단어를 _로 연결
-double taxRate;      // camelCase: 연결되는 단어의 첫 글자를 대문자로
+int usage2019;       // digits OK (just not at start)
+double _amount;      // underscore start OK
+double tax_rate;     // snake_case: words separated by _
+double taxRate;      // camelCase: capitalize each new word
 ```
 
 ---
@@ -556,7 +556,7 @@ printf("10 %zu, 10L %zu, 10LL %zu, 1.5f %zu, 1.5 %zu, 1.5L %zu\n",
 #define HOURLY_WAGE 8350
 #define PI 3.141592
 
-wage = HOURLY_WAGE * hours;  // 전처리 후 → wage = 8350 * hours;
+wage = HOURLY_WAGE * hours;  // preprocessor replaces → wage = 8350 * hours;
 ```
 
 `hours`가 5이면 `wage`는 8350 × 5 = 41750이 된다.
@@ -564,18 +564,18 @@ wage = HOURLY_WAGE * hours;  // 전처리 후 → wage = 8350 * hours;
 **규칙과 주의사항:** `#define`문의 끝에는 세미콜론이 필요 없으며, 매크로 상수의 값은 변경할 수 없다.
 
 ```c
-#define MAX_SIZE 100    // ✅ 올바름: 끝에 세미콜론 없음
-#define MAX_SIZE 100;   // ❌ 잘못됨: 세미콜론까지 대치됨!
+#define MAX_SIZE 100    // [O] correct: no semicolon at end
+#define MAX_SIZE 100;   // [X] wrong: semicolon gets substituted too!
 
-// 잘못된 정의로 전처리하면:
-int arr[MAX_SIZE];  →  int arr[100;];  // 문법 오류!
+// After preprocessing with the wrong version:
+int arr[MAX_SIZE];  →  int arr[100;];  // syntax error!
 ```
 
 ```c
 #define HOURLY_WAGE 8350
-HOURLY_WAGE = 9000;           // ❌ 컴파일 에러: 매크로는 변수가 아님
-printf("HOURLY_WAGE\n");      // "HOURLY_WAGE" 출력: 문자열 내부는 대치 안 됨
-printf("%d\n", HOURLY_WAGE);  // 8350 출력: 식별자는 대치됨
+HOURLY_WAGE = 9000;           // [X] compile error: macro is not a variable
+printf("HOURLY_WAGE\n");      // prints "HOURLY_WAGE": strings are NOT replaced
+printf("%d\n", HOURLY_WAGE);  // prints 8350: identifier IS replaced
 ```
 
 매크로 상수의 정의에 `=`를 넣는 것도 흔한 실수이다. 전처리기는 이름 뒤의 텍스트 전체를 그대로 대치하므로, `#define WRONG_PI = 3.14159`를 정의하고 `WRONG_PI * r * r`을 쓰면 전처리 결과는 `= 3.14159 * r * r`이 된다. 컴파일러는 대치된 결과를 보고 오류를 보고하므로, 오류가 매크로를 사용한 줄에서 나타나고 원인은 정의에 있다.
@@ -599,13 +599,13 @@ Clang은 `expanded from macro` 안내로 매크로의 정의 위치를 함께 �
 const int BUF_SIZE = 256;
 const double PI = 3.141592;
 
-BUF_SIZE = 128;  // ❌ 컴파일 에러
+BUF_SIZE = 128;  // [X] compile error
 ```
 
 > **주의:** `const` 변수는 **선언 시 초기화** 해야 한다. 초기화하지 않은 선언이 C에서 문법 오류는 아니지만(C++에서는 오류이다), 이후 값을 대입할 수 없으므로 지역 변수이면 쓰레기 값이 그대로 남아 무용지물이 된다.
 > ```c
-> const int size;      // ❌ 무의미: 값을 저장할 수 없음
-> const int size = 10; // ✅ 올바름
+> const int size;      // [X] useless: can never assign a value
+> const int size = 10; // [O] correct
 > ```
 
 | 특성 | `#define` | `const` |
@@ -711,9 +711,9 @@ FLT_EPSILON = 1.192093e-07, DBL_EPSILON = 2.220446e-16
 ```c
 int no = 34, in = 124, out = 512;
 
-printf("%5d", no);      //    34   (우측 정렬, 폭 5)
-printf("%-6d", in);     // 124    (좌측 정렬, 폭 6)
-printf("%06d", out);    // 000512 (0 채움, 폭 6)
+printf("%5d", no);      //    34   (right-aligned, width 5)
+printf("%-6d", in);     // 124    (left-aligned, width 6)
+printf("%06d", out);    // 000512 (zero-padded, width 6)
 ```
 
 세 문장을 이어서 실행하면 줄바꿈 없이 이어 붙어 `   34124   000512`가 출력된다.
@@ -724,7 +724,7 @@ printf("%06d", out);    // 000512 (0 채움, 폭 6)
 
 ```c
 int num;
-scanf("%d", &num);  // & (주소 연산자)가 반드시 필요
+scanf("%d", &num);  // & (address-of operator) is required
 ```
 
 > **주의:** `scanf`는 변수 자체가 아닌 **주소** (`&num`)를 요구한다. `&`를 빠뜨리면 정의되지 않은 동작이 발생한다.
@@ -755,13 +755,13 @@ graph LR
 ```c
 int a = 5;
 double b = 2.0;
-double result = a + b;  // a가 double로 승격 → 7.0
+double result = a + b;  // a promoted to double → 7.0
 
 double weight;
 weight = 50;  // 50 (int) → 50.0 (double)
 
 int length;
-length = 12.5; // ⚠ 12.5 (double) → 12 (int), 데이터 손실!
+length = 12.5; // ⚠ 12.5 (double) → 12 (int), data loss!
 ```
 
 ### 6.2 명시적 형 변환 (캐스팅)
@@ -832,9 +832,9 @@ printf("double: %d\n", sizeof(double));  // 8
 ```c
 int a;
 printf("%d\n", sizeof(a));      // 4
-printf("%d\n", sizeof(3.14));   // 8  (double 리터럴)
-printf("%d\n", sizeof(0.25f));  // 4  (float 리터럴)
-printf("%d\n", sizeof('x'));    // 4  (C에서 문자 리터럴은 int!)
+printf("%d\n", sizeof(3.14));   // 8  (double literal)
+printf("%d\n", sizeof(0.25f));  // 4  (float literal)
+printf("%d\n", sizeof('x'));    // 4  (char literal is int in C!)
 printf("%d\n", sizeof("x"));   // 2  ('x' + '\0')
 ```
 

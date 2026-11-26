@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5, 6
 
@@ -59,7 +59,7 @@ A conditional statement executes a statement if a given criterion is met and oth
 
 `if` is used when only the case where the condition is true matters. If the result of the condition is true, the next statement is executed; if false, that statement is skipped ([Chapter 5, Section 2.1](Concepts_Lecture.md#21-if)).
 
-```c
+```c wide-ok
 if (age > 19)
     printf("성인! \n");    // executed only when the condition is true
 printf("if와 상관없이 무조건 수행되는 코드 \n");
@@ -73,7 +73,7 @@ If `age` is 20 or more, both lines are printed; if 19 or less, only the second l
 
 `if-else` is used when there is work to do both when the condition is true and when it is false ([Chapter 5, Section 2.3](Concepts_Lecture.md#23-if-else)).
 
-```c
+```c wide-ok
 if (age > 19)
     printf("성인! \n");      // executed when the condition is true
 else
@@ -104,7 +104,7 @@ When an `else` contains only one `if` statement, the braces can be removed and i
 
 `if` and `else` execute only the single statement that follows. To print "성인!" and set the fee `price` to 3000 won for ages 20 and above, and to print "청소년!" and set the fee to 1600 won for ages below 20, the two statements of each case must be grouped in braces `{ }` into a **compound statement** ([Chapter 5, Section 2.2](Concepts_Lecture.md#22-compound-statements--blocks)).
 
-```c
+```c wide-ok
 if (age > 19) {
     printf("성인! \n");
     price = 3000;
@@ -128,7 +128,7 @@ printf("if와 상관없이 수행되는 코드 \n");
 
 The `switch` statement chooses the clause (case) to execute according to the value of a reference value (an integer expression). It jumps to the case label equal to the value of the expression and executes the statements after it, leaving the `switch` when it meets `break` ([Chapter 5, Section 2.7](Concepts_Lecture.md#27-switch)).
 
-```c
+```c wide-ok
 switch (n) {
 case 1:
     printf("n이 1인 경우 실행되는 영역\n");
@@ -162,7 +162,7 @@ flowchart TD
 
 The following are the results for the same n = 2 with and without `break`, and for n = 7, which matches no case.
 
-```text
+```text wide-ok
 [with break, n = 2]
 n이 2인 경우 실행되는 영역
 [without break, n = 2]
@@ -518,14 +518,14 @@ The `for` statement expresses the three elements together inside its parentheses
  while statement                 for statement
 ┌──────────────────────┐        ┌───────────────────────────────┐
 │ int i;               │        │ int i;                        │
-│ i = 0;         ①     │        │ for (i = 0; i < 10; i++)      │
-│ while (i < 10) ②     │        │      ①       ②       ③       │
+│ i = 0;         (1)   │        │ for (i = 0; i < 10; i++)      │
+│ while (i < 10) (2)   │        │      (1)     (2)     (3)      │
 │ {                    │        │ {                             │
 │   printf(...);       │        │   printf(...);                │
-│   i++;         ③     │        │ }                             │
+│   i++;         (3)   │        │ }                             │
 │ }                    │        │                               │
 └──────────────────────┘        └───────────────────────────────┘
- ① start value (init)   ② condition   ③ step size (update)
+ (1) start value (init)   (2) condition   (3) step size (update)
 ```
 
 *Figure 2. Positions of the three elements of a loop in while and for statements*
@@ -633,7 +633,7 @@ With `i = 5`, the condition `5 < 4` of `while` is false, so its body never runs,
 
 **Solution:** Initialize the accumulator `sum`, which stores the sum, to 0, and repeat `sum += i` while increasing `i` from 1 to 5 ([Chapter 5, Section 5.1](Concepts_Lecture.md#51-counter-and-accumulator)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -649,7 +649,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 1~5까지 합: 15
 ```
 
@@ -904,7 +904,7 @@ int main(void)
 
 1. **Compound statements:** In the following code, write the output and the value of `price` when `age` is 15.
 
-   ```c
+   ```c wide-ok
    int price = 0;
    if (age > 19)
        printf("성인! \n");

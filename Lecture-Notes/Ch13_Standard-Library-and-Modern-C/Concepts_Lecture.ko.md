@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 표준 헤더를 용도별로 구분하고 호스트 환경과 프리스탠딩 환경의 차이를 설명할 수 있다
@@ -97,7 +97,7 @@ C 프로그램이 쓰는 기능은 언어 자체와 **표준 라이브러리(sta
 프리스탠딩 구현이 반드시 제공해야 하는 헤더는 타입과 매크로가 중심인 `<float.h>`, `<iso646.h>`, `<limits.h>`, `<stdalign.h>`, `<stdarg.h>`, `<stdbool.h>`, `<stddef.h>`, `<stdint.h>`, `<stdnoreturn.h>`이다[1, 4절]. C23은 여기에 `<stdbit.h>`와 `<string.h>`의 대부분의 함수를 추가하였다[2, 4절]. 구현이 어느 환경인지는 미리 정의된 매크로 `__STDC_HOSTED__`로 구분한다.
 
 ```text
-$ clang -std=c17 hosted.c -o hosted && ./hosted     # __STDC_HOSTED__를 출력하는 프로그램
+$ clang -std=c17 hosted.c -o hosted && ./hosted     # a program that prints __STDC_HOSTED__
 1
 $ clang -std=c17 -ffreestanding hosted.c -o hosted && ./hosted
 0
@@ -146,10 +146,10 @@ $ clang -std=c17 -ffreestanding hosted.c -o hosted && ./hosted
 #include <stdio.h>
 
 int main(void) {
-    printf("%zu %zu\n", sizeof(int32_t), sizeof(int_fast16_t));   // 4 2 (이 플랫폼)
+    printf("%zu %zu\n", sizeof(int32_t), sizeof(int_fast16_t));   // 4 2 (this platform)
     uint8_t small = 255;
-    small = small + 1;                                            // 0으로 순환한다
-    int64_t big = INT64_C(9000000000);                            // 64비트 상수를 보장한다
+    small = small + 1;                                            // wraps around to 0
+    int64_t big = INT64_C(9000000000);                            // guarantees a 64-bit constant
     printf("%d %lld\n", small, (long long)big);                   // 0 9000000000
     return 0;
 }
@@ -173,7 +173,7 @@ int main(void) {
     int32_t  n;
 
     printf("celsius = %" PRId32 ", bytes = %" PRIu64 "\n", celsius, bytes);
-    printf("PRId32 is \"%s\", PRIu64 is \"%s\"\n", PRId32, PRIu64);   // "d", "llu" (이 플랫폼)
+    printf("PRId32 is \"%s\", PRIu64 is \"%s\"\n", PRId32, PRIu64);   // "d", "llu" (this platform)
     if (sscanf("1234", "%" SCNd32, &n) == 1) {
         printf("n = %" PRId32 "\n", n);                                // n = 1234
     }
@@ -198,8 +198,8 @@ int main(void) {
 `size_t`는 부호가 없으므로 0에서 1을 빼면 최댓값 `SIZE_MAX`(`<stdint.h>`)로 순환한다. 다음 역방향 반복문은 `i`가 0이 된 뒤 `i--`가 `SIZE_MAX`가 되어 끝나지 않고 범위를 벗어난다.
 
 ```c
-for (size_t i = n - 1; i >= 0; i--) { printf("%d ", a[i]); }     // 버그: i >= 0은 언제나 참이다
-for (size_t i = n; i > 0; i--)      { printf("%d ", a[i - 1]); }  // 올바른 형태
+for (size_t i = n - 1; i >= 0; i--) { printf("%d ", a[i]); }     // bug: i >= 0 is always true
+for (size_t i = n; i > 0; i--)      { printf("%d ", a[i - 1]); }  // correct form
 ```
 
 부호 있는 수와 비교할 때도 문제가 생긴다. `int d = -1; if (d < sizeof(int))`에서 `d`는 `size_t`로 변환되어 매우 큰 값이 되므로 조건은 거짓이다. 컴파일러는 `-Wextra`에서 경고한다(`warning: comparison of integers of different signs: 'int' and 'unsigned long'`).
@@ -216,7 +216,7 @@ printf("%zu %zu %zu %zu\n", sizeof(struct record),          // 16
 ```
 
 ```text
-struct record (int 4바이트, double 8바이트 정렬인 플랫폼)
+struct record (a platform with 4-byte int and 8-byte double alignment)
 
 offset  0     1  2  3    4  5  6  7    8 .................. 15
       ┌─────┬──────────┬─────────────┬────────────────────────┐
@@ -249,13 +249,13 @@ C23은 부호 있는 정수를 2의 보수로 고정하여 `INT_MIN`이 `-INT_MA
 C99는 `_Bool` 키워드와 `<stdbool.h>`의 매크로 `bool`, `true`, `false`를 추가하였고, C23부터는 `bool`, `true`, `false`가 그 자체로 키워드이다[2, 6.4.1절]. `bool`의 특징은 변환 규칙이다. 스칼라 값을 `bool`로 변환하면 그 값이 0과 같을 때만 0이고 그 밖에는 1이다[1, 6.3.1.2절]. 그래서 `unsigned char`로 변환하면 0이 되는 256이 `bool`로는 1이 된다. 과거의 코드는 `int`로 참과 거짓을 나타냈으며([4장 5.4절](../Ch04_Operators/Concepts_Lecture.ko.md#54-c에서의-참과-거짓)), `int` 변수에 `if (flag == true)`를 쓰면 `flag`가 2일 때 거짓이 되므로 `if (flag)`로 쓴다.
 
 ```c
-#include <stdbool.h>                      // C17까지 필요하다
+#include <stdbool.h>                      // needed through C17
 #include <stdio.h>
 
 int main(void) {
     int big = 256;
-    bool as_bool = big;                   // 1 (0이 아닌 값)
-    unsigned char as_char = (unsigned char)big;   // 0 (CHAR_BIT가 8일 때)
+    bool as_bool = big;                   // 1 (a nonzero value)
+    unsigned char as_char = (unsigned char)big;   // 0 (when CHAR_BIT is 8)
     printf("%d %d %d\n", as_bool, as_char, true);   // 1 0 1
     return 0;
 }
@@ -279,10 +279,10 @@ int n = snprintf(buf, sizeof buf, "Hello, %s!", "World");   // n = 13, buf = "He
 ```
 
 ```text
-"Hello, World!"는 13문자이지만 buf는 8바이트이다.
+"Hello, World!" has 13 characters, but buf is 8 bytes.
 
        [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]
-buf:   'H'  'e'  'l'  'l'  'o'  ','  ' '  '\0'     반환값 13 >= sizeof buf(8) 이므로 잘림
+buf:   'H'  'e'  'l'  'l'  'o'  ','  ' '  '\0'     return value 13 >= sizeof buf (8): truncated
 ```
 
 *그림 2. 공간이 부족할 때 `snprintf`가 쓴 내용과 반환값*
@@ -302,14 +302,14 @@ if (s != NULL) { snprintf(s, (size_t)len + 1, "%d-%s", 2024, "spring"); }
 `scanf("%d", &n)`은 숫자가 아닌 입력에서 변환에 실패하고 그 문자를 입력 버퍼에 남겨 두므로, 반복문에서 쓰면 같은 문자에서 계속 실패한다. 줄 단위로 읽고([9장 4.2절](../Ch09_Strings/Concepts_Lecture.ko.md#42-fgets--gets_s)) 읽은 줄을 `sscanf`로 해석하면, 잘못된 줄은 이미 소비되었으므로 다음 줄을 읽기만 하면 된다.
 
 ```c
-// 한 줄을 읽어 개행을 제거한다. 성공 1, 입력 끝 0, 줄이 너무 길면 -1을 반환한다.
+// Reads one line and removes the newline. Returns 1 on success, 0 at end of input, -1 if the line was too long.
 static int read_line(char *buf, int size) {
     if (fgets(buf, size, stdin) == NULL) { return 0; }
-    size_t len = strcspn(buf, "\n");               // 개행의 위치 (없으면 문자열 끝)
+    size_t len = strcspn(buf, "\n");               // position of the newline (or end of string)
     if (buf[len] == '\n') { buf[len] = '\0'; return 1; }
-    if (feof(stdin)) { return 1; }                 // 입력의 마지막 줄에는 개행이 없을 수 있다
+    if (feof(stdin)) { return 1; }                 // the last line of input may have no newline
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) { } // 줄의 나머지를 버린다
+    while ((c = getchar()) != '\n' && c != EOF) { } // discards the rest of the line
     return -1;
 }
 ```
@@ -399,14 +399,14 @@ header.c:5:37: note: expression evaluates to '8 == 5'
 
 ```c
 static int sum(int count, ...) {
-    va_list ap;                     // 다음 인수의 위치를 기억하는 객체
+    va_list ap;                     // holds the position of the next argument
     int total = 0;
 
-    va_start(ap, count);            // 마지막 고정 매개변수를 기준으로 시작한다
+    va_start(ap, count);            // starts from the last fixed parameter
     for (int i = 0; i < count; i++) {
-        total += va_arg(ap, int);   // 다음 인수를 int로 꺼낸다
+        total += va_arg(ap, int);   // extracts the next argument as int
     }
-    va_end(ap);                     // 정리한다
+    va_end(ap);                     // cleans up
     return total;
 }
 ```
@@ -414,11 +414,11 @@ static int sum(int count, ...) {
 ```text
 sum(3, 10, 20, 30)
 
-count = 3, 가변 인수: [ 10 ][ 20 ][ 30 ]
-va_start 직후       ap ┘
-va_arg 1회: 10 반환, ap는 20으로 이동    total = 10
-va_arg 2회: 20 반환, ap는 30으로 이동    total = 30
-va_arg 3회: 30 반환                       total = 60
+count = 3, variadic arguments: [ 10 ][ 20 ][ 30 ]
+just after va_start          ap ┘
+va_arg 1st call: returns 10, ap moves to 20    total = 10
+va_arg 2nd call: returns 20, ap moves to 30    total = 30
+va_arg 3rd call: returns 30                    total = 60
 ```
 
 *그림 3. `va_start`와 `va_arg`로 가변 인수를 꺼내는 과정의 개념적 모형*
@@ -449,8 +449,8 @@ clock_t c0 = clock();
 struct timespec w0, w1;
 timespec_get(&w0, TIME_UTC);
 
-busy();                              // 약 0.5초 계산하는 함수
-sleep(1);                            // 1초 대기, CPU를 쓰지 않는다
+busy();                              // about 0.5 seconds of computation
+sleep(1);                            // waits 1 second, using no CPU
 
 clock_t c1 = clock();
 timespec_get(&w1, TIME_UTC);
@@ -484,7 +484,7 @@ struct permission {
     unsigned int execute : 1;
     unsigned int level   : 4;
 };
-struct permission p = {1, 0, 1, 5};   // sizeof(p) = 4, 첫 바이트 = 0x2d (이 플랫폼)
+struct permission p = {1, 0, 1, 5};   // sizeof(p) = 4, first byte = 0x2d (this platform)
 ```
 
 ```text
@@ -542,12 +542,12 @@ int vol(volatile int *p)  { int a = *p; int b = *p; return a + b; }
 
 ```text
 _plain:
-    ldr  w8, [x0]         ; *p를 한 번만 읽는다
-    lsl  w0, w8, #1       ; 그 값을 2배 한다
+    ldr  w8, [x0]         ; reads *p only once
+    lsl  w0, w8, #1       ; doubles that value
     ret
 _vol:
-    ldr  w8, [x0]         ; 첫 번째 읽기
-    ldr  w9, [x0]         ; 두 번째 읽기
+    ldr  w8, [x0]         ; first read
+    ldr  w9, [x0]         ; second read
     add  w0, w9, w8
     ret
 ```
@@ -563,10 +563,10 @@ _vol:
 정렬은 구조체 패딩의 원인이다([10장 1.2절](../Ch10_Structures/Concepts_Lecture.ko.md#12-구조체-정의)). C11의 `_Alignof`와 `_Alignas`(매크로 `alignof`, `alignas`는 `<stdalign.h>`)로 정렬을 조회하고 지정하며, C23에서는 `alignas`와 `alignof`가 키워드이다[2, 6.4.1절]. `malloc`이 돌려주는 주소는 `max_align_t`의 정렬을 만족하고[1, 7.22.3절], C11의 `aligned_alloc(정렬, 크기)`은 더 큰 정렬의 블록을 돌려준다. C11은 크기가 정렬의 배수일 것을 요구했으므로[1, 7.22.3.1절] 크기를 배수로 맞추어 호출한다. Visual Studio는 `aligned_alloc` 대신 `_aligned_malloc`을 제공한다[8].
 
 ```c
-printf("%zu %zu %zu\n", alignof(int), alignof(double), alignof(max_align_t));   // 4 8 8 (이 플랫폼)
+printf("%zu %zu %zu\n", alignof(int), alignof(double), alignof(max_align_t));   // 4 8 8 (this platform)
 alignas(16) int aligned = 7;
 printf("%zu\n", (size_t)&aligned % 16);                                          // 0
-double *p = aligned_alloc(64, 64 * 4);                                           // 64바이트 경계
+double *p = aligned_alloc(64, 64 * 4);                                           // 64-byte boundary
 ```
 
 정렬되지 않은 객체를 접근하면 동작이 정의되지 않는다. 다음의 `*(int *)(buffer + 1)`은 4의 배수가 아닌 주소에서 `int`를 읽는다.
@@ -581,9 +581,9 @@ int read                   └─ *(int *)(buffer + 1) ──┘
 
 ```c
 unsigned char buffer[8] = {1, 2, 3, 4, 5, 6, 7, 8};
-int bad = *(int *)(buffer + 1);            // 정의되지 않은 동작
+int bad = *(int *)(buffer + 1);            // undefined behavior
 int good;
-memcpy(&good, buffer + 1, sizeof good);    // 정의된 동작
+memcpy(&good, buffer + 1, sizeof good);    // defined behavior
 ```
 
 ```text
@@ -654,8 +654,8 @@ flowchart TD
 int a = INT_MAX;
 unsigned int b = UINT_MAX;
 
-b = b + 1;     // 정의된 동작: 0으로 순환
-a = a + 1;     // 정의되지 않은 동작: 부호 있는 오버플로
+b = b + 1;     // defined behavior: wraps around to 0
+a = a + 1;     // undefined behavior: signed overflow
 ```
 
 `-fsanitize=undefined`로 컴파일하면 UndefinedBehaviorSanitizer(UBSan)가 다음 메시지로 보고하고 기본 설정에서는 실행을 계속한다[14]. 도구는 [11장 3.4절](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md#34-오류를-찾는-도구)과 [12장 9.1절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#91-컴파일-옵션)을 참고한다.
@@ -717,7 +717,7 @@ int set_both(int *a, float *b) {
     *b = 2.0f;
     return *a;
 }
-// set_both(&x, (float *)&x)는 정의되지 않은 동작이다
+// set_both(&x, (float *)&x) is undefined behavior
 ```
 
 ```text
@@ -739,18 +739,18 @@ $ clang -std=c17 -O2 -fno-strict-aliasing aliasing.c -o a && ./a
 int always(int x) { return x + 1 > x; }
 
 int check(int *p) {
-    int value = *p;        // 이미 역참조했다
-    if (p == NULL) { return -1; }     // 항상 거짓으로 간주된다
+    int value = *p;        // already dereferenced
+    if (p == NULL) { return -1; }     // treated as always false
     return value;
 }
 ```
 
 ```text
-_always:                   ; clang -O2, arm64 (주석은 추가한 것이다)
-    mov  w0, #1            ; 항상 1을 반환한다. 비교 코드가 없다
+_always:                   ; clang -O2, arm64 (comments added)
+    mov  w0, #1            ; always returns 1, with no comparison code
     ret
 _check:
-    ldr  w0, [x0]          ; *p를 읽고 반환한다. NULL 검사가 없다
+    ldr  w0, [x0]          ; reads *p and returns, with no NULL check
     ret
 ```
 
@@ -828,10 +828,10 @@ static const char *const name[MONTH_COUNT] = { [MAR] = "March", [JAN] = "January
 static int squared(struct point p) { return p.x * p.x + p.y * p.y; }
 
 int main(void) {
-    struct student s = { .id = 2024001, .name = "Kim" };   // gpa는 0.0이 된다
+    struct student s = { .id = 2024001, .name = "Kim" };   // gpa becomes 0.0
     int arr[6] = { [0] = 1, [4] = 5, 6 };                  // {1, 0, 0, 0, 5, 6}
-    int d = squared((struct point){3, 4});                 // 복합 리터럴을 인수로 전달한다 (d = 25)
-    int *p = (int[]){10, 20, 30};                          // 이 블록 안에서 유효하다
+    int d = squared((struct point){3, 4});                 // passes a compound literal as an argument (d = 25)
+    int *p = (int[]){10, 20, 30};                          // valid within this block
     printf("%s %d %.1f %d %d %d %s\n", s.name, s.id, s.gpa, arr[5], d, p[2], name[MAR]);
     return 0;                                              // Kim 2024001 0.0 6 25 30 March
 }
@@ -844,7 +844,7 @@ int main(void) {
 ```c
 struct message {
     size_t length;
-    char   text[];              // sizeof(struct message)에 포함되지 않는다
+    char   text[];              // not included in sizeof(struct message)
 };
 struct message *m = malloc(sizeof *m + strlen("hello") + 1);
 ```
@@ -853,7 +853,7 @@ struct message *m = malloc(sizeof *m + strlen("hello") + 1);
 m ──► ┌─────────────┬───────────────────────┐
       │ length = 5  │ 'h' 'e' 'l' 'l' 'o' \0│
       └─────────────┴───────────────────────┘
-       sizeof(*m) = 8        text[] 공간
+       sizeof(*m) = 8        space for text[]
 ```
 
 *그림 11. 유연 배열 멤버를 가진 구조체의 메모리 배치 (`size_t`가 8바이트인 경우)*
@@ -864,8 +864,8 @@ m ──► ┌─────────────┬───────�
 
 ```c
 size_t n = 4;
-int vla[n];                      // sizeof vla는 16 (실행 시점에 계산된다)
-long sum_grid(size_t rows, size_t cols, int grid[rows][cols]);   // 열 크기를 인수로 전달한다
+int vla[n];                      // sizeof vla is 16 (computed at run time)
+long sum_grid(size_t rows, size_t cols, int grid[rows][cols]);   // passes the column count as an argument
 ```
 
 지역 VLA는 일반적으로 스택에 놓이므로 큰 `n`은 스택 오버플로를 일으키고 실패를 감지할 방법이 없어, 크기가 입력에 달리면 동적 할당이 안전하다([11장 1.4절](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md#14-동적-메모리가-필요한-경우)). VLA는 C11에서 선택 사항이 되었고, C23은 가변 수정 타입(VLA를 가리키는 포인터처럼 타입의 크기가 실행 중에 정해지는 타입)을 필수로 정했지만 자동 저장 기간의 VLA는 여전히 선택 사항이다[2, 6.10.10.4절].
@@ -878,7 +878,7 @@ long sum_grid(size_t rows, size_t cols, int grid[rows][cols]);   // 열 크기�
 static inline int square(int n) { return n * n; }
 
 static void add_arrays(size_t n, int *restrict dst, const int *restrict src) {
-    for (size_t i = 0; i < n; i++) { dst[i] += src[i]; }   // 겹치지 않음을 전제로 최적화된다
+    for (size_t i = 0; i < n; i++) { dst[i] += src[i]; }   // optimized assuming no overlap
 }
 ```
 
@@ -906,17 +906,17 @@ printf("%s %s %s %s\n", TYPE_NAME(1), TYPE_NAME(1.0), TYPE_NAME(text), TYPE_NAME
 noreturn static void fail(const char *why) { fprintf(stderr, "%s\n", why); exit(EXIT_FAILURE); }
 
 struct value {
-    int kind;                // 0 = 정수, 1 = 실수
-    union { long integer; double real; };   // 이름 없는 공용체
+    int kind;                // 0 = integer, 1 = real
+    union { long integer; double real; };   // anonymous union
 };
-struct value v = { .kind = 1, .real = 2.5 };   // v.real로 바로 접근한다
+struct value v = { .kind = 1, .real = 2.5 };   // accessed directly as v.real
 ```
 
 C11은 동시성을 언어에 도입하였다. `_Thread_local`은 스레드별 변수를 만든다. `_Atomic` 타입 지정자와 `<stdatomic.h>`는 **원자적(atomic)** 객체와 연산, 곧 다른 스레드가 중간 상태를 볼 수 없도록 한 번에 이루어지는 읽기와 쓰기를 제공한다. 다음 프로그램은 네 스레드가 일반 변수와 원자적 변수를 각각 100만 번씩 증가시킨다. macOS에는 C11의 `<threads.h>`가 없으므로, 스레드를 만드는 부분만 C 표준이 아닌 POSIX의 `pthread_create`와 `pthread_join`을 쓴다[23].
 
 ```c
-static int plain_count = 0;              // 데이터 경합이 일어나는 변수
-static atomic_int atomic_count = 0;      // 원자적 변수
+static int plain_count = 0;              // variable with a data race
+static atomic_int atomic_count = 0;      // atomic variable
 
 static void *worker(void *arg) {
     (void)arg;
@@ -926,11 +926,11 @@ static void *worker(void *arg) {
     }
     return NULL;
 }
-// main은 pthread_create로 worker 네 개를 실행하고 pthread_join으로 기다린다
+// main starts four workers with pthread_create and waits with pthread_join
 ```
 
 ```text
-plain  = 1785467       실행마다 달라지는 값 (한 실행의 예)
+plain  = 1785467       a value that varies per run (example from one run)
 atomic = 4000000
 ```
 
@@ -959,20 +959,20 @@ C17(ISO/IEC 9899:2018)은 C11의 결함 보고를 반영한 표준으로 새로�
 C23(ISO/IEC 9899:2024)은 키워드 정비, 널 포인터 상수, 컴파일 시점 상수, 타입 추론 등 많은 기능을 추가하였다[2], [25]. 아래 코드는 C23 모드(`-std=c23`)로 컴파일해야 하며, 전체 코드는 [Example_C23Features.c](Example_C23Features.c)이다.
 
 ```c
-// 키워드: bool, true, false, static_assert, alignas, alignof, thread_local
-// nullptr은 널 포인터 상수이고 타입은 nullptr_t이다 (가변 인수에도 안전하다)
+// keywords: bool, true, false, static_assert, alignas, alignof, thread_local
+// nullptr is the null pointer constant and has type nullptr_t (also safe in variadic calls)
 int *p = nullptr;
 bool ok = true;
 
-auto n = 10;                         // 타입 추론: n은 int
-typeof(n) m = 3;                     // n과 같은 타입
-typeof_unqual(const int) w = 4;      // const를 뺀 int
+auto n = 10;                         // type inference: n is int
+typeof(n) m = 3;                     // same type as n
+typeof_unqual(const int) w = 4;      // int without const
 
-constexpr int BUFFER_SIZE = 16;      // 컴파일 시점 상수 (배열 크기, case 라벨에 쓸 수 있다)
-static_assert(BUFFER_SIZE == 16);    // 메시지를 생략할 수 있다
-char buffer[BUFFER_SIZE] = {};       // {}는 모두 0으로 초기화한다
+constexpr int BUFFER_SIZE = 16;      // compile-time constant (usable for array sizes and case labels)
+static_assert(BUFFER_SIZE == 16);    // the message may be omitted
+char buffer[BUFFER_SIZE] = {};       // {} initializes everything to 0
 
-unsigned mask = 0b1010'1010u;        // 2진 리터럴과 자릿수 구분자
+unsigned mask = 0b1010'1010u;        // binary literal and digit separator
 enum color : unsigned char { RED, GREEN, BLUE };   // sizeof(enum color) == 1
 ```
 
@@ -981,7 +981,7 @@ enum color : unsigned char { RED, GREEN, BLUE };   // sizeof(enum color) == 1
 `auto`는 C23에서 초기값으로부터 타입을 추론한다([12장 8.5절](../Ch12_File-IO-and-Program-Structure/Concepts_Lecture.ko.md#85-그-밖의-저장-부류-지정자)). C23에서 `int f();`는 `int f(void);`와 같아 매개변수가 없는 함수를 선언하며, `int f(a, b) int a; int b; { ... }` 같은 K&R 함수 정의는 제거되었다([6장 2.4절](../Ch06_Functions/Concepts_Lecture.ko.md#24-매개변수와-인수)).
 
 ```c
-[[nodiscard]] int compute(int x);                   // 반환값을 버리면 경고한다
+[[nodiscard]] int compute(int x);                   // warns if the return value is discarded
 [[deprecated("use compute instead")]] int old(int x);
 [[noreturn]] void die(const char *message);
 
@@ -989,7 +989,7 @@ void example(int n, [[maybe_unused]] void *ctx) {
     switch (n) {
     case 1:
         puts("one");
-        [[fallthrough]];                            // 의도적으로 다음 case로 이어진다
+        [[fallthrough]];                            // intentional fallthrough to the next case
     default:
         puts("done");
     }
@@ -1001,16 +1001,16 @@ void example(int n, [[maybe_unused]] void *ctx) {
 ```c
 static const unsigned char self[] = {
 #embed __FILE__ limit(3)
-};                                      // 이 파일의 앞 3바이트
+};                                      // the first 3 bytes of this file
 
 #include <stdckdint.h>
 int sum;
-if (ckd_add(&sum, 2147483647, 1)) {     // 오버플로를 bool로 알리고 순환된 값을 저장한다
+if (ckd_add(&sum, 2147483647, 1)) {     // reports overflow as a bool and stores the wrapped value
     printf("overflow, wrapped = %d\n", sum);   // overflow, wrapped = -2147483648
 }
 
-unsigned _BitInt(4) nibble = 15uwb;     // N비트 정수 타입, 리터럴 접미사 uwb
-nibble = nibble + 1uwb;                 // 0으로 순환한다
+unsigned _BitInt(4) nibble = 15uwb;     // an N-bit integer type, literal suffix uwb
+nibble = nibble + 1uwb;                 // wraps around to 0
 ```
 
 `<stdbit.h>`의 `stdc_count_ones`, 새로 표준에 들어온 함수와 매크로인 `strdup`, `strndup`, `memccpy`, `memset_explicit`, `timegm`, `unreachable`, 2의 보수 의무화, `realloc`의 크기 0 호출을 정의되지 않은 동작으로 바꾼 것([11장 2.3절](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md#23-realloc)), 매개변수 이름 생략, 선언 앞의 라벨, `printf`의 `%b` 등도 있다[2, 부록 M].

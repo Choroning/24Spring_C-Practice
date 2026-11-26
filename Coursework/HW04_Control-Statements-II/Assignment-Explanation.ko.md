@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5
 
@@ -55,17 +55,17 @@
 
 ```text
 Coursework/HW04_Control-Statements-II/
-├── Assignment-Explanation.ko.md   # 이 문서 (한국어)
-├── Assignment-Explanation.md      # 이 문서 (영어)
+├── Assignment-Explanation.ko.md   # this document (Korean)
+├── Assignment-Explanation.md      # this document (English)
 ├── Original/
-│   ├── Assignment.ko.md           # 과제 안내문 (한국어)
-│   └── Assignment.md              # 과제 안내문 (영어)
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
-    ├── Q1.c                       # 문제 1: 영문자 변환
-    ├── Q2.c                       # 문제 2: 홀짝 판별
-    ├── Q3.c                       # 문제 3: if문을 switch문으로 변환
-    ├── Q4.c                       # 문제 4: switch문을 if문으로 변환
-    └── Q5.c                       # 문제 5: switch 분기 연습
+    ├── Q1.c                       # Problem 1: letter conversion
+    ├── Q2.c                       # Problem 2: odd or even
+    ├── Q3.c                       # Problem 3: if statement to switch statement
+    ├── Q4.c                       # Problem 4: switch statement to if statement
+    └── Q5.c                       # Problem 5: switch branching practice
 ```
 
 *그림 1. HW4 과제의 디렉토리 구성*
@@ -122,8 +122,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q1.c
- * @brief   Q1. 영문자 변환
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Letter Case Conversion
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -203,8 +203,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q2.c
- * @brief   Q2. 홀짝 판별
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Odd or Even
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -290,8 +290,8 @@ int main()
 ```c
 /**
  * @file    A10303-2_C05Q3.c
- * @brief   Q3. switch-if 변환 (1)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. switch-to-if Conversion (1)
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -417,8 +417,8 @@ int main()
 ```c
 /**
  * @file    A10303-2_C05Q4.c
- * @brief   Q4. switch-if 변환 (2)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. switch-to-if Conversion (2)
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -520,8 +520,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q5.c
- * @brief   Q5. switch 분기 연습
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q5. switch Branching Practice
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 

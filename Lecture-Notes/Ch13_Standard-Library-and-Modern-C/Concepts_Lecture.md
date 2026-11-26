@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Classify the standard headers by purpose and explain the difference between hosted and freestanding environments

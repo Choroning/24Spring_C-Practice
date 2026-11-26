@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 9
 
@@ -465,7 +465,7 @@ int main()
 │ a = 3    │ ──copy───▶  │ x = 3→5  │
 │ b = 5    │ ──copy───▶  │ y = 5→3  │
 └──────────┘             │ temp = 3 │
- unchanged                └──────────┘
+ unchanged               └──────────┘
                           freed on return
 ```
 

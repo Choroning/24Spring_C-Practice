@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5
 
@@ -122,8 +122,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q1.c
- * @brief   Q1. 영문자 변환
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Letter Case Conversion
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -203,8 +203,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q2.c
- * @brief   Q2. 홀짝 판별
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Odd or Even
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -290,8 +290,8 @@ int main()
 ```c
 /**
  * @file    A10303-2_C05Q3.c
- * @brief   Q3. switch-if 변환 (1)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. switch-to-if Conversion (1)
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -417,8 +417,8 @@ int main()
 ```c
 /**
  * @file    A10303-2_C05Q4.c
- * @brief   Q4. switch-if 변환 (2)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. switch-to-if Conversion (2)
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 
@@ -520,8 +520,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-2_C05Q5.c
- * @brief   Q5. switch 분기 연습
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q5. switch Branching Practice
+ * @author  Cheolwon Park
  * @date    2024-04-05
  */
 

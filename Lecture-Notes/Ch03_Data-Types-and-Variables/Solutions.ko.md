@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -248,7 +248,7 @@
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -273,7 +273,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 한 변의 길이 ? 5
 정사각형의 넓이: 25
 정사각형의 둘레: 20
@@ -301,7 +301,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -327,7 +327,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 가로의 길이? 10
 세로의 길이? 20
 직사각형의 넓이: 200
@@ -356,7 +356,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -381,13 +381,13 @@ int main(void)
 
 **실행 결과:** 첫 번째 실행은 실행 예시의 입력이다. 두 번째 실행은 질량과 높이를 실수로 입력한 경우이며, 9.8 × 2.5 × 1.2 = 29.4이다.
 
-```text
+```text wide-ok
 질량(kg)? 10
 높이(m)? 5
 위치에너지: 490.00 J
 ```
 
-```text
+```text wide-ok
 질량(kg)? 2.5
 높이(m)? 1.2
 위치에너지: 29.40 J
@@ -415,7 +415,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -437,14 +437,14 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 밑변과 높이? 3 7
 직각삼각형의 면적: 10.50
 ```
 
 > **주의:** **정수 나눗셈.** 밑변과 높이를 `int`로 선언하고 `%d %d`로 읽은 뒤 같은 식 `area = base * height / 2;`를 쓰면, 오른쪽이 모두 `int`이므로 21 / 2가 정수 나눗셈으로 먼저 계산되어 10이 되고, 그 값이 `double`로 변환되어 `area`에 저장된다. 이렇게 고친 프로그램의 실행 결과는 다음과 같이 `10.00`이다. 정수로 입력받으려면 `base * height / 2.0`이나 `(double)base * height / 2`로 실수 나눗셈을 하게 한다([3장 6.2절](Concepts_Lecture.ko.md#62-명시적-형-변환-캐스팅)).
 
-```text
+```text wide-ok
 밑변과 높이? 3 7
 직각삼각형의 면적: 10.00
 ```
@@ -469,7 +469,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -494,7 +494,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 USD? 150
 원/달러 환율? 1210
 USD 150 = KRW 181500.00
@@ -502,7 +502,7 @@ USD 150 = KRW 181500.00
 
 > **주의:** **정수 변수에 소수 입력.** 달러를 `%d`로 읽으므로 `150.5`처럼 소수를 입력하면 `scanf`는 `150`까지만 읽고 `.5`를 입력 버퍼에 남긴다. 그러면 다음 `scanf("%lf", &rate)`가 사용자의 입력을 기다리지 않고 남은 `.5`를 환율 0.5로 읽으므로, 다음 실행처럼 잘못된 결과가 나온다. 센트 단위까지 다루려면 달러도 `double`로 선언하고 `%lf`로 읽는다.
 
-```text
+```text wide-ok
 USD? 150.5
 원/달러 환율? USD 150 = KRW 75.00
 ```
@@ -526,7 +526,7 @@ USD? 150.5
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -551,7 +551,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 KRW? 500000
 원/달러 환율? 1210
 KRW 500000 = USD 413.22
@@ -559,7 +559,7 @@ KRW 500000 = USD 413.22
 
 > **주의:** 환율에 0을 입력하면 0으로 나누게 된다. `rate`가 `double`이므로 이 식은 실수 나눗셈이고, IEEE 754를 따르는 gcc와 clang 환경에서는 결과가 무한대가 되어 다음과 같이 `inf`가 출력된다. 정수를 0으로 나누는 것은 정의되지 않은 동작이며, 0 같은 잘못된 입력은 [5장 2.1절](../Ch05_Control-Statements/Concepts_Lecture.ko.md#21-if)의 `if` 문으로 검사할 수 있다.
 
-```text
+```text wide-ok
 KRW? 500000
 원/달러 환율? 0
 KRW 500000 = USD inf
@@ -585,7 +585,7 @@ KRW 500000 = USD inf
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -607,7 +607,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 길이(yd)? 100
 100 yd = 91.440000 m
 ```
@@ -634,7 +634,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -658,7 +658,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 길이(in)? 10
 10.00 in = 25.40 cm
 ```
@@ -683,7 +683,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -706,7 +706,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 아파트의 면적(제곱미터)? 113
 113.00 제곱미터 = 34.18 평
 ```
@@ -733,7 +733,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -757,19 +757,19 @@ int main(void)
 
 **실행 결과:** 첫 번째 실행은 실행 예시의 입력이다. 두 번째와 세 번째 실행은 문제에 나온 소수 표기 12.34와 지수 표기 1.234e2를 입력한 경우이며, 각각 $12.34^2 = 152.2756$, $12.34^3 = 1879.080904$와 $123.4^2 = 15227.56$, $123.4^3 = 1879080.904$가 소수점 이하 6자리로 반올림되어 출력된다.
 
-```text
+```text wide-ok
 실수? 3.0e-1
 제곱: 9.000000e-02
 세제곱: 2.700000e-02
 ```
 
-```text
+```text wide-ok
 실수? 12.34
 제곱: 1.522756e+02
 세제곱: 1.879081e+03
 ```
 
-```text
+```text wide-ok
 실수? 1.234e2
 제곱: 1.522756e+04
 세제곱: 1.879081e+06
@@ -777,7 +777,7 @@ int main(void)
 
 > **주의:** 결과가 `double`의 최댓값(약 $1.8 \times 10^{308}$)을 넘으면 실수형 오버플로가 일어나 무한대가 된다. `1e200`을 입력하면 제곱이 $10^{400}$이 되므로 두 값 모두 `inf`로 출력된다([3장 1.2절의 실수형 오버플로와 언더플로](Concepts_Lecture.ko.md#실수형-오버플로와-언더플로)).
 
-```text
+```text wide-ok
 실수? 1e200
 제곱: inf
 세제곱: inf

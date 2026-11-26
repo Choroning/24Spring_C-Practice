@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -41,15 +41,15 @@
 
 **Code:** [Lab_Q1.c](../../Coursework/Lab08_Pointers/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C08Q1.c
- * @brief   Q1. 2차원 평면 좌표 계산기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. 2D Plane Coordinate Calculator
+ * @author  Cheolwon Park
  * @date    2024-05-14
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -110,7 +110,7 @@ void move_point(int *x, int *y, int move)
 
 **Output:** `scanf_s` is a function provided by Visual Studio (MSVC); it belongs to Annex K, which is optional in the C11 standard, and is not declared in the standard libraries used by gcc and clang. The `scanf_s` calls in this code read only integers (`%d`), so they behave like `scanf`, and with gcc or clang the code is compiled by defining a macro, as in `gcc -std=c99 -Wall -Dscanf_s=scanf Lab_Q1.c -lm`. This produces one warning that the local variable `distance` in `main()` is unused. Entering the values of the sample runs gives the following results, with the entered values shown as they appear in a terminal.
 
-```text
+```text wide-ok
 p1 좌표 입력(x1, y1 좌표값 입력): 1 1
 p2 좌표 입력(x2, y2 좌표값 입력): 3 7
 p1 = (1, 1)
@@ -121,7 +121,7 @@ p2 = (3, 7)
 p2를 x축과 y축으로 각각 -1만큼 이동 = (2, 6)
 ```
 
-```text
+```text wide-ok
 p1 좌표 입력(x1, y1 좌표값 입력): -2 4
 p2 좌표 입력(x2, y2 좌표값 입력): 3 -5
 p1 = (-2, 4)
@@ -158,15 +158,15 @@ The first distance is $\sqrt{2^2 + 6^2} = \sqrt{40} \approx 6.324555$, and the s
 
 **Code:** [Lab_Q2.c](../../Coursework/Lab08_Pointers/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C08Q2.c
- * @brief   Q2. 로또 프로그램
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Lotto Program
+ * @author  Cheolwon Park
  * @date    2024-05-14
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -246,7 +246,7 @@ void selectionSort(int p[], int size)
 
 **Output:** As in Exercise 1, compile with `gcc -std=c99 -Wall` and `-Dscanf_s=scanf`. The numbers differ on every run according to the seed set by `srand(time(NULL))`. One example run that generates 5 sets is shown below.
 
-```text
+```text wide-ok
 몇 세트의 로또 번호를 생성할까요? 5
  4  21  28  31  35  45  
  9  15  17  24  25  45  

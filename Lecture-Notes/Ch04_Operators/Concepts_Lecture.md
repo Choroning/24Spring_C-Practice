@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -174,7 +174,7 @@ printf("%d\n", -7 % 2);   // -1  (sign follows dividend in C99+)
 ```
 
 ```c
-// ❌ Compile error: % does not work with floats
+// [X] Compile error: % does not work with floats
 // double r = 7.5 % 2.0;
 ```
 
@@ -203,12 +203,12 @@ Mathematical notation must be rewritten using C operators. The key rules are as 
 // Fahrenheit to Celsius
 int F = 100;
 double C = 5.0 / 9 * (F - 32);   // 37.777...
-// ❌ Wrong: 5/9 * (F - 32) → 0 * 68 = 0 (integer division!)
+// [X] Wrong: 5/9 * (F - 32) → 0 * 68 = 0 (integer division!)
 
 // Average of two integers
 int a = 7, b = 4;
 double avg = (a + b) / 2.0;       // 5.5
-// ❌ Wrong: (a + b) / 2 → 11 / 2 = 5 (integer division!)
+// [X] Wrong: (a + b) / 2 → 11 / 2 = 5 (integer division!)
 
 // Polynomial: x^3 + 2x - 5
 int x = 3;
@@ -271,12 +271,12 @@ a = x++;   // a = 5 (old value), then x becomes 6
 
 ```c
 int count = 5;
-count++;        // ✅ OK: variable
-++count;        // ✅ OK: variable
+count++;        // [O] OK: variable
+++count;        // [O] OK: variable
 
-// 10++;         // ❌ Error: constant
-// (count+1)--;  // ❌ Error: expression, not a variable
-// ++(a+b);      // ❌ Error: expression
+// 10++;         // [X] Error: constant
+// (count+1)--;  // [X] Error: expression, not a variable
+// ++(a+b);      // [X] Error: expression
 ```
 
 ### 3.4 Detailed Trace Example
@@ -373,7 +373,7 @@ printf("%d\n", 3 > 7);  // prints 0
 ```c
 int x = 10;
 
-if (x == 5) { ... }  // ✅ Comparison: checks if x is 5
+if (x == 5) { ... }  // [O] Comparison: checks if x is 5
 if (x = 5)  { ... }  // ⚠ Assignment: sets x to 5, then checks if 5 is non-zero (always true!)
 ```
 
@@ -399,7 +399,7 @@ Logical operators combine or negate conditions.
 
 *Table 9. Logical operators*
 
-```c
+```c wide-ok
 int age = 25, income = 3000;
 
 // AND: both conditions must be true
@@ -767,7 +767,7 @@ The **conditional operator** `? :` is the only ternary operator in C (three oper
 condition ? value_if_true : value_if_false
 ```
 
-```c
+```c wide-ok
 int a = 10, b = 20;
 int max = (a > b) ? a : b;    // max = 20
 
@@ -957,7 +957,7 @@ Rather than memorizing the entire precedence table, use **parentheses** to make 
 if (a & b == 0) { ... }   // ⚠ Actually: a & (b == 0), because == has higher precedence than &
 
 // Clear: always use parentheses with bitwise operators
-if ((a & b) == 0) { ... } // ✅ Correct and readable
+if ((a & b) == 0) { ... } // [O] Correct and readable
 ```
 
 > **Caution:** Bitwise operators (`&`, `|`, `^`) have **lower precedence** than relational operators (`==`, `!=`). This is a common source of bugs. Always parenthesize bitwise expressions in comparisons.

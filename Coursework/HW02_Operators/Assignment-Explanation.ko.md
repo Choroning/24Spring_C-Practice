@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 3
 
@@ -46,15 +46,15 @@
 
 ```text
 Coursework/HW02_Operators/
-├── Assignment-Explanation.ko.md   # 이 문서 (한국어)
-├── Assignment-Explanation.md      # 이 문서 (영어)
+├── Assignment-Explanation.ko.md   # this document (Korean)
+├── Assignment-Explanation.md      # this document (English)
 ├── Original/
-│   ├── Assignment.ko.md           # 과제 안내문 (한국어)
-│   └── Assignment.md              # 과제 안내문 (영어)
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
-    ├── Q1.c                       # 문제 1: 값의 n진수 출력
-    ├── Q2.c                       # 문제 2: 연산의 기본
-    └── Q3.c                       # 문제 3: 자유 코드 (카페 매출 계산 프로그램)
+    ├── Q1.c                       # Problem 1: printing a value in different bases
+    ├── Q2.c                       # Problem 2: basic arithmetic
+    └── Q3.c                       # Problem 3: free code (cafe revenue calculator)
 ```
 
 *그림 1. HW2 과제의 디렉토리 구성*
@@ -103,12 +103,12 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C04Q1.c
- * @brief   Q1. 값의 n진수 출력
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Print a Value in Base n
+ * @author  Cheolwon Park
  * @date    2024-03-20
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -181,12 +181,12 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C04Q2.c
- * @brief   Q2. 연산의 기본
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Basic Operations
+ * @author  Cheolwon Park
  * @date    2024-03-23
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *	    other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -253,30 +253,30 @@ Enter 3 values: 100000 -3 7
 
 **코드:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C04Q3.c
- * @brief   Q3. 자유 코드
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Free Code
+ * @author  Cheolwon Park
  * @date    2024-03-23
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *	    other than Visual Studio.
  */
 
 #include <stdio.h>
 
 int main()
 {
-	int amer, vala, hala;     // 순서대로 (음료) 아메리카노, 바닐라라떼, 한라봉에이드의 가격
-	int amer_amount, vala_amount, hala_amount;     // 음료 항목들의 개수
-	int drink, drink_amount;     // 순서대로 음료 항목들의 총 판매금액 합, 총 판매개수 합
+	int amer, vala, hala;     // prices of (drinks) Americano, Vanilla Latte, Hallabong Ade, in that order
+	int amer_amount, vala_amount, hala_amount;     // quantities of the drink items
+	int drink, drink_amount;     // total sales amount and total quantity sold of the drink items, in that order
 
-	int blba, stca, chsa;     // 순서대로 (빵) 블루베리 베이글, 딸기 케이크, 치킨 샌드위치의 가격
-	int blba_amount, stca_amount, chsa_amount;     // 빵 항목들의 개수
-	int bread, bread_amount;     // 순서대로 빵 항목들의 총 매출, 총 판매개수
+	int blba, stca, chsa;     // prices of (bread) Blueberry Bagel, Strawberry Cake, Chicken Sandwich, in that order
+	int blba_amount, stca_amount, chsa_amount;     // quantities of the bread items
+	int bread, bread_amount;     // total sales and total quantity sold of the bread items, in that order
 
-	int target;     // 목표 매출
+	int target;     // target sales
 
 	printf("============================= * ============================= \n");
 	printf("안녕하세요. 예비 카페 창업주들을 위한 매출 계산 프로그램입니다. \n");
@@ -360,7 +360,7 @@ int main()
 
 **실행 결과:** 목표 매출 1,500,000원, 가격 4,500원, 5,500원, 6,000원, 3,500원, 6,500원, 7,000원, 판매 개수 100, 50, 40, 30, 20, 25를 입력한 결과이다. 음료 매출은 450,000 + 275,000 + 240,000 = 965,000원, 빵 매출은 105,000 + 130,000 + 175,000 = 410,000원으로 총매출은 1,375,000원이고, 목표 매출과의 차이는 125,000원이다. 메뉴당 평균 판매 잔수 190 / 3 = 63.333...은 `63.3`으로 출력된다.
 
-```text
+```text wide-ok
 ============================= * ============================= 
 안녕하세요. 예비 카페 창업주들을 위한 매출 계산 프로그램입니다. 
 매출 예상에 쓰일 메뉴는 총 6개이며, 음료 3개와 빵 3개입니다. 

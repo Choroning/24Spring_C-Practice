@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 7
 
@@ -36,7 +36,7 @@
 
 **Example Code:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 int main() {
     int dig1, dig2, dig3, dig4, dig5, dig6, dig7, dig8, dig9, dig10, dig11, dig12, sum;
@@ -78,7 +78,7 @@ int main()
 
 **Sample Run:**
 
-```text
+```text wide-ok
 Please enter the first eleven UPC digits, separated by white space:
 0 3 6 0 0 0 2 9 1 4 5
 입력된 숫자: 03600029145
@@ -105,11 +105,11 @@ Program ended with exit code: 0
 
 **Code of Example 7-11:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define SIZE 5
 
-void print_array(int arr[], int size)   // 배열의 원소를 출력하는 함수
+void print_array(int arr[], int size)   // function that prints the elements of the array
 {
     int i;
     for (i = 0; i < size; i++)
@@ -121,30 +121,30 @@ int main(void)
 {
     int data[SIZE] = { 52, 31, 28, 17, 46 };
     int i, j, temp;
-    int index_min;      // 아직 정렬되지 않은 원소 중 가장 작은 원소의 인덱스
+    int index_min;      // index of the smallest element among those not yet sorted
 
-    for (i = 0; i < SIZE - 1; i++) {            // 0~(i-1)까지는 정렬된 상태이다.
+    for (i = 0; i < SIZE - 1; i++) {            // Elements 0 to (i-1) are already sorted.
         index_min = i;
         for (j = i + 1; j < SIZE; j++) {
-            // data[i]~data[SIZE-1] 중에서 가장 작은 원소의 인덱스를 찾는다.
-            if (data[index_min] > data[j])      // 오름차순 정렬
+            // Find the index of the smallest element among data[i] to data[SIZE-1].
+            if (data[index_min] > data[j])      // ascending order sort
                 index_min = j;
         }
-        if (i != index_min) {                   // data[i]를 data[index_min]과 맞바꾼다.
+        if (i != index_min) {                   // Swap data[i] with data[index_min].
             temp = data[i];
             data[i] = data[index_min];
             data[index_min] = temp;
-        }                                       // data[i]가 i번째로 작은 값이 된다.
+        }                                       // data[i] becomes the i-th smallest value.
 
         printf("i = %d 일 때 정렬 결과 : ", i);
-        print_array(data, SIZE);                // i번째 작은 값을 찾은 후의 정렬 결과 출력
+        print_array(data, SIZE);                // print the result after finding the i-th smallest value
     }
 }
 ```
 
 **Output of Example 7-11:**
 
-```text
+```text wide-ok
 i = 0 일 때 정렬 결과 : 17 31 28 52 46 
 i = 1 일 때 정렬 결과 : 17 28 31 52 46 
 i = 2 일 때 정렬 결과 : 17 28 31 52 46 
@@ -184,7 +184,7 @@ i = 3 일 때 정렬 결과 : 17 28 31 46 52
 
 **Sample Run:**
 
-```text
+```text wide-ok
 배열 내용:
 165  183  186  171  165  190  174  151  152  198
 193  172  196  165  199  181  181  167  155  160

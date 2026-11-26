@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -159,14 +159,14 @@ The `main` function is the **entry point** of every C program. The entry point i
 *Table 4. Rules for the `main` function*
 
 ```c
-int main(void)    // ✅ standard form
+int main(void)    // [O] standard form
 {
     return 0;
 }
 ```
 
 ```c
-int main()        // ✅ also valid (empty parameter list)
+int main()        // [O] also valid (empty parameter list)
 {
     return 0;
 }
@@ -311,7 +311,7 @@ The **format string** is written inside `" "` and can contain the following.
 
 `%F` and `%E` are the same as `%f` and `%e` but print characters such as infinity (`INF`) and the exponent sign (`E`) in uppercase. When a format string has several format specifiers, the specifiers and the values to print correspond in order, and their counts must match.
 
-```c
+```c wide-ok
 int age = 20;
 double height = 175.5;
 
@@ -403,7 +403,7 @@ printf("World\n");
 // Output: HelloWorld   (no space, no line break between them)
 ```
 
-```c
+```c wide-ok
 printf("Line 1\n");
 printf("Line 2\n");
 // Output:
@@ -446,7 +446,7 @@ scanf("format string", &variable1, &variable2, ...);
 
 The `&` (**address-of operator**) is required before each variable. `scanf` needs the memory address to store the input value.
 
-```c
+```c wide-ok
 int num;
 printf("Enter a number: ");
 scanf("%d", &num);            // read an integer from keyboard
@@ -560,7 +560,7 @@ double price = 19.99;
 
 **Using variables with `printf` and `scanf`:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)

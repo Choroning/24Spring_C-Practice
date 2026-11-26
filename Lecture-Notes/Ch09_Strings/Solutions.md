@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -44,15 +44,15 @@
 
 **Code:** [Lab_Q1.c](../../Coursework/Lab09_Strings/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C09Q1.c
- * @brief   Q1. 문자열 조작
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. String Manipulation
+ * @author  Cheolwon Park
  * @date    2024-05-28
  * 
- * @note    소스 코드에 사용된 gets_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that gets_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
  #include <stdio.h>
@@ -189,7 +189,7 @@ static char *gets_s(char *s, size_t n) {
 
 Compiling this way produces two warnings (`-Wparentheses`) that ask for parentheses to make the assignment inside the conditions `if (result = my_strcmp(...))` explicit. Entering the string of the sample run gives the following result.
 
-```text
+```text wide-ok
 문자열(str1) 입력: c is fun!!
 
 str1의 길이: 10

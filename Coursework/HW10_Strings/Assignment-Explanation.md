@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8
 
@@ -82,8 +82,8 @@ The median is the value at the middle position when the data are first sorted by
 ```c
 /**
  * @file    Q1.c
- * @brief   Q1. 중위수 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Finding the Median
+ * @author  Cheolwon Park
  * @date    2026-10-19
  */
 
@@ -191,12 +191,12 @@ In `aB3 2# dfkW`, the uppercase letters are `B` and `W` (2), and the lowercase l
 ```c
 /**
  * @file    A10303-1_C09Q1.c
- * @brief   Q1. 문자열 검색
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. String Search
+ * @author  Cheolwon Park
  * @date    2024-05-31
  * 
- * @note    소스 코드에 사용된 gets_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that gets_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -279,8 +279,8 @@ Step 3:  [e][d][c][b][a]   start == end (c)     : loop ends
 ```c
 /**
  * @file    A10303-1_C09Q2.c
- * @brief   Q2. 문자열 뒤집기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Reversing a String
+ * @author  Cheolwon Park
  * @date    2024-05-31
  */
 
@@ -387,8 +387,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C09Q3.c
- * @brief   Q3. 문자열 분리
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Splitting a String
+ * @author  Cheolwon Park
  * @date    2024-05-27
  */
 

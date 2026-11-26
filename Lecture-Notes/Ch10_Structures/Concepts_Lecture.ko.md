@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -61,9 +61,9 @@
 **배열**은 **같은** 데이터 타입의 값을 여러 개 저장한다. **구조체**는 **서로 다른** 데이터 타입의 변수를 하나의 이름으로 묶어 **사용자 정의 데이터 타입**을 만든다. C 언어에서 구조체는 사용자 정의형을 만드는 방법이다.
 
 ```text
-배열 vs 구조체
-├── 배열    : 같은 데이터 타입 × N     → int scores[5];
-└── 구조체  : 다른 데이터 타입 × N     → struct student { char name[20]; int age; double gpa; };
+Array vs Structure
+├── Array   : same type × N      → int scores[5];
+└── Structure: different types × N → struct student { char name[20]; int age; double gpa; };
 ```
 
 *그림 1. 같은 데이터 타입을 묶는 배열과 다른 데이터 타입을 묶는 구조체*
@@ -84,7 +84,7 @@ struct content {
     char title[50];
     int price;
     double rate;
-};              // <-- 세미콜론 필수!
+};              // <-- semicolon required!
 ```
 
 ### 1.2 구조체 정의
@@ -92,21 +92,21 @@ struct content {
 **문법:**
 
 ```c
-struct 태그명 {
-    자료형1 멤버1;
-    자료형2 멤버2;
+struct tag_name {
+    type1 member1;
+    type2 member2;
     // ...
 };
 ```
 
-- **태그명(tag name):** 구조체를 구별하는 이름이다. **완전한 데이터 타입 이름**은 `struct 태그명`이며, `struct` 키워드를 반드시 함께 써야 한다.
+- **태그명(tag name):** 구조체를 구별하는 이름이다. **완전한 데이터 타입 이름**은 `struct tag_name`이며, `struct` 키워드를 반드시 함께 써야 한다.
 - **멤버(member, 구성 변수):** 구조체를 구성하는 개별 변수이다.
 
 ```c
 struct content {
-    char title[50];    // 멤버 1
-    int price;         // 멤버 2
-    double rate;       // 멤버 3
+    char title[50];    // member 1
+    int price;         // member 2
+    double rate;       // member 3
 };
 ```
 
@@ -114,46 +114,46 @@ struct content {
 
 > **주의:** `struct` 없이 태그명만 쓰면 컴파일러가 `content`가 구조체 이름이라는 것을 알 수 없으므로 **컴파일 오류**가 발생한다.
 > ```c
-> content c1;          // 컴파일 오류!
-> struct content c1;   // 올바른 사용
+> content c1;          // compile error!
+> struct content c1;   // correct
 > ```
 
 **크기와 정렬:**
 
 구조체의 크기는 멤버 크기의 합 **이상**이다. 컴파일러가 효율적인 메모리 접근을 위해 멤버 사이나 끝에 **패딩/정렬(padding/alignment)** 바이트를 삽입할 수 있기 때문이다.
 
-```c
+```c wide-ok
 struct example {
-    char c;      // 1바이트
-    int n;       // 4바이트
-    double d;    // 8바이트
+    char c;      // 1 byte
+    int n;       // 4 bytes
+    double d;    // 8 bytes
 };
-// 합계 = 13바이트이지만, sizeof(struct example)은 16 또는 24가 될 수 있음
+// Sum = 13 bytes, but sizeof(struct example) may be 16 or 24 (with padding)
 
-printf("크기: %zu\n", sizeof(struct example));  // 16 또는 24일 가능성
+printf("크기: %zu\n", sizeof(struct example));  // likely 16 or 24
 ```
 
 ```text
-메모리 레이아웃 (패딩 포함 가능):
+Memory layout (with possible padding):
 ┌─────┬─────────┬──────────┬──────────────────┐
-│  c  │   패딩   │    n     │        d         │
+│  c  │ padding │    n     │        d         │
 │ 1B  │   3B    │    4B    │        8B        │
 └─────┴─────────┴──────────┴──────────────────┘
-sizeof(struct example) = 16  (13이 아님)
+sizeof(struct example) = 16  (not 13)
 ```
 
 *그림 2. `struct example`의 패딩을 포함한 메모리 레이아웃 (일반적인 64비트 시스템)*
 
 일반적인 64비트 시스템에서 `int`는 4의 배수 주소에, `double`은 8의 배수 주소에 놓이므로 `c` 뒤에 3바이트가 채워져 크기가 16이 된다. 멤버 순서를 `char c; double d; int n;`으로 바꾸면 `c` 뒤에 7바이트, `n` 뒤에 4바이트가 채워져 크기가 24가 되므로, 같은 멤버라도 선언 순서에 따라 크기가 달라질 수 있다.
 
-> **핵심:** `sizeof(struct 태그명)` >= 멤버 크기의 합이다. 컴파일러가 멤버 사이에 정렬을 위한 패딩 바이트를 삽입할 수 있다.
+> **핵심:** `sizeof(struct tag_name)` >= 멤버 크기의 합이다. 컴파일러가 멤버 사이에 정렬을 위한 패딩 바이트를 삽입할 수 있다.
 
 ### 1.3 구조체 변수 선언
 
 구조체를 정의한 후, 해당 데이터 타입의 변수를 선언할 수 있다.
 
 ```c
-struct content c1, c2, c3;   // 변수 3개 선언
+struct content c1, c2, c3;   // declare three variables
 ```
 
 구조체 **정의와 동시에** 변수를 선언할 수도 있다.
@@ -163,7 +163,7 @@ struct content {
     char title[50];
     int price;
     double rate;
-} c1, c2;                    // 구조체 정의와 c1, c2 선언을 동시에
+} c1, c2;                    // define struct AND declare c1, c2
 ```
 
 **익명 구조체** (태그명 없음):
@@ -173,7 +173,7 @@ struct {
     char title[50];
     int price;
     double rate;
-} c1;                        // 작동하지만, 이 자료형으로 추가 변수를 선언할 수 없음
+} c1;                        // works, but cannot declare more variables of this type later
 ```
 
 > **주의:** 익명 구조체는 태그명이 없으므로, 나중에 같은 데이터 타입의 변수를 **다시 선언할 수 없다**.
@@ -184,10 +184,10 @@ struct {
 struct content c1;
 
 ┌────────────────────────┬──────────┬────────────────┐
-│    c1.title (50바이트)   │ c1.price │    c1.rate     │
-│                        │  (4바이트) │    (8바이트)     │
+│        c1.title        │ c1.price │     c1.rate    │
+│        (50 bytes)      │ (4 bytes)│    (8 bytes)   │
 └────────────────────────┴──────────┴────────────────┘
-            (멤버 사이에 패딩이 포함될 수 있음)
+         (may include padding between members)
 ```
 
 *그림 3. 구조체 변수 c1의 멤버가 선언 순서대로 할당된 모습*
@@ -216,34 +216,34 @@ struct content c2 = {"Inception"};
 **초기값이 너무 많으면:** 초기값이 멤버의 개수보다 많으면 안 된다. 표준을 어기는 코드이므로 컴파일러가 진단 메시지를 내며, Visual Studio는 컴파일 오류로 처리하고 gcc와 clang은 기본적으로 경고를 낸 뒤 남는 값을 버린다.
 
 ```c
-struct content c3 = {"Matrix", 9000, 9.1, 100};  // 컴파일 오류!
+struct content c3 = {"Matrix", 9000, 9.1, 100};  // compile error!
 ```
 
 **다른 구조체 변수로 초기화:** 같은 멤버끼리 1:1로 복사하여 초기화한다.
 
 ```c
 struct content c1 = {"Avengers", 11000, 8.8};
-struct content c2 = c1;   // c1의 모든 멤버를 c2로 복사
+struct content c2 = c1;   // copies all members from c1 to c2
 ```
 
 ### 1.5 멤버 접근
 
 **점 연산자**(`.`, 멤버 접근 연산자)를 사용하여 구조체 변수를 통해 멤버에 접근한다.
 
-```c
+```c wide-ok
 struct content c1 = {"Avengers", 11000, 8.8};
 
-c1.rate = 8.9;                      // 멤버 수정
-c1.price *= 0.8;                    // 멤버에 복합 대입
-strcat(c1.title, ": Endgame");      // 멤버에 문자열 연산
-printf("제목: %s\n", c1.title);      // 멤버 읽기
+c1.rate = 8.9;                      // modify a member
+c1.price *= 0.8;                    // compound assignment on a member
+strcat(c1.title, ": Endgame");      // string operation on a member
+printf("제목: %s\n", c1.title);      // read a member
 ```
 
 > **핵심:** 멤버는 구조체 변수를 통해서**만** 접근할 수 있다. 멤버 이름을 단독으로 사용할 수 없으며, `title`만으로는 `c1.title`을 가리키지 않는다. 같은 이름의 일반 변수가 있으면 `title`은 그 변수를 뜻한다.
 
 ```c
-// title = "Test";       // 컴파일 오류: title은 독립 변수가 아님
-c1.title;                // 올바른 사용: 구조체 변수를 통한 접근
+// title = "Test";       // compile error: title is not a standalone variable
+c1.title;                // correct: access through the struct variable
 ```
 
 구조체 변수를 여러 개 선언하면 서로 다른 메모리에 할당되며, 멤버도 구조체 변수마다 따로 할당된다. 멤버에는 항상 구조체 변수를 통해 접근하므로 어느 변수의 멤버인지 구분할 수 있다.
@@ -256,7 +256,7 @@ c1.title;                // 올바른 사용: 구조체 변수를 통한 접근
 struct content c1 = {"Avengers", 11000, 8.8};
 struct content c3;
 
-c3 = c1;   // title, price, rate 모두 c1에서 c3으로 복사
+c3 = c1;   // copies title, price, and rate from c1 to c3
 ```
 
 **제한 사항:**
@@ -265,7 +265,7 @@ c3 = c1;   // title, price, rate 모두 c1에서 c3으로 복사
 
 ```c
 struct content c3;
-c3 = {"Matrix", 9000, 9.1};    // 컴파일 오류!
+c3 = {"Matrix", 9000, 9.1};    // compile error!
 ```
 
 배열 멤버끼리는 직접 대입할 수 **없으므로** 문자열에는 `strcpy`를 사용해야 한다.
@@ -274,9 +274,9 @@ c3 = {"Matrix", 9000, 9.1};    // 컴파일 오류!
 struct content c1 = {"Avengers", 11000, 8.8};
 struct content c3;
 
-// c3.title = c1.title;         // 컴파일 오류: 배열은 대입 불가!
-strcpy(c3.title, c1.title);     // 올바른 방법: 문자열에는 strcpy 사용
-c3.price = c1.price;            // OK: 배열이 아닌 멤버는 대입 가능
+// c3.title = c1.title;         // compile error: arrays cannot be assigned!
+strcpy(c3.title, c1.title);     // correct: use strcpy for strings
+c3.price = c1.price;            // OK: non-array members can be assigned
 c3.rate = c1.rate;              // OK
 ```
 
@@ -290,12 +290,12 @@ c3.rate = c1.rate;              // OK
 struct content c1 = {"Avengers", 11000, 8.8};
 struct content c2 = c1;
 
-// if (c1 == c2) { ... }     // 컴파일 오류!
+// if (c1 == c2) { ... }     // compile error!
 ```
 
 대신 **멤버별로 비교**해야 한다. 문자열 멤버에는 `strcmp`를 사용한다.
 
-```c
+```c wide-ok
 if (strcmp(c1.title, c2.title) == 0 &&
     c1.price == c2.price &&
     c1.rate == c2.rate) {
@@ -341,13 +341,13 @@ B: size 8, n 0, c 4, d 5
 ```
 
 ```text
-struct A (12바이트)
-         0     1     2     3     4     5     6     7     8     9    10    11   ← 오프셋
+struct A (12 bytes)
+offset   0     1     2     3     4     5     6     7     8     9    10    11
       ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
       │  c  │ /// │ /// │ /// │  n  │  n  │  n  │  n  │  d  │ /// │ /// │ /// │
       └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
-struct B (8바이트)
-         0     1     2     3     4     5     6     7   ← 오프셋
+struct B (8 bytes)
+offset   0     1     2     3     4     5     6     7
       ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
       │  n  │  n  │  n  │  n  │  c  │  d  │ /// │ /// │
       └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
@@ -427,7 +427,7 @@ for (int i = 0; i < 3; i++) {
 
 **구조체 배열 검색:** 검색할 제목을 입력받아, 제목이 같은 원소를 찾으면 `break`로 `for` 문을 빠져나온다. 반복이 끝난 뒤 `i`가 배열 크기보다 작으면 `i`가 찾은 원소의 인덱스이고, 배열 크기와 같으면 검색에 실패한 것이다.
 
-```c
+```c wide-ok
 char title[50];
 int i;
 
@@ -435,7 +435,7 @@ printf("검색할 제목: ");
 scanf("%s", title);
 for (i = 0; i < 3; i++) {
     if (strcmp(movies[i].title, title) == 0)
-        break;                    // 찾으면 for 탈출 (i는 찾은 원소의 인덱스)
+        break;                    // leave the loop when found (i is the index found)
 }
 if (i < 3)
     printf("가격: %d, 평점: %.1f\n", movies[i].price, movies[i].rate);
@@ -474,8 +474,8 @@ struct content *p = &c1;
 
 포인터를 통해 멤버에 접근할 때는 **화살표 연산자**(`->`, 간접 멤버 접근 연산자)를 사용한다.
 
-```c
-printf("제목: %s\n", p->title);     // 화살표 연산자
+```c wide-ok
+printf("제목: %s\n", p->title);     // arrow operator
 printf("가격: %d\n", p->price);
 printf("평점: %.1f\n", p->rate);
 ```
@@ -483,9 +483,9 @@ printf("평점: %.1f\n", p->rate);
 화살표 연산자 `->`는 역참조 `(*p).멤버`와 동일하다.
 
 ```c
-p->title      // (*p).title과 동일
-p->price      // (*p).price과 동일
-p->rate       // (*p).rate과 동일
+p->title      // equivalent to (*p).title
+p->price      // equivalent to (*p).price
+p->rate       // equivalent to (*p).rate
 ```
 
 > **주의:** `(*p).title`에서 괄호가 필수이다. 점 `.`이 `*`보다 우선순위가 높기 때문에, 괄호 없이 `*p.title`이라 쓰면 `*(p.title)`로 해석되어 `p`가 구조체 포인터일 때 오류가 발생한다.
@@ -510,25 +510,25 @@ p->title   ≡  (*p).title   ≡  c1.title
 
 **값에 의한 전달(pass by value):** 함수가 **복사본**을 받는다.
 
-```c
+```c wide-ok
 void display(struct content c) {
     printf("%s %d %.1f\n", c.title, c.price, c.rate);
-    c.price = 0;   // 복사본만 수정: 원본은 변하지 않음
+    c.price = 0;   // modifies the copy only: original unchanged
 }
 
 int main() {
     struct content c1 = {"Avengers", 11000, 8.8};
-    display(c1);    // 복사본 전달
-    printf("가격: %d\n", c1.price);  // 여전히 11000
+    display(c1);    // passes a copy
+    printf("가격: %d\n", c1.price);  // still 11000
     return 0;
 }
 ```
 
 **포인터에 의한 전달(pass by pointer):** 함수가 **원본을 수정**할 수 있다.
 
-```c
+```c wide-ok
 void discount(struct content *p, double rate) {
-    p->price *= rate;   // 원본 구조체를 수정
+    p->price *= rate;   // modifies the original struct
 }
 
 int main() {
@@ -566,7 +566,7 @@ int main() {
 
 **포인터를 이용한 입력 함수:**
 
-```c
+```c wide-ok
 void input_content(struct content *p) {
     printf("제목: ");
     scanf("%s", p->title);
@@ -614,7 +614,7 @@ struct date {
 struct student {
     char name[20];
     int id;
-    struct date birthday;   // 중첩 구조체
+    struct date birthday;   // nested struct
 };
 ```
 
@@ -626,7 +626,7 @@ struct student s1 = {"Kim", 2024001, {2005, 3, 15}};
 
 **중첩 멤버 접근:** 점 연산자를 연속해서 사용한다.
 
-```c
+```c wide-ok
 printf("이름: %s\n", s1.name);
 printf("생일: %d-%02d-%02d\n",
        s1.birthday.year, s1.birthday.month, s1.birthday.day);
@@ -634,9 +634,9 @@ printf("생일: %d-%02d-%02d\n",
 
 **포인터와 함께:**
 
-```c
+```c wide-ok
 struct student *p = &s1;
-printf("년도: %d\n", p->birthday.year);   // 포인터->외부.내부
+printf("년도: %d\n", p->birthday.year);   // pointer->outer.inner
 ```
 
 ```text
@@ -672,12 +672,12 @@ struct point midpoint(struct point a, struct point b)
 
     m.x = (a.x + b.x) / 2;
     m.y = (a.y + b.y) / 2;
-    return m;                       // m의 멤버 전체가 복사되어 반환된다
+    return m;                       // all members of m are copied and returned
 }
 
 void move(struct point *p, int dx, int dy)
 {
-    p->x += dx;                     // 호출한 쪽의 구조체를 직접 바꾼다
+    p->x += dx;                     // changes the caller's structure directly
     p->y += dy;
 }
 
@@ -776,7 +776,7 @@ sum = 44
 
 ```text
           pts[0]                pts[1]                pts[2]
-          af0        af4        af8        afc        b00        b04      ← 주소의 끝
+address   af0        af4        af8        afc        b00        b04
         ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
         │  x = 1   │  y = 2   │  x = 3   │  y = 4   │  x = 5   │  y = 6   │
         └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
@@ -790,11 +790,11 @@ sum = 44
 `->`는 `.`, `[]`, 후위 `++`와 함께 가장 먼저 결합하는 연산자이므로, 증감 연산자와 섞으면 무엇이 증가하는지 주의해야 한다. `pts = { {1, 2}, {5, 6} }`이고 `p = pts`일 때 다음 세 수식을 차례로 실행하면 결과가 다르다.
 
 ```c
-a = ++p->x;         // ++(p->x): pts[0].x가 2가 되고 a는 2
+a = ++p->x;         // ++(p->x): pts[0].x becomes 2 and a is 2
 printf("%d %d\n", a, pts[0].x);
-a = (++p)->x;       // p가 pts[1]로 이동하고 a는 5
+a = (++p)->x;       // p moves to pts[1] and a is 5
 printf("%d %d\n", a, (int)(p - pts));
-a = p->x++;         // (p->x)++: a는 5, pts[1].x는 6이 됨
+a = p->x++;         // (p->x)++: a is 5, pts[1].x becomes 6
 printf("%d %d\n", a, pts[1].x);
 ```
 
@@ -871,8 +871,8 @@ value: size 8, i 0, d 0, c 0
 ```
 
 ```text
-struct student (36바이트)
-        0                   20         24         28         32         36   ← 오프셋
+struct student (36 bytes)
+offset  0                   20         24         28         32         36
       ┌───────────────────┬──────────┬──────────┬──────────┬──────────┐
       │ name[20]          │ score    │ year     │ month    │ day      │
       └───────────────────┴──────────┴──────────┴──────────┴──────────┘
@@ -924,7 +924,7 @@ C 컴파일러는 열거체를 `int`형으로 처리하고 열거 상수를 정�
 
 **사용 예:**
 
-```c
+```c wide-ok
 enum color c = RED;
 
 switch (c) {
@@ -946,25 +946,25 @@ case BLUE:
 
 **공용체(union)** 는 구조체와 비슷하게 생겼지만, 모든 멤버가 **메모리를 공유**한다. 공용체의 멤버들은 모두 같은 주소에 할당되므로 한 멤버의 값을 바꾸면 다른 멤버의 값도 함께 바뀐다. 한 번에 **하나의 멤버만** 의미 있는 값을 가지며, 공용체의 크기는 **가장 큰 멤버**를 담을 수 있는 크기이다.
 
-```c
+```c wide-ok
 union data {
     int i;
     float f;
     char c;
 };
 
-printf("크기: %zu\n", sizeof(union data));  // 4 (int 또는 float의 크기)
+printf("크기: %zu\n", sizeof(union data));  // 4 (size of int or float)
 ```
 
 ```text
 union data d;
 
 ┌──────────────────┐
-│    i (4바이트)     │  ← 세 멤버 모두
-│    f (4바이트)     │    같은 메모리
-│    c (1바이트)     │    위치를 공유
+│   i (4 bytes)    │  ← all three members
+│   f (4 bytes)    │    share the same
+│   c (1 byte)     │    memory location
 └──────────────────┘
-sizeof(union data) = 4  (가장 큰 멤버)
+sizeof(union data) = 4  (largest member)
 ```
 
 *그림 9. 세 멤버가 같은 메모리를 공유하는 공용체 변수 d*
@@ -978,7 +978,7 @@ printf("i = %d\n", d.i);    // 42
 
 d.f = 3.14;
 printf("f = %.2f\n", d.f);  // 3.14
-printf("i = %d\n", d.i);    // 쓰레기 값: d.f에 의해 덮어씌워짐!
+printf("i = %d\n", d.i);    // garbage: overwritten by d.f!
 ```
 
 마지막 줄은 의미 없는 값을 출력하지만, 무작위 값은 아니다. `d.f`에 저장된 `3.14f`의 IEEE 754 단정도 비트 패턴 `0x4048F5C3`을 `int`로 다시 해석한 값 `1078523331`이 출력된다(`int`와 `float`가 모두 4바이트인 일반적인 시스템). C 표준은 마지막으로 쓴 멤버가 아닌 멤버를 읽으면 그 바이트를 새 데이터 타입으로 다시 해석한다고 정한다.
@@ -993,8 +993,8 @@ printf("i = %d\n", d.i);    // 쓰레기 값: d.f에 의해 덮어씌워짐!
 typedef unsigned int uint;
 typedef int BOOL;
 
-uint count = 100;     // unsigned int count = 100;과 동일
-BOOL flag = 1;        // int flag = 1;과 동일
+uint count = 100;     // same as: unsigned int count = 100;
+BOOL flag = 1;        // same as: int flag = 1;
 ```
 
 **가장 일반적인 용도는 구조체 선언의 간소화이다.** 구조체를 정의할 때 `typedef`로 `struct 태그명` 대신 쓸 이름을 만들어 두면 사용하기 편하다.
@@ -1005,7 +1005,7 @@ typedef struct point {
     int y;
 } Point;
 
-Point p1 = {10, 20};         // "struct point"라고 쓸 필요 없음
+Point p1 = {10, 20};         // no need for "struct point"
 Point p2 = {30, 40};
 ```
 
@@ -1022,8 +1022,8 @@ typedef struct point Point;
 `typedef` 없이는 항상 `struct point`라고 써야 한다. `typedef`를 정의한 다음에도 기존 데이터 타입 이름 `struct point`를 그대로 쓸 수 있다.
 
 ```c
-struct point p1 = {10, 20};   // 장황함
-Point p1 = {10, 20};          // 간결함: typedef 사용
+struct point p1 = {10, 20};   // verbose
+Point p1 = {10, 20};          // concise: with typedef
 ```
 
 > **핵심:** `typedef`는 새로운 데이터 타입을 만드는 것이 **아니라**, 기존 데이터 타입에 새 **이름**을 부여하는 것이다. `Point`와 `struct point`는 같은 데이터 타입이다.
@@ -1121,9 +1121,9 @@ step 5: dir = 3, pos = (2, 1)
 struct point { int x, y; };
 
 struct point pt = { 1, 2 }, *p = &pt;
-int a = p.x;            // 포인터에 .을 씀
-int b = pt->y;          // 구조체 변수에 ->를 씀
-point q;                // struct 없이 태그 이름만 씀
+int a = p.x;            // uses . on a pointer
+int b = pt->y;          // uses -> on a structure variable
+point q;                // uses only the tag name without struct
 ```
 
 ```text
@@ -1214,7 +1214,7 @@ const char *names[DIR_COUNT] = { "UP", "DOWN", "LEFT", "RIGHT" };
 
 const char *dir_name(enum direction d)
 {
-    if (d < UP || d >= DIR_COUNT)       // 범위를 벗어난 값을 걸러 낸다
+    if (d < UP || d >= DIR_COUNT)       // filter out out-of-range values
         return "?";
     return names[d];
 }

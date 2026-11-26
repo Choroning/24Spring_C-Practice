@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 7
 
@@ -255,10 +255,10 @@ int Add(int i, int j) { // function definition
 4. `main`은 반환값 7을 `d`에 대입하고 출력한다. `main`의 `return 0;`은 C99부터 생략할 수 있다.
 
 ```text
- Add 실행 중                         Add 반환 후
+ While Add runs                      After Add returns
 ┌─────────────────────────┐        ┌─────────────────────────┐
 │ Add   i = 3             │        │                         │
-│       j = 4             │        │  (i, j, result 소멸)     │
+│       j = 4             │        │  (i, j, result freed)   │
 │       result = 7        │        │                         │
 ├─────────────────────────┤        ├─────────────────────────┤
 │ main  d = garbage       │        │ main  d = 7             │

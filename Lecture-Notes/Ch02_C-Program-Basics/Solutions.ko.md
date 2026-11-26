@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -286,7 +286,7 @@ pi = 3.14
 
 ```c
 // test.c
-#define _CRT_SECURE_NO_WARNINGS     // Visual Studio 2022에서 scanf 사용 시 필요
+#define _CRT_SECURE_NO_WARNINGS     // needed to use scanf in Visual Studio 2022
 #include <stdio.h>
 
 int main(void)
@@ -373,7 +373,7 @@ printf("int main(void)\n"
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -393,19 +393,19 @@ int main(void)
 
 **실행 결과:** 171을 입력하면 171 = 16 × 10 + 11이므로 두 자리 16진수 `ab`가 출력된다.
 
-```text
+```text wide-ok
 10진수 정수? 10
 10진수 10은 16진수 a에 해당합니다.
 ```
 
-```text
+```text wide-ok
 10진수 정수? 171
 10진수 171은 16진수 ab에 해당합니다.
 ```
 
 > **주의:** **음수 입력.** `%x`는 `unsigned int` 값을 기대하므로, 음수를 입력하면 그 비트 패턴을 부호 없는 정수로 해석한 값이 출력된다. 32비트 `int`에서 -1은 2의 보수로 모든 비트가 1이므로 `ffffffff`가 출력된다([3장 2.2절](../Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md#22-정수의-2진-표현-2의-보수)).
 
-```text
+```text wide-ok
 10진수 정수? -1
 10진수 -1은 16진수 ffffffff에 해당합니다.
 ```
@@ -429,7 +429,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -452,7 +452,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 연? 2022
 월? 10
 일? 1
@@ -461,7 +461,7 @@ int main(void)
 
 > **주의:** **입력 값의 검사.** 이 프로그램은 정수를 입력받아 출력할 뿐, 입력받은 값이 유효한 날짜인지 검사하지 않는다. 연, 월, 일에 각각 -500, 15, 55를 입력하면 "-500년 15월 55일"이 그대로 출력된다. 월이 1~12인지, 일이 그 달의 날수 안에 있는지 검사하려면 [5장 2절](../Ch05_Control-Statements/Concepts_Lecture.ko.md#2-조건문)의 조건문이 필요하다.
 
-```text
+```text wide-ok
 연? -500
 월? 15
 일? 55
@@ -494,7 +494,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -518,14 +518,14 @@ int main(void)
 
 **실행 결과:** 13, 5, 9를 입력하면 한 자리 수인 분과 초에만 0이 채워진다.
 
-```text
+```text wide-ok
 시? 1
 분? 1
 초? 1
 입력한 시간은 01:01:01입니다.
 ```
 
-```text
+```text wide-ok
 시? 13
 분? 5
 초? 9
@@ -534,7 +534,7 @@ int main(void)
 
 > **주의:** **문자 폭은 최소 폭이다.** 값이 두 자리를 넘으면 잘리지 않고 모두 출력되며, 음수는 부호가 한 글자를 차지한다. 100, -5, 7을 입력하면 "100:-5:07"이 출력된다. 이 프로그램도 시가 0\~23, 분과 초가 0\~59의 범위에 있는지 검사하지 않는다.
 
-```text
+```text wide-ok
 시? 100
 분? -5
 초? 7
@@ -562,7 +562,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -587,19 +587,19 @@ int main(void)
 
 **실행 결과:** 50.25 × 1000 = 50250원이 출력된다. 2.01달러도 2010원으로 바르게 환산된다.
 
-```text
+```text wide-ok
 달러? 50.25
 $50.25는 50250원입니다.
 ```
 
-```text
+```text wide-ok
 달러? 2.01
 $2.01는 2010원입니다.
 ```
 
 > **주의:** **실수의 표현 오차와 소수 부분의 버림.** 반올림 없이 `won = dollars * WON_PER_DOLLAR;`로 대입하면 결과가 1원 모자랄 수 있다. 2.01은 2진수로 정확히 나타낼 수 없어 `double`에 2.00999999999999978684...로 저장되고, 여기에 1000을 곱한 2009.9999999999998이 `int`로 변환되면서 소수 부분이 버려져 2009가 되기 때문이다([3장 1.2절](../Ch03_Data-Types-and-Variables/Concepts_Lecture.ko.md#12-실수형)). 다음은 반올림 없이 대입한 프로그램에 2.01을 입력한 결과이다.
 
-```text
+```text wide-ok
 달러? 2.01
 $2.01는 2009원입니다.
 ```
@@ -623,7 +623,7 @@ $2.01는 2009원입니다.
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -642,14 +642,14 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? M
 M 사이즈를 선택했습니다.
 ```
 
 > **주의:** **문자 하나만 읽는다.** `%c`는 문자 하나만 읽으므로 `XL`을 입력하면 `X`만 저장되고 `L`은 입력 버퍼에 남는다. 또 입력이 S, M, L 중 하나인지 검사하지 않으므로 소문자나 다른 문자도 그대로 출력된다. 입력을 S, M, L로 제한하려면 [5장 2절](../Ch05_Control-Statements/Concepts_Lecture.ko.md#2-조건문)의 조건문이 필요하다.
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? XL
 X 사이즈를 선택했습니다.
 ```
@@ -674,7 +674,7 @@ X 사이즈를 선택했습니다.
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -694,7 +694,7 @@ int main(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 12.340000 + 0.500000 = 12.840000
 12.340000 - 0.500000 = 11.840000
@@ -702,7 +702,7 @@ int main(void)
 
 > **주의:** **`scanf`에서 `double`을 `%f`로 읽는 실수.** `scanf("%f %f", &x, &y);`로 쓰면 `scanf`가 `double` 변수의 메모리에 `float` 형식의 값을 저장하므로 정의되지 않은 동작이 발생한다. `-Wall`로 컴파일하면 clang이 "format specifies type 'float *' but the argument has type 'double *'" 경고를 내며, 실행하면 다음처럼 입력과 무관한 값이 출력될 수 있다.
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 0.000000 + 0.000000 = 0.000000
 0.000000 - 0.000000 = 0.000000
@@ -814,7 +814,7 @@ pi = 3.141593e+00
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -836,7 +836,7 @@ int main(void)
 
 **실행 결과:** `0x12`를 입력한 결과는 다음과 같다. 8진수 `012`는 8 × 1 + 2 = 10이고, 10진수 `18`은 `0x12`와 같은 값이다.
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 0x12
  8진수: 022
@@ -844,7 +844,7 @@ int main(void)
 16진수: 0x12
 ```
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 012
  8진수: 012
@@ -852,7 +852,7 @@ int main(void)
 16진수: 0xa
 ```
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 18
  8진수: 022
@@ -862,7 +862,7 @@ int main(void)
 
 > **주의:** **0과 8진수가 아닌 숫자.** `#` 플래그는 값이 0이면 접두사를 붙이지 않으므로 0을 입력하면 세 줄 모두 `0`이 출력된다. 또 `%i`는 0으로 시작하는 입력을 8진수로 읽으므로, `09`를 입력하면 8진수 숫자가 아닌 9 앞에서 읽기를 멈추어 값이 0이 된다. 10진수로 입력할 때는 앞에 0을 붙이지 않아야 한다.
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 09
  8진수: 0

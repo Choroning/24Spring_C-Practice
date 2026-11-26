@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -306,7 +306,7 @@ strncat(dest, ", World!!!!!", 7);  // "Hello, World" (appends 7 chars + '\0')
 
 **`strchr(str, ch)`** finds the **first occurrence** of character `ch` in `str`. Returns a pointer to the found character, or `NULL` if not found.
 
-```c
+```c wide-ok
 char str[] = "Hello, World!";
 char *p = strchr(str, 'o');
 if (p != NULL) {
@@ -317,7 +317,7 @@ if (p != NULL) {
 
 **`strstr(str, substr)`** finds the **first occurrence** of substring `substr` in `str`. Returns a pointer to the beginning of the match, or `NULL`. For example, it can find `".txt"` in a file name to decide whether the file is a text file.
 
-```c
+```c wide-ok
 char str[] = "Hello, World!";
 char *p = strstr(str, "World");
 if (p != NULL) {
@@ -476,7 +476,7 @@ All functions below require `#include <ctype.h>`. They take an `int` (character)
 
 *Table 5. Character classification functions of `<ctype.h>`*
 
-```c
+```c wide-ok
 #include <ctype.h>
 
 char c = 'A';
@@ -526,7 +526,7 @@ The string I/O functions require `<stdio.h>`.
 
 **`scanf("%s", str)`** reads characters from the input buffer until **whitespace** (space, tab, newline). No `&` is needed because the array name converts to the starting address of the array.
 
-```c
+```c wide-ok
 char name[20];
 printf("Enter name: ");
 scanf("%s", name);          // reads one word only
@@ -548,7 +548,7 @@ printf("Hello, %s!\n", name);
 
 To read a line of string that contains spaces, use `fgets` or `gets_s`. **`fgets(str, count, stdin)`** reads up to `count - 1` characters or until a newline, whichever comes first. It **includes the newline** `'\n'` in the stored string.
 
-```c
+```c wide-ok
 char line[100];
 printf("Enter a line: ");
 fgets(line, 100, stdin);
@@ -684,7 +684,7 @@ int z = atoi("abc");    // 0  (no valid number found)
 
 **`sscanf(str, format, ...)`** reads formatted data **from a string** (instead of standard input).
 
-```c
+```c wide-ok
 char data[] = "Alice 25 3.85";
 char name[20];
 int age;

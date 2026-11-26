@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -62,15 +62,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab06_Functions/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C06Q1.c
- * @brief   Q1. 실수 반올림
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Rounding a Real Number
+ * @author  Cheolwon Park
  * @date    2024-04-16
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -106,7 +106,7 @@ int main()
 
 **실행 결과:** `scanf_s`는 Visual Studio 전용 함수이므로, 다른 컴파일러에서는 `-Dscanf_s=scanf` 옵션으로 `scanf`로 대체하여 컴파일한다. 실행 예시의 마지막 줄 `Program ended with exit code: 0`은 프로그램의 출력이 아니라 Xcode 콘솔이 덧붙이는 종료 메시지이다.
 
-```text
+```text wide-ok
 실수를 입력하세요 (0.0 입력 시 종료) : 2.75
 2.750000의 반올림 결과 = 3
 
@@ -144,11 +144,11 @@ int main()
 
 **코드:** [Lab_Q2.c](../../Coursework/Lab06_Functions/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C06Q2.c
- * @brief   Q2. 윤년 판별
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Leap Year Check
+ * @author  Cheolwon Park
  * @date    2024-04-17
  */
 
@@ -182,7 +182,7 @@ int main()
 
 **실행 결과:** 각 연도 뒤에 공백을 출력하므로 줄마다 끝에 공백이 하나 남고, 마지막 줄은 7개를 출력한 뒤 `count`가 10의 배수가 아니어서 줄바꿈 없이 끝난다.
 
-```text
+```text wide-ok
 -------------------------------------------------
                2000~2150년 사이의 윤년
 -------------------------------------------------
@@ -212,15 +212,15 @@ int main()
 
 **코드:** [Lab_Q3.c](../../Coursework/Lab06_Functions/Lab_Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C06Q3.c
- * @brief   Q3. 월별 날짜 수 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Number of Days in a Month
+ * @author  Cheolwon Park
  * @date    2024-04-17
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -266,22 +266,22 @@ int main()
 
 **실행 결과:** 실행 예시의 네 입력을 차례로 넣은 결과이다. 출력 끝에 줄바꿈을 하지 않으므로 터미널에서는 다음 프롬프트가 같은 줄에 이어진다.
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2017 4
 2017년 4월은 30일까지 있습니다.
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2020 8
 2020년 8월은 31일까지 있습니다.
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2000 2
 2000년 2월은 29일까지 있습니다.
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2100 2
 2100년 2월은 28일까지 있습니다.
 ```
@@ -592,7 +592,7 @@ int get_gcd(int x, int y)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -624,17 +624,17 @@ int main(void)
 
 **실행 결과:** 문제에 실행 예시가 없으므로, 주석의 입력 형태대로 `10 + 30`을 입력한 결과, 정수 나눗셈의 결과, 지원하지 않는 연산자 `%`를 입력한 결과를 차례로 보인다.
 
-```text
+```text wide-ok
 수식 ? 10 + 30
 10 + 30 = 40
 ```
 
-```text
+```text wide-ok
 수식 ? 100 / 7
 100 / 7 = 14
 ```
 
-```text
+```text wide-ok
 수식 ? 10 % 3
 잘못된 수식입니다.
 ```
@@ -667,7 +667,7 @@ seconds.c:9:62: error: call to undeclared function 'get_seconds'; ISO C99 and la
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -697,7 +697,7 @@ int get_seconds(int hours, int minutes, int seconds)
 
 **실행 결과:** 문제에 실행 예시가 없으므로 1시간 30분 15초를 입력한 결과를 보인다. 1 × 3600 + 30 × 60 + 15 = 5415초이다.
 
-```text
+```text wide-ok
 시간 분 초? 1 30 15
 1시간 30분 15초 = 5415초
 ```
@@ -757,7 +757,7 @@ data = 10
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -793,7 +793,7 @@ void print_multiples(int num, int count)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 정수? 3
 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60
 정수? 11
@@ -822,7 +822,7 @@ void print_multiples(int num, int count)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -851,7 +851,7 @@ int get_perimeter(int width, int height)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 가로? 100
 세로? 200
 직사각형의 둘레: 600
@@ -877,7 +877,7 @@ int get_perimeter(int width, int height)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 #include <math.h>   // sqrt
@@ -911,7 +911,7 @@ double get_distance(int x1, int y1, int x2, int y2)
 
 **실행 결과:** (0, 0)과 (3, 4) 사이의 거리는 $\sqrt{9 + 16} = 5$이다.
 
-```text
+```text wide-ok
 직선의 시작점 좌표? 0 0
 직선의 끝점 좌표? 3 4
 (0, 0)~(3, 4) 직선의 길이: 5.000000
@@ -936,7 +936,7 @@ double get_distance(int x1, int y1, int x2, int y2)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -968,7 +968,7 @@ int computeDiscount(int price, int rate)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 할인율(%)? 20
 제품의 가격? 10000
 할인가: 8000원
@@ -979,7 +979,7 @@ int computeDiscount(int price, int rate)
 
 > **주의:** 정수 나눗셈이므로 원 미만은 버려진다. 999원을 15% 할인하면 849.15원이지만 849원이 출력된다. 또 `price * (100 - rate)`를 `int`로 계산하므로, 할인율이 0일 때 21474837원 이상의 가격처럼 곱이 2147483647을 넘으면 오버플로가 일어난다.
 
-```text
+```text wide-ok
 할인율(%)? 15
 제품의 가격? 999
 할인가: 849원
@@ -1005,7 +1005,7 @@ int computeDiscount(int price, int rate)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1040,7 +1040,7 @@ void print_menu(void)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 1
 파일 열기를 수행합니다.
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 2
@@ -1050,7 +1050,7 @@ void print_menu(void)
 
 실행 예시에 없는 3과 메뉴에 없는 번호 7을 입력하면 다음과 같다.
 
-```text
+```text wide-ok
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 3
 인쇄를 수행합니다.
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 7
@@ -1088,7 +1088,7 @@ void print_menu(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1130,14 +1130,14 @@ int get_blue(unsigned int rgb)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 RGB 색상? 0xff0080
 RGB FF0080의 red: 128, green: 0, blue: 255
 ```
 
 `0xff`를 입력하면 `%06X`가 앞자리를 0으로 채워 `0000FF`로 출력한다. `%X`로 출력하면 `FF`만 나온다.
 
-```text
+```text wide-ok
 RGB 색상? 0xff
 RGB 0000FF의 red: 255, green: 0, blue: 0
 ```
@@ -1223,7 +1223,7 @@ int is_leap_year(int year)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1279,7 +1279,7 @@ int is_valid_date(int year, int month, int day)
 
 **실행 결과:** 13월은 월 검사에서, 6월 31일은 6월의 날짜 수 30을 넘어 일 검사에서 걸린다.
 
-```text
+```text wide-ok
 날짜 (연 월 일)? 2022 13 1
 잘못 입력하셨습니다. 유효한 날짜를 입력하세요.
 날짜 (연 월 일)? 2022 6 31
@@ -1290,7 +1290,7 @@ int is_valid_date(int year, int month, int day)
 
 2월 29일은 윤년에만 유효하다. 2023년과 2100년은 평년이고 2024년은 윤년이다.
 
-```text
+```text wide-ok
 날짜 (연 월 일)? 2023 2 29
 잘못 입력하셨습니다. 유효한 날짜를 입력하세요.
 날짜 (연 월 일)? 2100 2 29
@@ -1321,7 +1321,7 @@ int is_valid_date(int year, int month, int day)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1356,14 +1356,14 @@ void print_binary(unsigned int num)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 정수? 0xabcd1234
 16진수 ABCD1234: 1010 1011 1100 1101 0001 0010 0011 0100
 ```
 
 작은 값을 입력하면 앞자리가 0으로 채워진 32비트 전체가 출력된다. `%x`는 `0x` 없이 입력한 `1f`도 16진수로 읽는다.
 
-```text
+```text wide-ok
 정수? 1f
 16진수 1F: 0000 0000 0000 0000 0000 0000 0001 1111
 ```
@@ -1387,7 +1387,7 @@ void print_binary(unsigned int num)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1429,7 +1429,7 @@ void print_divisors(int num)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 양의 정수? 100
 100의 약수: 1 2 4 5 10 20 25 50 100 => 총 9개
 양의 정수? 56
@@ -1439,7 +1439,7 @@ void print_divisors(int num)
 
 음수와 1을 입력하면 다음과 같다. 1의 약수는 1 하나뿐이다.
 
-```text
+```text wide-ok
 양의 정수? -12
 양의 정수를 입력하세요.
 양의 정수? 1
@@ -1467,7 +1467,7 @@ void print_divisors(int num)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1511,7 +1511,7 @@ int is_prime(int num)
 
 **실행 결과:**
 
-```text
+```text wide-ok
 1~N 사이의 소수를 구합니다. N은? 100
   2  3  5  7 11 13 17 19 23 29
  31 37 41 43 47 53 59 61 67 71
@@ -1539,7 +1539,7 @@ int is_prime(int num)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1597,7 +1597,7 @@ void accumulate(char op, int operand)
 
 0으로 나누는 입력과 지원하지 않는 연산자 `%`를 넣으면 메시지를 출력한 뒤 이전 결과를 그대로 보여 준다.
 
-```text
+```text wide-ok
 0 + 7
 = 7 / 0
 0으로 나눌 수 없습니다.

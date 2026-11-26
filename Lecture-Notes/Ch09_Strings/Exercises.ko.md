@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -63,7 +63,7 @@
 
 **예시 코드:** 함수의 선언과 정의를 추가하여 완성한다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define SIZE 64
 
@@ -111,7 +111,7 @@ int main()
 
 **실행 예시:**
 
-```text
+```text wide-ok
 문자열(str1) 입력: c is fun!!
 
 str1의 길이: 10

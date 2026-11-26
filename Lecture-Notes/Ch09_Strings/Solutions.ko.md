@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -44,15 +44,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab09_Strings/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C09Q1.c
- * @brief   Q1. 문자열 조작
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. String Manipulation
+ * @author  Cheolwon Park
  * @date    2024-05-28
  * 
- * @note    소스 코드에 사용된 gets_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that gets_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
  #include <stdio.h>
@@ -182,14 +182,14 @@ void swap(char* a, char* b)
 
 static char *gets_s(char *s, size_t n) {
     if (!fgets(s, (int)n, stdin)) return NULL;
-    s[strcspn(s, "\n")] = '\0';   // 개행 문자를 버림
+    s[strcspn(s, "\n")] = '\0';   // discard the newline
     return s;
 }
 ```
 
 이렇게 컴파일하면 조건식 안의 대입 `if (result = my_strcmp(...))`에 대해 괄호로 의도를 밝히라는 경고(`-Wparentheses`) 두 개가 나온다. 실행 예시의 문자열을 입력한 결과는 다음과 같다.
 
-```text
+```text wide-ok
 문자열(str1) 입력: c is fun!!
 
 str1의 길이: 10

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Update the maximum and minimum in a `while` loop that ends at the sentinel 0 while filtering out-of-range inputs
@@ -119,8 +119,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q1.c
- * @brief   Q1. 반복문 연습 (1)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Loop Practice (1)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -202,7 +202,7 @@ Assume that only positive numbers including 0 (numbers 0 or greater) are entered
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 >> Input value: 0
 =====================
 -> 0만 입력되었습니다!
@@ -221,11 +221,11 @@ Program ended with exit code: 0
 
 **Code:** [Solution/Q2.c](Solution/Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-3_C05Q2.c
- * @brief   Q2. 반복문 연습 (2)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Loop Practice (2)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -268,7 +268,7 @@ int main()
 -> SUM: 5, AVE: 1.7
 ```
 
-```text
+```text wide-ok
 >> Input value: 0
 ===================== 
 -> 0만 입력되었습니다!
@@ -307,8 +307,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q3.c
- * @brief   Q3. 반복문 연습 (3)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Loop Practice (3)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -375,8 +375,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q4.c
- * @brief   Q4. 반복문 연습 (4)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Loop Practice (4)
+ * @author  Cheolwon Park
  * @date    2024-04-13
  */
 

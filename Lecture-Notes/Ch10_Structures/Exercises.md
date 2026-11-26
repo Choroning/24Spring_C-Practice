@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -52,7 +52,7 @@
 
 **Example Code:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 #define MAX_STD 20
 
@@ -89,7 +89,7 @@ int main()
 
 **Sample Run:**
 
-```text
+```text wide-ok
 A클래스의 실제 학생 수 입력: 5
 
 이름 입력: 김ㅇㅇ
@@ -172,7 +172,7 @@ typedef struct rectangle {
 
 **Sample Run:**
 
-```text
+```text wide-ok
 사각형의 좌표를 입력하세요.
 좌상단 좌표: 1 3
 우하단 좌표: 7 10
@@ -181,7 +181,7 @@ typedef struct rectangle {
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 사각형의 좌표를 입력하세요.
 좌상단 좌표: -2 5
 우하단 좌표: 7 5

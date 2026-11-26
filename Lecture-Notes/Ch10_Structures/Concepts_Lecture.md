@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 10
 
@@ -122,7 +122,7 @@ Defining a structure only creates a new data type; it does not create a structur
 
 The size of a struct is **at least** the sum of its member sizes, but may be larger due to **padding/alignment** bytes inserted by the compiler between or after members for efficient memory access.
 
-```c
+```c wide-ok
 struct example {
     char c;      // 1 byte
     int n;       // 4 bytes
@@ -230,7 +230,7 @@ struct content c2 = c1;   // copies all members from c1 to c2
 
 Use the **dot operator** (`.`, the member access operator) to access members through a struct variable.
 
-```c
+```c wide-ok
 struct content c1 = {"Avengers", 11000, 8.8};
 
 c1.rate = 8.9;                      // modify a member
@@ -295,7 +295,7 @@ struct content c2 = c1;
 
 Instead, compare **member by member**. For string members, use `strcmp`.
 
-```c
+```c wide-ok
 if (strcmp(c1.title, c2.title) == 0 &&
     c1.price == c2.price &&
     c1.rate == c2.rate) {
@@ -427,7 +427,7 @@ for (int i = 0; i < 3; i++) {
 
 **Searching a struct array:** The program reads the title to search for and leaves the `for` loop with `break` when it finds an element with the same title. After the loop, if `i` is less than the array size, `i` is the index of the found element; if it equals the array size, the search failed.
 
-```c
+```c wide-ok
 char title[50];
 int i;
 
@@ -474,7 +474,7 @@ struct content *p = &c1;
 
 Access members through a pointer using the **arrow operator** (`->`, the indirect member access operator).
 
-```c
+```c wide-ok
 printf("Title: %s\n", p->title);     // arrow operator
 printf("Price: %d\n", p->price);
 printf("Rate: %.1f\n", p->rate);
@@ -510,7 +510,7 @@ A structure can be passed to a function either by value or by pointer.
 
 **Pass by value:** The function receives a **copy**.
 
-```c
+```c wide-ok
 void display(struct content c) {
     printf("%s %d %.1f\n", c.title, c.price, c.rate);
     c.price = 0;   // modifies the copy only: original unchanged
@@ -526,7 +526,7 @@ int main() {
 
 **Pass by pointer:** The function can **modify the original**.
 
-```c
+```c wide-ok
 void discount(struct content *p, double rate) {
     p->price *= rate;   // modifies the original struct
 }
@@ -566,7 +566,7 @@ int main() {
 
 **Input function using a pointer:**
 
-```c
+```c wide-ok
 void input_content(struct content *p) {
     printf("Title: ");
     scanf("%s", p->title);
@@ -626,7 +626,7 @@ struct student s1 = {"Kim", 2024001, {2005, 3, 15}};
 
 **Accessing nested members:** Use the dot operator repeatedly.
 
-```c
+```c wide-ok
 printf("Name: %s\n", s1.name);
 printf("Birthday: %d-%02d-%02d\n",
        s1.birthday.year, s1.birthday.month, s1.birthday.day);
@@ -634,7 +634,7 @@ printf("Birthday: %d-%02d-%02d\n",
 
 **With pointers:**
 
-```c
+```c wide-ok
 struct student *p = &s1;
 printf("Year: %d\n", p->birthday.year);   // pointer->outer.inner
 ```
@@ -924,7 +924,7 @@ The C compiler treats an enumeration as type `int` and defines the enumeration c
 
 **Usage:**
 
-```c
+```c wide-ok
 enum color c = RED;
 
 switch (c) {
@@ -946,7 +946,7 @@ case BLUE:
 
 A **union** looks like a struct but **shares memory** among all members. All members of a union are allocated at the same address, so changing the value of one member changes the others as well. Only **one member** holds a meaningful value at a time, and the size of the union is large enough to hold its **largest member**.
 
-```c
+```c wide-ok
 union data {
     int i;
     float f;

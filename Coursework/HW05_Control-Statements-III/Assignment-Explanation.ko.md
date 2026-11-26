@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 감시값 0으로 끝나는 `while` 반복에서 범위 밖의 입력을 걸러 내며 최댓값과 최솟값을 갱신할 수 있다
@@ -48,16 +48,16 @@
 
 ```text
 Coursework/HW05_Control-Statements-III/
-├── Assignment-Explanation.ko.md   # 이 문서 (한국어)
-├── Assignment-Explanation.md      # 이 문서 (영어)
+├── Assignment-Explanation.ko.md   # this document (Korean)
+├── Assignment-Explanation.md      # this document (English)
 ├── Original/
-│   ├── Assignment.ko.md           # 과제 안내문 (한국어)
-│   └── Assignment.md              # 과제 안내문 (영어)
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
-    ├── Q1.c                       # 문제 1: 최댓값과 최솟값 (while)
-    ├── Q2.c                       # 문제 2: 합과 평균 (do-while)
-    ├── Q3.c                       # 문제 3: 부호가 번갈아 바뀌는 합 (for)
-    └── Q4.c                       # 문제 4: 숫자 삼각형 (중첩 for)
+    ├── Q1.c                       # Problem 1: maximum and minimum (while)
+    ├── Q2.c                       # Problem 2: sum and average (do-while)
+    ├── Q3.c                       # Problem 3: alternating-sign sum (for)
+    └── Q4.c                       # Problem 4: number triangle (nested for)
 ```
 
 *그림 1. HW5 과제의 디렉토리 구성*
@@ -119,8 +119,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q1.c
- * @brief   Q1. 반복문 연습 (1)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Loop Practice (1)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -202,7 +202,7 @@ MAX: 100, MIN: 100
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 >> Input value: 0
 =====================
 -> 0만 입력되었습니다!
@@ -221,11 +221,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q2.c](Solution/Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-3_C05Q2.c
- * @brief   Q2. 반복문 연습 (2)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Loop Practice (2)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -268,7 +268,7 @@ int main()
 -> SUM: 5, AVE: 1.7
 ```
 
-```text
+```text wide-ok
 >> Input value: 0
 ===================== 
 -> 0만 입력되었습니다!
@@ -307,8 +307,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q3.c
- * @brief   Q3. 반복문 연습 (3)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Loop Practice (3)
+ * @author  Cheolwon Park
  * @date    2024-04-12
  */
 
@@ -375,8 +375,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-3_C05Q4.c
- * @brief   Q4. 반복문 연습 (4)
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Loop Practice (4)
+ * @author  Cheolwon Park
  * @date    2024-04-13
  */
 

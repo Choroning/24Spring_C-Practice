@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -132,7 +132,7 @@ Because a pointer stores an address, not the data itself, its size is determined
 
 **The `&` (address-of) operator** returns the memory address of a variable. The result of `&` is an address whose type is a pointer to the variable written after `&`; for an `int` variable `a`, `&a` has type `int*`.
 
-```c
+```c wide-ok
 int a = 10;
 int *p = &a;   // p now holds the address of a
 
@@ -212,7 +212,7 @@ Why use pointers? The textbook highlights two key situations.
 
 *Table 2. Two situations that require pointers*
 
-```c
+```c wide-ok
 // Example: function returning multiple values via pointers
 void divide(int a, int b, int *quotient, int *remainder) {
     *quotient = a / b;
@@ -786,7 +786,7 @@ int main() {
 
 Since C functions can only `return` a single value, pointer parameters are used to give back additional values.
 
-```c
+```c wide-ok
 void sec_to_hms(int sec, int *h, int *m, int *s) {
     *h = sec / 3600;
     *m = (sec % 3600) / 60;
@@ -819,7 +819,7 @@ Parameters fall into three kinds according to their role inside the function, an
 
 A function that returns its results through output parameters is written in the following order. (1) In the prototype, declare each output parameter as a pointer to the variable that will store the result. (2) When calling the function, prepare the variables that will receive the results and pass their addresses. (3) In the function definition, store the results where the pointer parameters point.
 
-```c
+```c wide-ok
 void get_sum_product(int x, int y, int *psum, int *pproduct) {
     *psum = x + y;        // store the sum where psum points
     *pproduct = x * y;    // store the product where pproduct points

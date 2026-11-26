@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -125,8 +125,8 @@ printf("%d\n", max + 1); // -2,147,483,648  (wraps around!)
 
 ```text
           Overflow
-    ┌─── INT_MAX + 1 ───┐
-    │                    ▼
+    ┌───── INT_MAX + 1 ────────────┐
+    │                              ▼
 ... ─2 ─1  0  1  2 ... INT_MAX  INT_MIN ...
                          ▲                │
                          └── INT_MIN - 1 ─┘
@@ -204,7 +204,7 @@ Computers store numbers in **binary**. Some decimal fractions (like 0.1) have no
 double x = 0.1 + 0.2;
 printf("%.20f\n", x);  // 0.30000000000000004441  (not exactly 0.3!)
 
-if (x == 0.3) { ... }  // ❌ may be false!
+if (x == 0.3) { ... }  // [X] may be false!
 ```
 
 > **Caution:** Do not compare floating-point values with `==`; use a tolerance instead.
@@ -564,8 +564,8 @@ If `hours` is 5, `wage` becomes 8350 × 5 = 41750.
 **Rules and pitfalls:** A `#define` statement needs no semicolon at the end, and the value of a macro constant cannot be changed.
 
 ```c
-#define MAX_SIZE 100    // ✅ correct: no semicolon at end
-#define MAX_SIZE 100;   // ❌ wrong: semicolon gets substituted too!
+#define MAX_SIZE 100    // [O] correct: no semicolon at end
+#define MAX_SIZE 100;   // [X] wrong: semicolon gets substituted too!
 
 // After preprocessing with the wrong version:
 int arr[MAX_SIZE];  →  int arr[100;];  // syntax error!
@@ -573,7 +573,7 @@ int arr[MAX_SIZE];  →  int arr[100;];  // syntax error!
 
 ```c
 #define HOURLY_WAGE 8350
-HOURLY_WAGE = 9000;           // ❌ compile error: macro is not a variable
+HOURLY_WAGE = 9000;           // [X] compile error: macro is not a variable
 printf("HOURLY_WAGE\n");      // prints "HOURLY_WAGE": strings are NOT replaced
 printf("%d\n", HOURLY_WAGE);  // prints 8350: identifier IS replaced
 ```
@@ -599,13 +599,13 @@ Clang also points to the location of the macro definition with the `expanded fro
 const int BUF_SIZE = 256;
 const double PI = 3.141592;
 
-BUF_SIZE = 128;  // ❌ compile error
+BUF_SIZE = 128;  // [X] compile error
 ```
 
 > **Caution:** A `const` variable **must be initialized at declaration**. A declaration without initialization is not a syntax error in C (it is in C++), but because no value can be assigned later, a local one is left holding garbage and is useless.
 > ```c
-> const int size;     // ❌ useless: can never assign a value
-> const int size = 10; // ✅ correct
+> const int size;      // [X] useless: can never assign a value
+> const int size = 10; // [O] correct
 > ```
 
 | Feature | `#define` | `const` |

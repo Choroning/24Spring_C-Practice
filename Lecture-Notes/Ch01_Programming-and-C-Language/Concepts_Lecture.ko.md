@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 1
 
@@ -141,17 +141,17 @@ flowchart TD
 C 언어는 **1972년** Bell 연구소에서 **Dennis Ritchie**가 **Ken Thompson**이 개발한 B 언어를 기반으로 만들었으며, 두 사람은 함께 UNIX를 개발하였다. 주된 목적은 UNIX 운영체제를 고급 언어로 다시 작성하는 것이었다. C는 이후 C++, C#, Objective-C, Java, JavaScript, Perl 같은 언어의 등장에 큰 영향을 주었다.
 
 ```text
-C 언어의 역사
+Timeline of C
 ──────────────────────────────────────────────────────────────
-1969    B 언어 (Ken Thompson): PDP-7에서 초기 UNIX 개발용
-1972    C 언어 (Dennis Ritchie): Bell Labs, PDP-11에서 UNIX 개발용
-1978    K&R C: "The C Programming Language" 서적 출간 (Kernighan & Ritchie)
-1989    ANSI C (C89): 최초의 공식 표준 (ANSI X3.159-1989)
-1990    C90: ISO에서 ANSI C 채택 (ISO/IEC 9899:1990)
-1999    C99: 인라인 함수, 가변 길이 배열, // 주석 도입
-2011    C11: 멀티스레딩, _Generic, 경계 검사 도입
-2018    C18: C11 버그 수정 (새로운 기능 없음)
-2024    C23: 최신 표준, ISO/IEC 9899:2024 (nullptr, #embed, auto 타입 추론)
+1969    B Language (Ken Thompson): for early UNIX on PDP-7
+1972    C Language (Dennis Ritchie): Bell Labs, for UNIX on PDP-11
+1978    K&R C: "The C Programming Language" book (Kernighan & Ritchie)
+1989    ANSI C (C89): first official standard (ANSI X3.159-1989)
+1990    C90: ISO adoption of ANSI C (ISO/IEC 9899:1990)
+1999    C99: inline functions, variable-length arrays, // comments
+2011    C11: multi-threading, _Generic, bounds-checking
+2018    C18: bug fixes for C11 (no new features)
+2024    C23: latest standard, ISO/IEC 9899:2024 (nullptr, #embed, auto type inference)
 ──────────────────────────────────────────────────────────────
 ```
 
@@ -339,10 +339,10 @@ flowchart TD
 실제로는 컴파일러 드라이버(예: `gcc`)가 모든 단계를 자동으로 처리한다.
 
 ```bash
-gcc hello.c -o hello      ← 전처리기 + 컴파일러 + 어셈블러 + 링커
-gcc -E hello.c             ← 전처리기만 실행 (.i 출력)
-gcc -S hello.c             ← 전처리기 + 컴파일러만 (.s 출력)
-gcc -c hello.c             ← 전처리기 + 컴파일러 + 어셈블러 (.o 출력)
+gcc hello.c -o hello      ← preprocessor + compiler + assembler + linker
+gcc -E hello.c             ← preprocessor only (outputs .i)
+gcc -S hello.c             ← preprocessor + compiler only (outputs .s)
+gcc -c hello.c             ← preprocessor + compiler + assembler (outputs .o)
 ```
 
 위 블록의 `←` 뒤는 설명이며 명령의 일부가 아니다. `gcc -E`는 결과를 화면(표준 출력)에 쓰므로 `.i` 파일로 저장하려면 `gcc -E hello.c -o hello.i`처럼 출력 파일을 지정한다.
@@ -403,7 +403,7 @@ C 프로그램의 오류는 **감지 시점**에 따라 세 가지로 분류된�
 #include <stdio.h>
 
 int main(void) {
-    printf("Hello\n")   // ← 세미콜론 누락 → 컴파일 오류
+    printf("Hello\n")   // ← missing semicolon → compile error
     return 0;
 }
 ```
@@ -420,10 +420,10 @@ err1.c:4:22: error: expected ';' after expression
 **링크 오류:**
 ```c
 // main.c
-void myFunction(void);  // 선언만 하고 어디서도 정의하지 않음
+void myFunction(void);  // declared but never defined anywhere
 
 int main(void) {
-    myFunction();        // ← 링커가 정의를 찾을 수 없음 → 링크 오류
+    myFunction();        // ← linker cannot find the definition → link error
     return 0;
 }
 ```
@@ -444,7 +444,7 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
 int main(void) {
     int a = 10, b = 0;
-    printf("%d\n", a / b);  // ← 0으로 나누기 → 런타임 오류 (프로그램 비정상 종료)
+    printf("%d\n", a / b);  // ← division by zero → runtime error (crash)
     return 0;
 }
 ```
@@ -495,10 +495,10 @@ int main(void) {
     int x = 10, y = 3;
     int result = x / y;
 
-    printf("[DEBUG] x = %d, y = %d\n", x, y);       // 값 확인
-    printf("[DEBUG] result = %d\n", result);           // 기대값: 3 (정수 나눗셈)
+    printf("[DEBUG] x = %d, y = %d\n", x, y);       // check values
+    printf("[DEBUG] result = %d\n", result);           // expected 3 (integer division)
 
-    // ... 나머지 프로그램
+    // ... rest of program
     return 0;
 }
 ```
@@ -612,7 +612,7 @@ int square(int x)
 // main.c
 #include <stdio.h>
 
-int square(int x);     // 다른 파일에 정의된 함수의 원형
+int square(int x);     // prototype of a function defined in another file
 
 int main(void)
 {
@@ -622,9 +622,9 @@ int main(void)
 ```
 
 ```bash
-cc -c util.c                  # util.o 생성
-cc -c main.c                  # main.o 생성
-cc util.o main.o -o app       # 두 오브젝트 파일을 링크
+cc -c util.c                  # creates util.o
+cc -c main.c                  # creates main.o
+cc util.o main.o -o app       # links the two object files
 ./app
 ```
 

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -91,8 +91,8 @@
 
 ```c
 int x;
-x = 5;              // 대입 수식, 값은 5
-printf("%d\n", x=5); // 5 출력: 대입도 수식이다
+x = 5;              // assignment expression, value is 5
+printf("%d\n", x=5); // prints 5: assignment is an expression
 ```
 
 ### 1.2 연산자와 피연산자
@@ -112,9 +112,9 @@ printf("%d\n", x=5); // 5 출력: 대입도 수식이다
 ```c
 int a = 10, b = 3;
 
-sizeof(a);    // 단항: 피연산자 1개 (a)
-a + b;        // 이항: 피연산자 2개 (a, b)
-a > b ? a : b; // 삼항: 피연산자 3개 (a>b, a, b)
+sizeof(a);    // unary: one operand (a)
+a + b;        // binary: two operands (a, b)
+a > b ? a : b; // ternary: three operands (a>b, a, b)
 ```
 
 ---
@@ -145,8 +145,8 @@ a > b ? a : b; // 삼항: 피연산자 3개 (a>b, a, b)
 
 ```c
 int a = 7, b = 2;
-printf("%d\n", a / b);       // 3  (3.5가 아님: 절삭!)
-printf("%d\n", -7 / 2);      // -3 (0 방향으로 절삭)
+printf("%d\n", a / b);       // 3  (not 3.5: truncated!)
+printf("%d\n", -7 / 2);      // -3 (truncates toward zero)
 ```
 
 실수 결과를 얻으려면 **최소 하나의 피연산자**가 실수형이어야 한다.
@@ -155,7 +155,7 @@ printf("%d\n", -7 / 2);      // -3 (0 방향으로 절삭)
 int a = 7, b = 2;
 double result;
 
-result = a / b;              // int / int = 3 → 3.0으로 대입
+result = a / b;              // int / int = 3 → assigned as 3.0
 result = (double)a / b;      // double / int = 3.5
 result = a / (double)b;      // int / double = 3.5
 result = 7.0 / 2;            // double / int = 3.5
@@ -170,11 +170,11 @@ result = 7.0 / 2;            // double / int = 3.5
 ```c
 printf("%d\n", 10 % 3);   // 1   (10 = 3*3 + 1)
 printf("%d\n", 10 % 5);   // 0   (10 = 5*2 + 0)
-printf("%d\n", -7 % 2);   // -1  (C99 이후: 부호는 피제수를 따름)
+printf("%d\n", -7 % 2);   // -1  (sign follows dividend in C99+)
 ```
 
 ```c
-// ❌ 컴파일 에러: %는 실수형에 사용 불가
+// [X] Compile error: % does not work with floats
 // double r = 7.5 % 2.0;
 ```
 
@@ -200,21 +200,21 @@ printf("%d\n", -7 % 2);   // -1  (C99 이후: 부호는 피제수를 따름)
 *표 4. 수학 공식과 C 수식의 대응*
 
 ```c
-// 화씨를 섭씨로 변환
+// Fahrenheit to Celsius
 int F = 100;
 double C = 5.0 / 9 * (F - 32);   // 37.777...
-// ❌ 잘못된 예: 5/9 * (F - 32) → 0 * 68 = 0 (정수 나눗셈!)
+// [X] Wrong: 5/9 * (F - 32) → 0 * 68 = 0 (integer division!)
 
-// 두 정수의 평균
+// Average of two integers
 int a = 7, b = 4;
 double avg = (a + b) / 2.0;       // 5.5
-// ❌ 잘못된 예: (a + b) / 2 → 11 / 2 = 5 (정수 나눗셈!)
+// [X] Wrong: (a + b) / 2 → 11 / 2 = 5 (integer division!)
 
-// 다항식: x^3 + 2x - 5
+// Polynomial: x^3 + 2x - 5
 int x = 3;
 int result = x*x*x + 2*x - 5;    // 27 + 6 - 5 = 28
 
-// 정수 피연산자가 포함된 분수식
+// Fraction with integer operands
 int p = 3, q = 4;
 double frac = (double)(p + q) / (p*p * q*q);  // 7.0 / 144 = 0.048611...
 ```
@@ -242,9 +242,9 @@ double frac = (double)(p + q) / (p*p * q*q);  // 7.0 / 144 = 0.048611...
 
 ```c
 int x = 5;
-x++;    // x → 6
-++x;    // x → 7
-// 둘 다 x를 1 증가시킬 뿐: 단독 사용 시 차이 없음
+x++;    // x becomes 6
+++x;    // x becomes 7
+// Both just increment x by 1: no difference in standalone use
 ```
 
 차이는 **수식 내에서** 나타난다.
@@ -252,15 +252,15 @@ x++;    // x → 6
 ```c
 int a, x;
 
-// 전위: 먼저 증가, 그 다음 사용
+// Prefix: increment FIRST, then use
 x = 5;
-a = ++x;   // x가 6이 되고, a = 6
-// 결과: x = 6, a = 6
+a = ++x;   // x becomes 6, then a = 6
+// Result: x = 6, a = 6
 
-// 후위: 먼저 사용, 그 다음 증가
+// Postfix: use FIRST, then increment
 x = 5;
-a = x++;   // a = 5 (기존 값), 그 다음 x가 6이 됨
-// 결과: x = 6, a = 5
+a = x++;   // a = 5 (old value), then x becomes 6
+// Result: x = 6, a = 5
 ```
 
 > **핵심:** 전위는 값을 바꾼 뒤 읽고(변경 후 읽기), 후위는 값을 읽은 뒤 바꾼다(읽기 후 변경).
@@ -271,12 +271,12 @@ a = x++;   // a = 5 (기존 값), 그 다음 x가 6이 됨
 
 ```c
 int count = 5;
-count++;        // ✅ OK: 변수
-++count;        // ✅ OK: 변수
+count++;        // [O] OK: variable
+++count;        // [O] OK: variable
 
-// 10++;         // ❌ 에러: 상수
-// (count+1)--;  // ❌ 에러: 수식이지 변수가 아님
-// ++(a+b);      // ❌ 에러: 수식
+// 10++;         // [X] Error: constant
+// (count+1)--;  // [X] Error: expression, not a variable
+// ++(a+b);      // [X] Error: expression
 ```
 
 ### 3.4 상세 추적 예제
@@ -288,11 +288,11 @@ int main(void) {
     int a = 5, b = 5;
 
     printf("a   = %d\n", a);       // a   = 5
-    printf("a++ = %d\n", a++);     // a++ = 5  (5를 출력 후, a가 6이 됨)
+    printf("a++ = %d\n", a++);     // a++ = 5  (prints 5, then a becomes 6)
     printf("a   = %d\n", a);       // a   = 6
 
     printf("b   = %d\n", b);       // b   = 5
-    printf("++b = %d\n", ++b);     // ++b = 6  (b가 6이 된 후, 6을 출력)
+    printf("++b = %d\n", ++b);     // ++b = 6  (b becomes 6, then prints 6)
     printf("b   = %d\n", b);       // b   = 6
 
     return 0;
@@ -319,7 +319,7 @@ int main(void) {
 ```c
 int i = 1, n;
 
-n = i++ + i++;      // i를 한 수식에서 두 번 바꾼다
+n = i++ + i++;      // changes i twice in one expression
 ```
 
 ```text
@@ -355,10 +355,10 @@ C에서 관계 수식의 결과는 항상 `int`형이며, **참이면 1**, **거
 
 ```c
 int result;
-result = (10 > 5);      // result = 1 (참)
-result = (10 == 5);     // result = 0 (거짓)
-printf("%d\n", 3 < 7);  // 1 출력
-printf("%d\n", 3 > 7);  // 0 출력
+result = (10 > 5);      // result = 1 (true)
+result = (10 == 5);     // result = 0 (false)
+printf("%d\n", 3 < 7);  // prints 1
+printf("%d\n", 3 > 7);  // prints 0
 ```
 
 ### 4.3 흔한 실수: `=`와 `==`
@@ -373,8 +373,8 @@ printf("%d\n", 3 > 7);  // 0 출력
 ```c
 int x = 10;
 
-if (x == 5) { ... }  // ✅ 비교: x가 5인지 확인
-if (x = 5)  { ... }  // ⚠ 대입: x에 5를 대입하고, 5가 0이 아니므로 항상 참!
+if (x == 5) { ... }  // [O] Comparison: checks if x is 5
+if (x = 5)  { ... }  // ⚠ Assignment: sets x to 5, then checks if 5 is non-zero (always true!)
 ```
 
 > **주의:** `if (x = 5)`는 컴파일 에러 없이 통과하지만, x에 5를 대입한 후 5가 0이 아니므로 항상 참으로 평가된다. C에서 가장 흔한 버그 중 하나이다. gcc와 clang은 `-Wall` 옵션을 주면 경고하지만, 모든 컴파일러가 기본 설정에서 경고하는 것은 아니다.
@@ -399,20 +399,20 @@ if (x = 5)  { ... }  // ⚠ 대입: x에 5를 대입하고, 5가 0이 아니므�
 
 *표 9. 논리 연산자*
 
-```c
+```c wide-ok
 int age = 25, income = 3000;
 
-// AND: 양쪽 조건이 모두 참이어야 함
+// AND: both conditions must be true
 if (age >= 20 && income >= 2000)
     printf("자격 충족\n");
 
-// OR: 하나 이상의 조건이 참이면 됨
+// OR: at least one condition must be true
 if (age < 18 || age > 65)
     printf("특별 요금\n");
 
-// NOT: 조건을 반전
+// NOT: inverts the condition
 if (!0)
-    printf("출력됨\n");  // !0 = 1 (참)
+    printf("출력됨\n");  // !0 = 1 (true)
 ```
 
 ### 5.2 진리표
@@ -458,24 +458,24 @@ C는 논리 수식을 **왼쪽에서 오른쪽으로** 평가하며, **결과가
 ```c
 int a = 0, b = 5;
 
-// 단락 AND: a가 0(거짓)이므로, (b++)는 평가되지 않음
+// Short-circuit AND: a is 0 (false), so (b++) is never evaluated
 if (a && b++) {
-    // 실행 안 됨
+    // not entered
 }
-printf("b = %d\n", b);  // b = 5 (b++가 건너뛰어짐!)
+printf("b = %d\n", b);  // b = 5 (b++ was skipped!)
 
-// 단락 OR: a가 0(거짓)이므로, 오른쪽은 평가됨
+// Short-circuit OR: a is 0 (false), so right side IS evaluated
 a = 0;
 b = 5;
 if (a || b++) {
-    // 실행됨 (b++가 5로 평가, 0이 아니므로 참)
+    // entered (b++ evaluates to 5, which is true)
 }
-printf("b = %d\n", b);  // b = 6 (b++가 실행됨)
+printf("b = %d\n", b);  // b = 6 (b++ was executed)
 ```
 
 > **참고:** **단락 평가를 이용한 보호.** 단락 평가는 위험한 연산을 **보호**하는 데 유용하다.
 > ```c
-> if (b != 0 && a / b > 2) { ... }  // b가 0이 아닐 때만 나눗셈 실행
+> if (b != 0 && a / b > 2) { ... }  // division only happens if b != 0
 > ```
 
 ### 5.4 C에서의 참과 거짓
@@ -486,12 +486,12 @@ C89에는 별도의 불리언(boolean) 타입이 **없다**. 대신 정수값으
 
 ```c
 int x = -5;
-if (x)   printf("true\n");   // "true" 출력: x가 0이 아님
-if (!0)  printf("true\n");   // "true" 출력: !0 = 1
+if (x)   printf("true\n");   // prints "true": x is non-zero
+if (!0)  printf("true\n");   // prints "true": !0 = 1
 
 printf("%d\n", !0);    // 1
-printf("%d\n", !5);    // 0  (0이 아닌 값 → 0)
-printf("%d\n", !-3);   // 0  (음수도 참이므로 !(-3) = 0)
+printf("%d\n", !5);    // 0  (any non-zero becomes 0)
+printf("%d\n", !-3);   // 0  (negative non-zero is also true, so !(-3) = 0)
 ```
 
 > **핵심:** `!`, `&&`, `||`의 결과는 입력이 어떤 정수값이든 항상 `0` 또는 `1` (`int`형)이다.
@@ -590,7 +590,7 @@ printf("%02X\n", x >> 2);  // 0000 0011 = 0x03 = 3   (/4)
 32비트 RGB 모델에서는 하나의 `unsigned int`에 세 가지 색상 채널(과 사용하지 않는 상위 바이트)을 저장한다.
 
 ```text
-비트 위치:  31──24  23──16  15───8   7───0
+Bit position:  31──24  23──16  15───8   7───0
            [ 0x00 ][ Blue ][ Green ][ Red  ]
 ```
 
@@ -609,10 +609,10 @@ printf("RGB = 0X%06X\n", rgb);  // RGB = 0X8200FF
 
 단계별 과정:
 ```text
-red   = 0x000000FF              (비트 0-7)
-green = 0x00000000  << 8  → 0x00000000  (비트 8-15)
-blue  = 0x00000082  << 16 → 0x00820000  (비트 16-23)
-모두 OR:                     0x008200FF
+red   = 0x000000FF              (bits 0-7)
+green = 0x00000000  << 8  → 0x00000000  (bits 8-15)
+blue  = 0x00000082  << 16 → 0x00820000  (bits 16-23)
+OR all together:             0x008200FF
 ```
 
 **하나의 RGB 값에서 R, G, B 추출** ([연습 문제 4](Exercises.ko.md#연습-문제-4-16진수-rgb-값을-red-green-blue-값으로-변환)에서 사용):
@@ -622,9 +622,9 @@ blue  = 0x00000082  << 16 → 0x00820000  (비트 16-23)
 ```c
 unsigned int rgb = 0xA73B03;
 
-unsigned int red   = rgb & 0xFF;           // 비트 0-7
-unsigned int green = (rgb >> 8) & 0xFF;    // 비트 8-15
-unsigned int blue  = (rgb >> 16) & 0xFF;   // 비트 16-23
+unsigned int red   = rgb & 0xFF;           // bits 0-7
+unsigned int green = (rgb >> 8) & 0xFF;    // bits 8-15
+unsigned int blue  = (rgb >> 16) & 0xFF;   // bits 16-23
 
 printf("Red   = 0X%02X (%d)\n", red, red);     // Red   = 0X03 (3)
 printf("Green = 0X%02X (%d)\n", green, green);  // Green = 0X3B (59)
@@ -635,9 +635,9 @@ printf("Blue  = 0X%02X (%d)\n", blue, blue);    // Blue  = 0XA7 (167)
 ```text
 rgb         = 0x00A73B03
 
-red   = rgb & 0xFF           = 0x03  (하위 8비트 마스크)
-green = (rgb >> 8) & 0xFF    = 0x3B  (8비트 오른쪽 시프트 후 마스크)
-blue  = (rgb >> 16) & 0xFF   = 0xA7  (16비트 오른쪽 시프트 후 마스크)
+red   = rgb & 0xFF           = 0x03  (mask lower 8 bits)
+green = (rgb >> 8) & 0xFF    = 0x3B  (shift right 8, then mask)
+blue  = (rgb >> 16) & 0xFF   = 0xA7  (shift right 16, then mask)
 ```
 
 > **핵심:** 마스크 `0xFF` (이진수 `1111 1111`)는 정확히 8비트를 분리한다. `& 0xFF`는 하위 8비트를 제외한 모든 비트를 0으로 만든다. 먼저 시프트로 원하는 채널을 하위 8비트로 이동시킨 뒤, 마스크로 추출한다.
@@ -722,14 +722,14 @@ score %= 3;    // score = 17 % 3 = 2
 ```c
 int a, b, c;
 a = b = c = 0;
-// 평가 순서: a = (b = (c = 0))
+// Evaluated as: a = (b = (c = 0))
 // c = 0 → b = 0 → a = 0
 ```
 
 ```c
 int x, y;
 x = y = 10 + 5;
-// y = 15, 그 다음 x = 15
+// y = 15, then x = 15
 ```
 
 ### 7.3 대입 연산식의 값과 복합 대입의 우선순위
@@ -764,10 +764,10 @@ printf("%d %d\n", a, b);
 **조건 연산자** `? :`는 C에서 유일한 삼항 연산자이다 (피연산자 3개).
 
 ```text
-조건 ? 참일_때_값 : 거짓일_때_값
+condition ? value_if_true : value_if_false
 ```
 
-```c
+```c wide-ok
 int a = 10, b = 20;
 int max = (a > b) ? a : b;    // max = 20
 
@@ -779,14 +779,14 @@ printf("%s\n", (a % 2 == 0) ? "짝수" : "홀수");  // "짝수"
 조건 연산자는 간단한 `if/else`의 축약형이다.
 
 ```c
-// if/else 사용
+// Using if/else
 int abs_val;
 if (x >= 0)
     abs_val = x;
 else
     abs_val = -x;
 
-// 삼항 연산자: 동일한 동작
+// Using ternary: equivalent
 int abs_val = (x >= 0) ? x : -x;
 ```
 
@@ -806,10 +806,10 @@ int abs_val = (x >= 0) ? x : -x;
 
 ```c
 char a = 10, b = 20;
-// 수식 a + b에서:
-// a가 int로 승격, b가 int로 승격
-// 결과 타입: int
-printf("%zu\n", sizeof(a + b));  // 4 (int), 1 (char)이 아님
+// In the expression a + b:
+// a is promoted to int, b is promoted to int
+// Result type: int
+printf("%zu\n", sizeof(a + b));  // 4 (int), not 1 (char)
 ```
 
 **일반 산술 변환** (이항 연산자용):
@@ -831,7 +831,7 @@ graph LR
 ```c
 int i = 5;
 double d = 2.5;
-double result = i + d;   // i가 double로 승격 → 5.0 + 2.5 = 7.5
+double result = i + d;   // i promoted to double → 5.0 + 2.5 = 7.5
 ```
 
 ### 9.2 캐스트 연산자
@@ -841,10 +841,10 @@ double result = i + d;   // i가 double로 승격 → 5.0 + 2.5 = 7.5
 ```c
 int a = 7, b = 2;
 
-// 캐스트 없이: 정수 나눗셈
+// Without cast: integer division
 double r1 = a / b;           // 3.0
 
-// 캐스트 사용: 실수 나눗셈
+// With cast: floating-point division
 double r2 = (double)a / b;   // 3.5
 ```
 
@@ -853,9 +853,9 @@ double r2 = (double)a / b;   // 3.5
 ```c
 int a = 3, b = 4;
 
-(double)(a + b)              // 합(7)을 double로 캐스트 → 7.0
-(double)a + b                // a만 캐스트 → 3.0 + 4 = 7.0
-(double)(a / b)              // ⚠ 정수 나눗셈 먼저 (0), 그 후 캐스트 → 0.0
+(double)(a + b)              // casts the sum (7) to double → 7.0
+(double)a + b                // casts a only → 3.0 + 4 = 7.0
+(double)(a / b)              // ⚠ integer division first (0), then cast → 0.0
 ```
 
 ### 9.3 수식 결과의 sizeof
@@ -867,7 +867,7 @@ char c = 'A';
 short s = 100;
 
 printf("%zu\n", sizeof(c));        // 1 (char)
-printf("%zu\n", sizeof(c + c));    // 4 (char + char → int, 정수 승격)
+printf("%zu\n", sizeof(c + c));    // 4 (char + char → int, due to integer promotion)
 printf("%zu\n", sizeof(s + s));    // 4 (short + short → int)
 printf("%zu\n", sizeof(c + 1.0));  // 8 (char + double → double)
 ```
@@ -881,8 +881,8 @@ printf("%zu\n", sizeof(c + 1.0));  // 8 (char + double → double)
 ```c
 int a, b, c;
 
-a = (b = 3, b + 4);     // b에 3을 대입한 뒤 b + 4의 값 7을 a에 대입
-c = 5, 6;               // (c = 5), 6 으로 해석된다
+a = (b = 3, b + 4);     // assign 3 to b, then assign the value 7 of b + 4 to a
+c = 5, 6;               // interpreted as (c = 5), 6
 printf("%d %d %d\n", a, b, c);
 ```
 
@@ -923,8 +923,8 @@ printf("%d %d %d\n", a, b, c);
 *표 18. 연산자 우선순위*
 
 ```c
-int x = 2 + 3 * 4;      // 3*4 먼저 → 2 + 12 = 14 (20이 아님)
-int y = (2 + 3) * 4;    // 2+3 먼저 → 5 * 4 = 20
+int x = 2 + 3 * 4;      // 3*4 first → 2 + 12 = 14 (not 20)
+int y = (2 + 3) * 4;    // 2+3 first → 5 * 4 = 20
 int z = 5 > 3 && 2 < 4; // (5>3) && (2<4) → 1 && 1 = 1
 ```
 
@@ -941,11 +941,11 @@ int z = 5 > 3 && 2 < 4; // (5>3) && (2<4) → 1 && 1 = 1
 
 ```c
 int result = 10 - 3 - 2;
-// 왼쪽→오른쪽: (10 - 3) - 2 = 5 (10 - (3-2) = 9가 아님)
+// Left-to-right: (10 - 3) - 2 = 5 (not 10 - (3-2) = 9)
 
 int a, b, c;
 a = b = c = 0;
-// 오른쪽→왼쪽: a = (b = (c = 0))
+// Right-to-left: a = (b = (c = 0))
 ```
 
 ### 10.3 괄호 활용
@@ -953,11 +953,11 @@ a = b = c = 0;
 우선순위 표를 전부 외우기보다, **괄호**를 사용하여 의도를 명확하게 표현하는 것이 좋다.
 
 ```c
-// 모호함: (a & b) == 0 인가, a & (b == 0) 인가?
-if (a & b == 0) { ... }   // ⚠ 실제로는: a & (b == 0), ==가 &보다 우선순위가 높기 때문
+// Ambiguous: is it (a & b) == 0 or a & (b == 0)?
+if (a & b == 0) { ... }   // ⚠ Actually: a & (b == 0), because == has higher precedence than &
 
-// 명확함: 비트 연산자에는 항상 괄호를 사용
-if ((a & b) == 0) { ... } // ✅ 올바르고 읽기 쉬움
+// Clear: always use parentheses with bitwise operators
+if ((a & b) == 0) { ... } // [O] Correct and readable
 ```
 
 > **주의:** 비트 연산자(`&`, `|`, `^`)는 관계 연산자(`==`, `!=`)보다 **우선순위가 낮다**. 이것은 흔한 버그의 원인이다. 비교문에서 비트 연산자를 사용할 때는 반드시 괄호로 감싸야 한다.

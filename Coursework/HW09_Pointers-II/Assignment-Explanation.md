@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Sort an integer array in ascending order with selection sort and trace the array state at each step
@@ -51,7 +51,7 @@ Write a program that sorts the elements of the given array in ascending order an
 
 **Sample Run:**
 
-```text
+```text wide-ok
 > 정렬 전:  52  31  28  17  46
 > 정렬 후:  17  28  31  46  52
 
@@ -80,11 +80,11 @@ The array state at each step is as follows.
 
 **Code:** [Solution/Q1.c](Solution/Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-2_C08Q1.c
- * @brief   Q1. 선택 정렬
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Selection Sort
+ * @author  Cheolwon Park
  * @date    2024-05-22
  */
 
@@ -128,7 +128,7 @@ int main()
 
 The output is as follows.
 
-```text
+```text wide-ok
 > 정렬 전:  52  31  28  17  46
 > 정렬 후:  17  28  31  46  52
 ```
@@ -189,8 +189,8 @@ data[2]     9   10    0    0
 ```c
 /**
  * @file    A10303-2_C08Q2.c
- * @brief   Q2. 2차원 배열 출력
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Printing a 2D Array
+ * @author  Cheolwon Park
  * @date    2024-05-22
  */
 
@@ -241,7 +241,7 @@ A semester grade is computed from the midterm (30 points), final exam (30 points
 
 **Sample Run:**
 
-```text
+```text wide-ok
            중간   기말   팀플   출석   총점
 학생   1번:  28    28    26     9    91
 학생   2번:  30    27    30    10    97
@@ -265,11 +265,11 @@ The column sums and averages are midterm 125 / 5 = 25.0, final 128 / 5 = 25.6, t
 
 **Code:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-2_C08Q3.c
- * @brief   Q3. 항목별 평균 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Average per Item
+ * @author  Cheolwon Park
  * @date    2024-05-24
  */
 
@@ -281,13 +281,13 @@ int main()
 		{18, 22, 22, 5}, {24, 25, 30, 10}, {0} };
 	int i, j;
 
-	// 총점 score[i][4] = score[i][0] + score[i][1] + score[i][2] + score[i][3]
+	// total score[i][4] = score[i][0] + score[i][1] + score[i][2] + score[i][3]
 	for (i = 0; i < 6; i++) { 
 		for (j = 0; j < 4; j++) {
 			score[i][4] += score[i][j];
 		}
 	}
-	// 평균 score[5][i] = score[0][i] + score[1][i] + score[2][i] + score[3][i] + score[4][i]
+	// average score[5][i] = score[0][i] + score[1][i] + score[2][i] + score[3][i] + score[4][i]
 	for (i = 0; i < 5; i++) { 
 		for (j = 0; j < 5; j++) {
 			score[5][i] += score[j][i];
@@ -313,7 +313,7 @@ int main()
 
 The output is as follows.
 
-```text
+```text wide-ok
                중간  기말  팀플  출석  총점
 학생    1번:    28    28    26     9    91
 학생    2번:    30    27    30    10    97

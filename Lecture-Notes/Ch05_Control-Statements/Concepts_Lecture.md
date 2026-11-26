@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **Last Updated:** 2026-11-19
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -135,7 +135,7 @@ flowchart TD
 
 *Figure 2. Execution flow of the if statement*
 
-```c
+```c wide-ok
 int score = 85;
 
 if (score >= 60) {
@@ -151,7 +151,7 @@ Exactly one statement follows the parentheses of an `if`. To execute several sta
 
 A **compound statement** (block) groups multiple statements with braces `{}`.
 
-```c
+```c wide-ok
 if (score >= 90) {
     printf("Grade: A\n");
     printf("Excellent!\n");
@@ -160,7 +160,7 @@ if (score >= 90) {
 
 Without braces, only the **first statement** belongs to `if`.
 
-```c
+```c wide-ok
 if (score >= 90)
     printf("Grade: A\n");      // belongs to if
     printf("Excellent!\n");    // ALWAYS executes (not part of if!)
@@ -209,7 +209,7 @@ flowchart TD
 
 *Figure 3. Execution flow of the if-else statement*
 
-```c
+```c wide-ok
 int num = 7;
 
 if (num % 2 == 0) {
@@ -221,7 +221,7 @@ if (num % 2 == 0) {
 
 **When to use `if-else` vs two separate `if` statements:**
 
-```c
+```c wide-ok
 // if-else: exactly one branch executes (mutually exclusive)
 if (x > 0) {
     printf("positive\n");
@@ -273,7 +273,7 @@ if (condition1) {
 
 The final `else` is **optional** but recommended as a catch-all.
 
-```c
+```c wide-ok
 int score;
 printf("Enter score: ");
 scanf("%d", &score);
@@ -297,7 +297,7 @@ if (score >= 90) {
 
 An `if` statement inside another `if` or `else` block.
 
-```c
+```c wide-ok
 int x, y;
 scanf("%d %d", &x, &y);
 
@@ -377,7 +377,7 @@ else
 
 When conditions are **not mutually exclusive**, use separate `if` statements. Each condition is evaluated independently.
 
-```c
+```c wide-ok
 int temp = 35;
 
 if (temp > 30) {
@@ -441,7 +441,7 @@ default:
 }
 ```
 
-```c
+```c wide-ok
 char unit;
 printf("Temperature unit (C/F): ");
 scanf(" %c", &unit);
@@ -743,7 +743,7 @@ The condition `i <= 5` is tested 6 times in all. The first 5 tests are true, so 
 
 **Common patterns:**
 
-```c
+```c wide-ok
 // Count down
 for (int i = 10; i >= 1; i--) {
     printf("%d ", i);
@@ -805,7 +805,7 @@ flowchart TD
 
 The condition is checked **before** each iteration. If false initially, the body never executes.
 
-```c
+```c wide-ok
 // Sentinel-controlled loop: -1 to stop
 int num, sum = 0, count = 0;
 
@@ -828,7 +828,7 @@ In this loop, -1 is not data to be processed but a mark indicating that the inpu
 
 **Infinite loop with `break`:**
 
-```c
+```c wide-ok
 while (1) {
     int n;
     printf("Enter a positive number: ");
@@ -864,7 +864,7 @@ flowchart TD
 
 *Figure 6. Execution flow of the do-while statement*
 
-```c
+```c wide-ok
 int choice;
 do {
     printf("1. Play  2. Quit\n");
@@ -956,7 +956,7 @@ for (int i = 1; i <= 9; i++) {
 
 **Alternating sign sum (`1-2+3-4+...+9-10`):**
 
-```c
+```c wide-ok
 int sum = 0;
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 1) {
@@ -1167,7 +1167,7 @@ Therefore `for (x = 0.0; x != 1.0; x += 0.1)` never ends, because `x` never land
 
 `break` immediately exits the **innermost enclosing loop** or `switch` statement.
 
-```c
+```c wide-ok
 for (int i = 1; i <= 100; i++) {
     if (i * i > 50) {
         printf("First i where i^2 > 50: %d\n", i);
@@ -1213,7 +1213,7 @@ In a `for` loop, `continue` jumps to the **update** expression (`i++`), not the 
 
 `goto` unconditionally jumps to a labeled statement. It is **generally avoided** because it makes code hard to follow (spaghetti code).
 
-```c
+```c wide-ok
 for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 10; j++) {
         if (i + j == 15) {
@@ -1328,7 +1328,7 @@ The condition first becomes true when `i` is 3 and `j` is 4. In the first method
 
 A **counter** tracks how many times something occurs. An **accumulator** tracks a running total.
 
-```c
+```c wide-ok
 int sum = 0;    // accumulator
 int count = 0;  // counter
 int num;
@@ -1356,7 +1356,7 @@ if (count > 0) {
 
 Initialize the maximum and minimum with the **first input**, then update them as new values arrive.
 
-```c
+```c wide-ok
 int num, max, min, count = 0;
 
 while (1) {
@@ -1395,7 +1395,7 @@ printf("Max: %d\n", max);
 
 Use `do-while` to repeat until valid input is received.
 
-```c
+```c wide-ok
 int score;
 do {
     printf("Enter score (0-100): ");
@@ -1412,7 +1412,7 @@ printf("Valid score: %d\n", score);
 
 Combine `while(1)`, `switch`, and `do-while` to implement an interactive menu.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main() {

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 4
 
@@ -73,7 +73,7 @@ $$S = 2\pi \times \left(\frac{h}{3} + \frac{V}{\pi \times h^2}\right) \times h$$
 
 **실행 예시:**
 
-```text
+```text wide-ok
 헬멧의 높이: 1
 base 반지름 입력: 1
 헬멧의 체적: 2.094395
@@ -82,7 +82,7 @@ base 반지름 입력: 1
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 헬멧의 높이: 12
 base 반지름 입력: 20
 헬멧의 체적: 8444.601043
@@ -122,7 +122,7 @@ Program ended with exit code: 0
 
 **실행 예시:**
 
-```text
+```text wide-ok
 시간을 차례로 입력하세요(시,분,초): 2 10 47
 2시간 10분 47초는 총 7847초입니다.
 -----------------------------------
@@ -132,7 +132,7 @@ Program ended with exit code: 0
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 시간을 차례로 입력하세요(시,분,초): 7 1 55
 7시간 1분 55초는 총 25315초입니다.
 -----------------------------------
@@ -163,7 +163,7 @@ Program ended with exit code: 0
 
 **실행 예시:**
 
-```text
+```text wide-ok
 Red 값 입력(0-255): 255
 Green 값 입력(0-255): 0
 Blue 값 입력(0-255): 130
@@ -173,7 +173,7 @@ RGB = 0X8200FF
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 Red 값 입력(0-255): 67
 Green 값 입력(0-255): 200
 Blue 값 입력(0-255): 13
@@ -198,7 +198,7 @@ Program ended with exit code: 0
 
 **실행 예시:**
 
-```text
+```text wide-ok
 RGB 값 입력(16진수 6자리): A73803
 
 Red   = 0X03 (3)
@@ -208,7 +208,7 @@ Blue  = 0XA7 (167)
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 RGB 값 입력(16진수 6자리): FF00DD
 
 Red   = 0XDD (221)
@@ -399,7 +399,7 @@ int x = 1, y = 2, z = 3;
 **문제:** 다음은 입장료를 계산하는 코드이다. 입장료가 성수기(6~8월)에는 70,000원이고, 성수기가 아닌 경우에는 35,000원이 되도록 조건 연산자를 이용해서 코드의 빈칸을 채우라.
 
 ```c
-#define _CRT_SECURE_NO_WARNINGS    // Visual Studio 2022에서 scanf 사용 시 필요
+#define _CRT_SECURE_NO_WARNINGS    // required to use scanf in Visual Studio 2022
 #include <stdio.h>
 
 int main(void)
@@ -408,7 +408,7 @@ int main(void)
     int fee;
 
     printf("what month? ");
-    scanf("%d", &month);            // 몇 월인지 입력받는다.
+    scanf("%d", &month);            // reads the month
     fee = ______________________________;
 
     printf("entrance fee = %d\n", fee);
@@ -460,7 +460,7 @@ $$\text{밀도}(\text{g/cm}^3) = \frac{\text{질량}(\text{g})}{\text{부피}(\t
 
 **실행 예시:**
 
-```text
+```text wide-ok
 질량(g)? 33
 부피(세제곱센티미터)? 400
 밀도: 0.082500
@@ -484,7 +484,7 @@ $$\text{밀도}(\text{g/cm}^3) = \frac{\text{질량}(\text{g})}{\text{부피}(\t
 
 **실행 예시:**
 
-```text
+```text wide-ok
 월 사용량(kWh)? 375
 전기 요금: 71250원
 ```
@@ -507,7 +507,7 @@ $$\text{밀도}(\text{g/cm}^3) = \frac{\text{질량}(\text{g})}{\text{부피}(\t
 
 **실행 예시:**
 
-```text
+```text wide-ok
 기본 요금? 2500
 월 사용량(kWh)? 375
 전기 요금: 73750원
@@ -527,7 +527,7 @@ $$\text{밀도}(\text{g/cm}^3) = \frac{\text{질량}(\text{g})}{\text{부피}(\t
 
 **실행 예시:**
 
-```text
+```text wide-ok
 몇 월? 15
 잘못된 값입니다.
 ```
@@ -548,7 +548,7 @@ $$\text{섭씨 온도} = (\text{화씨 온도} - 32) \times \frac{5}{9}$$
 
 **실행 예시:**
 
-```text
+```text wide-ok
 화씨온도? 72
 72 F = 22.22 C
 ```
@@ -569,7 +569,7 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **실행 예시:**
 
-```text
+```text wide-ok
 질량(kg)? 5.5
 속력(m/s)? 4
 운동에너지: 44.00 J
@@ -593,7 +593,7 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **실행 예시:**
 
-```text
+```text wide-ok
 용매(g)? 200
 용질(g)? 24
 농도: 10.71 %
@@ -613,7 +613,7 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **실행 예시:**
 
-```text
+```text wide-ok
 재생 시간(초)? 3750
 재생 시간은 1시간 2분 30초입니다.
 ```
@@ -632,7 +632,7 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **실행 예시:**
 
-```text
+```text wide-ok
 제품의 가격? 12000
 할인율(%)? 25
 할인가: 9000원 (3000원 할인)
@@ -652,7 +652,7 @@ $$\text{운동 에너지} = \frac{1}{2} \times \text{질량} \times (\text{속�
 
 **실행 예시:**
 
-```text
+```text wide-ok
 16진수로 데이터를 입력하세요: 0xa1b2c3d4
 byte 0 : d4
 byte 1 : c3
@@ -674,7 +674,7 @@ byte 3 : a1
 
 **실행 예시:**
 
-```text
+```text wide-ok
 red? 256
 green? 128
 blue? 255

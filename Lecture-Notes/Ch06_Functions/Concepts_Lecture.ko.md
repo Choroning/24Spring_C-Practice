@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -70,14 +70,14 @@
 #include <stdio.h>
 
 int main() {
-    // --- 5의 팩토리얼 계산 ---
+    // --- compute factorial of 5 ---
     int fact1 = 1;
     for (int i = 1; i <= 5; i++) {
         fact1 *= i;
     }
     printf("5! = %d\n", fact1);
 
-    // --- 8의 팩토리얼 계산 (중복된 로직!) ---
+    // --- compute factorial of 8 (duplicated logic!) ---
     int fact2 = 1;
     for (int i = 1; i <= 8; i++) {
         fact2 *= i;
@@ -204,15 +204,15 @@ int main(void)
 함수 정의는 **헤더**와 **본체**로 구성된다.
 
 ```text
-┌─── 함수 헤더 ────────────────────────────┐
-│  반환형   함수이름(매개변수 목록)             │
-└────────────────────────────────────────┘
-┌─── 함수 본체 ──────┐
-│  {               │
-│      문장들;       │
-│      return 값;   │
-│  }               │
-└──────────────────┘
+┌─── Function Header ─────────────────────────┐
+│  return_type  function_name(parameter_list) │
+└─────────────────────────────────────────────┘
+┌─── Function Body ───┐
+│  {                  │
+│      statements;    │
+│      return value;  │
+│  }                  │
+└─────────────────────┘
 ```
 
 *그림 3. 함수 정의의 헤더와 본체*
@@ -220,20 +220,20 @@ int main(void)
 **주석이 달린 예제:**
 
 ```c
-/*  반환형
+/*  return type
  *    │
- *    │    함수 이름
+ *    │    function name
  *    │       │
- *    │       │        매개변수 목록
+ *    │       │        parameter list
  *    │       │            │            */
-    int     factorial   (int n)          // ← 헤더
-    {                                    // ← 본체 시작
-        int result = 1;                  //   지역 변수
+    int     factorial   (int n)          // ← header
+    {                                    // ← body begins
+        int result = 1;                  //   local variable
         for (int i = 1; i <= n; i++) {
             result *= i;
         }
-        return result;                   //   호출자에게 값 반환
-    }                                    // ← 본체 끝
+        return result;                   //   return value to caller
+    }                                    // ← body ends
 ```
 
 | 구성 요소 | 설명 |
@@ -258,17 +258,17 @@ int main(void)
 *표 6. 반환형의 종류*
 
 ```c
-// int 반환형
+// int return type
 int square(int x) {
     return x * x;
 }
 
-// double 반환형
+// double return type
 double average(int a, int b) {
     return (double)(a + b) / 2;
 }
 
-// void 반환형: 반환값 없음
+// void return type: no return value
 void printLine(void) {
     printf("--------------------\n");
 }
@@ -284,10 +284,10 @@ void printLine(void) {
 ```c
 void printIfPositive(int n) {
     if (n <= 0) {
-        return;           // 조기 종료, 값 없음
+        return;           // early exit, no value
     }
     printf("%d\n", n);
-}   // 여기서 암묵적 return
+}   // implicit return here
 ```
 
 함수에서 여러 값을 돌려주려면 매개변수로 포인터를 전달한다. 함수는 이 포인터를 통해 호출자의 변수를 직접 수정할 수 있으며, 자세한 내용은 8장에서 다룬다.
@@ -331,16 +331,16 @@ void printIfPositive(int n) {
 *표 9. 매개변수와 인수의 비교*
 
 ```c
-//                  매개변수 (형식)
+//                 parameter (formal)
 //                    ↓
 int square(int x) {
     return x * x;
 }
 
 int main() {
-    int result = square(5);   // 5는 인수 (실제)
+    int result = square(5);   // 5 is the argument (actual)
     //                 ↑
-    //               인수
+    //              argument
     return 0;
 }
 ```
@@ -348,13 +348,13 @@ int main() {
 **매개변수 선언 규칙:**
 
 ```c
-// 올바름: 각 매개변수에 자체 타입이 필요
+// CORRECT: each parameter needs its own type
 int add(int a, int b) {
     return a + b;
 }
 
-// 잘못됨: 변수 선언처럼 타입을 공유할 수 없음
-// int add(int a, b) { ... }   ← 컴파일 오류!
+// WRONG: cannot share type like variable declarations
+// int add(int a, b) { ... }   ← compile error!
 ```
 
 함수 정의에서 매개변수의 타입을 생략하면 컴파일 오류가 나고, C17까지는 매개변수의 이름을 생략해도 오류가 난다(C23부터는 정의에서도 이름 없는 매개변수를 허용한다). 매개변수의 개수에는 제한이 없다.
@@ -362,9 +362,9 @@ int add(int a, int b) {
 **매개변수가 없는 함수:**
 
 ```c
-// 두 형태 모두 "매개변수 없음"을 의미:
-void printMenu(void) { ... }   // 명시적 void: 권장
-void printMenu() { ... }       // 빈 괄호: 정의에서는 유효
+// Both forms mean "no parameters":
+void printMenu(void) { ... }   // explicit void: preferred
+void printMenu() { ... }       // empty parentheses: also valid in definitions
 ```
 
 > **핵심:** C23 이전의 **원형(선언)** 에서 `void printMenu()`는 매개변수의 개수와 타입을 지정하지 않은 선언이어서 컴파일러가 인수를 검사하지 않고, `void printMenu(void)`는 매개변수가 없음을 뜻한다. C23부터는 빈 괄호도 매개변수가 없다는 뜻이다. 명확성을 위해 원형에서는 항상 `void`를 사용하라.
@@ -373,22 +373,22 @@ void printMenu() { ... }       // 빈 괄호: 정의에서는 유효
 
 C에서 인수는 **값에 의해** 전달된다. 매개변수는 함수가 호출될 때 생성되어 인수의 **복사본**으로 초기화되는 지역 변수이며, 함수가 반환하면 소멸한다. 따라서 매개변수를 변경해도 원래 변수에는 **영향을 주지 않는다**.
 
-```c
+```c wide-ok
 void tryToChange(int x) {
-    x = 100;   // 지역 복사본만 수정
+    x = 100;   // modifies the LOCAL copy only
     printf("함수 내부: x = %d\n", x);   // 100
 }
 
 int main() {
     int num = 5;
     tryToChange(num);
-    printf("함수 호출 후: num = %d\n", num);  // 여전히 5!
+    printf("함수 호출 후: num = %d\n", num);  // still 5!
     return 0;
 }
 ```
 
-```text
-출력:
+```text wide-ok
+Output:
 함수 내부: x = 100
 함수 호출 후: num = 5
 ```
@@ -400,12 +400,12 @@ int main() {
 함수를 실행하려면 함수 이름 뒤에 인수를 포함한 괄호를 작성한다.
 
 ```c
-// 함수를 호출하고 반환값 사용
-int result = factorial(5);              // 반환값을 저장
-printf("8! = %d\n", factorial(8));      // 반환값을 식에서 직접 사용
+// Calling a function and using its return value
+int result = factorial(5);              // store return value
+printf("8! = %d\n", factorial(8));      // use return value directly in expression
 
-// void 함수 호출
-printLine();                            // 캡처할 반환값 없음
+// Calling a void function
+printLine();                            // no return value to capture
 ```
 
 **함수 호출 규칙:**
@@ -418,7 +418,7 @@ printLine();                            // 캡처할 반환값 없음
 
 **다른 함수에서 함수 호출:**
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int isLeapYear(int year) {
@@ -427,7 +427,7 @@ int isLeapYear(int year) {
 
 int GetDaysOfMonth(int year, int month) {
     if (month == 2) {
-        return isLeapYear(year) ? 29 : 28;   // isLeapYear() 호출
+        return isLeapYear(year) ? 29 : 28;   // calls isLeapYear()
     }
     switch (month) {
     case 4: case 6: case 9: case 11:
@@ -438,7 +438,7 @@ int GetDaysOfMonth(int year, int month) {
 }
 
 int main() {
-    int days = GetDaysOfMonth(2024, 2);       // GetDaysOfMonth() 호출
+    int days = GetDaysOfMonth(2024, 2);       // calls GetDaysOfMonth()
     printf("2024년 2월은 %d일\n", days);       // 29
     return 0;
 }
@@ -451,7 +451,7 @@ int main() {
 **문법:**
 
 ```c
-반환형 함수이름(매개변수_목록);   // ← 세미콜론, 본체 없음
+return_type function_name(parameter_list);   // ← semicolon, no body
 ```
 
 **원형이 필요한 이유:**
@@ -461,17 +461,17 @@ C 컴파일러는 소스 코드를 **위에서 아래로** 읽는다. `main()`�
 ```c
 #include <stdio.h>
 
-// ─── 원형 (선언) ───
-int factorial(int n);         // 매개변수 이름 포함 (권장)
-int isLeapYear(int);          // 매개변수 이름 생략 (유효)
+// ─── Prototypes (declarations) ───
+int factorial(int n);         // parameter name included (recommended)
+int isLeapYear(int);          // parameter name omitted (also valid)
 
 int main() {
-    printf("5! = %d\n", factorial(5));      // OK: 위에서 원형 확인됨
-    printf("Leap? %d\n", isLeapYear(2024)); // OK: 위에서 원형 확인됨
+    printf("5! = %d\n", factorial(5));      // OK: prototype seen above
+    printf("Leap? %d\n", isLeapYear(2024)); // OK: prototype seen above
     return 0;
 }
 
-// ─── 정의 ───
+// ─── Definitions ───
 int factorial(int n) {
     int result = 1;
     for (int i = 1; i <= n; i++) {
@@ -504,9 +504,9 @@ int isLeapYear(int year) {
 #include <stdio.h>
 
 int main() {
-    // factorial()이 아래에 정의되어 있고 위에 원형이 없는 경우:
-    // 컴파일러가 int 반환형으로 가정하거나 (C89) 오류를 발생시킴 (C99+)
-    printf("5! = %d\n", factorial(5));   // 경고 또는 오류!
+    // If factorial() is defined below and NO prototype exists above:
+    // The compiler may assume int return type (C89) or produce an error (C99+)
+    printf("5! = %d\n", factorial(5));   // warning or error!
     return 0;
 }
 
@@ -602,11 +602,11 @@ int sign(int n)
         return 1;
     else if (n < 0)
         return -1;
-}                               // n이 0이면 반환값이 없다
+}                               // no return value when n is 0
 
-double half(double x);          // 원형의 반환형은 double
+double half(double x);          // the prototype's return type is double
 
-int half(double x)              // 정의의 반환형은 int
+int half(double x)              // the definition's return type is int
 {
     return x / 2;
 }
@@ -618,7 +618,7 @@ void hello(void)
 
 int main(void)
 {
-    int r = hello();            // void 함수의 반환값을 쓴다
+    int r = hello();            // uses the return value of a void function
     return 0;
 }
 ```
@@ -713,19 +713,19 @@ positive integer? 5
 
 ```c
 void funcA() {
-    int x = 10;   // funcA의 지역 변수
+    int x = 10;   // local to funcA
     printf("funcA: x = %d\n", x);
 }
 
 void funcB() {
-    int x = 20;   // funcB의 지역 변수: funcA의 x와 독립적
+    int x = 20;   // local to funcB: independent from funcA's x
     printf("funcB: x = %d\n", x);
 }
 
 int main() {
-    funcA();   // 출력: funcA: x = 10
-    funcB();   // 출력: funcB: x = 20
-    // printf("%d", x);   // 오류: 여기서 x에 접근 불가
+    funcA();   // prints: funcA: x = 10
+    funcB();   // prints: funcB: x = 20
+    // printf("%d", x);   // ERROR: x is not accessible here
     return 0;
 }
 ```
@@ -745,10 +745,10 @@ int main() {
 ```c
 int main() {
     for (int i = 0; i < 3; i++) {
-        int temp = i * 10;   // 매 반복마다 생성되고, 반복 끝에 소멸
+        int temp = i * 10;   // created each iteration, destroyed at end of iteration
         printf("%d ", temp);
     }
-    // printf("%d", temp);  // 오류: temp는 여기에 존재하지 않음
+    // printf("%d", temp);  // ERROR: temp does not exist here
     return 0;
 }
 ```
@@ -764,10 +764,10 @@ int main() {
 ```c
 #include <stdio.h>
 
-int count = 0;   // 전역 변수: 이 줄 아래 어디서든 접근 가능
+int count = 0;   // global variable: accessible everywhere below this line
 
 void increment() {
-    count++;   // 전역 변수를 수정
+    count++;   // modifies the global variable
 }
 
 void printCount() {
@@ -800,13 +800,13 @@ int main() {
 ```c
 #include <stdio.h>
 
-int g;   // 전역: 자동으로 0으로 초기화됨
+int g;   // global: automatically initialized to 0
 
 int main() {
-    printf("g = %d\n", g);   // g = 0 (보장됨)
+    printf("g = %d\n", g);   // g = 0 (guaranteed)
 
     int local;
-    // printf("local = %d\n", local);  // 위험: 미초기화, 쓰레기 값
+    // printf("local = %d\n", local);  // DANGEROUS: uninitialized, garbage value
     return 0;
 }
 ```
@@ -818,7 +818,7 @@ int main() {
 ```c
 void show(void)
 {
-    printf("%d\n", total);      // total은 아직 선언되지 않았다
+    printf("%d\n", total);      // total has not been declared yet
 }
 
 int total = 10;
@@ -834,33 +834,33 @@ error: use of undeclared identifier 'total'
 
 지역 변수와 전역 변수의 이름이 같으면, 해당 유효 범위 내에서 **지역 변수가 우선한다**. 이를 **섀도잉(shadowing)** 이라 한다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
-int x = 100;   // 전역
+int x = 100;   // global
 
 void demo() {
-    int x = 50;   // 지역: 전역 x를 가림
-    printf("demo() 내부: x = %d\n", x);       // 50 (지역)
+    int x = 50;   // local: shadows the global x
+    printf("demo() 내부: x = %d\n", x);       // 50 (local)
 }
 
 int main() {
-    printf("demo() 전: x = %d\n", x);          // 100 (전역)
+    printf("demo() 전: x = %d\n", x);          // 100 (global)
     demo();
-    printf("demo() 후: x = %d\n", x);          // 100 (전역, 변경 없음)
+    printf("demo() 후: x = %d\n", x);          // 100 (global, unchanged)
 
     {
-        int x = 999;   // 블록 지역: 전역 x를 가림
+        int x = 999;   // block-local: shadows the global x
         printf("블록 내부: x = %d\n", x);       // 999
     }
-    printf("블록 후: x = %d\n", x);             // 100 (전역)
+    printf("블록 후: x = %d\n", x);             // 100 (global)
 
     return 0;
 }
 ```
 
-```text
-출력:
+```text wide-ok
+Output:
 demo() 전: x = 100
 demo() 내부: x = 50
 demo() 후: x = 100
@@ -871,9 +871,9 @@ demo() 후: x = 100
 **유효 범위 우선순위:**
 
 ```text
-동일한 이름이 여러 수준에 존재할 때:
-  내부 블록 변수  >  외부 블록 변수  >  전역 변수
-  (가장 안쪽 범위가 우선)
+When the same name exists at multiple levels:
+  Inner block variable  >  Outer block variable  >  Global variable
+  (innermost scope wins)
 ```
 
 *그림 4. 같은 이름의 변수가 여러 범위에 있을 때의 우선순위*
@@ -893,7 +893,7 @@ demo() 후: x = 100
 교재는 전역 변수, `main`의 지역 변수, `while` 블록의 지역 변수가 모두 `x`라는 같은 이름을 쓰는 예로 영역 규칙을 설명한다. 이름이 같아도 선언한 위치가 다르면 서로 다른 변수이며, 어떤 문장에서 `x`를 쓰면 그 문장을 감싼 가장 안쪽 블록부터 바깥쪽으로 찾아 처음 만나는 선언이 선택된다.
 
 ```c
-int x = 1;                      // 전역 x
+int x = 1;                      // global x
 
 void show(void)
 {
@@ -902,12 +902,12 @@ void show(void)
 
 int main(void)
 {
-    int x = 10;                 // main의 x
+    int x = 10;                 // x of main
     int i = 0;
 
     printf("main: x = %d\n", x);
     while (i < 2) {
-        int x = 100 + i;        // while 블록의 x
+        int x = 100 + i;        // x of the while block
 
         printf("while: x = %d\n", x);
         i++;
@@ -972,15 +972,15 @@ result = 30
 ```
 
 ```text
-             ┌────────────────────────┐   높은 주소
+high address ┌────────────────────────┐
              │ main:     result       │  0x...b08
              ├────────────────────────┤
              │ depth(1): n=1 local=10 │  0x...ad8
              ├────────────────────────┤
              │ depth(2): n=2 local=20 │  0x...a98
              ├────────────────────────┤
-             │ depth(3): n=3 local=30 │  0x...a58   ← 가장 최근의 호출
-             └────────────────────────┘   낮은 주소
+             │ depth(3): n=3 local=30 │  0x...a58   ← most recent call
+low address  └────────────────────────┘
 ```
 
 *그림 5. 재귀 호출 중 호출 스택의 프레임*
@@ -996,16 +996,16 @@ result = 30
 모든 함수 호출에는 **호출 스택**이 관리하는 일련의 배후 작업이 수반된다:
 
 ```text
-함수 호출 메커니즘
+Function Call Mechanism
 ─────────────────────────────────────────
-1. 복귀 주소 저장 (돌아올 위치)
-2. CPU 레지스터 값 저장
-3. 인수를 스택에 push
-4. 함수 코드로 점프
-5. 함수 본체 실행
-6. 반환값을 레지스터에 배치
-7. 스택 pop (레지스터, 인수 복원)
-8. 복귀 주소로 점프
+1. Save the return address (where to come back)
+2. Save CPU register values
+3. Push arguments onto the stack
+4. Jump to the function code
+5. Execute the function body
+6. Place return value in a register
+7. Pop the stack (restore registers, arguments)
+8. Jump back to the return address
 ─────────────────────────────────────────
 ```
 
@@ -1018,14 +1018,14 @@ result = 30
 이 과정을 **함수 호출 오버헤드**라 한다. 상당한 계산을 수행하는 큰 함수의 경우 오버헤드는 무시할 수 있다. 그러나 **매우 작은 함수**(예: 한 줄짜리 계산)의 경우, 실제 작업에 비해 오버헤드가 상대적으로 클 수 있다.
 
 ```c
-// 작은 함수: 수행하는 작업에 비해 오버헤드가 상대적으로 큼
+// Small function: overhead is relatively large compared to the work done
 int square(int x) {
     return x * x;
 }
 
-// 촘촘한 반복문에서 호출: 오버헤드 누적
+// Called in a tight loop: overhead accumulates
 for (int i = 0; i < 1000000; i++) {
-    result += square(i);   // 함수 호출 오버헤드 × 1,000,000
+    result += square(i);   // function call overhead × 1,000,000
 }
 ```
 
@@ -1047,12 +1047,12 @@ for (int i = 0; i < 1000000; i++) {
 ```c
 #include <stdio.h>
 
-// 팩토리얼: n! = n × (n-1) × ... × 2 × 1
+// Factorial: n! = n × (n-1) × ... × 2 × 1
 int factorial(int n) {
-    if (n <= 1) {         // 기저 조건
+    if (n <= 1) {         // base case
         return 1;
     }
-    return n * factorial(n - 1);   // 재귀 조건
+    return n * factorial(n - 1);   // recursive case
 }
 
 int main() {
@@ -1068,7 +1068,7 @@ factorial(4)
   → 4 * factorial(3)
        → 3 * factorial(2)
             → 2 * factorial(1)
-                 → returns 1      (기저 조건)
+                 → returns 1      (base case)
             → returns 2 * 1 = 2
        → returns 3 * 2 = 6
   → returns 4 * 6 = 24
@@ -1080,10 +1080,10 @@ factorial(4)
 
 ```c
 int countDigits(int n) {
-    if (n < 10) {         // 기저 조건: 한 자리 수
+    if (n < 10) {         // base case: single digit
         return 1;
     }
-    return 1 + countDigits(n / 10);   // 재귀 조건
+    return 1 + countDigits(n / 10);   // recursive case
 }
 // countDigits(9128) = 1 + countDigits(912)
 //                   = 1 + 1 + countDigits(91)

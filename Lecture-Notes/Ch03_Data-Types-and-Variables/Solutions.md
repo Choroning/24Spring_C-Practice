@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -248,7 +248,7 @@
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -273,7 +273,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 한 변의 길이 ? 5
 정사각형의 넓이: 25
 정사각형의 둘레: 20
@@ -301,7 +301,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -327,7 +327,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 가로의 길이? 10
 세로의 길이? 20
 직사각형의 넓이: 200
@@ -356,7 +356,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -381,13 +381,13 @@ int main(void)
 
 **Output:** The first run uses the input of the sample run. The second run enters the mass and the height as real numbers, and 9.8 × 2.5 × 1.2 = 29.4.
 
-```text
+```text wide-ok
 질량(kg)? 10
 높이(m)? 5
 위치에너지: 490.00 J
 ```
 
-```text
+```text wide-ok
 질량(kg)? 2.5
 높이(m)? 1.2
 위치에너지: 29.40 J
@@ -415,7 +415,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -437,14 +437,14 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 밑변과 높이? 3 7
 직각삼각형의 면적: 10.50
 ```
 
 > **Caution:** **Integer division.** If the base and the height are declared as `int`, read with `%d %d`, and the same expression `area = base * height / 2;` is used, everything on the right is `int`, so 21 / 2 is computed first as an integer division and gives 10, and that value is converted to `double` and stored in `area`. The program changed this way prints `10.00`, as shown below. To read integers, make the division a floating-point division with `base * height / 2.0` or `(double)base * height / 2` ([Chapter 3, Section 6.2](Concepts_Lecture.md#62-explicit-conversion-casting)).
 
-```text
+```text wide-ok
 밑변과 높이? 3 7
 직각삼각형의 면적: 10.00
 ```
@@ -469,7 +469,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -494,7 +494,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 USD? 150
 원/달러 환율? 1210
 USD 150 = KRW 181500.00
@@ -502,7 +502,7 @@ USD 150 = KRW 181500.00
 
 > **Caution:** **Entering a fraction for an integer variable.** The dollars are read with `%d`, so for an input with a fraction such as `150.5`, `scanf` reads only `150` and leaves `.5` in the input buffer. The next `scanf("%lf", &rate)` then does not wait for the user and reads the remaining `.5` as an exchange rate of 0.5, which gives a wrong result, as in the following run. To handle cents, declare the dollars as `double` as well and read them with `%lf`.
 
-```text
+```text wide-ok
 USD? 150.5
 원/달러 환율? USD 150 = KRW 75.00
 ```
@@ -526,7 +526,7 @@ USD? 150.5
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -551,7 +551,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 KRW? 500000
 원/달러 환율? 1210
 KRW 500000 = USD 413.22
@@ -559,7 +559,7 @@ KRW 500000 = USD 413.22
 
 > **Caution:** Entering 0 for the exchange rate divides by zero. Since `rate` is a `double`, this expression is a floating-point division, and in gcc and clang environments that follow IEEE 754 the result is infinity, so `inf` is printed, as shown below. Dividing an integer by zero is undefined behavior, and invalid input such as 0 can be checked with the `if` statement of [Chapter 5, Section 2.1](../Ch05_Control-Statements/Concepts_Lecture.md#21-if).
 
-```text
+```text wide-ok
 KRW? 500000
 원/달러 환율? 0
 KRW 500000 = USD inf
@@ -585,7 +585,7 @@ KRW 500000 = USD inf
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -607,7 +607,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 길이(yd)? 100
 100 yd = 91.440000 m
 ```
@@ -634,7 +634,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -658,7 +658,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 길이(in)? 10
 10.00 in = 25.40 cm
 ```
@@ -683,7 +683,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -706,7 +706,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 아파트의 면적(제곱미터)? 113
 113.00 제곱미터 = 34.18 평
 ```
@@ -733,7 +733,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -757,19 +757,19 @@ int main(void)
 
 **Output:** The first run uses the input of the sample run. The second and third runs enter the decimal notation 12.34 and the exponent notation 1.234e2 given in the problem, and $12.34^2 = 152.2756$, $12.34^3 = 1879.080904$ and $123.4^2 = 15227.56$, $123.4^3 = 1879080.904$ are printed rounded to 6 decimal places.
 
-```text
+```text wide-ok
 실수? 3.0e-1
 제곱: 9.000000e-02
 세제곱: 2.700000e-02
 ```
 
-```text
+```text wide-ok
 실수? 12.34
 제곱: 1.522756e+02
 세제곱: 1.879081e+03
 ```
 
-```text
+```text wide-ok
 실수? 1.234e2
 제곱: 1.522756e+04
 세제곱: 1.879081e+06
@@ -777,7 +777,7 @@ int main(void)
 
 > **Caution:** If a result exceeds the maximum of `double` (about $1.8 \times 10^{308}$), floating-point overflow occurs and the result becomes infinity. Entering `1e200` makes the square $10^{400}$, so both values are printed as `inf` ([Floating-Point Overflow and Underflow in Chapter 3, Section 1.2](Concepts_Lecture.md#floating-point-overflow-and-underflow)).
 
-```text
+```text wide-ok
 실수? 1e200
 제곱: inf
 세제곱: inf

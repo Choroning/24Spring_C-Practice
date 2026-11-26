@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 8
 
@@ -61,14 +61,14 @@
 메모리는 **연속된 바이트**의 나열이며, 각 바이트는 고유한 **주소(address)** 를 갖는다. **포인터(pointer)** 란 주소 그 자체이고, **포인터 변수**란 주소를 저장하는 변수이다. 메모리 주소가 가질 수 있는 값의 범위를 **메모리 주소 공간(address space)** 이라 한다.
 
 ```text
-메모리 구조 (간략화)
-주소          값
+Memory Layout (simplified)
+Address        Value
 ┌──────────┬──────────┐
 │  0x1000  │    10    │  ← int a = 10;
 ├──────────┼──────────┤
 │  0x1004  │    20    │  ← int b = 20;
 ├──────────┼──────────┤
-│  0x1008  │  0x1000  │  ← int *p = &a;  (p에 a의 주소 저장)
+│  0x1008  │  0x1000  │  ← int *p = &a;  (p stores a's address)
 └──────────┴──────────┘
 ```
 
@@ -88,30 +88,30 @@
 **문법:**
 
 ```c
-자료형 *포인터이름;
+type *pointer_name;
 ```
 
-`자료형`은 포인터가 가리킬 변수의 타입이다. `*`는 이 변수가 포인터임을 나타내는 포인터 수식어이다. 어떤 데이터 타입의 변수를 가리키는지에 따라 포인터의 데이터 타입이 정해지며, 예를 들어 `int` 변수를 가리키는 포인터는 `int*`형이다.
+`type`은 포인터가 가리킬 변수의 타입이다. `*`는 이 변수가 포인터임을 나타내는 포인터 수식어이다. 어떤 데이터 타입의 변수를 가리키는지에 따라 포인터의 데이터 타입이 정해지며, 예를 들어 `int` 변수를 가리키는 포인터는 `int*`형이다.
 
 ```c
-int *p;      // int를 가리키는 포인터
-double *q;   // double을 가리키는 포인터
-char *r;     // char를 가리키는 포인터
+int *p;      // pointer to int
+double *q;   // pointer to double
+char *r;     // pointer to char
 ```
 
 **`*`의 위치는 상관없으며 세 가지 형태가 모두 같다.**
 
 ```c
 int* p;    // OK
-int *p;    // OK (권장)
+int *p;    // OK (recommended)
 int * p;   // OK
 ```
 
 > **주의:** `int *p` 스타일을 권장한다. `int* p, q;`라고 쓰면 `p`만 포인터이고 `q`는 일반 `int`이다. `int *p, *q;`라고 써야 둘 다 포인터임이 명확하다.
 
 ```c
-int* p, q;    // p는 int*, q는 int   (혼동 유발!)
-int *p, *q;   // p, q 모두 int*      (명확)
+int* p, q;    // p is int*, q is int   (misleading!)
+int *p, *q;   // both p and q are int* (clear)
 ```
 
 **포인터의 크기는 가리키는 타입에 관계없이 같다.**
@@ -121,9 +121,9 @@ int *p;
 double *q;
 char *r;
 
-printf("%zu\n", sizeof(p));  // 8 (64비트 시스템)
-printf("%zu\n", sizeof(q));  // 8 (64비트 시스템)
-printf("%zu\n", sizeof(r));  // 8 (64비트 시스템)
+printf("%zu\n", sizeof(p));  // 8 (on 64-bit)
+printf("%zu\n", sizeof(q));  // 8 (on 64-bit)
+printf("%zu\n", sizeof(r));  // 8 (on 64-bit)
 ```
 
 포인터는 데이터가 아니라 주소를 저장하므로, 포인터의 크기는 가리키는 데이터 타입이 아니라 플랫폼이 정한다. 일반적인 플랫폼에서 모든 포인터는 32비트에서 **4바이트**, 64비트에서 **8바이트**를 차지한다.
@@ -132,28 +132,28 @@ printf("%zu\n", sizeof(r));  // 8 (64비트 시스템)
 
 **`&`(주소 연산자)** 는 변수의 메모리 주소를 반환한다. `&` 연산의 결과는 `&` 다음에 쓴 변수에 대한 포인터형의 주소이며, `int` 변수 `a`에 대해 `&a`는 `int*`형이다.
 
-```c
+```c wide-ok
 int a = 10;
-int *p = &a;   // p에 a의 주소를 저장
+int *p = &a;   // p now holds the address of a
 
-printf("a의 주소: %p\n", (void *)&a);   // 예: 0x7ffee3c0
-printf("p의 값:   %p\n", (void *)p);    // 같은 주소
+printf("a의 주소: %p\n", (void *)&a);   // e.g., 0x7ffee3c0
+printf("p의 값:   %p\n", (void *)p);    // same address
 ```
 
 **`&` 연산자의 제약:** `&`는 **변수(lvalue)** 에만 사용할 수 있으며, 다음과 같은 상수나 수식에는 사용할 수 없다.
 
 ```c
-&10        // 오류: 리터럴 (주소 없음)
-&(a + 1)   // 오류: 수식 결과 (임시값, 주소 없음)
+&10        // ERROR: literal (no address)
+&(a + 1)   // ERROR: expression result (temporary, no address)
 #define MAX 100
-&MAX       // 오류: 매크로 (전처리 시 치환됨, 주소 없음)
+&MAX       // ERROR: macro (replaced at preprocessing, no address)
 ```
 
 **NULL 포인터:** 아무것도 가리키지 않는 포인터이다. `NULL`은 표준 C 라이브러리 헤더에 정의된 매크로 상수로 값은 0이다(구현에 따라 `((void *)0)`으로 정의된다). `NULL`은 메모리 0번지를 가리킨다는 뜻이 아니라 포인터가 어떤 변수도 가리키지 않는다는 뜻이며, 포인터를 어떤 변수의 주소로 초기화할지 알 수 없을 때 `NULL`로 초기화한다.
 
 ```c
-int *q = NULL;   // 명시적으로 아무것도 가리키지 않음
-int *r = 0;      // NULL과 동일
+int *q = NULL;   // explicitly points to nothing
+int *r = 0;      // same as NULL
 ```
 
 > **참고:** **팁.** 포인터는 항상 초기화한다. 초기화되지 않은 포인터는 쓰레기 주소를 갖고 있으며, 역참조하면 **정의되지 않은 동작**(크래시, 데이터 손상 등)이 발생한다.
@@ -163,7 +163,7 @@ int *r = 0;      // NULL과 동일
 ```c
 int x = 42;
 int *p = &x;
-printf("p = %p\n", (void *)p);   // p = 0x7ffee4b8 (예시)
+printf("p = %p\n", (void *)p);   // p = 0x7ffee4b8 (example)
 ```
 
 ### 1.4 역참조 연산자 `*`
@@ -174,19 +174,19 @@ printf("p = %p\n", (void *)p);   // p = 0x7ffee4b8 (예시)
 int a = 10;
 int *p = &a;
 
-printf("%d\n", *p);   // 10 (읽기: p가 가리키는 주소의 값)
+printf("%d\n", *p);   // 10 (read: get value at p's address)
 
-*p = 20;               // 쓰기: p가 가리키는 주소의 값을 변경
-printf("%d\n", a);     // 20 (p를 통해 a가 수정됨)
+*p = 20;               // write: change value at p's address
+printf("%d\n", a);     // 20 (a was modified through p)
 ```
 
 `p`가 `a`를 가리킬 때, `*p`와 `a`는 **같은 메모리 위치의 다른 이름**이다. 즉 `*p`를 쓰면 그 자리에 `a`를 쓴 것처럼 처리된다. 포인터 변수 `p`도 변수이므로 자신의 주소 `&p`를 따로 갖는다.
 
 ```text
    p ──────► ┌───────┐
-             │  20   │  ← *p와 a는 같은 위치를 가리킴
+             │  20   │  ← *p and a refer to the same location
              └───────┘
-             주소: 0x1000
+             address: 0x1000
 ```
 
 *그림 2. 포인터 p가 가리키는 변수 a*
@@ -195,8 +195,8 @@ printf("%d\n", a);     // 20 (p를 통해 a가 수정됨)
 
 ```c
 int a = 10;
-*a         // 오류: a는 포인터가 아님
-*(a + 1)   // 오류: (a + 1)은 포인터가 아님
+*a         // ERROR: a is not a pointer
+*(a + 1)   // ERROR: (a + 1) is not a pointer
 ```
 
 > **핵심:** 포인터 문맥에서 `*` 기호는 두 가지 의미를 갖는다. (1) 선언문 `int *p;`에서는 `p`가 포인터임을 나타내고, (2) 수식 `*p`에서는 `p`를 역참조하여 `p`가 가리키는 주소의 값에 접근함을 나타낸다.
@@ -212,8 +212,8 @@ int a = 10;
 
 *표 2. 포인터가 필요한 두 가지 상황*
 
-```c
-// 예제: 포인터를 통한 다중 값 반환
+```c wide-ok
+// Example: function returning multiple values via pointers
 void divide(int a, int b, int *quotient, int *remainder) {
     *quotient = a / b;
     *remainder = a % b;
@@ -244,20 +244,20 @@ int main() {
 ```c
 int a = 10, b = 20;
 
-// 상수 int를 가리키는 포인터: *p1 수정 불가, p1 재대입 가능
+// Pointer to const int: cannot modify *p, but can reassign p
 const int *p1 = &a;
-// *p1 = 30;    // 오류: p1을 통해 값을 수정할 수 없음
-p1 = &b;        // OK: p1이 이제 b를 가리킴
+// *p1 = 30;    // ERROR: cannot modify value through p1
+p1 = &b;        // OK: p1 now points to b
 
-// int를 가리키는 상수 포인터: *p2 수정 가능, p2 재대입 불가
+// Const pointer to int: can modify *p, but cannot reassign p
 int *const p2 = &a;
-*p2 = 30;       // OK: a를 30으로 수정
-// p2 = &b;     // 오류: p2가 가리키는 대상을 변경할 수 없음
+*p2 = 30;       // OK: modifies a to 30
+// p2 = &b;     // ERROR: cannot change where p2 points
 
-// 상수 int를 가리키는 상수 포인터: 둘 다 불가
+// Const pointer to const int: neither modification allowed
 const int *const p3 = &a;
-// *p3 = 40;    // 오류
-// p3 = &b;     // 오류
+// *p3 = 40;    // ERROR
+// p3 = &b;     // ERROR
 ```
 
 `const int *p`는 가리키는 변수를 `const` 변수처럼 읽기만 하는 **읽기 전용 포인터**이고, `int *const p`는 선언할 때 특정 변수의 주소로 초기화한 뒤 다른 변수를 가리킬 수 없는 그 변수의 **전용 포인터**이다. `const int *const p`는 두 성질을 모두 가지므로 반드시 초기화해야 한다. 세 가지 중 실제로 주로 쓰이는 것은 읽기 전용 포인터이다.
@@ -271,7 +271,7 @@ const int *const p3 = &a;
 ```c
 int *q = NULL;
 if (q != NULL) {
-    printf("%d\n", *q);   // q가 널 포인터가 아닐 때만 역참조
+    printf("%d\n", *q);   // dereference only when q is not a null pointer
 }
 ```
 
@@ -279,7 +279,7 @@ if (q != NULL) {
 
 ```c
 double d = 3.14;
-int *pi = &d;   // 경고: 호환되지 않는 포인터형
+int *pi = &d;   // warning: incompatible pointer type
 ```
 
 셋째, 초기화하지 않은 포인터를 역참조하지 않는다. `int *p;`만 선언한 지역 포인터에는 쓰레기 주소가 들어 있으므로 `*p = 5;`는 어디인지 알 수 없는 메모리에 값을 쓴다. 이런 포인터를 흔히 **와일드 포인터(wild pointer)** 라고 하며, 운이 좋으면 즉시 비정상 종료되고 운이 나쁘면 다른 변수의 값을 조용히 망가뜨린다. 같은 이유로 `int *p = (int *)0x1000;`처럼 주소 값을 직접 정해 넣는 것도 피한다. 일반적인 운영체제에서 프로그램이 쓸 수 있는 메모리의 위치는 실행할 때마다 운영체제가 정하므로, 소스 코드에 적은 절대 주소가 유효한 변수를 가리킨다는 보장이 없다. 포인터에는 `&`로 얻은 변수의 주소나 `NULL`만 넣는다.
@@ -343,11 +343,11 @@ sizeof(a) = 4, sizeof(p) = 8
 ```
 
 ```text
-        주소           내용
+        address        contents
       ┌──────────────┬────────────────────┐
-p     │ 0x16f4feb10  │ 0x16f4feb18 ───────┼──┐   p의 값 = a의 주소 (8바이트)
+p     │ 0x16f4feb10  │ 0x16f4feb18 ───────┼──┐   value of p = address of a (8 bytes)
       ├──────────────┼────────────────────┤  │
-a     │ 0x16f4feb18  │ 10                 │◄─┘   *p는 이 칸 (4바이트)
+a     │ 0x16f4feb18  │ 10                 │◄─┘   *p is this cell (4 bytes)
       └──────────────┴────────────────────┘
 ```
 
@@ -369,7 +369,7 @@ a     │ 0x16f4feb18  │ 10                 │◄─┘   *p는 이 칸 (4바
 
 ```c
 int arr[5] = {10, 20, 30, 40, 50};
-int *p = arr;    // p는 arr[0]을 가리킴
+int *p = arr;    // p points to arr[0]
 ```
 
 ```text
@@ -409,13 +409,13 @@ p     p+1    p+2    p+3    p+4
 int arr[5] = {10, 20, 30, 40, 50};
 int *p = arr;
 
-printf("%d\n", *(p + 2));   // 30 (세 번째 요소)
+printf("%d\n", *(p + 2));   // 30 (third element)
 
 p++;
-printf("%d\n", *p);         // 20 (두 번째 요소)
+printf("%d\n", *p);         // 20 (second element)
 
 int *q = &arr[4];
-printf("%ld\n", q - p);     // 3 (요소 단위 거리, 바이트가 아님)
+printf("%ld\n", q - p);     // 3 (distance in elements, not bytes)
 ```
 
 > **참고:** 두 포인터의 차는 `<stddef.h>`의 `ptrdiff_t`형이며, `printf`로 출력할 때 정확한 형식 지정자는 `%td`이다. 위의 `%ld`는 `long`과 `ptrdiff_t`의 크기가 같은 64비트 Linux와 macOS에서는 맞게 출력되지만, `long`이 4바이트인 64비트 Windows에서는 형식이 맞지 않는다.
@@ -430,9 +430,9 @@ printf("%ld\n", q - p);     // 3 (요소 단위 거리, 바이트가 아님)
 int arr[5] = {10, 20, 30, 40, 50};
 int *p = arr;
 
-printf("%d\n", p[0]);       // 10  (*(p + 0)과 동일)
-printf("%d\n", p[2]);       // 30  (*(p + 2)과 동일)
-printf("%d\n", *(p + 4));   // 50  (p[4]와 동일)
+printf("%d\n", p[0]);       // 10  (same as *(p + 0))
+printf("%d\n", p[2]);       // 30  (same as *(p + 2))
+printf("%d\n", *(p + 4));   // 50  (same as p[4])
 ```
 
 | 표기법 | 동치 | 의미 |
@@ -449,11 +449,11 @@ printf("%d\n", *(p + 4));   // 50  (p[4]와 동일)
 ```c
 int arr[5] = {10, 20, 30, 40, 50};
 
-printf("%p\n", (void *)arr);       // arr[0]의 주소
-printf("%p\n", (void *)&arr[0]);   // 같은 주소
+printf("%p\n", (void *)arr);       // address of arr[0]
+printf("%p\n", (void *)&arr[0]);   // same address
 
-printf("%d\n", *arr);         // 10  (arr[0]과 동일)
-printf("%d\n", *(arr + 2));   // 30  (arr[2]과 동일)
+printf("%d\n", *arr);         // 10  (same as arr[0])
+printf("%d\n", *(arr + 2));   // 30  (same as arr[2])
 ```
 
 **핵심 등가 관계:**
@@ -468,8 +468,8 @@ printf("%d\n", *(arr + 2));   // 30  (arr[2]과 동일)
 
 > **주의:** 배열 이름은 **상수**이므로 수정할 수 없다. 다음은 **불가능**하다.
 > ```c
-> arr++;          // 오류: 상수를 증가시킬 수 없음
-> arr = other;    // 오류: 배열 이름에 재대입할 수 없음
+> arr++;          // ERROR: cannot increment a constant
+> arr = other;    // ERROR: cannot reassign array name
 > ```
 
 ### 2.4 배열과 포인터 비교
@@ -489,10 +489,10 @@ int arr[5] = {1, 2, 3, 4, 5};
 int *p = arr;
 
 printf("%zu\n", sizeof(arr));   // 20 (5 * sizeof(int))
-printf("%zu\n", sizeof(p));     // 8  (64비트에서 포인터 크기)
+printf("%zu\n", sizeof(p));     // 8  (pointer size on 64-bit)
 
-// arr++;   // 오류
-p++;        // OK: p는 이제 arr[1]을 가리킴
+// arr++;   // ERROR
+p++;        // OK: p now points to arr[1]
 ```
 
 > **핵심:** `arr`과 `p`는 많은 수식에서 같은 방식으로 사용할 수 있지만(`arr[i]`와 `p[i]`), 본질적으로 다르다. 배열 이름은 특정 배열의 전용 포인터처럼 고정된 시작 주소이고, `p`는 실행 중에 다른 주소를 저장할 수 있는 변수이다.
@@ -503,18 +503,18 @@ p++;        // OK: p는 이제 arr[1]을 가리킴
 
 ```c
 int x = 1, y = 2, z = 3;
-int *list[3] = { &x, &y, &z };      // 포인터 배열
+int *list[3] = { &x, &y, &z };      // array of pointers
 int *p = &x;
-int **pp = &p;                      // 이중 포인터
+int **pp = &p;                      // double pointer
 int i;
 
 for (i = 0; i < 3; i++)
-    *list[i] *= 10;                 // 각 원소가 가리키는 변수를 10배로
+    *list[i] *= 10;                 // multiply each pointed-to variable by 10
 printf("x = %d, y = %d, z = %d\n", x, y, z);
 
 **pp = 99;                          // pp → p → x
 printf("x = %d, *p = %d, **pp = %d\n", x, *p, **pp);
-*pp = &y;                           // p가 y를 가리키게 바꾼다
+*pp = &y;                           // make p point to y
 printf("*p = %d\n", *p);
 printf("sizeof list = %zu, sizeof pp = %zu\n", sizeof(list), sizeof(pp));
 ```
@@ -661,40 +661,40 @@ p == end: 1
 
 ```c
 void by_value(int x) {
-    x = 100;   // 지역 복사본만 수정
+    x = 100;   // modifies local copy only
 }
 
 void by_reference(int *x) {
-    *x = 100;  // 원본 변수를 수정
+    *x = 100;  // modifies the original variable
 }
 
 int main() {
     int a = 10;
 
     by_value(a);
-    printf("%d\n", a);     // 10 (변경 안 됨)
+    printf("%d\n", a);     // 10 (unchanged)
 
     by_reference(&a);
-    printf("%d\n", a);     // 100 (수정됨)
+    printf("%d\n", a);     // 100 (modified)
 
     return 0;
 }
 ```
 
 ```text
-값에 의한 전달                     주소에 의한 전달
-┌──────────────┐                ┌───────────────┐
-│ main         │                │ main          │
-│  a = 10      │                │  a = 10 → 100 │
-└──────┬───────┘                └───────┬───────┘
-       │ 복사                            │ 주소
-       ▼                                ▼
-┌──────────────┐                ┌───────────────┐
-│ by_value     │                │ by_reference  │
-│  x = 10→100  │                │  x = &a       │
-│  (지역 복사본)  │                │  *x = 100     │
-└──────────────┘                └───────────────┘
-   a 변경 안 됨                        a 변경됨!
+Pass by Value              Pass by Reference
+┌──────────────┐           ┌───────────────┐
+│ main         │           │ main          │
+│  a = 10      │           │  a = 10 → 100 │
+└──────┬───────┘           └───────┬───────┘
+       │ copy                      │ address
+       ▼                           ▼
+┌──────────────┐           ┌───────────────┐
+│ by_value     │           │ by_reference  │
+│  x = 10→100  │           │  x = &a       │
+│  (local copy)│           │  *x = 100     │
+└──────────────┘           └───────────────┘
+   a unchanged                 a changed!
 ```
 
 *그림 5. 값에 의한 전달과 주소에 의한 전달의 비교*
@@ -710,23 +710,23 @@ int main() {
 ```c
 void addTen_wrong(int x) {
     x = x + 10;
-    // x는 지역 복사본: 원본은 변경되지 않음
+    // x is a local copy: original unchanged
 }
 
 int main() {
     int score = 85;
     addTen_wrong(score);
-    printf("score = %d\n", score);   // score = 85 (수정 안 됨!)
+    printf("score = %d\n", score);   // score = 85 (not modified!)
     return 0;
 }
 ```
 
 ```text
-addTen_wrong 호출 전:       addTen_wrong 내부:          addTen_wrong 후:
-  main: score=85             x=85→95                    main: score=85
-         │                   (지역 복사본)                (변경 안 됨!)
+Before addTen_wrong:      Inside addTen_wrong:      After addTen_wrong:
+  main: score=85           x=85→95                   main: score=85
+         │                 (local copy)               (unchanged!)
          ▼
-        복사
+        copy
          │
          ▼
         x=85
@@ -738,21 +738,21 @@ addTen_wrong 호출 전:       addTen_wrong 내부:          addTen_wrong 후:
 
 ```c
 void addTen(int *p) {
-    *p = *p + 10;   // 포인터를 통해 원본 변수를 수정
+    *p = *p + 10;   // modify the original variable through the pointer
 }
 
 int main() {
     int score = 85;
     addTen(&score);
-    printf("score = %d\n", score);   // score = 95 (수정됨!)
+    printf("score = %d\n", score);   // score = 95 (modified!)
     return 0;
 }
 ```
 
 ```text
-addTen 호출 전:              addTen 내부:                addTen 후:
-  main: score=85             *p=85→95                   main: score=95
-         │                   (주소를 통해 원본 수정)       (수정됨!)
+Before addTen:            Inside addTen:            After addTen:
+  main: score=85           *p=85→95                  main: score=95
+         │                 (modify via address)       (modified!)
          ▼
        &score
          │
@@ -786,7 +786,7 @@ int main() {
 
 C 함수는 `return`으로 하나의 값만 반환할 수 있으므로, 포인터 매개변수를 사용하여 추가 값을 돌려준다.
 
-```c
+```c wide-ok
 void sec_to_hms(int sec, int *h, int *m, int *s) {
     *h = sec / 3600;
     *m = (sec % 3600) / 60;
@@ -799,7 +799,7 @@ int main() {
 
     sec_to_hms(total_sec, &hours, &minutes, &seconds);
     printf("%d초 = %d시간 %d분 %d초\n", total_sec, hours, minutes, seconds);
-    // 3723초 = 1시간 2분 3초
+    // 3723 seconds = 1h 2m 3s
 
     return 0;
 }
@@ -819,14 +819,14 @@ int main() {
 
 처리 결과를 출력 매개변수로 돌려주는 함수는 다음 순서로 작성한다. (1) 함수 원형에서 출력 매개변수를 처리 결과를 저장할 변수를 가리키는 포인터형으로 선언한다. (2) 함수를 호출할 때 처리 결과를 받아 올 변수를 준비하고 그 주소를 전달한다. (3) 함수를 정의할 때 포인터형 매개변수가 가리키는 곳에 처리 결과를 저장한다.
 
-```c
+```c wide-ok
 void get_sum_product(int x, int y, int *psum, int *pproduct) {
-    *psum = x + y;        // psum이 가리키는 변수에 합을 저장
-    *pproduct = x * y;    // pproduct가 가리키는 변수에 곱을 저장
+    *psum = x + y;        // store the sum where psum points
+    *pproduct = x * y;    // store the product where pproduct points
 }
 
 int main() {
-    int sum, product;     // 처리 결과를 받아 올 변수
+    int sum, product;     // variables that receive the results
     get_sum_product(4, 5, &sum, &product);
     printf("합: %d, 곱: %d\n", sum, product);   // 합: 9, 곱: 20
     return 0;
@@ -840,8 +840,8 @@ int main() {
 **두 가지 동일한 함수 시그니처:**
 
 ```c
-void print_array(int *arr, int size);    // 포인터 문법
-void print_array(int arr[], int size);   // 배열 문법 (동일)
+void print_array(int *arr, int size);    // pointer syntax
+void print_array(int arr[], int size);   // array syntax (same thing)
 ```
 
 두 표현은 동일하다. 함수 매개변수에서 `int arr[]`는 `int *arr`로 취급된다.
@@ -849,14 +849,14 @@ void print_array(int arr[], int size);   // 배열 문법 (동일)
 ```c
 void print_array(int *arr, int size) {
     for (int i = 0; i < size; i++) {
-        printf("%d ", arr[i]);   // arr[i]는 *(arr + i)와 동일
+        printf("%d ", arr[i]);   // arr[i] same as *(arr + i)
     }
     printf("\n");
 }
 
 int main() {
     int data[5] = {10, 20, 30, 40, 50};
-    print_array(data, 5);   // 배열 이름이 포인터로 변환됨
+    print_array(data, 5);   // array name decays to pointer
     return 0;
 }
 ```
@@ -865,12 +865,12 @@ int main() {
 
 ```c
 void func(int arr[]) {
-    printf("%zu\n", sizeof(arr));    // 8 (포인터 크기, 배열 크기가 아님!)
+    printf("%zu\n", sizeof(arr));    // 8 (pointer size, NOT array size!)
 }
 
 int main() {
     int arr[5] = {1, 2, 3, 4, 5};
-    printf("%zu\n", sizeof(arr));    // 20 (배열 전체 크기)
+    printf("%zu\n", sizeof(arr));    // 20 (total array size)
     func(arr);
     return 0;
 }
@@ -881,14 +881,14 @@ int main() {
 ```c
 void double_elements(int *arr, int size) {
     for (int i = 0; i < size; i++) {
-        arr[i] *= 2;   // 원본 배열을 수정
+        arr[i] *= 2;   // modifies the original array
     }
 }
 
 int main() {
     int nums[4] = {1, 2, 3, 4};
     double_elements(nums, 4);
-    // nums는 이제 {2, 4, 6, 8}
+    // nums is now {2, 4, 6, 8}
     return 0;
 }
 ```
@@ -908,7 +908,7 @@ int *bad(void)
 {
     int local = 42;
 
-    return &local;              // 함수가 끝나면 local은 소멸한다
+    return &local;              // local is destroyed when the function ends
 }
 ```
 
@@ -980,7 +980,7 @@ a = 7, b = 3
 ```
 
 ```text
-main의 영역                       swap의 영역
+area of main                         area of swap
 ┌─────────────────────────┐         ┌──────────────────────────┐
 │ a  @...b08 : 3 → 7      │◄────────┤ x : 0x...b08             │
 │ b  @...b04 : 7 → 3      │◄────────┤ y : 0x...b04             │
@@ -999,10 +999,10 @@ main의 영역                       swap의 영역
 ```c
 int a = 5, *p, *q = &a;
 
-*p = 3;                 // p를 초기화하지 않고 역참조
-if (q == 5)             // 포인터와 정수를 비교
+*p = 3;                 // dereferences p without initializing it
+if (q == 5)             // compares a pointer with an integer
     printf("five\n");
-printf("%d\n", q);      // 포인터를 %d로 출력
+printf("%d\n", q);      // prints a pointer with %d
 ```
 
 ```text

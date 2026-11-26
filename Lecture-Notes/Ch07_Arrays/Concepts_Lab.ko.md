@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -72,7 +72,7 @@ array[9] = 100;     // tenth element: the last index is 9
 
 다음 프로그램은 실수 네 개를 배열에 저장하고 평균을 구한다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -92,7 +92,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 평균 : 2.5 
 ```
 
@@ -151,7 +151,7 @@ int main(void)
 
 **풀이:** 인덱스는 0부터, 월은 1부터 시작하므로 인덱스 `i`의 원소는 `i + 1`월의 날짜 수이다. `%2d`로 월을 두 칸에 맞추어 1월과 12월의 줄이 정렬되게 한다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -166,7 +166,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
  1월은 31일
  2월은 28일
  3월은 31일
@@ -187,7 +187,7 @@ int main(void)
 
 **풀이:** `scanf`에는 저장할 곳의 주소를 넘겨야 하므로 원소의 주소 `&val[i]`를 쓴다. 첫 반복으로 입력을 모두 받고, 둘째 반복에서 각 원소를 출력하면서 합을 누적한다.
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -211,7 +211,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 1번째 data input: 1
 2번째 data input: 2
 3번째 data input: 4
@@ -287,13 +287,13 @@ arr[2][2] = 8;      // row 2, column 2: the last element
 ```
 
 ```text
-          열 0   열 1   열 2
+          col 0  col 1  col 2
         ┌──────┬──────┬──────┐
- 행 0   │  2   │      │      │   arr[0][0]
+ row 0  │  2   │      │      │   arr[0][0]
         ├──────┼──────┼──────┤
- 행 1   │  4   │      │      │   arr[1][0]
+ row 1  │  4   │      │      │   arr[1][0]
         ├──────┼──────┼──────┤
- 행 2   │      │      │  8   │   arr[2][2]
+ row 2  │      │      │  8   │   arr[2][2]
         └──────┴──────┴──────┘
 ```
 
@@ -330,12 +330,12 @@ a[1][2] = 6 at offset 20 bytes
 ```
 
 ```text
- int a[2][3]의 메모리 배치 (int 4바이트)
-  0       4       8       12      16      20      (바이트 오프셋)
+ Memory layout of int a[2][3] (int is 4 bytes)
+  0       4       8       12      16      20      (byte offset)
 ┌───────┬───────┬───────┬───────┬───────┬───────┐
 │a[0][0]│a[0][1]│a[0][2]│a[1][0]│a[1][1]│a[1][2]│
 └───────┴───────┴───────┴───────┴───────┴───────┘
- └────── 행 0 ──────────┘└────── 행 1 ──────────┘
+ └────── row 0 ─────────┘└────── row 1 ─────────┘
 ```
 
 *그림 2. 2 × 3 배열이 메모리에 행 우선으로 놓인 모습*
@@ -409,7 +409,7 @@ int arr[2][4] = {1, 2, 3, 4, 5, 6, 7, 8};     // OK
 
 **코드:** [Example_LinearSearch.c](Example_LinearSearch.c)
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -465,14 +465,14 @@ int main() // works even if the number of elements in the array changes
 }
 ```
 
-```text
+```text wide-ok
 arr = 23 45 -34 23 -124 22 2 
 >> input value: 23
 인덱스 0에 23값이 위치함! 
 인덱스 3에 23값이 위치함! 
 ```
 
-```text
+```text wide-ok
 arr = 23 45 -34 23 -124 22 2 
 >> input value: 7
 배열에 7값이 없습니다! 

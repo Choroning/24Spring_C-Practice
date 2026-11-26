@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-17
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 2
 
@@ -46,7 +46,7 @@
 
 The `printf` function prints the contents between the double quotes (`" "`) on the console screen as they are. `\n` is an escape sequence for a newline, so it does not appear as characters on the screen but makes the next output start on a new line ([Chapter 2, Section 2.2](Concepts_Lecture.md#22-printf)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -59,7 +59,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 2022년 3월 1학기 C언어 강의
 3 + 3 = 6
 2 + 6 = 5 
@@ -300,7 +300,7 @@ printf("%.2f - %.2f = %.2f\n", ave, sum, ave - sum);
 
 **Solution:** A `char` variable stores a character as the integer code of that character. So printing the same variable with `%c` gives the character, and printing it with `%d` gives the code value ([Chapter 3, Section 1.3](../Ch03_Data-Types-and-Variables/Concepts_Lecture.md#13-character-type)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -313,7 +313,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 A의 ASCII값은 65입니다!
 ```
 

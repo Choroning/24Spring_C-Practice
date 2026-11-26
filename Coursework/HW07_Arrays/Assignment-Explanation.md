@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **Last Updated:** 2026-11-16
+> **Last Updated:** 2026-11-27
 
 > **Learning Objectives:**
 > 1. Store input real numbers in an array and compute their average and standard deviation
@@ -97,7 +97,7 @@ To take the square root of the computed value, include the `<math.h>` header and
 
 **Sample Run:**
 
-```text
+```text wide-ok
 >> Input data (1): 1.4
 >> Input data (2): 2.3
 >> Input data (3): 4.5
@@ -130,11 +130,11 @@ Substituting the values of the sample run, the sum is 67.6, so the average is 6.
 
 **Code:** [Solution/Q1.c](Solution/Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q1.c
- * @brief   Q1. 평균과 표준편차 구하기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Mean and Standard Deviation
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -168,7 +168,7 @@ int main()
 
 **Output:** Entering the values of the sample run gives the average 6.76 and the standard deviation 16.03. Unlike the sample run, there is no blank line between the input and `배열의 내용:`, and the values are separated by a single space, so the line ends with one trailing space. There is no newline after the last line.
 
-```text
+```text wide-ok
 >> Input data (1): 1.4
 >> Input data (2): 2.3
 >> Input data (3): 4.5
@@ -202,7 +202,7 @@ Write a program that reads 7 arbitrary integers from the user in turn, stores th
 
 **Sample Run:**
 
-```text
+```text wide-ok
 >> Input data (1): 97
 >> Input data (2): 40
 >> Input data (3): -35
@@ -227,11 +227,11 @@ Because the initialization uses the first element, the result is correct even if
 
 **Code:** [Solution/Q2.c](Solution/Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q2.c
- * @brief   Q2. 배열에서 대소 비교
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Comparing Magnitudes in an Array
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -260,7 +260,7 @@ int main()
 
 **Output:** Entering the values of the sample run prints the largest value 100 and the smallest value -49. However, the second result line follows the string in the code and has a space before the colon, as in `가장 작은 값 : -49`, which differs by one space from the sample run.
 
-```text
+```text wide-ok
 >> Input data (1): 97
 >> Input data (2): 40
 >> Input data (3): -35
@@ -297,7 +297,7 @@ Write a program that reverses the order of the elements of an array storing real
 
 **Sample Run:**
 
-```text
+```text wide-ok
 배열(원본): 1.2  3.1  4.3  4.5  6.7  2.3  8.7  9.5  2.3  5.8
 배열(역순): 5.8  2.3  9.5  8.7  2.3  6.7  4.5  4.3  3.1  1.2
 
@@ -314,11 +314,11 @@ This method leaves the original untouched and builds a separate reversed array. 
 
 **Code:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C07Q3.c
- * @brief   Q3. 배열 원소 뒤집기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Reversing Array Elements
+ * @author  Cheolwon Park
  * @date    2024-05-10
  */
 
@@ -346,7 +346,7 @@ int main()
 
 **Output:** The original and reversed arrays are printed. Because the first `printf` begins with `\n`, there is one blank line at the very start of the output, and because two spaces are printed after each value, each line ends with two trailing spaces.
 
-```text
+```text wide-ok
 
 배열(원본): 1.2  3.1  4.3  4.5  6.7  2.3  8.7  9.5  2.3  5.8  
 배열(역순): 5.8  2.3  9.5  8.7  2.3  6.7  4.5  4.3  3.1  1.2  
@@ -376,7 +376,7 @@ Write a program that finds a value entered by the user in an array storing integ
 
 **Sample Runs:**
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 3
 -> 인덱스: 1 3 6
@@ -385,7 +385,7 @@ Write a program that finds a value entered by the user in an array storing integ
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 4
 -> 찾는 값이 배열에 없습니다.
@@ -407,11 +407,11 @@ Each value is printed with a leading space as `" %d"`, so no space remains at th
 
 **Code:** [Solution/Q4.c](Solution/Q4.c)
 
-```c
+```c wide-ok
 /**
  * @file    Q4.c
- * @brief   Q4. 배열에서 값 찾기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q4. Finding a Value in an Array
+ * @author  Cheolwon Park
  * @date    2026-10-19
  */
 
@@ -449,14 +449,14 @@ int main()
 
 **Output:** 3 is at indices 1, 3, and 6, so the count is 3, and 4 is not in the array.
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 3
 -> 인덱스: 1 3 6
 -> 개수: 3
 ```
 
-```text
+```text wide-ok
 배열의 내용: 7 3 9 3 12 5 3 8 1 9
 >> 찾을 값: 4
 -> 찾는 값이 배열에 없습니다.

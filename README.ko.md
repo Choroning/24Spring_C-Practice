@@ -64,13 +64,13 @@ C 언어로 컴퓨터 프로그래밍의 기초를 배우는 두 교양 과목�
 
 ```plaintext
 24Spring_C-Practice
-├── Lecture-Notes               장별 강의 노트, 실습 노트, 연습 문제, 풀이, 예제 코드
-├── Coursework                  컴퓨터언어실습Ⅰ 과제와 장별 C 실습 코드
-├── images                      연습 문제와 과제의 그림
-├── Course-Information.ko.md    수업 운영 정보
+├── Lecture-Notes               Lecture notes, lab notes, exercises, solutions, and example code by chapter
+├── Coursework                  Computer Language and Training I assignments and C lab code by chapter
+├── images                      Figures in the exercises and assignments
+├── Course-Information.ko.md    Course operations
 ├── Course-Information.md
-├── LICENSE                     문서 라이선스 (CC BY-NC-SA 4.0)
-├── LICENSE-CODE                코드 라이선스 (PolyForm Noncommercial 1.0.0)
+├── LICENSE                     Documentation license (CC BY-NC-SA 4.0)
+├── LICENSE-CODE                Code license (PolyForm Noncommercial 1.0.0)
 ├── README.ko.md
 └── README.md
 ```

@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 3
 
@@ -225,7 +225,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 한 변의 길이 ? 5
 정사각형의 넓이: 25
 정사각형의 둘레: 20
@@ -245,7 +245,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 가로의 길이? 10
 세로의 길이? 20
 직사각형의 넓이: 200
@@ -266,7 +266,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 질량(kg)? 10
 높이(m)? 5
 위치에너지: 490.00 J
@@ -288,7 +288,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 밑변과 높이? 3 7
 직각삼각형의 면적: 10.50
 ```
@@ -307,7 +307,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 USD? 150
 원/달러 환율? 1210
 USD 150 = KRW 181500.00
@@ -327,7 +327,7 @@ USD 150 = KRW 181500.00
 
 **Sample Run:**
 
-```text
+```text wide-ok
 KRW? 500000
 원/달러 환율? 1210
 KRW 500000 = USD 413.22
@@ -347,7 +347,7 @@ KRW 500000 = USD 413.22
 
 **Sample Run:**
 
-```text
+```text wide-ok
 길이(yd)? 100
 100 yd = 91.440000 m
 ```
@@ -366,7 +366,7 @@ KRW 500000 = USD 413.22
 
 **Sample Run:**
 
-```text
+```text wide-ok
 길이(in)? 10
 10.00 in = 25.40 cm
 ```
@@ -385,7 +385,7 @@ KRW 500000 = USD 413.22
 
 **Sample Run:**
 
-```text
+```text wide-ok
 아파트의 면적(제곱미터)? 113
 113.00 제곱미터 = 34.18 평
 ```
@@ -404,7 +404,7 @@ KRW 500000 = USD 413.22
 
 **Sample Run:**
 
-```text
+```text wide-ok
 실수? 3.0e-1
 제곱: 9.000000e-02
 세제곱: 2.700000e-02

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-16
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 포인터 매개변수로 호출한 쪽의 두 변수를 교환하는 함수를 작성할 수 있다
@@ -45,7 +45,7 @@
 
 **실행 예시:**
 
-```text
+```text wide-ok
 초기상태: a = 3, b = 5
 맞바꾸기: a = 5, b = 3
 
@@ -61,11 +61,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q1.c](Solution/Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10303-1_C08Q1.c
- * @brief   Q1. 맞바꾸기
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Swapping
+ * @author  Cheolwon Park
  * @date    2024-05-18
  */
 
@@ -91,7 +91,7 @@ int main()
 
 실행 결과는 다음과 같다.
 
-```text
+```text wide-ok
 초기상태: a = 3, b = 5
 맞바꾸기: a = 5, b = 3
 ```
@@ -144,8 +144,8 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C08Q2.c
- * @brief   Q2. 배열 연산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Array Operations
+ * @author  Cheolwon Park
  * @date    2024-05-18
  */
 
@@ -203,7 +203,7 @@ arrZ:   2    7    1  -26
 
 **실행 예시:**
 
-```text
+```text wide-ok
 정수 3개 입력: 9 -2 5
 정렬 전: x = 9, y = -2, z = 5
 정렬 후: x = -2, y = 5, z = 9
@@ -231,11 +231,11 @@ Program ended with exit code: 0
 
 **코드:** [Solution/Q3.c](Solution/Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    Q3.c
- * @brief   Q3. 세 수 정렬
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Sorting Three Numbers
+ * @author  Cheolwon Park
  * @date    2026-10-19
  */
 
@@ -275,7 +275,7 @@ int main()
 
 실행 예시의 값을 입력한 결과는 다음과 같다.
 
-```text
+```text wide-ok
 정수 3개 입력: 9 -2 5
 정렬 전: x = 9, y = -2, z = 5
 정렬 후: x = -2, y = 5, z = 9
@@ -283,7 +283,7 @@ int main()
 
 1, 2, 3을 여섯 가지 순서로 모두 입력해도 결과는 `x = 1, y = 2, z = 3`이고, 같은 값이 섞인 `5 5 1`은 `x = 1, y = 5, z = 5`가 된다. 비교는 입력과 관계없이 항상 세 번이며, 교환이 가장 많이 일어나는 입력은 내림차순인 `3 2 1`로 세 단계 모두에서 교환한다.
 
-```text
+```text wide-ok
 정수 3개 입력: 3 2 1
 정렬 전: x = 3, y = 2, z = 1
 정렬 후: x = 1, y = 2, z = 3

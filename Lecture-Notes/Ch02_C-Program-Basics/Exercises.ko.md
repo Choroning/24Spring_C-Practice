@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **최종 수정일:** 2026-10-27
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -213,18 +213,18 @@ pi = 3.14
 
 **교재 문항:** 2장 연습 문제 10번
 
-**문제:** 다음은 문자를 입력받아서 출력하는 프로그램이다. 소스 코드의 빈칸 ①, ②, ③에 들어갈 코드를 쓰라.
+**문제:** 다음은 문자를 입력받아서 출력하는 프로그램이다. 소스 코드의 빈칸 (1), (2), (3)에 들어갈 코드를 쓰라.
 
 ```c
 // test.c
-#define _CRT_SECURE_NO_WARNINGS     // Visual Studio 2022에서 scanf 사용 시 필요
-#include ① ____________
+#define _CRT_SECURE_NO_WARNINGS     // needed to use scanf in Visual Studio 2022
+#include (1) ____________
 
 int main(void)
 {
     char ch;
-    scanf("%c", ② ________);
-    printf("ch = ③____\n", ch);
+    scanf("%c", (2) ________);
+    printf("ch = (3)____\n", ch);
 }
 ```
 
@@ -263,7 +263,7 @@ int main(void)
 
 **실행 예시:**
 
-```text
+```text wide-ok
 10진수 정수? 10
 10진수 10은 16진수 a에 해당합니다.
 ```
@@ -282,7 +282,7 @@ int main(void)
 
 **실행 예시:**
 
-```text
+```text wide-ok
 연? 2022
 월? 10
 일? 1
@@ -303,7 +303,7 @@ int main(void)
 
 **실행 예시:**
 
-```text
+```text wide-ok
 시? 1
 분? 1
 초? 1
@@ -324,7 +324,7 @@ int main(void)
 
 **실행 예시:**
 
-```text
+```text wide-ok
 달러? 50.25
 $50.25는 50250원입니다.
 ```
@@ -343,7 +343,7 @@ $50.25는 50250원입니다.
 
 **실행 예시:**
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? M
 M 사이즈를 선택했습니다.
 ```
@@ -362,7 +362,7 @@ M 사이즈를 선택했습니다.
 
 **실행 예시:**
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 12.340000 + 0.500000 = 12.840000
 12.340000 - 0.500000 = 11.840000
@@ -404,7 +404,7 @@ pi = 3.141593e+00
 
 **실행 예시:**
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 0x12
  8진수: 022

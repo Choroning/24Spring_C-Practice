@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Exercises.md) | [한국어](Exercises.ko.md)
 
-> **Last Updated:** 2026-10-27
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 6
 
@@ -67,7 +67,7 @@ Exercises 1-3 are lab problems, Exercises 4-17 are exercises 1-14 of Chapter 6 o
 
 **Sample Run:**
 
-```text
+```text wide-ok
 실수를 입력하세요 (0.0 입력 시 종료): 2.75
 2.750000의 반올림 결과 = 3
 
@@ -115,7 +115,7 @@ The leap year conditions are as follows.
 
 **Sample Run:**
 
-```text
+```text wide-ok
 -------------------------------------------------
                2000~2150년 사이의 윤년
 -------------------------------------------------
@@ -152,28 +152,28 @@ Program ended with exit code: 0
 
 **Sample Run:**
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2017 4
 2017년 4월은 30일까지 있습니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2020 8
 2020년 8월은 31일까지 있습니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2000 2
 2000년 2월은 29일까지 있습니다.
 
 Program ended with exit code: 0
 ```
 
-```text
+```text wide-ok
 연도와 월을 입력하세요: 2100 2
 2100년 2월은 28일까지 있습니다.
 
@@ -377,16 +377,16 @@ Program ended with exit code: 0
 
 **Problem:** In the following code, define the whole `switch` statement, from `switch (op) {` to its matching closing `}`, as a function. Choose the return type, the name, and the parameters of the function yourself. Then modify the code so that it calls the function.
 
-```c
-#define _CRT_SECURE_NO_WARNINGS      // Visual Studio 2022에서 scanf 사용 시 필요
+```c wide-ok
+#define _CRT_SECURE_NO_WARNINGS      // needed to use scanf in Visual Studio 2022
 #include <stdio.h>
 
 int main(void)
 {
-    int x, y;                        // 피연산자
-    char op;                         // 연산자 기호를 문자로 저장할 변수
+    int x, y;                        // operands
+    char op;                         // variable that stores the operator symbol as a character
     printf("수식 ? ");
-    scanf("%d %c %d", &x, &op, &y);  // 10 + 30 형태로 입력받는다.
+    scanf("%d %c %d", &x, &op, &y);  // Read the input in the form 10 + 30.
 
     switch (op) {
     case '+':   printf("%d + %d = %d\n", x, y, x + y);    break;
@@ -408,12 +408,12 @@ int main(void)
 
 **Textbook Problem:** Chapter 6 exercise 13
 
-**Problem:** Write the code needed in place of `[빈칸]` (blank) in the following program.
+**Problem:** Write the code needed in place of `[blank]` in the following program.
 
-```c
-#define _CRT_SECURE_NO_WARNINGS      // Visual Studio 2022에서 scanf 사용 시 필요
+```c wide-ok
+#define _CRT_SECURE_NO_WARNINGS      // needed to use scanf in Visual Studio 2022
 #include <stdio.h>
-[빈칸]
+[blank]
 int main(void)
 {
     int hour, min, sec;
@@ -477,7 +477,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 정수? 3
 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60
 정수? 11
@@ -499,7 +499,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 가로? 100
 세로? 200
 직사각형의 둘레: 600
@@ -519,7 +519,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 직선의 시작점 좌표? 0 0
 직선의 끝점 좌표? 3 4
 (0, 0)~(3, 4) 직선의 길이: 5.000000
@@ -539,7 +539,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 할인율(%)? 20
 제품의 가격? 10000
 할인가: 8000원
@@ -562,7 +562,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 1
 파일 열기를 수행합니다.
 [1.파일 열기  2.파일 저장  3.인쇄  0.종료] 선택? 2
@@ -584,7 +584,7 @@ int main(void)
 
 **Sample Run:**
 
-```text
+```text wide-ok
 RGB 색상? 0xff0080
 RGB FF0080의 red: 128, green: 0, blue: 255
 ```
@@ -623,7 +623,7 @@ RGB FF0080의 red: 128, green: 0, blue: 255
 
 **Sample Run:**
 
-```text
+```text wide-ok
 날짜 (연 월 일)? 2022 13 1
 잘못 입력하셨습니다. 유효한 날짜를 입력하세요.
 날짜 (연 월 일)? 2022 6 31
@@ -646,7 +646,7 @@ RGB FF0080의 red: 128, green: 0, blue: 255
 
 **Sample Run:**
 
-```text
+```text wide-ok
 정수? 0xabcd1234
 16진수 ABCD1234: 1010 1011 1100 1101 0001 0010 0011 0100
 ```
@@ -665,7 +665,7 @@ RGB FF0080의 red: 128, green: 0, blue: 255
 
 **Sample Run:**
 
-```text
+```text wide-ok
 양의 정수? 100
 100의 약수: 1 2 4 5 10 20 25 50 100 => 총 9개
 양의 정수? 56
@@ -687,7 +687,7 @@ RGB FF0080의 red: 128, green: 0, blue: 255
 
 **Sample Run:**
 
-```text
+```text wide-ok
 1~N 사이의 소수를 구합니다. N은? 100
   2  3  5  7 11 13 17 19 23 29
  31 37 41 43 47 53 59 61 67 71

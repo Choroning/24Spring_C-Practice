@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 8, 9
 
@@ -57,8 +57,8 @@ char str2[] = {'a', 'b', 'c', '\0'};        // with character constants, '\0' mu
 
 ```text
         [0]    [1]    [2]    [3]    [4]
- str1 │ 'G' │ 'o' │ 'o' │ 'd' │ '\0' │
- str2 │ 'a' │ 'b' │ 'c' │ '\0' │
+ str1 │ 'G'  │ 'o'  │ 'o'  │ 'd'  │ '\0' │
+ str2 │ 'a'  │ 'b'  │ 'c'  │ '\0' │
 ```
 
 *Figure 1. Elements of the character arrays str1 and str2*

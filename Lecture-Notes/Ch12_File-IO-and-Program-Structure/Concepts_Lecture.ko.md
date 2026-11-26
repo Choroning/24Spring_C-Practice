@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. `int main(int argc, char *argv[])`로 명령행 인수를 받아 검사하고 변환하며, 종료 상태로 결과를 알리는 프로그램을 작성할 수 있다
@@ -85,8 +85,8 @@
 C 표준은 호스트 환경의 `main`을 매개변수 없이 정의하거나, `argc`와 `argv`라는 두 매개변수로 정의하거나, 그와 동등한 형태로 정의하도록 규정하며, 구현이 정하는 다른 형태도 허용한다[1].
 
 ```c
-int main(void)                      // 명령행 인수를 사용하지 않는 형태
-int main(int argc, char *argv[])    // 명령행 인수를 사용하는 형태
+int main(void)                      // the form that does not use command-line arguments
+int main(int argc, char *argv[])    // the form that uses command-line arguments
 ```
 
 `argc`(argument count)는 `argv`에 담긴 문자열의 개수이고 프로그램 이름도 여기에 포함된다. `argv`(argument vector)는 각 문자열의 시작 주소를 담은 포인터 배열의 첫 원소를 가리킨다. 두 이름은 표준이 설명에 쓰는 이름일 뿐 다른 이름을 써도 되지만[1], 널리 쓰이는 관례이므로 바꾸지 않는 것이 좋다. 프로그램을 실행하면 셸과 운영체제, C 런타임의 **시작 코드(startup code)** 가 명령행을 문자열 배열로 정리한 뒤 `main`을 호출한다.
@@ -112,7 +112,7 @@ flowchart LR
 다음 프로그램은 받은 인수를 출력한다. 코드는 [Example_ArgDump.c](Example_ArgDump.c)이다. `./args Alice 20`으로 실행하면 `argc`는 프로그램 이름을 포함하여 3이다. `argv[argc]`가 널 포인터이므로 `for (char **p = argv; *p != NULL; p++)`처럼 포인터로 순회할 수도 있다.
 
 ```c
-int main(int argc, char *argv[])    // ./args Alice 20으로 실행한다
+int main(int argc, char *argv[])    // Run as ./args Alice 20
 {
     printf("argc = %d\n", argc);    // argc = 3
     for (int i = 0; i < argc; i++)
@@ -126,17 +126,17 @@ int main(int argc, char *argv[])    // ./args Alice 20으로 실행한다
 ```text
 argc = 3
 
-argv: char **          포인터 배열 (원소마다 8바이트)         문자열 (널 문자로 끝남)
+argv: char **          array of pointers (8 bytes each)       strings (null-terminated)
 ┌──────────────┐      ┌────────────────────────────┐
-│ 0x16f81f1f8  │ ───► │ [0] 0x16f81f408            │ ───► "./greet\0"  8바이트
+│ 0x16f81f1f8  │ ───► │ [0] 0x16f81f408            │ ───► "./greet\0"  8 bytes
 └──────────────┘      ├────────────────────────────┤
-                      │ [1] 0x16f81f410            │ ───► "Alice\0"    6바이트
+                      │ [1] 0x16f81f410            │ ───► "Alice\0"    6 bytes
                       ├────────────────────────────┤
-                      │ [2] 0x16f81f416            │ ───► "20\0"       3바이트
+                      │ [2] 0x16f81f416            │ ───► "20\0"       3 bytes
                       ├────────────────────────────┤
                       │ [3] NULL (argv[argc])      │
                       └────────────────────────────┘
-                       주소: 0x16f81f1f8, 0x16f81f200, 0x16f81f208, 0x16f81f210
+                       addresses: 0x16f81f1f8, 0x16f81f200, 0x16f81f208, 0x16f81f210
 ```
 
 *그림 2. `./greet Alice 20` 실행 시 `argv`의 메모리 구조 (64비트 환경, 주소는 예)*
@@ -272,7 +272,7 @@ POSIX 환경에서는 `<unistd.h>`의 `getopt`가 이 처리를 대신한다[11]
 while ((opt = getopt(argc, argv, "un:")) != -1) {
     if (opt == 'u') upper = 1;
     else if (opt == 'n') { if (!parse_int(optarg, &count)) return 2; }
-    else return 2;                       // 알 수 없는 옵션이면 '?'를 반환한다
+    else return 2;                       // An unknown option makes it return '?'
 }
 ```
 
@@ -301,15 +301,15 @@ POSIX에서 부모 프로세스가 `wait`나 `waitpid`로 볼 수 있는 값은 
 앞의 절을 모두 묶은 프로그램이다. `-n count`와 `-u` 옵션을 처리하고, 숫자를 검사하고, 사용법을 표준 오류로 알리고, 결과에 맞는 종료 상태를 돌려준다. 코드는 [Example_RepeatWords.c](Example_RepeatWords.c)이다. 아래 코드는 변환 함수와 옵션 처리를 보이며, `#include` 줄, 상수 `STATUS_USAGE`(값 2), 사용법을 출력하고 그 값을 반환하는 `usage` 함수, 단어를 출력하는 마지막 반복문은 생략했다.
 
 ```c
-// s 전체를 int로 변환한다. 성공하면 1, 실패하면 0을 반환한다.
+// Converts all of s to an int. Returns 1 on success and 0 on failure.
 static int parse_int(const char *s, int *out)
 {
     char *end;
-    errno = 0;                                      // strtol은 errno를 지우지 않는다
+    errno = 0;                                      // strtol never clears errno itself
     long value = strtol(s, &end, 10);
-    if (end == s || *end != '\0' || errno == ERANGE) // 숫자 없음, 뒤의 문자, 범위 초과
+    if (end == s || *end != '\0' || errno == ERANGE) // No digits, trailing text, or out of range
         return 0;
-    if (value < INT_MIN || value > INT_MAX)         // long에는 맞지만 int로 표현할 수 없다
+    if (value < INT_MIN || value > INT_MAX)         // Fits in a long but not in an int
         return 0;
 
     *out = (int)value;
@@ -320,9 +320,9 @@ int main(int argc, char *argv[])
 {
     const char *prog = (argc > 0 && argv[0][0] != '\0') ? argv[0] : "repeat";
     int count = 1, upper = 0, i = 1;
-    // 옵션 반복: 옵션이 아닌 첫 인수에서 멈춘다
+    // Option loop: stops at the first argument that is not an option
     while (i < argc && argv[i][0] == '-' && argv[i][1] != '\0') {
-        if (strcmp(argv[i], "--") == 0) {           // 옵션의 끝
+        if (strcmp(argv[i], "--") == 0) {           // End of the options
             i++;
             break;
         } else if (strcmp(argv[i], "-u") == 0) {
@@ -333,16 +333,16 @@ int main(int argc, char *argv[])
                 fprintf(stderr, "%s: -n needs a non-negative count\n", prog);
                 return STATUS_USAGE;
             }
-            i += 2;                                 // -n과 그 값을 건너뛴다
+            i += 2;                                 // Skip -n and its value
         } else {
             fprintf(stderr, "%s: unknown option: %s\n", prog, argv[i]);
             return usage(prog);
         }
     }
-    if (i >= argc)                                  // 단어가 적어도 하나 필요하다
+    if (i >= argc)                                  // At least one word is required
         return usage(prog);
 
-    /* 남은 단어를 count번씩 출력한다. -u이면 대문자로 바꾼다. */
+    /* Print each remaining word count times, in upper case if -u was given. */
     return EXIT_SUCCESS;
 }
 ```
@@ -414,8 +414,8 @@ C 프로그램은 키보드, 화면, 디스크의 파일을 같은 방식으로 
 표준은 대화형 장치에 연결되지 않은 것이 확실할 때에만 `stdin`과 `stdout`을 완전 버퍼링하고, `stderr`는 완전 버퍼링하지 않도록 규정한다[1]. 일반적인 구현에서 `stdout`은 터미널에 연결되면 줄 버퍼링이고, 파일이나 파이프에 연결되면 완전 버퍼링이다. 이 때문에 `printf("A\n"); fprintf(stderr, "B\n"); printf("C\n");`의 출력 순서는 연결 대상에 따라 달라진다.
 
 ```text
-$ ./order                터미널에 직접 출력: A, B, C
-$ ./order 2>&1 | cat     stdout이 파이프에 연결됨: B, A, C
+$ ./order                printed directly to the terminal: A, B, C
+$ ./order 2>&1 | cat     stdout connected to a pipe: B, A, C
 ```
 
 파이프로 연결되면 `A`와 `C`가 버퍼에 쌓였다가 프로그램이 끝날 때 한꺼번에 전달되므로 `B`가 먼저 보인다. `fflush(fp)`는 출력 스트림의 버퍼 내용을 환경에 즉시 전달하며, 오류가 나면 `EOF`를 반환한다[1]. `fflush(NULL)`은 모든 출력 스트림을 비운다. 개행이 없는 프롬프트는 입력을 받기 전에 `printf("Enter a number: "); fflush(stdout);`처럼 비워서 화면에 보낸다.
@@ -436,11 +436,11 @@ $ ./order 2>&1 | cat     stdout이 파이프에 연결됨: B, A, C
 
 ```c
 FILE *fp = fopen("data.txt", "r");
-if (fp == NULL) {               // 파일이 없거나 권한이 없으면 NULL이다
-    perror("data.txt");         // 원인을 표준 오류로 출력한다 (5.2절)
+if (fp == NULL) {               // NULL if the file is missing or permission is denied
+    perror("data.txt");         // Print the cause on standard error (Section 5.2)
     return 1;
 }
-/* fp로 파일을 읽는다 */
+/* read the file through fp */
 fclose(fp);
 ```
 
@@ -496,8 +496,8 @@ fclose(fp);
 `fprintf`와 `fscanf`는 `printf`, `scanf`와 사용법이 같고 첫 번째 인수로 파일 포인터를 받는다. `fscanf`는 성공적으로 변환하여 저장한 항목 수를 반환하고, 첫 변환 전에 입력이 끝나면 `EOF`를 반환한다.
 
 ```c
-fprintf(fp, "%s %d %.1f\n", "Alice", 90, 3.8);      // "w"로 연 파일에 쓴다
-while (fscanf(fp, "%19s %d %lf", name, &score, &gpa) == 3) {  // 항목 수로 판단한다
+fprintf(fp, "%s %d %.1f\n", "Alice", 90, 3.8);      // Write to a file opened with "w"
+while (fscanf(fp, "%19s %d %lf", name, &score, &gpa) == 3) {  // Judge by the item count
     printf("name=%s score=%d gpa=%.1f\n", name, score, gpa);  // name=Alice score=90 gpa=3.8
 }
 ```
@@ -512,11 +512,11 @@ while (fscanf(fp, "%19s %d %lf", name, &score, &gpa) == 3) {  // 항목 수로 �
 
 ```c
 int value = 0, sum = 0;
-while (!feof(fp)) {             // 잘못된 코드
+while (!feof(fp)) {             // Deliberately wrong
     fscanf(fp, "%d", &value);
     printf("read %d\n", value);  // read 10, read 20, read 30, read 30
     sum += value;
-}                               // 결과: sum = 90
+}                               // Result: sum = 90
 ```
 
 읽기 함수의 반환값으로 반복을 제어하고, `feof`와 `ferror`는 반복이 끝난 뒤 **원인을 구분**하는 데 쓴다.
@@ -526,9 +526,9 @@ while (fscanf(fp, "%d", &value) == 1) {
     sum += value;
 }
 if (ferror(fp)) {
-    perror("read");             // 읽기 오류
+    perror("read");             // A read error
 } else if (!feof(fp)) {
-    fprintf(stderr, "malformed input\n");   // 끝이 아니므로 형식 오류
+    fprintf(stderr, "malformed input\n");   // Not the end, so a format error
 }
 ```
 
@@ -565,8 +565,8 @@ $ xxd num.bin
 
 ```c
 int out[3] = {10, 20, 30}, in[5];
-size_t written = fwrite(out, sizeof out[0], 3, fp);   // "wb"로 연 파일: written은 3
-size_t got = fread(in, sizeof in[0], 5, fp);          // "rb"로 다시 열어 5개를 요청: got은 3
+size_t written = fwrite(out, sizeof out[0], 3, fp);   // A file opened with "wb": written is 3
+size_t got = fread(in, sizeof in[0], 5, fp);          // Reopened with "rb" and 5 requested: got is 3
 ```
 
 파일에는 `0a00 0000 1400 0000 1e00 0000`의 12바이트가 저장되고, 5개를 요청한 `fread`는 3을 반환한 뒤 `feof`가 참이 된다.
@@ -576,11 +576,11 @@ size_t got = fread(in, sizeof in[0], 5, fp);          // "rb"로 다시 열어 5
 파일 위치 표시자는 다음 입출력이 시작될 위치이다. `fseek(stream, offset, whence)`는 위치를 옮기고 성공하면 0을 반환하며, `ftell(stream)`은 현재 위치를 반환하고 실패하면 `-1L`을 반환한다. `rewind(stream)`은 처음으로 이동하면서 오류 표시자를 지운다. `whence`는 기준 위치이며 `SEEK_SET`은 파일 처음, `SEEK_CUR`은 현재 위치, `SEEK_END`는 파일 끝이다. 다음은 `"w+b"`로 연 파일에 쓴 뒤 각 호출의 결과이다.
 
 ```c
-fputs("ABCDEFGHIJ", fp);        // ftell은 10
-fseek(fp, 2L, SEEK_SET);        // 다음 fgetc는 C, 그 뒤 ftell은 3
-fseek(fp, 3L, SEEK_CUR);        // 다음 fgetc는 G, 그 뒤 ftell은 7
-fseek(fp, -1L, SEEK_END);       // 다음 fgetc는 J, 그 뒤 ftell은 10
-rewind(fp);                     // 다음 fgetc는 A, 그 뒤 ftell은 1
+fputs("ABCDEFGHIJ", fp);        // ftell is 10
+fseek(fp, 2L, SEEK_SET);        // next fgetc gives C, then ftell is 3
+fseek(fp, 3L, SEEK_CUR);        // next fgetc gives G, then ftell is 7
+fseek(fp, -1L, SEEK_END);       // next fgetc gives J, then ftell is 10
+rewind(fp);                     // next fgetc gives A, then ftell is 1
 ```
 
 `fseek`가 성공하면 파일 끝 표시자는 지워진다[1]. 크기가 같은 레코드를 이진 파일에 저장하면 `i`번째 레코드의 위치가 `i * sizeof(struct record)`이므로 앞의 레코드를 읽지 않고 바로 접근할 수 있다. [Example_BinaryRecords.c](Example_BinaryRecords.c)는 16바이트 레코드 3개를 저장한 뒤(파일 크기 48바이트) 두 번째 레코드의 점수만 81.00에서 88.75로 고친다.
@@ -630,7 +630,7 @@ C에는 예외가 없으므로 함수는 반환값으로 실패를 알린다. �
 ```c
 FILE *fp = fopen("missing.txt", "r");
 if (fp == NULL) {
-    int saved = errno;                                  // 다른 호출로 바뀌기 전에 저장한다
+    int saved = errno;                                  // Save it before anything else can change it
     fprintf(stderr, "%d: %s\n", saved, strerror(saved)); // 2: No such file or directory
     errno = saved;
     perror("missing.txt");                              // missing.txt: No such file or directory
@@ -661,13 +661,13 @@ static int copy_file(const char *src_path, const char *dst_path)
     if (src == NULL) { perror(src_path); goto cleanup; }
     dst = fopen(dst_path, "wb");
     if (dst == NULL) { perror(dst_path); goto cleanup; }
-    /* fread와 fwrite로 복사하고, 실패하면 perror 후 goto cleanup; 끝나면 ferror도 검사한다 */
+    /* copy with fread and fwrite; on failure perror and goto cleanup; finally check ferror */
     result = 0;
 
 cleanup:
     if (src != NULL) { fclose(src); }
     if (dst != NULL && fclose(dst) == EOF && result == 0) {
-        perror(dst_path);               // 버퍼의 쓰기 실패가 여기서 드러날 수 있다
+        perror(dst_path);               // Buffered data may fail to reach the file here
         result = -1;
     }
     return result;
@@ -715,7 +715,7 @@ cleanup:
 #define SWAP(a, b) do { int t_ = (a); (a) = (b); (b) = t_; } while (0)
 
 if (flag)
-    SWAP(x, y);         // 하나의 문장처럼 쓸 수 있다
+    SWAP(x, y);         // Can be used like a single statement
 else
     printf("no swap\n");
 ```
@@ -730,13 +730,13 @@ else
 #define PRINT_INT(x)    printf(#x " = %d\n", (x))
 #define MAKE_NAME(a, b) a##b
 
-#define STR(x)          #x              // 인수를 쓰인 그대로 문자열로 만든다
-#define XSTR(x)         STR(x)          // 인수를 먼저 전개한 뒤 문자열로 만든다
+#define STR(x)          #x              // Stringizes the argument as written
+#define XSTR(x)         STR(x)          // Expands the argument first, then stringizes it
 #define VERSION         12
 
 int value12 = 99;
 PRINT_INT(a + b);                       // printf("a + b" " = %d\n", (a + b));
-printf("%d\n", MAKE_NAME(value, 12));   // value12를 출력한다
+printf("%d\n", MAKE_NAME(value, 12));   // prints value12
 printf("%s\n", STR(VERSION));           // VERSION
 printf("%s\n", XSTR(VERSION));          // 12
 ```
@@ -810,11 +810,11 @@ printf("%s\n", XSTR(VERSION));          // 12
 헤더 파일에는 여러 소스 파일이 공유해야 하는 **선언**을 넣는다. 함수 원형, 구조체와 `enum`, `typedef`, 매크로, `extern` 변수 선언이 해당한다. 함수 정의나 전역 변수 정의를 넣으면 그 헤더를 포함한 소스 파일마다 정의가 생겨 7.4절의 링크 오류가 난다.
 
 ```c
-// Example_Counter.h: 카운터 모듈의 인터페이스
+// Example_Counter.h: interface of the counter module
 #ifndef COUNTER_H
 #define COUNTER_H
 
-extern int counter_step;    // 선언만 한다: 정의는 Example_Counter.c에 있다
+extern int counter_step;    // Declaration only: the definition is in Example_Counter.c
 
 void counter_reset(void);
 void counter_increment(void);
@@ -899,15 +899,15 @@ flowchart LR
 ```c
 static int next_id(void)
 {
-    int automatic = 0;          // 호출할 때마다 만들어지고 초기화된다
-    static int persistent = 0;  // 프로그램 시작 전에 한 번만 초기화된다
+    int automatic = 0;          // Created and initialized on every call
+    static int persistent = 0;  // Initialized once, before the program starts
 
     automatic++;
     persistent++;
     printf("automatic = %d, persistent = %d\n", automatic, persistent);
     return persistent;
 }
-// 세 번 호출하면 automatic은 매번 1이고 persistent는 1, 2, 3이 된다
+// Over three calls, automatic is 1 each time and persistent becomes 1, 2, 3
 ```
 
 초기값이 없으면 0으로 초기화된다. 초기값은 상수 식이어야 하며, `static int s = k;`처럼 변수를 쓰면 `initializer element is not a compile-time constant` 오류가 난다. 저장 기간이 정적이므로 함수가 그 주소를 반환해도 안전하다([11장 1.3절](../Ch11_Dynamic-Memory-and-Advanced-Pointers/Concepts_Lecture.ko.md#13-지역-변수의-주소를-반환하면-안-되는-이유)). 다만 모든 호출과 재귀 호출이 같은 변수를 공유하므로, 재귀 함수나 여러 스레드에서 호출되는 함수에 쓸 때는 주의해야 한다.
@@ -977,8 +977,8 @@ MSVC 옵션의 뜻은 Microsoft의 옵션 목록을 따른다[34]. `-Wall`은 �
 여러 파일로 나눈 프로그램을 빌드할 때 매번 전체를 컴파일하지 않으려면 **고친 파일과 그에 의존하는 파일만** 다시 만들어야 한다. `make`는 `Makefile`에 적힌 규칙을 읽어 이 일을 자동화한다. 규칙은 **목표(target)**, **의존 파일(prerequisite)**, **명령(recipe)** 으로 이루어진다.
 
 ```makefile
-목표: 의존 파일들
-	명령
+target: prerequisites
+	recipe
 ```
 
 명령 줄은 반드시 **탭 문자**로 시작해야 한다[37]. 공백 8칸으로 시작하면 `missing separator (did you mean TAB instead of 8 spaces?)` 오류가 난다. 목표가 없거나 의존 파일보다 오래되었을 때에만 명령을 실행하며[37], 판단 기준은 파일의 수정 시각이다.
@@ -1006,10 +1006,10 @@ clean:
 `$@`는 목표, `$^`는 의존 파일 전체, `$<`는 첫 번째 의존 파일을 뜻하는 자동 변수이다[37]. `.PHONY`는 `clean`처럼 파일이 아닌 작업 이름을 선언하여, 같은 이름의 파일이 있어도 명령이 실행되게 한다[37].
 
 ```text
-$ make                       # main.o, counter.o, app을 차례로 만든다
+$ make                       # builds main.o, counter.o, and app in turn
 $ make                       # make: `app' is up to date.
-$ touch counter.c && make    # counter.o와 app만 다시 만든다
-$ touch counter.h && make    # main.o, counter.o, app을 모두 다시 만든다
+$ touch counter.c && make    # rebuilds only counter.o and app
+$ touch counter.h && make    # rebuilds main.o, counter.o, and app
 ```
 
 헤더의 의존 관계를 손으로 적으면 빠뜨리기 쉽다. 컴파일러의 `-MMD -MP` 옵션은 소스마다 의존 파일 목록(`.d`)을 만들어 주고[25], `make`는 이를 포함하여 헤더 변경까지 추적한다. 아래의 `%.o: %.c`는 모든 오브젝트 파일에 적용되는 패턴 규칙으로, 앞의 두 오브젝트 규칙을 대신한다.

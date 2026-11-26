@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-26
+> **최종 수정일:** 2026-11-27
 
 > **학습 목표:**
 > 1. 프로그램의 메모리 영역과 세 가지 저장 기간을 구분하고 지역 변수의 주소를 반환하면 안 되는 이유를 설명할 수 있다
@@ -68,21 +68,21 @@ C 표준에는 1.1절에서 정의할 스택(stack)이나 힙(heap)이라는 개
 실행 중인 프로그램은 운영체제로부터 **주소 공간(address space)** 을 받으며, 일반적인 구현은 이 공간을 다음과 같이 용도별 영역으로 나눈다.
 
 ```text
-높은 주소
+high addresses
 ┌──────────────────┐
-│      stack       │ ← 지역 변수, 매개변수, 호출 정보 (보통 아래로 자란다)
+│      stack       │ ← local variables, parameters, call information (usually grows down)
 │                  │
-│       heap       │ ← malloc 등이 돌려주는 블록 (보통 위로 자란다)
+│       heap       │ ← blocks returned by malloc and related functions (usually grows up)
 ├──────────────────┤
-│       bss        │ ← 0으로 초기화되는 정적 저장 기간 객체
+│       bss        │ ← static-duration objects initialized to 0
 ├──────────────────┤
-│       data       │ ← 0이 아닌 값으로 초기화된 정적 저장 기간 객체
+│       data       │ ← static-duration objects initialized to a nonzero value
 ├──────────────────┤
-│      rodata      │ ← 문자열 리터럴과 같은 읽기 전용 데이터
+│      rodata      │ ← read-only data such as string literals
 ├──────────────────┤
-│       text       │ ← 기계어 명령어 (코드 영역)
+│       text       │ ← machine instructions (code segment)
 └──────────────────┘
-낮은 주소
+low addresses
 ```
 
 *그림 1. 일반적인 구현에서 프로세스 주소 공간의 배치*
@@ -134,7 +134,7 @@ C11 표준의 저장 기간은 정적, 스레드, 자동, 할당의 네 가지�
 자동 변수의 수명은 선언된 블록이 끝날 때 끝나므로 함수가 반환한 뒤에는 남아 있지 않고, 수명이 끝난 객체를 참조하는 것은 정의되지 않은 동작이다[1, 6.2.4절]. 다음은 이 규칙을 어기는 잘못된 코드이다.
 
 ```c
-// 잘못된 코드: 수명이 끝난 변수의 주소를 반환한다
+// Incorrect code: returns the address of a variable whose lifetime has ended
 int *make_value(void) {
     int value = 42;
     return &value;
@@ -154,11 +154,11 @@ int main(void) {
 컴파일러는 `warning: address of stack memory associated with local variable 'value' returned`로 경고한다. 무시하고 실행하면 결과를 예측할 수 없으며, macOS의 Apple clang에서는 `-O0`로 컴파일하면 777이, `-O2`로 컴파일하면 143556992 같은 쓰레기 값이 출력된다. 777이 나온 이유는 `fill_stack`의 프레임이 `make_value`의 프레임이 있던 자리를 다시 사용했기 때문이다.
 
 ```text
-make_value 실행 중                 반환 뒤 fill_stack 실행 중
+while make_value runs              after return, while fill_stack runs
 ┌─────────────────────┐            ┌─────────────────────┐
 │ main    p = ?       │            │ main    p = 0x...c8 ┼──┐
 ├─────────────────────┤            ├─────────────────────┤  │
-│ value = 42          │ ← 0x...c8  │ other = 777         │ ◄┘ 같은 자리를 재사용
+│ value = 42          │ ← 0x...c8  │ other = 777         │ ◄┘ same location reused
 └─────────────────────┘            └─────────────────────┘
 ```
 
@@ -218,27 +218,27 @@ void free(void *ptr);
 
 ```c
 int n = 5;
-int *arr = malloc(n * sizeof *arr);    // int 5개 크기의 블록 요청
+int *arr = malloc(n * sizeof *arr);    // request a block for 5 ints
 
-if (arr == NULL) {                     // 실패 검사
+if (arr == NULL) {                     // check for failure
     printf("allocation failed\n");
     return 1;
 }
 for (int i = 0; i < n; i++) {
-    arr[i] = (i + 1) * 10;             // 포인터를 배열처럼 사용
+    arr[i] = (i + 1) * 10;             // use the pointer like an array
 }
 printf("%d %d\n", arr[0], arr[4]);     // 10 50
 
-free(arr);                             // 블록 반환
-arr = NULL;                            // 해제된 주소를 지운다
+free(arr);                             // return the block
+arr = NULL;                            // erase the freed address
 ```
 
 `n * sizeof *arr`는 필요한 바이트 수이다. `sizeof *arr`는 `arr`이 가리키는 원소의 크기로, `sizeof`의 피연산자는 가변 길이 배열 타입이 아니면 평가되지 않으므로 초기화 전의 `arr`을 역참조하는 일이 없고, 나중에 `arr`의 타입이 바뀌어도 이 식은 고칠 필요가 없다. 포인터에 `arr[i]`를 쓸 수 있는 것은 [8장 2.2절](../Ch08_Pointers/Concepts_Lecture.ko.md#22-포인터를-배열처럼-사용)의 규칙이다.
 
 ```text
-스택                            힙
+stack                           heap
 ┌───────────────┐              ┌────┬────┬────┬────┬────┐
-│ arr = 0x...50 │ ───────────► │ 10 │ 20 │ 30 │ 40 │ 50 │  (20바이트 블록)
+│ arr = 0x...50 │ ───────────► │ 10 │ 20 │ 30 │ 40 │ 50 │  (20-byte block)
 │ n   = 5       │              └────┴────┴────┴────┴────┘
 └───────────────┘               0x...50
 ```
@@ -285,12 +285,12 @@ void *realloc(void *ptr, size_t size);
 `realloc`은 기존 블록을 해제하고 `size` 바이트의 새 블록을 돌려준다. 새 블록의 앞부분에는 기존 내용이 기존 크기와 새 크기 중 작은 쪽만큼 유지되고, 늘어난 부분은 불확정이다[1, 7.22.3.5절]. 구현은 블록을 제자리에서 늘려도 되고 다른 곳에 새 블록을 만들어 복사해도 된다[5].
 
 ```text
-제자리에서 늘린 경우 (주소 유지)         다른 곳으로 옮긴 경우 (주소 변경)
-ptr ─► ┌────┬────┬────┬────┐          ptr ─► ┌────┬────┐ (해제됨)
+extended in place (address kept)         moved elsewhere (address changed)
+ptr ─► ┌────┬────┬────┬────┐          ptr ─► ┌────┬────┐ (freed)
        │ 10 │ 20 │ ?  │ ?  │                 └────┴────┘
        └────┴────┴────┴────┘          new ─► ┌────┬────┬────┬────┐
-                                              │ 10 │ 20 │ ?  │ ?  │
-                                              └────┴────┴────┴────┘
+                                             │ 10 │ 20 │ ?  │ ?  │
+                                             └────┴────┴────┴────┘
 ```
 
 *그림 4. `realloc`이 블록을 제자리에서 늘리는 경우와 옮기는 경우*
@@ -302,10 +302,10 @@ ptr ─► ┌────┬────┬────┬────┐      
 ```c
 int *tmp = realloc(arr, new_count * sizeof *tmp);
 if (tmp == NULL) {
-    free(arr);              // 기존 블록은 아직 유효하다
+    free(arr);              // the old block is still valid
     return 1;
 }
-arr = tmp;                  // 성공했을 때만 갱신
+arr = tmp;                  // update only on success
 ```
 
 경계 사례는 다음과 같다. `realloc(NULL, size)`는 `malloc(size)`와 같다[1, 7.22.3.5절]. 성공하면 기존 포인터는 값이 같더라도 사용할 수 없다. `realloc(ptr, 0)`은 C17까지 구현 정의 동작이었고 널 포인터를 돌려주는지와 기존 블록을 해제하는지가 구현마다 달랐으며[6], C23에서는 정의되지 않은 동작이 되었다[4, 7.24.3.7절]. 크기가 0이 될 수 있으면 먼저 검사하여 `free`를 호출한다.
@@ -324,7 +324,7 @@ arr = tmp;                  // 성공했을 때만 갱신
 곱셈은 왼쪽에서 오른쪽으로 결합하므로, 마지막 행에서 `rows * cols`가 `int`의 범위를 넘으면 정의되지 않은 동작이다. `sizeof(int)`를 앞에 두면 모든 계산이 `size_t`로 이루어진다. `size_t`로 계산해도 값이 너무 크면 범위를 돌아 작아진다. `size_t`가 8바이트이고 `int`가 4바이트인 환경에서 `n = SIZE_MAX / 2 + 2`이면 `n * sizeof(int)`는 4가 되어, `malloc`은 성공하지만 `n`개의 원소가 있다고 믿고 접근하면 범위를 벗어난다. 곱하기 전에 나눗셈으로 검사하면 오버플로 없이 판단할 수 있다.
 
 ```c
-if (n > SIZE_MAX / sizeof *p) {     // n * sizeof *p의 오버플로 검사
+if (n > SIZE_MAX / sizeof *p) {     // does n * sizeof *p overflow?
     return NULL;
 }
 p = malloc(n * sizeof *p);
@@ -351,14 +351,14 @@ p = malloc(n * sizeof *p);
 일반적인 운영체제는 프로세스가 끝나면 메모리를 회수하므로 금방 끝나는 프로그램에서는 누수가 드러나지 않지만, 서버처럼 오래 실행되는 프로그램에서는 사용량이 계속 늘어난다. 누수는 주로 다음과 같이 일어난다.
 
 ```c
-// 잘못된 코드: 두 가지 메모리 누수
+// Incorrect code: two memory leaks
 void leak_examples(size_t n) {
     int *a = malloc(n);
     if (n > 100) {
-        return;               // 1. 이른 반환에서 해제를 잊었다
+        return;               // 1. early return forgets to free
     }
     int *b = malloc(n);
-    b = malloc(n);            // 2. 유일한 포인터를 덮어써 첫 블록을 잃었다
+    b = malloc(n);            // 2. overwriting the only pointer loses the first block
     free(a);
     free(b);
 }
@@ -392,11 +392,11 @@ previously allocated by thread T0 here:
 
 ```text
 int *q = p;           p ──┐
-                          ├──► [ 블록 ]
+                          ├──► [ block ]
                       q ──┘
 
 free(p); p = NULL;    p = NULL
-                      q ──────► [ 해제된 블록 ]   ← q는 여전히 댕글링 포인터
+                      q ──────► [ freed block ]   ← q is still a dangling pointer
 ```
 
 *그림 5. 같은 블록을 가리키던 두 번째 포인터가 해제 후 댕글링 포인터로 남은 상태*
@@ -412,7 +412,7 @@ free(p); p = NULL;    p = NULL
 할당한 범위 밖을 접근하는 오류는 [7장 3.3절](../Ch07_Arrays/Concepts_Lecture.ko.md#33-인덱스-범위-초과)의 인덱스 범위 초과와 같은 문제인데, 포인터만으로는 블록의 크기를 알 수 없으므로 찾기가 더 어렵다. 다음 반복문은 `i == n`일 때 범위를 넘어 쓴다.
 
 ```c
-// 잘못된 코드: 경계를 하나 넘어 쓴다
+// Incorrect code: writes one past the boundary
 int n = 5;
 int *a = malloc(n * sizeof *a);
 for (int i = 0; i <= n; i++) {
@@ -475,10 +475,10 @@ void *memmove(void *dest, const void *src, size_t n);
 두 함수 모두 `src`의 `n`바이트를 `dest`로 복사하고 `dest`를 돌려준다. `memcpy`는 두 영역이 겹치면 정의되지 않은 동작이고, `memmove`는 겹쳐도 올바르게 복사한다[1, 7.24.2절].
 
 ```text
-int a[6] = {1, 2, 3, 4, 5, 0};   목표: a[0..4]를 a[1..5]로 복사
-처음                 [ 1 ][ 2 ][ 3 ][ 4 ][ 5 ][ 0 ]
-memmove의 결과       [ 1 ][ 1 ][ 2 ][ 3 ][ 4 ][ 5 ]   ← 겹쳐도 원래 값을 복사
-앞에서부터 복사하면  [ 1 ][ 1 ][ 1 ][ 1 ][ 1 ][ 1 ]   ← 이미 덮어쓴 값을 다시 읽는다
+int a[6] = {1, 2, 3, 4, 5, 0};   goal: copy a[0..4] into a[1..5]
+initial              [ 1 ][ 2 ][ 3 ][ 4 ][ 5 ][ 0 ]
+result of memmove    [ 1 ][ 1 ][ 2 ][ 3 ][ 4 ][ 5 ]   ← original values copied despite overlap
+copying front first  [ 1 ][ 1 ][ 1 ][ 1 ][ 1 ][ 1 ]   ← rereads values already overwritten
 ```
 
 *그림 6. 겹치는 영역을 복사할 때 `memmove`의 결과와 앞에서부터 복사할 때의 문제*
@@ -509,7 +509,7 @@ printf("%d %d %d\n", a[0], a[1], a[2]);   // 0 0 0
 ```c
 int x = 256, y = 1;
 printf("%d\n", x > y);                                   // 1
-printf("%d\n", memcmp(&x, &y, sizeof x) > 0 ? 1 : -1);   // -1 (리틀 엔디언)
+printf("%d\n", memcmp(&x, &y, sizeof x) > 0 ? 1 : -1);   // -1 (little-endian)
 
 double p = 0.0, q = -0.0;
 printf("%d\n", p == q);                                  // 1
@@ -534,9 +534,9 @@ printf("%d\n", memcmp(&p, &q, sizeof p) == 0);           // 0
 
 ```c
 typedef struct {
-    int *data;          // 원소를 담는 블록
-    size_t size;        // 사용 중인 원소 수
-    size_t capacity;    // 블록이 담을 수 있는 원소 수
+    int *data;          // block holding the elements
+    size_t size;        // number of elements in use
+    size_t capacity;    // number of elements the block can hold
 } IntArray;
 
 int array_push(IntArray *v, int value) {
@@ -544,11 +544,11 @@ int array_push(IntArray *v, int value) {
         size_t new_capacity = (v->capacity == 0) ? 1 : v->capacity * 2;
 
         if (new_capacity > SIZE_MAX / sizeof *v->data) {
-            return 0;                       // 크기 계산에서 오버플로가 일어난다
+            return 0;                       // size calculation would overflow
         }
         int *tmp = realloc(v->data, new_capacity * sizeof *tmp);
         if (tmp == NULL) {
-            return 0;                       // v는 변하지 않았다
+            return 0;                       // v is unchanged
         }
         v->data = tmp;
         v->capacity = new_capacity;
@@ -583,7 +583,7 @@ size  513  capacity 1024  copies so far 1023
 
 ```c
 char *string_duplicate(const char *s) {
-    size_t bytes = strlen(s) + 1;       // 널 문자 몫으로 +1
+    size_t bytes = strlen(s) + 1;       // +1 for the null character
     char *copy = malloc(bytes);
 
     if (copy != NULL) {
@@ -617,7 +617,7 @@ int **matrix_alloc(size_t rows, size_t cols) {
     for (size_t r = 0; r < rows; r++) {
         m[r] = malloc(cols * sizeof *m[r]);
         if (m[r] == NULL) {
-            matrix_free(m, r);      // 이미 할당한 r개의 행만 해제
+            matrix_free(m, r);      // free only the r rows already allocated
             return NULL;
         }
     }
@@ -626,7 +626,7 @@ int **matrix_alloc(size_t rows, size_t cols) {
 ```
 
 ```text
-int **a      행 포인터 배열        각 행 (따로 할당)
+int **a      row pointer array     each row (allocated separately)
 ┌────┐       ┌──────┐             ┌───┬───┬───┐
 │  ──┼──────►│  ────┼────────────►│   │   │   │
 └────┘       ├──────┤             └───┴───┴───┘
@@ -644,15 +644,15 @@ int **a      행 포인터 배열        각 행 (따로 할당)
 다음 코드의 `rows`, `cols`는 `size_t`이다.
 
 ```c
-int *b = malloc(rows * cols * sizeof *b);    // 방법 2
+int *b = malloc(rows * cols * sizeof *b);    // method 2
 if (b != NULL) {
-    b[r * cols + j] = 12;                    // r행 j열
+    b[r * cols + j] = 12;                    // row r, column j
     free(b);
 }
 
-int (*c)[3] = malloc(rows * sizeof *c);      // 방법 3 (COLS가 3인 경우)
+int (*c)[3] = malloc(rows * sizeof *c);      // method 3 (with COLS equal to 3)
 if (c != NULL) {
-    c[1][2] = 12;                            // sizeof *c는 12
+    c[1][2] = 12;                            // sizeof *c is 12
     free(c);
 }
 ```
@@ -680,7 +680,7 @@ if (c != NULL) {
 ```c
 typedef struct node {
     int value;
-    struct node *next;   // 다음 노드의 주소
+    struct node *next;   // address of the next node
 } Node;
 ```
 
@@ -703,16 +703,16 @@ Node *push_front(Node *head, int value) {
     Node *n = malloc(sizeof *n);
 
     if (n == NULL) {
-        return head;           // 실패하면 리스트를 그대로 둔다
+        return head;           // on failure, leave the list unchanged
     }
     n->value = value;
-    n->next = head;            // 새 노드가 기존 첫 노드를 가리킨다
-    return n;                  // 새 노드가 첫 노드가 된다
+    n->next = head;            // the new node points to the old first node
+    return n;                  // the new node becomes the first node
 }
 
 void free_list(Node *head) {
     while (head != NULL) {
-        Node *next = head->next;   // free 전에 다음 주소를 저장
+        Node *next = head->next;   // save the next address before free
         free(head);
         head = next;
     }
@@ -765,7 +765,7 @@ pp                p                a
 C의 인수 전달은 항상 값에 의한 전달이므로, 함수가 호출자의 포인터를 바꾸려면 포인터의 주소를 받아야 한다([8장 3.1절](../Ch08_Pointers/Concepts_Lecture.ko.md#31-값에-의한-전달-vs-주소에-의한-전달)과 같은 원리).
 
 ```c
-// 잘못된 코드: 지역 복사본만 바뀌고 할당한 블록의 주소를 잃는다
+// Incorrect code: changes only a local copy and loses the address of the block
 void alloc_wrong(int *p, size_t n) {
     p = malloc(n * sizeof *p);
 }
@@ -776,7 +776,7 @@ int alloc_right(int **out, size_t n) {
     if (p == NULL) {
         return 0;
     }
-    *out = p;                 // 호출자의 포인터를 바꾼다
+    *out = p;                 // change the caller's pointer
     return 1;
 }
 ```
@@ -792,7 +792,7 @@ int remove_value(Node **head, int value) {
     while (*link != NULL) {
         if ((*link)->value == value) {
             Node *victim = *link;
-            *link = victim->next;   // 앞 칸이 다음 노드를 가리키게 한다
+            *link = victim->next;   // make the previous slot point to the next node
             free(victim);
             return 1;
         }
@@ -805,9 +805,9 @@ int remove_value(Node **head, int value) {
 ```text
 head ──► [40|•] ──► [30|•] ──► [20|•] ──► [10|•] ──► NULL
                         ▲
-                        └─ 20을 지울 때 link는 이 노드의 next 칸을 가리킨다
+                        └─ when removing 20, link points to this node's next slot
 
-*link = victim->next;  이후
+after *link = victim->next;
 head ──► [40|•] ──► [30|•] ──────────────► [10|•] ──► NULL
 ```
 
@@ -825,19 +825,19 @@ head ──► [40|•] ──► [30|•] ────────────�
 
 ```c
 int m[2][3] = {{1, 2, 3}, {4, 5, 6}};
-int *a[3];       // 포인터 배열: int*가 3개인 배열
-int (*p)[3] = m; // 배열 포인터: int 3개짜리 배열을 가리키는 포인터
+int *a[3];       // array of pointers: an array of 3 int*
+int (*p)[3] = m; // pointer to an array: pointer to an array of 3 ints
 
 printf("%zu %zu %zu\n", sizeof a, sizeof p, sizeof *p);   // 24 8 12
 printf("%d\n", p[1][2]);                                  // 6
 ```
 
 ```text
-포인터 배열 int *a[3]              배열 포인터 int (*p)[3]
+array of pointers int *a[3]        pointer to an array int (*p)[3]
 a ┌──────┐                        p ┌──────┐     ┌────┬────┬────┐
   │  ────┼──► int                   │  ────┼────►│    │    │    │
   ├──────┤                          └──────┘     └────┴────┴────┘
-  │  ────┼──► int                                 p + 1은 12바이트 뒤
+  │  ────┼──► int                                 p + 1 is 12 bytes later
   ├──────┤
   │  ────┼──► int
   └──────┘
@@ -850,7 +850,7 @@ a ┌──────┐                        p ┌──────┐    
 > **주의:** `int **`와 `int [][3]`는 다른 데이터 타입이다. `int **`로 받으려면 메모리에 실제로 포인터 배열이 있어야 하는데, `int m[2][3]`에는 정수만 연속으로 있고 포인터가 없다.
 
 ```c
-// 잘못된 코드: 2차원 배열을 int **로 다룬다
+// Incorrect code: treats a two-dimensional array as int **
 int m[2][3] = {{1, 2, 3}, {4, 5, 6}};
 int **q = (int **)m;
 printf("%d\n", q[1][0]);
@@ -894,10 +894,10 @@ int mul(int x, int y) { return x * y; }
 
 typedef int (*BinaryOp)(int, int);
 
-int (*op)(int, int) = add;   // op는 (int, int)를 받아 int를 반환하는 함수의 포인터
+int (*op)(int, int) = add;   // op points to a function taking (int, int) and returning int
 printf("%d %d\n", op(3, 4), (*op)(3, 4));    // 7 7
 
-BinaryOp table[] = {add, sub, mul};          // 디스패치 테이블
+BinaryOp table[] = {add, sub, mul};          // dispatch table
 printf("%d\n", table[2](7, 3));              // 21
 ```
 
@@ -952,14 +952,14 @@ C의 선언은 변수를 사용하는 수식의 형태를 따른다[26]. 복잡�
 
 ```text
 int ( * ( * f ) ( void ) ) [3]
-            ^                  시작: f는
-          ^                    왼쪽: 포인터이다 (괄호 안을 먼저 읽는다)
-                ^^^^^^^^       오른쪽: (void)를 받는 함수의
-      ^                        왼쪽: 포인터를 반환한다
-                           ^^^ 오른쪽: int 3개 배열을 가리키는
-^^^                            왼쪽: int
+            ^                  start: f is
+          ^                    left: a pointer (read inside parentheses first)
+                ^^^^^^^^       right: to a function taking (void)
+      ^                        left: returning a pointer
+                           ^^^ right: to an array of 3
+^^^                            left: int
 
-결과: f는 (void)를 받아 int [3]을 가리키는 포인터를 반환하는 함수의 포인터이다
+result: f is a pointer to a function taking (void) and returning a pointer to int [3]
 ```
 
 *그림 13. `int (*(*f)(void))[3]`을 읽는 순서*
@@ -1010,7 +1010,7 @@ qsort(values, count, sizeof values[0], compare_int);     // -7 0 3 19 42 42
 
 ```c
 int compare_string(const void *a, const void *b) {
-    const char *const *x = a;     // 원소가 char *이므로 받는 것은 char **
+    const char *const *x = a;     // the elements are char *, so char ** is received
     const char *const *y = b;
 
     return strcmp(*x, *y);
@@ -1020,8 +1020,8 @@ int compare_string(const void *a, const void *b) {
 이름과 달리 표준은 `qsort`가 퀵 정렬일 것을 요구하지 않으며, 수행 시간과 안정성(같다고 비교된 원소의 입력 순서를 유지하는 성질)도 보장하지 않는다[27]. 같다고 비교된 원소의 순서는 미지정이다[1, 7.22.5.2절]. macOS에서 점수만으로 정렬하면 다음과 같이 같은 점수 안에서 입력 순서가 유지되지 않는다.
 
 ```text
-입력(점수+글자): 3a 1b 3c 2d 1e 3f 2g 1h 3i 2j
-qsort 결과:      1h 1e 1b 2g 2d 2j 3f 3c 3a 3i
+input (score+letter): 3a 1b 3c 2d 1e 3f 2g 1h 3i 2j
+qsort result:         1h 1e 1b 2g 2d 2j 3f 3c 3a 3i
 ```
 
 ### 7.2 `bsearch`
@@ -1053,9 +1053,9 @@ int compare_student(const void *a, const void *b) {
     const Student *y = b;
 
     if (x->score != y->score) {
-        return (x->score < y->score) - (x->score > y->score);   // 점수 내림차순
+        return (x->score < y->score) - (x->score > y->score);   // score, descending
     }
-    return strcmp(x->name, y->name);                            // 이름 오름차순
+    return strcmp(x->name, y->name);                            // name, ascending
 }
 ```
 

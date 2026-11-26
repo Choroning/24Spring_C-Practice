@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lecture.md) | [한국어](Concepts_Lecture.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 9
 
@@ -77,9 +77,9 @@
 C에서 **문자열**은 **널 종료 문자 배열(null-terminated character array)** 로, `'\0'` (ASCII 0)으로 끝나는 `char` 값의 연속이다. 문자열의 끝을 나타내는 널 문자를 함께 저장하므로 널 종료 문자열이라고 한다.
 
 ```text
-문자:   'A'       →  [ 65 ]                           (1바이트)
-문자열:  "A"       →  [ 65 ][ 0 ]                      (2바이트)
-문자열:  "Hello"   →  [ H ][ e ][ l ][ l ][ o ][ \0 ]  (6바이트)
+Character:  'A'      →  [ 65 ]                           (1 byte)
+String:     "A"      →  [ 65 ][ 0 ]                      (2 bytes)
+String:     "Hello"  →  [ H ][ e ][ l ][ l ][ o ][ \0 ]  (6 bytes)
 ```
 
 *그림 1. 문자 `'A'`와 문자열 `"A"`, `"Hello"`의 저장 형태*
@@ -96,30 +96,30 @@ C에서 **문자열**은 **널 종료 문자 배열(null-terminated character ar
 문자 배열은 문자열 길이에 `'\0'`를 위한 **1바이트를 더한** 크기여야 한다. 즉 배열의 크기는 저장할 문자열의 길이 + 1 이상으로 지정한다.
 
 ```c
-// 크기 명시: 나머지 위치는 '\0'으로 채워짐
-char str1[10] = "abc";    // 저장: 'a','b','c','\0','\0',...,'\0' (크기 10)
+// Explicit size: remaining positions filled with '\0'
+char str1[10] = "abc";    // stores: 'a','b','c','\0','\0',...,'\0' (size 10)
 
-// 자동 크기: 컴파일러가 초기화 값으로 크기 결정
-char str2[] = "abc";      // 저장: 'a','b','c','\0' (크기 4)
+// Auto-sized: compiler determines size from initializer
+char str2[] = "abc";      // stores: 'a','b','c','\0' (size 4)
 
-// 문자 리스트로 초기화 ('\0'을 수동으로 포함해야 함)
-char str3[] = {'a', 'b', 'c', '\0'};  // str2와 동일
+// Initialized with character list (must include '\0' manually)
+char str3[] = {'a', 'b', 'c', '\0'};  // same as str2
 
-// '\0' 없이 문자 리스트로 초기화: 유효한 문자열이 아님!
-char str4[] = {'a', 'b', 'c'};        // 크기 3, 널 종료 없음
+// Initialized with character list WITHOUT '\0': NOT a valid string!
+char str4[] = {'a', 'b', 'c'};        // size 3, no null terminator
 ```
 
 초기값을 지정하면 배열 크기를 생략할 수 있으며, 이때 문자열의 길이 + 1 크기로 배열이 할당된다. 문자 배열 전체를 널 문자로 초기화하려면 널 문자 하나로 이루어진 **널 문자열**(`""`)로 초기화한다.
 
 ```c
-char str5[10] = "";   // 10바이트 모두 '\0'
+char str5[10] = "";   // all 10 bytes are '\0'
 ```
 
 **`char str[10] = "abc";`의 메모리 배치:**
 
 ```text
-인덱스:   [0]  [1]  [2]   [3]  [4]  [5]  [6]  [7]  [8]  [9]
-값:      'a'  'b'  'c'  '\0' '\0' '\0' '\0' '\0' '\0' '\0'
+Index:   [0]  [1]  [2]   [3]  [4]  [5]  [6]  [7]  [8]  [9]
+Value:   'a'  'b'  'c'  '\0' '\0' '\0' '\0' '\0' '\0' '\0'
 ```
 
 *그림 2. `char str[10] = "abc";`의 메모리 배치*
@@ -127,8 +127,8 @@ char str5[10] = "";   // 10바이트 모두 '\0'
 > **주의:** 문자열 길이가 배열 크기와 같거나 초과하면, `'\0'`이 저장되지 않는다. 이렇게 하면 유효한 문자열이 **아닌** 문자 배열이 만들어져 모든 문자열 함수에서 버그가 발생한다. 문자열 길이가 배열 크기와 같으면 C는 널 문자 없이 초기화하고, 배열 크기보다 길면 컴파일러가 경고하거나 오류를 낸다.
 
 ```c
-char danger[3] = "abc";  // 저장: 'a','b','c', '\0' 없음!
-printf("%s", danger);     // 미정의 동작: 배열 경계를 넘어서 읽음
+char danger[3] = "abc";  // stores: 'a','b','c', NO '\0'!
+printf("%s", danger);     // undefined behavior: reads past array boundary
 ```
 
 ### 1.3 사용법
@@ -139,7 +139,7 @@ printf("%s", danger);     // 미정의 동작: 배열 경계를 넘어서 읽음
 char str[] = "Hello";
 printf("%c\n", str[0]);   // H
 printf("%c\n", str[4]);   // o
-str[0] = 'h';             // OK: 개별 문자 수정 가능
+str[0] = 'h';             // OK: modify individual character
 printf("%s\n", str);      // hello
 ```
 
@@ -147,22 +147,22 @@ printf("%s\n", str);      // hello
 
 ```c
 char str[] = "Hello";
-printf("%s\n", str);      // '\0'까지 출력: Hello
-printf("%c\n", str[1]);   // 한 문자 출력: e
+printf("%s\n", str);      // prints until '\0': Hello
+printf("%c\n", str[1]);   // prints one character: e
 ```
 
 **선언 후 문자열 대입 불가:**
 
 ```c
 char str[10];
-str = "Hello";   // 오류: 배열 이름은 상수 포인터이므로 재대입 불가
+str = "Hello";   // ERROR: array name is a constant pointer, cannot reassign
 ```
 
 배열 이름 `str`은 배열의 시작 주소이며 변경할 수 없는 **상수 포인터**처럼 동작한다. 가리키는 대상을 바꿀 수 없으므로 대신 `strcpy()`를 사용한다.
 
 ```c
 char str[10];
-strcpy(str, "Hello");  // 배열에 문자열을 복사하는 올바른 방법
+strcpy(str, "Hello");  // correct way to copy a string into an array
 ```
 
 개별 문자는 수정할 수 있지만(`str[0] = 'X'`), `=`로 전체 문자열을 교체할 수는 없다. 선언 후 문자열 전체를 대입하려면 반드시 `strcpy()`를 사용한다.
@@ -175,13 +175,13 @@ strcpy(str, "Hello");  // 배열에 문자열을 복사하는 올바른 방법
 char s[20] = "Hello, C";
 int n = 0, i, upper = 0;
 
-while (s[n] != '\0')                    // 널 문자를 만날 때까지
+while (s[n] != '\0')                    // until the null character
     n++;
 printf("length = %d\n", n);
 
 for (i = 0; s[i] != '\0'; i++) {
     if (s[i] >= 'a' && s[i] <= 'z')
-        s[i] = s[i] - 'a' + 'A';        // 소문자를 대문자로
+        s[i] = s[i] - 'a' + 'A';        // lowercase to uppercase
     else if (s[i] >= 'A' && s[i] <= 'Z')
         upper++;
 }
@@ -225,8 +225,8 @@ size_t len = strlen(str);   // 5
 
 ```c
 char str[20] = "Hello";
-printf("strlen: %zu\n", strlen(str));   // 5  (문자열 길이)
-printf("sizeof: %zu\n", sizeof(str));   // 20 (배열 크기, 바이트 단위)
+printf("strlen: %zu\n", strlen(str));   // 5  (string length)
+printf("sizeof: %zu\n", sizeof(str));   // 20 (array size in bytes)
 ```
 
 > **핵심:** `strlen`은 실행 중에 `'\0'`을 찾을 때까지 탐색한다(O(n)). `sizeof`는 컴파일할 때 결정된다(O(1)). `strlen`의 반환 타입은 `size_t`(부호 없는 정수)이다.
@@ -238,7 +238,7 @@ printf("sizeof: %zu\n", sizeof(str));   // 20 (배열 크기, 바이트 단위)
 ```c
 char src[] = "Hello";
 char dest[20];
-strcpy(dest, src);         // dest는 이제 "Hello"
+strcpy(dest, src);         // dest is now "Hello"
 ```
 
 **`strncpy(dest, src, n)`** 는 최대 `n`개의 문자를 복사한다. `src`가 `n`보다 짧으면 나머지를 `'\0'`으로 채운다. `src`가 더 길면 **`'\0'`이 추가되지 않는다**.
@@ -246,7 +246,7 @@ strcpy(dest, src);         // dest는 이제 "Hello"
 ```c
 char dest[10];
 strncpy(dest, "Hello, World!", 9);
-dest[9] = '\0';   // strncpy 후에는 항상 수동으로 널 종료를 추가하라!
+dest[9] = '\0';   // always manually null-terminate after strncpy!
 ```
 
 > **주의:** `strcpy`는 **경계 검사를 하지 않는다**. `dest`가 너무 작으면 할당받은 메모리 범위를 넘어서 값을 저장하여 메모리를 변조하는 **버퍼 오버플로**(버퍼 오버런)가 발생하며, 이는 C에서 가장 위험한 버그 중 하나이다. 항상 `dest`의 크기가 충분한지 확인한다.
@@ -266,10 +266,10 @@ dest[9] = '\0';   // strncpy 후에는 항상 수동으로 널 종료를 추가�
 *표 3. `strcmp`의 반환 값*
 
 ```c
-strcmp("abc", "abc");   // 0 반환 (같음)
-strcmp("abd", "abc");   // > 0 반환 ('d' > 'c')
-strcmp("abc", "abd");   // < 0 반환 ('c' < 'd')
-strcmp("abc", "abcd");  // < 0 반환 ('\0' < 'd')
+strcmp("abc", "abc");   // returns 0  (equal)
+strcmp("abd", "abc");   // returns > 0  ('d' > 'c')
+strcmp("abc", "abd");   // returns < 0  ('c' < 'd')
+strcmp("abc", "abcd");  // returns < 0  ('\0' < 'd')
 ```
 
 표준은 반환값의 부호만 정하므로, 0이 아닌 반환값이 반드시 -1이나 1인 것은 아니다. 결과는 `strcmp(...) < 0`처럼 부호로 판단한다.
@@ -277,8 +277,8 @@ strcmp("abc", "abcd");  // < 0 반환 ('\0' < 'd')
 **`strncmp(s1, s2, n)`** 은 처음 `n`개 문자만 비교한다.
 
 ```c
-strncmp("Hello", "Help", 3);   // 0 반환 (처음 3문자가 같음)
-strncmp("Hello", "Help", 4);   // < 0 반환 ('l' < 'p')
+strncmp("Hello", "Help", 3);   // returns 0  (first 3 chars are equal)
+strncmp("Hello", "Help", 4);   // returns < 0  ('l' < 'p')
 ```
 
 > **주의:** 문자열 비교에 `==`를 사용하지 않는다. `s1 == s2`는 **포인터 주소**를 비교하는 것이지, 문자열 내용을 비교하는 것이 아니다. 반드시 `strcmp`를 사용한다.
@@ -297,7 +297,7 @@ strcat(dest, "World!");   // "Hello, World!"
 
 ```c
 char dest[20] = "Hello";
-strncat(dest, ", World!!!!!", 7);  // "Hello, World" (7문자 + '\0' 추가)
+strncat(dest, ", World!!!!!", 7);  // "Hello, World" (appends 7 chars + '\0')
 ```
 
 > **주의:** `dest`에는 기존 문자열 + 이어붙일 문자열 + `'\0'`을 위한 **충분한 공간**이 있어야 한다. `strcat`은 경계 검사를 수행하지 않으므로 버퍼 오버런의 위험이 있다.
@@ -306,7 +306,7 @@ strncat(dest, ", World!!!!!", 7);  // "Hello, World" (7문자 + '\0' 추가)
 
 **`strchr(str, ch)`** 는 `str`에서 문자 `ch`의 **첫 번째 위치**를 찾는다. 찾은 문자에 대한 포인터를 반환하고, 없으면 `NULL`을 반환한다.
 
-```c
+```c wide-ok
 char str[] = "Hello, World!";
 char *p = strchr(str, 'o');
 if (p != NULL) {
@@ -317,7 +317,7 @@ if (p != NULL) {
 
 **`strstr(str, substr)`** 는 `str`에서 부분 문자열 `substr`의 **첫 번째 위치**를 찾는다. 일치하는 위치의 포인터를 반환하고, 없으면 `NULL`을 반환한다. 예를 들어 파일 이름에서 `".txt"`를 찾아 텍스트 파일인지 판단할 수 있다.
 
-```c
+```c wide-ok
 char str[] = "Hello, World!";
 char *p = strstr(str, "World");
 if (p != NULL) {
@@ -342,7 +342,7 @@ while (token != NULL) {
     printf("%s\n", token);
     token = strtok(NULL, ",");
 }
-// 출력:
+// Output:
 // Alice
 // Bob
 // Charlie
@@ -388,7 +388,7 @@ printf("%d\n", strncmp("apple", "apricot", 2) == 0);
 ```c
 char a[20] = "banana", b[20] = "apple", temp[20];
 
-if (strcmp(a, b) > 0) {         // a가 b보다 뒤에 오면
+if (strcmp(a, b) > 0) {         // if a comes after b
     strcpy(temp, a);
     strcpy(a, b);
     strcpy(b, temp);
@@ -411,23 +411,23 @@ size_t my_strlen(const char *s)
 {
     const char *p = s;
 
-    while (*p != '\0')          // 널 문자까지 p를 옮긴다
+    while (*p != '\0')          // move p up to the null character
         p++;
-    return (size_t)(p - s);     // 옮긴 칸 수가 길이
+    return (size_t)(p - s);     // the number of slots moved is the length
 }
 
 char *my_strcpy(char *dest, const char *src)
 {
     char *d = dest;
 
-    while ((*d++ = *src++) != '\0')     // 한 문자씩 복사, 널 문자까지
+    while ((*d++ = *src++) != '\0')     // copy one character at a time, through the null
         ;
     return dest;
 }
 
 char *my_strcat(char *dest, const char *src)
 {
-    my_strcpy(dest + my_strlen(dest), src);     // dest의 널 문자 자리부터 복사
+    my_strcpy(dest + my_strlen(dest), src);     // copy from the position of dest's null
     return dest;
 }
 
@@ -476,13 +476,13 @@ database 8
 
 *표 5. `<ctype.h>`의 문자 분류 함수*
 
-```c
+```c wide-ok
 #include <ctype.h>
 
 char c = 'A';
 if (isalpha(c))  printf("영문자\n");   // 영문자
 if (isupper(c))  printf("대문자\n");   // 대문자
-if (isdigit(c))  printf("숫자\n");     // (출력 안 됨)
+if (isdigit(c))  printf("숫자\n");     // (not printed)
 ```
 
 > **주의:** 이 함수들의 인자는 `unsigned char`로 나타낼 수 있는 값이거나 `EOF`여야 한다. `char`가 부호 있는 형인 시스템에서 한글처럼 ASCII가 아닌 바이트는 음수가 되므로, `isspace((unsigned char)str[i])`처럼 `unsigned char`로 변환하여 넘긴다.
@@ -499,7 +499,7 @@ if (isdigit(c))  printf("숫자\n");     // (출력 안 됨)
 ```c
 printf("%c\n", toupper('a'));   // A
 printf("%c\n", tolower('Z'));   // z
-printf("%c\n", toupper('1'));   // 1 (영문자가 아니면 변환 없음)
+printf("%c\n", toupper('1'));   // 1 (non-letter unchanged)
 ```
 
 **문자열 전체를 대문자로 변환:**
@@ -526,10 +526,10 @@ printf("%s\n", str);   // HELLO, WORLD!
 
 **`scanf("%s", str)`** 는 입력 버퍼에서 **공백 문자**(스페이스, 탭, 개행)를 만날 때까지 문자를 읽는다. 배열 이름이 배열의 시작 주소로 변환되므로 `&`가 필요 없다.
 
-```c
+```c wide-ok
 char name[20];
 printf("이름 입력: ");
-scanf("%s", name);          // 한 단어만 읽음
+scanf("%s", name);          // reads one word only
 printf("안녕하세요, %s!\n", name);
 ```
 
@@ -548,11 +548,11 @@ printf("안녕하세요, %s!\n", name);
 
 빈칸을 포함한 문자열을 한 줄 입력받으려면 `fgets`나 `gets_s`를 이용한다. **`fgets(str, count, stdin)`** 는 최대 `count - 1`개의 문자 또는 개행 문자까지(둘 중 먼저 오는 것까지) 읽는다. 저장된 문자열에 개행 문자 `'\n'`이 **포함**된다.
 
-```c
+```c wide-ok
 char line[100];
 printf("한 줄 입력: ");
 fgets(line, 100, stdin);
-// 사용자가 "Hello World\n"을 입력하면, line에는 "Hello World\n\0"이 저장됨
+// If user types "Hello World\n", line contains "Hello World\n\0"
 ```
 
 **끝의 개행 문자 제거:**
@@ -570,7 +570,7 @@ if (len > 0 && line[len - 1] == '\n') {
 
 ```c
 char line[100];
-gets_s(line, 100);   // '\n' 없이 줄을 읽음
+gets_s(line, 100);   // reads line without '\n'
 ```
 
 | 함수 | 읽는 범위 | `'\n'` 포함 여부 | 버퍼 오버플로 방지 |
@@ -591,8 +591,8 @@ gets_s(line, 100);   // '\n' 없이 줄을 읽음
 
 ```c
 char str[] = "Hello, World!";
-puts(str);    // 출력: Hello, World!\n
-// 다음과 동일: printf("%s\n", str);
+puts(str);    // prints: Hello, World!\n
+// equivalent to: printf("%s\n", str);
 ```
 
 ### 4.4 문자열 입력의 흔한 문제
@@ -633,10 +633,10 @@ age = 21, line = [
 
 ```c
 scanf("%d", &age);
-while ((c = getchar()) != '\n' && c != EOF)     // 줄의 나머지를 버린다
+while ((c = getchar()) != '\n' && c != EOF)     // discard the rest of the line
     ;
 fgets(line, sizeof(line), stdin);
-line[strcspn(line, "\n")] = '\0';               // 줄 끝의 '\n'을 지운다
+line[strcspn(line, "\n")] = '\0';               // remove the '\n' at the end of the line
 ```
 
 ```text
@@ -674,8 +674,8 @@ char s3[] = "99abc";
 
 int n = atoi(s1);       // 123
 double d = atof(s2);    // 3.14
-int m = atoi(s3);       // 99 (숫자가 아닌 첫 문자에서 멈춤)
-int z = atoi("abc");    // 0  (유효한 숫자 없음)
+int m = atoi(s3);       // 99 (stops at first non-numeric character)
+int z = atoi("abc");    // 0  (no valid number found)
 ```
 
 > **핵심:** `atoi`, `atof`, `atol`은 앞의 공백을 건너뛰고, 가능한 한 많은 유효 문자를 읽은 후, 유효하지 않은 첫 문자에서 멈춘다. 유효한 변환이 불가능하면 `0`을 반환한다.
@@ -684,7 +684,7 @@ int z = atoi("abc");    // 0  (유효한 숫자 없음)
 
 **`sscanf(str, format, ...)`** 는 (표준 입력 대신) **문자열로부터** 서식에 맞는 데이터를 읽는다.
 
-```c
+```c wide-ok
 char data[] = "Alice 25 3.85";
 char name[20];
 int age;
@@ -692,7 +692,7 @@ double gpa;
 
 sscanf(data, "%s %d %lf", name, &age, &gpa);
 printf("이름: %s, 나이: %d, 학점: %.2f\n", name, age, gpa);
-// 이름: Alice, 나이: 25, 학점: 3.85
+// Name: Alice, Age: 25, GPA: 3.85
 ```
 
 **`sprintf(str, format, ...)`** 는 (표준 출력 대신) **문자열에** 서식화된 데이터를 쓴다.
@@ -719,17 +719,17 @@ printf("%s\n", result);   // x = 42, pi = 3.14
 **문자열 포인터**는 `char*`형의 포인터로, `char`형 변수나 `char`형 배열의 원소를 가리킬 수 있다. `char*` 포인터는 **읽기 전용 메모리**에 저장된 문자열 리터럴을 가리킬 수도 있다. 문자열 리터럴은 텍스트 세그먼트(문자열 테이블)라는 변경할 수 없는 메모리 영역에 보관되며, 수식에서 문자열 리터럴의 값은 그 주소이다.
 
 ```c
-char *p = "Hello";   // p는 문자열 리터럴을 가리킴
+char *p = "Hello";   // p points to a string literal
 printf("%s\n", p);   // Hello
 ```
 
 **메모리 배치:**
 
 ```text
-읽기 전용 메모리:  [ H ][ e ][ l ][ l ][ o ][ \0 ]
-                ▲
-                │
-       p ───────┘
+Read-only memory:  [ H ][ e ][ l ][ l ][ o ][ \0 ]
+                     ▲
+                     │
+            p ───────┘
 ```
 
 *그림 3. 문자열 리터럴을 가리키는 `char*` 포인터 p*
@@ -738,23 +738,23 @@ printf("%s\n", p);   // Hello
 
 ```c
 char *p = "Hello";
-p[0] = 'h';      // 미정의 동작! 문자열 리터럴은 읽기 전용이다.
+p[0] = 'h';      // UNDEFINED BEHAVIOR! String literals are read-only.
 ```
 
 **수정 가능한 사본**을 만드는 `char` 배열과 비교한다.
 
 ```c
 char arr[] = "Hello";
-arr[0] = 'h';     // OK: arr은 수정 가능한 사본
+arr[0] = 'h';     // OK: arr is a modifiable copy
 ```
 
 문자열 포인터에 다른 문자열 리터럴을 대입하면 포인터가 가리키는 대상만 달라진다. `char*`형 포인터는 주로 문자 배열을 가리키는 데 사용하며, 이때 포인터가 가리키는 배열의 내용을 변경할 수 있다. 배열을 직접 쓰지 않고 포인터를 쓰는 이유는 포인터를 배열의 특정 위치로 옮겨 가면서 문자열을 처리할 수 있기 때문이다.
 
 ```c
 char str[] = "hello world";
-char *p = strchr(str, ' ');   // 공백 문자의 주소
+char *p = strchr(str, ' ');   // address of the space character
 if (p != NULL) {
-    p++;                      // 공백 다음 문자를 가리킴
+    p++;                      // point to the character after the space
     printf("%s\n", p);        // world
 }
 ```
@@ -765,8 +765,8 @@ if (p != NULL) {
 
 ```c
 const char *msg = "Hello";
-msg[0] = 'h';    // 컴파일 오류: const 데이터를 수정할 수 없음
-msg = "World";   // OK: 포인터가 가리키는 대상을 변경하는 것은 가능
+msg[0] = 'h';    // COMPILE ERROR: cannot modify const data
+msg = "World";   // OK: can change what the pointer points to
 ```
 
 ### 6.3 사용 지침
@@ -781,13 +781,13 @@ msg = "World";   // OK: 포인터가 가리키는 대상을 변경하는 것은 
 *표 10. 용도에 따른 문자열 선언*
 
 ```c
-// 수정 가능한 문자열 (배열: 리터럴을 복사)
+// Mutable string (array: copies the literal)
 char greeting[] = "Hello";
 greeting[0] = 'h';             // OK
 
-// 수정 불가능한 참조 (포인터: 리터럴을 가리킴)
+// Immutable reference (pointer: points to literal)
 const char *message = "Hello";
-// message[0] = 'h';           // 컴파일 오류
+// message[0] = 'h';           // compile error
 ```
 
 문자열 내용을 변경해야 하면 `char[]`를 사용하고, 읽기 또는 전달만 필요하면 `const char*`를 사용한다. 사용자로부터 입력받거나 변경할 수 있는 문자열은 문자 배열에 저장하고, 실행 중에 변경되지 않는 문자열은 문자열 리터럴로 나타낸다. `char*` 포인터는 변경할 수 있는 문자열(문자 배열)을 가리킬 때만 쓰고, 문자열 리터럴을 가리키거나 문자 배열을 읽기 전용으로 접근할 때는 `const char*` 포인터를 쓴다.
@@ -805,10 +805,10 @@ int count_space(const char *s)
 {
     int count = 0;
 
-    while (*s != '\0') {        // s가 가리키는 문자가 널 문자가 아닌 동안
+    while (*s != '\0') {        // while the character s points to is not null
         if (*s == ' ')
             count++;
-        s++;                    // 다음 문자로 이동
+        s++;                    // move to the next character
     }
     return count;
 }
@@ -818,9 +818,9 @@ void reverse(char *s)
     int i = 0, j = 0;
     char t;
 
-    while (s[j] != '\0')        // j를 널 문자의 위치까지 옮긴다
+    while (s[j] != '\0')        // move j to the position of the null character
         j++;
-    j--;                        // 마지막 문자의 위치
+    j--;                        // position of the last character
     while (i < j) {
         t = s[i];
         s[i] = s[j];
@@ -877,14 +877,14 @@ jello world
 ```
 
 ```text
-지역 변수 영역 (0x16f...)                  문자열 상수 영역 (0x100...)
+local variable area (0x16f...)             string constant area (0x100...)
 ┌────────────────────────────┐           ┌────────────────────────────┐
 │ arr: h  e  l  l  o  \0     │           │ "hello\0"  @0x1000e0590    │
 ├────────────────────────────┤           └────────────────────────────┘
 │ ptr: 0x1000e0590 ──────────┼─────────────────▲
 └────────────────────────────┘
-arr: 6바이트 배열, 수정 가능               상수: 읽기 전용으로 쓴다
-ptr: 8바이트 주소
+arr: 6-byte array, modifiable              constant: used as read-only
+ptr: 8-byte address
 ```
 
 *그림 4. char 배열과 char 포인터가 놓이는 메모리 영역*
@@ -916,9 +916,9 @@ char names[3][20] = {
 **메모리 배치 (각 행은 20바이트):**
 
 ```text
-names[0]: [ A ][ l ][ i ][ c ][ e ][ \0 ][ \0 ]...[ \0 ]  (20바이트)
-names[1]: [ B ][ o ][ b ][ \0 ][ \0 ][ \0 ][ \0 ]...[ \0 ]  (20바이트)
-names[2]: [ C ][ h ][ a ][ r ][ l ][ i ][ e ][ \0 ]...[ \0 ]  (20바이트)
+names[0]: [ A ][ l ][ i ][ c ][ e ][ \0 ][ \0 ]...[ \0 ]  (20 bytes)
+names[1]: [ B ][ o ][ b ][ \0 ][ \0 ][ \0 ][ \0 ]...[ \0 ]  (20 bytes)
+names[2]: [ C ][ h ][ a ][ r ][ l ][ i ][ e ][ \0 ]...[ \0 ]  (20 bytes)
 ```
 
 *그림 5. `char names[3][20]`의 메모리 배치*
@@ -926,13 +926,13 @@ names[2]: [ C ][ h ][ a ][ r ][ l ][ i ][ e ][ \0 ]...[ \0 ]  (20바이트)
 각 문자열에는 행 인덱스만 써서 `names[i]`로 접근하고, `i`번째 문자열의 `j`번째 문자에는 `names[i][j]`처럼 행 인덱스와 열 인덱스를 모두 써서 접근한다.
 
 ```c
-// 각 이름 접근 및 출력
+// Access and print each name
 for (int i = 0; i < 3; i++) {
     printf("%s\n", names[i]);
 }
 
-// 이름 수정
-strcpy(names[1], "Bobby");   // OK: 각 행은 수정 가능한 char 배열
+// Modify a name
+strcpy(names[1], "Bobby");   // OK: each row is a mutable char array
 ```
 
 열 크기(20)는 **가장 긴 문자열 + 1** 이상이어야 하며, 모든 문자열이 이 고정된 열 크기 안에 들어가야 한다. 짧은 문자열은 나머지 공간을 낭비한다.
@@ -952,24 +952,24 @@ const char *names[] = {
 **메모리 배치 (읽기 전용 리터럴을 가리키는 포인터):**
 
 ```text
-names[0] ──► "Alice\0"    (읽기 전용 메모리에 6바이트)
-names[1] ──► "Bob\0"      (읽기 전용 메모리에 4바이트)
-names[2] ──► "Charlie\0"  (읽기 전용 메모리에 8바이트)
+names[0] ──► "Alice\0"    (6 bytes in read-only memory)
+names[1] ──► "Bob\0"      (4 bytes in read-only memory)
+names[2] ──► "Charlie\0"  (8 bytes in read-only memory)
 ```
 
 *그림 6. 문자열 리터럴을 가리키는 포인터 배열 names*
 
 ```c
-// 접근 및 출력
+// Access and print
 for (int i = 0; i < 3; i++) {
     printf("%s\n", names[i]);
 }
 
-// 포인터가 가리키는 문자열을 변경할 수 있음
-names[1] = "Bobby";   // OK: 포인터를 변경하는 것이지, 문자열을 변경하는 것이 아님
+// Can change which string a pointer refers to
+names[1] = "Bobby";   // OK: changes the pointer, not the string
 
-// 문자열 리터럴의 문자를 수정할 수 없음
-// names[1][0] = 'b';  // 미정의 동작: 리터럴은 읽기 전용
+// CANNOT modify the characters of the string literal
+// names[1][0] = 'b';  // UNDEFINED BEHAVIOR: literals are read-only
 ```
 
 **2차원 배열과 포인터 배열 비교:**
@@ -1010,7 +1010,7 @@ Thor thor
 ```
 
 ```text
-a (4행 20열, 80바이트)               p (포인터 4개, 32바이트)
+a (4 rows, 20 columns, 80 bytes)     p (4 pointers, 32 bytes)
 a[0] avengers\0.......... (20)       p[0] ──► "avengers\0"         (9)
 a[1] iron man\0.......... (20)       p[1] ──► "iron man\0"         (9)
 a[2] thor\0.............. (20)       p[2] ──► "thor\0"             (5)

@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **최종 수정일:** 2026-11-19
+> **최종 수정일:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 5
 
@@ -65,15 +65,15 @@
 
 **코드:** [Lab_Q1.c](../../Coursework/Lab05_Control-Statements/Lab_Q1.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C05Q1.c
- * @brief   Q1. 이차원 평면의 점 좌표 사분면 판별
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Determining the Quadrant of a Point on a 2D Plane
+ * @author  Cheolwon Park
  * @date    2024-04-02
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -82,7 +82,7 @@ int main(void)
 {
     int posx, posy;
 
-    // 사용자로부터 좌표를 입력받음
+    // Read the coordinates from the user
     printf("좌표 (x, y)? ");
     scanf_s(" %d %d", &posx, &posy);
 
@@ -117,7 +117,7 @@ int main(void)
 
 **실행 결과:** 실행 예시의 다섯 경우에 제2사분면, 제3사분면, y축의 음수 쪽을 더한 여덟 경우를 차례로 실행한 결과이다. 문구는 실행 예시와 다르다. 입력 안내가 `좌표 (x, y)? `이고, 좌표를 `(0, 0)`처럼 쉼표 뒤에 공백을 넣어 출력하며, 사분면을 `1사분면 위에`가 아니라 `제1사분면에`로 출력한다.
 
-```text
+```text wide-ok
 좌표 (x, y)? 0 0
 (0, 0)는 원점에 위치합니다.
 좌표 (x, y)? -2 0
@@ -161,15 +161,15 @@ int main(void)
 
 **코드:** [Lab_Q2.c](../../Coursework/Lab05_Control-Statements/Lab_Q2.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C05Q2.c
- * @brief   Q2. 섭씨 ↔ 화씨 단위 변환
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Celsius <-> Fahrenheit Conversion
+ * @author  Cheolwon Park
  * @date    2024-04-02
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -207,7 +207,7 @@ int main()
 
 **실행 결과:** 오류 메시지는 `입력 오류! 온도 단위는 C(혹은 c)와 F(혹은 f)만 허용됩니다.`로 실행 예시와 문구가 다르고, 모든 출력이 줄바꿈 없이 끝난다. 32°C는 32 × 9 / 5 + 32 = 89.6°F, 100°F는 (100 - 32) × 5 / 9 = 37.777...°C이다.
 
-```text
+```text wide-ok
 온도? 32C
 32 C == 89.60 F
 온도? 100 f
@@ -218,7 +218,7 @@ int main()
 
 > **주의:** MSVC의 `scanf_s`는 `%c`, `%s`, `%[` 변환마다 버퍼 크기를 나타내는 인자를 하나 더 받도록 정의되어 있다. 이 코드의 `scanf_s(" %d %c", &temp, &tempal)`에는 그 인자가 없으므로 `scanf_s`의 규약에 맞지 않으며, `scanf_s`를 그대로 쓰려면 `scanf_s(" %d %c", &temp, &tempal, 1)`처럼 크기 1을 넘겨야 한다. 또 온도는 `%d`로 읽으므로 `32.5C`처럼 소수를 입력하면 32 다음의 `.`이 단위 문자로 읽혀 오류 메시지가 출력된다.
 
-```text
+```text wide-ok
 온도? 32.5C
 입력 오류! 온도 단위는 C(혹은 c)와 F(혹은 f)만 허용됩니다.
 ```
@@ -242,15 +242,15 @@ int main()
 
 **코드:** [Lab_Q3.c](../../Coursework/Lab05_Control-Statements/Lab_Q3.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-1_C05Q3.c
- * @brief   Q3. 이차 방정식의 근 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q3. Roots of a Quadratic Equation
+ * @author  Cheolwon Park
  * @date    2024-04-03
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -268,7 +268,7 @@ int main()
     ans1 = (-b + sqrt(cal)) / (2 * a);
     ans2 = (-b - sqrt(cal)) / (2 * a);
 
-    if (a) {  // a != 0일 때 이차 방정식으로 계산을 수행
+    if (a) {  // Compute as a quadratic equation when a != 0
         if (cal < 0)
             printf("입력하신 이차 방정식은 허근을 갖습니다.");
         else if (cal == 0)
@@ -285,7 +285,7 @@ int main()
 
 **실행 결과:** 문구는 `입력하신 이차 방정식의 해는 x1 = 1, x2 = -0.666667입니다.`, `입력하신 이차 방정식의 중근 x = 0.666667입니다.`처럼 실행 예시와 다르고, 줄바꿈 없이 끝난다. 마지막 실행은 a에 0을 입력한 경우이다.
 
-```text
+```text wide-ok
 이차 방정식의 상관계수 a, b, c 입력: 3 -1 -2
 입력하신 이차 방정식의 해는 x1 = 1, x2 = -0.666667입니다.
 이차 방정식의 상관계수 a, b, c 입력: 9 -12 4
@@ -315,15 +315,15 @@ int main()
 
 **코드:** [Lab_Q4.c](../../Coursework/Lab05_Control-Statements/Lab_Q4.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-2_C05Q1.c
- * @brief   Q1. 정수의 합과 평균 계산
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Sum and Average of Integers
+ * @author  Cheolwon Park
  * @date    2024-04-09
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *          IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *          other than Visual Studio.
  */
 
 #include <stdio.h>
@@ -354,7 +354,7 @@ int main()
 
 **실행 결과:** 결과 문구는 `입력된 정수의 합`이 아니라 `입력된 수의 합`, `입력된 수의 평균`이다.
 
-```text
+```text wide-ok
 정수 입력(종료: -1): 10
 정수 입력(종료: -1): 27
 정수 입력(종료: -1): 61
@@ -367,7 +367,7 @@ int main()
 
 > **주의:** 처음부터 `-1`을 입력하면 `count`가 0인 채로 `(double)sum1 / count`, 즉 0.0 / 0을 계산하므로 평균이 `nan`으로 출력된다. 5장 3.2절의 감시값 예제처럼 `if (count > 0)`으로 입력이 하나 이상일 때만 평균을 출력하면 이 경우를 처리할 수 있다.
 
-```text
+```text wide-ok
 정수 입력(종료: -1): -1
 입력된 수의 합: 0
 입력된 수의 평균: nan
@@ -394,20 +394,20 @@ int main()
 
 **코드:** [Lab_Q5.c](../../Coursework/Lab05_Control-Statements/Lab_Q5.c)
 
-```c
+```c wide-ok
 /**
  * @file    A10104-2_C05Q2.c
- * @brief   Q2. 삼각형 출력 메뉴
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q2. Triangle Printing Menu
+ * @author  Cheolwon Park
  * @date    2024-04-10
  * 
- * @note    <windows.h> 헤더는 Windows 이외의 개발환경에서
- *          오류가 발생할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that the <windows.h> header may cause errors in development
+ *          environments other than Windows.
  */
 
 #pragma warning(disable:4996)
 #include <stdio.h>
-#include <windows.h>    // system 함수를 사용하기 위해 추가
+#include <windows.h>    // added to use the system function
 
 int main()
 {
@@ -485,7 +485,7 @@ int main()
 
 **실행 결과:** 코드의 구분선은 `-` 31개로 실행 예시의 24개보다 길고, 크기를 입력한 뒤 빈 줄 없이 바로 삼각형을 출력하며, 일부 메시지 끝에 공백이 남는다. 각 실행은 삼각형을 출력한 뒤 5를 입력하여 종료한다.
 
-```text
+```text wide-ok
 -------------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -516,7 +516,7 @@ int main()
 
 메뉴 4는 실행 예시와 다르다. case 4의 첫 번째 안쪽 반복이 공백을 i - 1개가 아니라 i개 출력하므로, 모든 줄이 실행 예시보다 한 칸씩 오른쪽으로 밀린다. 첫 줄이 `*******`가 아니라 ` *******`이다. 실행 예시와 같게 하려면 공백 반복의 조건을 `j < i`로 하여 i - 1개만 출력해야 한다.
 
-```text
+```text wide-ok
 -------------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -544,7 +544,7 @@ int main()
 프로그램을 종료합니다. 
 ```
 
-```text
+```text wide-ok
 -------------------------------
 1. 왼쪽 정렬 삼각형 출력
 2. 오른쪽 정렬 삼각형 출력
@@ -600,7 +600,7 @@ int main()
 
 **해설:** `if-else`문은 조건식이 참이면 `if` 다음의 문장을, 거짓이면 `else` 다음의 문장을 수행한다([5장 2.3절](Concepts_Lecture.ko.md#23-if-else)). 두 문장 중 정확히 하나만 실행되므로, 조건식이 거짓일 때만 수행할 문장은 `else` 뒤에 쓴다.
 
-```c
+```c wide-ok
 if (num % 2 == 0)
     printf("짝수\n");    // executed when the condition is true
 else
@@ -636,7 +636,7 @@ else
 
 **코드:** 바꾼 부분을 넣은 전체 프로그램이다.
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -658,7 +658,7 @@ int main(void)
 
 **실행 결과:** 세 입력 모두 원래의 조건 연산자 코드와 같은 결과를 낸다. 마지막 실행은 두 수가 같은 경우이다.
 
-```text
+```text wide-ok
 두 수를 입력하세요: 3 7
 큰 수: 7
 두 수를 입력하세요: 12 -4
@@ -728,7 +728,7 @@ else                                // regular fee for the other months
 
 **코드:** 바꾼 부분을 넣은 전체 프로그램이다.
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -753,7 +753,7 @@ int main(void)
 
 **실행 결과:** 극성수기, 성수기, 나머지 달을 하나씩 입력한 결과는 원래의 `switch`문과 같다.
 
-```text
+```text wide-ok
 몇 월? 7
 입장료 : 70000
 몇 월? 9
@@ -819,7 +819,7 @@ while (i <= 10) {
 
 **코드:** 바꾼 부분을 넣은 전체 프로그램이다.
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -842,7 +842,7 @@ int main(void)
 
 **실행 결과:** 원래의 `for`문과 같은 결과를 낸다. 1 + 2 + ... + 10 = 55이고, 10! = 3,628,800은 `int`의 범위 안에 있다.
 
-```text
+```text wide-ok
 합:55, 곱:3628800
 ```
 
@@ -1026,7 +1026,7 @@ n = 13
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1063,7 +1063,7 @@ int main(void)
 
 **실행 결과:** 91을 입력하면 `학점: A`가 출력된다. 이어서 경계값 90, 89, 60, 59와 범위 밖의 값 101을 입력한 결과이다.
 
-```text
+```text wide-ok
 점수? 91
 학점: A
 점수? 90
@@ -1100,7 +1100,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1141,7 +1141,7 @@ int main(void)
 
 **실행 결과:** 80명 중 10등을 입력하면 `학점: B`가 출력된다. 이어서 구간 경계에 있는 8등(10%), 9등(11.25%), 72등(90%), 73등(91.25%)을 입력한 결과이다.
 
-```text
+```text wide-ok
 등수? 10
 전체 인원수? 80
 학점: B
@@ -1161,7 +1161,7 @@ int main(void)
 
 > **주의:** 등수를 전체 인원수로 나눈 비율로 학점을 정하므로, 인원이 적으면 1등도 A를 받지 못한다. 5명 중 1등은 상위 20%이므로 B이고, 1명뿐이면 그 1등이 상위 100%가 되어 F이다. 인원이 10명 미만이면 A 구간에 드는 등수가 없다.
 
-```text
+```text wide-ok
 등수? 1
 전체 인원수? 5
 학점: B
@@ -1186,7 +1186,7 @@ int main(void)
 
 **실행 결과:** 연습 문제 1의 코드([Lab_Q1.c](../../Coursework/Lab05_Control-Statements/Lab_Q1.c))에 실행 예시의 입력 `10 -10`을 넣은 결과이다.
 
-```text
+```text wide-ok
 좌표 (x, y)? 10 -10
 (10, -10)는 제4사분면에 위치합니다.
 ```
@@ -1213,7 +1213,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1236,7 +1236,7 @@ int main(void)
 
 **실행 결과:** 실행 예시의 입력 2020에 이어 평년 2023과 세 번째 규칙을 확인하는 1900, 2000을 입력한 결과이다.
 
-```text
+```text wide-ok
 연도? 2020
 2020년은 윤년입니다.
 연도? 2023
@@ -1263,7 +1263,7 @@ int main(void)
 
 **실행 결과:** 연습 문제 2의 코드([Lab_Q2.c](../../Coursework/Lab05_Control-Statements/Lab_Q2.c))에 실행 예시의 입력 `27 C`를 넣은 결과이다. 27 × 9 / 5 + 32 = 80.6이다.
 
-```text
+```text wide-ok
 온도? 27 C
 27 C == 80.60 F
 ```
@@ -1291,7 +1291,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1336,7 +1336,7 @@ int main(void)
 
 **실행 결과:** 실행 예시의 입력 350에 이어 구간 경계인 300과 301, 그리고 0을 입력한 결과이다. 300kWh와 301kWh의 합계가 4,200원 차이 나는 것은 1kWh의 초과분 요금 200원에 더해 기본요금이 구간에 따라 1,000원에서 5,000원으로 바뀌기 때문이다.
 
-```text
+```text wide-ok
 월 사용량 (kWh)? 350
 전기 요금 합계:  45000원
   - 기본요금:     5000원
@@ -1377,7 +1377,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1416,7 +1416,7 @@ int main(void)
 
 **실행 결과:** 실행 예시의 입력에 이어 0xAB와 0xCC로 세 연산을 하나씩 계산하고, 공백 없이 입력한 경우와 지원하지 않는 연산자 `+`를 입력한 결과이다.
 
-```text
+```text wide-ok
 비트 연산식? 0xabcdef12 & 0xF0F0F0F0
 ABCDEF12 & F0F0F0F0 = A0C0E010
 비트 연산식? 0xAB & 0xCC
@@ -1506,7 +1506,7 @@ h i j k l m n o p q r s t u v w x y z { | } ~
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1536,7 +1536,7 @@ int main(void)
 
 **실행 결과:** 11과 20을 입력하면 11부터 220까지 20개의 배수가 출력된다. 각 수 뒤에 공백을 출력하므로 줄 끝에 공백이 하나 남는다. 두 번째 실행은 정수로 0을 입력한 경우이다.
 
-```text
+```text wide-ok
 양의 정수? 11
 배수의 개수? 20
 11 22 33 44 55 66 77 88 99 110 121 132 143 154 165 176 187 198 209 220 
@@ -1567,7 +1567,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1613,7 +1613,7 @@ int main(void)
 
 **실행 결과:** 350, 250, 0을 차례로 입력하면 두 번 계산한 뒤 끝난다.
 
-```text
+```text wide-ok
 월 사용량 (kWh)? 350
 전기 요금 합계:  45000원
   - 기본요금:     5000원
@@ -1627,7 +1627,7 @@ int main(void)
 
 음수를 입력하면 오류 메시지를 출력한 뒤 다시 입력받는다.
 
-```text
+```text wide-ok
 월 사용량 (kWh)? -20
 입력 오류! 월 사용량은 0 이상이어야 합니다.
 월 사용량 (kWh)? 301
@@ -1657,7 +1657,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1700,7 +1700,7 @@ int main(void)
 
 **실행 결과:** 12를 입력하면 `12는 소수가 아닙니다.`가 출력된다. 이어서 7, 2, 1, 97과 `int`의 최댓값이자 소수인 2147483647을 입력한 결과이다.
 
-```text
+```text wide-ok
 양의 정수? 12
 12는 소수가 아닙니다.
 양의 정수? 7
@@ -1735,7 +1735,7 @@ int main(void)
 
 **코드:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -1780,7 +1780,7 @@ int main(void)
 
 **실행 결과:** 100을 입력하면 25개의 소수가 세 줄에 출력된다.
 
-```text
+```text wide-ok
 양의 정수? 100
   2  3  5  7 11 13 17 19 23 29
  31 37 41 43 47 53 59 61 67 71
@@ -1789,7 +1789,7 @@ int main(void)
 
 소수가 정확히 10개인 30을 입력하면 빈 줄 없이 한 줄로 끝나고, 1을 입력하면 소수가 없다는 메시지가 출력된다.
 
-```text
+```text wide-ok
 양의 정수? 30
   2  3  5  7 11 13 17 19 23 29
 양의 정수? 1

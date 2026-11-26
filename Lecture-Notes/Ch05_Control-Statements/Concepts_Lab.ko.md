@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Concepts_Lab.md) | [한국어](Concepts_Lab.ko.md)
 
-> **최종 수정일:** 2026-11-18
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 5, 6
 
@@ -59,7 +59,7 @@
 
 `if`는 주어진 조건이 참(true)일 때에만 관심이 있는 경우에 쓴다. 조건식의 결과가 참이면 바로 다음 문장을 실행하고, 거짓이면 그 문장을 건너뛴다([5장 2.1절](Concepts_Lecture.ko.md#21-if)).
 
-```c
+```c wide-ok
 if (age > 19)
     printf("성인! \n");    // executed only when the condition is true
 printf("if와 상관없이 무조건 수행되는 코드 \n");
@@ -73,7 +73,7 @@ printf("if와 상관없이 무조건 수행되는 코드 \n");
 
 `if-else`는 조건이 참인 경우와 거짓인 경우 각각에 수행할 일이 있을 때 쓴다([5장 2.3절](Concepts_Lecture.ko.md#23-if-else)).
 
-```c
+```c wide-ok
 if (age > 19)
     printf("성인! \n");      // executed when the condition is true
 else
@@ -104,7 +104,7 @@ else {                          // num <= 0: two cases remain
 
 `if`와 `else`가 실행하는 것은 바로 다음의 문장 하나이다. 나이가 20세 이상이면 "성인!"을 출력하고 요금 `price`를 3000원으로, 20세 미만이면 "청소년!"을 출력하고 요금을 1600원으로 정하려면, 각 경우에 실행할 두 문장을 중괄호 `{ }`로 묶은 **복합문(compound statement)** 을 만들어야 한다([5장 2.2절](Concepts_Lecture.ko.md#22-복합문--블록)).
 
-```c
+```c wide-ok
 if (age > 19) {
     printf("성인! \n");
     price = 3000;
@@ -128,7 +128,7 @@ printf("if와 상관없이 수행되는 코드 \n");
 
 `switch`문은 기준 값(정수식)의 값에 따라 실행할 구문(case)을 고른다. 식의 값과 같은 case 레이블로 이동하여 그 뒤의 문장을 실행하고, `break`를 만나면 `switch`를 빠져나간다([5장 2.7절](Concepts_Lecture.ko.md#27-switch)).
 
-```c
+```c wide-ok
 switch (n) {
 case 1:
     printf("n이 1인 경우 실행되는 영역\n");
@@ -162,7 +162,7 @@ flowchart TD
 
 다음은 같은 n = 2에 대해 `break`가 있는 경우와 없는 경우, 그리고 일치하는 case가 없는 n = 7을 실행한 결과이다.
 
-```text
+```text wide-ok
 [with break, n = 2]
 n이 2인 경우 실행되는 영역
 [without break, n = 2]
@@ -515,17 +515,17 @@ Input error!
 `for`문은 세 요소를 괄호 안에 한데 묶어 표현하고, `while`문은 세 요소를 나누어 표현한다([5장 3.1절](Concepts_Lecture.ko.md#31-for), [3.2절](Concepts_Lecture.ko.md#32-while)).
 
 ```text
- while문                         for문
+ while statement                 for statement
 ┌──────────────────────┐        ┌───────────────────────────────┐
 │ int i;               │        │ int i;                        │
-│ i = 0;         ①     │        │ for (i = 0; i < 10; i++)      │
-│ while (i < 10) ②     │        │      ①       ②       ③       │
+│ i = 0;         (1)   │        │ for (i = 0; i < 10; i++)      │
+│ while (i < 10) (2)   │        │      (1)     (2)     (3)      │
 │ {                    │        │ {                             │
 │   printf(...);       │        │   printf(...);                │
-│   i++;         ③     │        │ }                             │
+│   i++;         (3)   │        │ }                             │
 │ }                    │        │                               │
 └──────────────────────┘        └───────────────────────────────┘
- ① 시작 값(초기식)   ② 조건(조건식)   ③ 증감 크기(증감식)
+ (1) start value (init)   (2) condition   (3) step size (update)
 ```
 
 *그림 2. while문과 for문에서 반복문의 세 요소의 위치*
@@ -633,7 +633,7 @@ do-while: 5
 
 **풀이:** 합을 저장할 누적 변수 `sum`을 0으로 초기화하고, `i`를 1부터 5까지 늘리며 `sum += i`를 반복한다([5장 5.1절](Concepts_Lecture.ko.md#51-카운터와-누적기)).
 
-```c
+```c wide-ok
 #include <stdio.h>
 
 int main(void)
@@ -649,7 +649,7 @@ int main(void)
 }
 ```
 
-```text
+```text wide-ok
 1~5까지 합: 15
 ```
 
@@ -904,7 +904,7 @@ int main(void)
 
 1. **복합문:** 다음 코드에서 `age`가 15일 때 출력과 `price`의 값을 쓰라.
 
-   ```c
+   ```c wide-ok
    int price = 0;
    if (age > 19)
        printf("성인! \n");

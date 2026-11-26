@@ -2,7 +2,7 @@
 
 [레포지토리 안내](../../README.ko.md) | [English](Assignment-Explanation.md) | [한국어](Assignment-Explanation.ko.md)
 
-> **최종 수정일:** 2026-11-17
+> **최종 수정일:** 2026-11-27
 >
 > 문제풀이 중심의 C언어 연습, 김용일과 강문설, Ch 4, 5
 
@@ -51,13 +51,13 @@
 
 ```text
 Coursework/HW03_Control-Statements-I/
-├── Assignment-Explanation.ko.md   # 이 문서 (한국어)
-├── Assignment-Explanation.md      # 이 문서 (영어)
+├── Assignment-Explanation.ko.md   # this document (Korean)
+├── Assignment-Explanation.md      # this document (English)
 ├── Original/
-│   ├── Assignment.ko.md           # 과제 안내문 (한국어)
-│   └── Assignment.md              # 과제 안내문 (영어)
+│   ├── Assignment.ko.md           # assignment handout (Korean)
+│   └── Assignment.md              # assignment handout (English)
 └── Solution/
-    └── Q4.c                       # 문제 4: 대소 비교
+    └── Q4.c                       # Problem 4: comparing magnitudes
 ```
 
 *그림 1. HW3 과제의 디렉토리 구성*
@@ -302,12 +302,12 @@ Program ended with exit code: 0
 ```c
 /**
  * @file    A10303-1_C05Q1.c
- * @brief   Q1. 대소 비교
- * @author  박철원 (Cheolwon Park)
+ * @brief   Q1. Comparing Magnitudes
+ * @author  Cheolwon Park
  * @date    2024-03-28
  * 
- * @note    소스 코드에 사용된 scanf_s는 Visual Studio 이외의
- *	    IDE에서 실행이 불가할 수 있음에 주의하시기 바랍니다.
+ * @note    Note that scanf_s used in this source code may not run in IDEs
+ *	    other than Visual Studio.
  */
 
 #include <stdio.h>

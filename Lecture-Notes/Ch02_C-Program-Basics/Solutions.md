@@ -2,7 +2,7 @@
 
 [Repository Guide](../../README.md) | [English](Solutions.md) | [한국어](Solutions.ko.md)
 
-> **Last Updated:** 2026-11-18
+> **Last Updated:** 2026-11-27
 >
 > Warming-Up C Programming, 천정아, Ch 2
 
@@ -373,7 +373,7 @@ printf("int main(void)\n"
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -393,19 +393,19 @@ int main(void)
 
 **Output:** Entering 171 prints the two-digit hexadecimal number `ab`, because 171 = 16 × 10 + 11.
 
-```text
+```text wide-ok
 10진수 정수? 10
 10진수 10은 16진수 a에 해당합니다.
 ```
 
-```text
+```text wide-ok
 10진수 정수? 171
 10진수 171은 16진수 ab에 해당합니다.
 ```
 
 > **Caution:** **Negative input.** `%x` expects an `unsigned int` value, so for a negative input it prints the value obtained by reading the bit pattern as an unsigned integer. With a 32-bit `int`, -1 in two's complement has all bits set to 1, so `ffffffff` is printed ([Chapter 3, Section 2.2](../Ch03_Data-Types-and-Variables/Concepts_Lecture.md#22-integer-representation-twos-complement)).
 
-```text
+```text wide-ok
 10진수 정수? -1
 10진수 -1은 16진수 ffffffff에 해당합니다.
 ```
@@ -429,7 +429,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -452,7 +452,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 연? 2022
 월? 10
 일? 1
@@ -461,7 +461,7 @@ int main(void)
 
 > **Caution:** **Checking the input values.** This program only reads integers and prints them; it does not check whether the values form a valid date. Entering -500, 15, and 55 for the year, month, and day prints "-500년 15월 55일" as it is. Checking that the month is 1-12 and that the day is within the number of days in that month requires the conditional statements of [Chapter 5, Section 2](../Ch05_Control-Statements/Concepts_Lecture.md#2-conditional-statements).
 
-```text
+```text wide-ok
 연? -500
 월? 15
 일? 55
@@ -494,7 +494,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -518,14 +518,14 @@ int main(void)
 
 **Output:** Entering 13, 5, and 9 pads only the one-digit minutes and seconds with 0.
 
-```text
+```text wide-ok
 시? 1
 분? 1
 초? 1
 입력한 시간은 01:01:01입니다.
 ```
 
-```text
+```text wide-ok
 시? 13
 분? 5
 초? 9
@@ -534,7 +534,7 @@ int main(void)
 
 > **Caution:** **The field width is a minimum width.** A value with more than two digits is printed in full without being cut, and the sign of a negative number takes one character. Entering 100, -5, and 7 prints "100:-5:07". This program also does not check that the hours are in the range 0-23 and the minutes and seconds in 0-59.
 
-```text
+```text wide-ok
 시? 100
 분? -5
 초? 7
@@ -562,7 +562,7 @@ int main(void)
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -587,19 +587,19 @@ int main(void)
 
 **Output:** The program prints 50.25 × 1000 = 50250 won. 2.01 dollars is also converted correctly to 2010 won.
 
-```text
+```text wide-ok
 달러? 50.25
 $50.25는 50250원입니다.
 ```
 
-```text
+```text wide-ok
 달러? 2.01
 $2.01는 2010원입니다.
 ```
 
 > **Caution:** **Representation error of real numbers and discarding the fractional part.** Assigning without rounding, as in `won = dollars * WON_PER_DOLLAR;`, can give a result 1 won short. 2.01 cannot be represented exactly in binary, so it is stored in a `double` as 2.00999999999999978684..., and multiplying it by 1000 gives 2009.9999999999998, whose fractional part is discarded in the conversion to `int`, leaving 2009 ([Chapter 3, Section 1.2](../Ch03_Data-Types-and-Variables/Concepts_Lecture.md#12-floating-point-types)). The following is the result of entering 2.01 into a program that assigns without rounding.
 
-```text
+```text wide-ok
 달러? 2.01
 $2.01는 2009원입니다.
 ```
@@ -623,7 +623,7 @@ $2.01는 2009원입니다.
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -642,14 +642,14 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? M
 M 사이즈를 선택했습니다.
 ```
 
 > **Caution:** **Only one character is read.** `%c` reads only one character, so entering `XL` stores only `X` and leaves `L` in the input buffer. The program also does not check whether the input is one of S, M, and L, so a lowercase letter or any other character is printed as it is. Restricting the input to S, M, and L requires the conditional statements of [Chapter 5, Section 2](../Ch05_Control-Statements/Concepts_Lecture.md#2-conditional-statements).
 
-```text
+```text wide-ok
 옷 사이즈(S,M,L)? XL
 X 사이즈를 선택했습니다.
 ```
@@ -674,7 +674,7 @@ X 사이즈를 선택했습니다.
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -694,7 +694,7 @@ int main(void)
 
 **Output:**
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 12.340000 + 0.500000 = 12.840000
 12.340000 - 0.500000 = 11.840000
@@ -702,7 +702,7 @@ int main(void)
 
 > **Caution:** **Reading a `double` with `%f` in `scanf`.** Writing `scanf("%f %f", &x, &y);` makes `scanf` store a value in `float` format in the memory of a `double` variable, which causes undefined behavior. Compiling with `-Wall`, clang warns "format specifies type 'float *' but the argument has type 'double *'", and running the program can print values unrelated to the input, as follows.
 
-```text
+```text wide-ok
 실수 2개? 12.34 0.5
 0.000000 + 0.000000 = 0.000000
 0.000000 - 0.000000 = 0.000000
@@ -814,7 +814,7 @@ pi = 3.141593e+00
 
 **Code:**
 
-```c
+```c wide-ok
 #define _CRT_SECURE_NO_WARNINGS  // allows scanf in Visual Studio
 #include <stdio.h>
 
@@ -836,7 +836,7 @@ int main(void)
 
 **Output:** Entering `0x12` gives the following output. The octal `012` is 8 × 1 + 2 = 10, and the decimal `18` is the same value as `0x12`.
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 0x12
  8진수: 022
@@ -844,7 +844,7 @@ int main(void)
 16진수: 0x12
 ```
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 012
  8진수: 012
@@ -852,7 +852,7 @@ int main(void)
 16진수: 0xa
 ```
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 18
  8진수: 022
@@ -862,7 +862,7 @@ int main(void)
 
 > **Caution:** **Zero and digits that are not octal.** The `#` flag adds no prefix when the value is 0, so entering 0 prints `0` on all three lines. Also, `%i` reads input that starts with 0 as octal, so entering `09` stops reading before 9, which is not an octal digit, and the value becomes 0. A decimal number must be entered without a leading 0.
 
-```text
+```text wide-ok
 8진수로 입력하려면 012, 16진수로 입력하려면 0x12처럼 입력하세요.
 정수? 09
  8진수: 0
